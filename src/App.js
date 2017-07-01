@@ -1,22 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap'
+import axios from 'axios';
 
 class App extends Component {
-  render() {
+
+constructor(props) {
+    super(props);
+
+    this.state = {
+        tournaments: []
+    };
+}
+
+componentDidMount() {
+    axios.get(`http://localhost:8080/`)
+        .then(res => {
+            console.log(res.data);
+            const tournaments = res.data;
+            this.setState({ tournaments });
+        });
+}
+
+render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>XXXcome to React</h2>
+        <div>
+            <h1>Begin of battleCraft</h1>
+            <ul>
+                {this.state.tournaments.map(tournament =>
+                    <li key={tournament.id}>{tournament.id}</li>
+                )}
+            </ul>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
     );
-  }
+}
 }
 
 export default App;
