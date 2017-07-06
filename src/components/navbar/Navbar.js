@@ -1,38 +1,64 @@
-import React from 'react';
-import {Navbar,Nav,NavItem,Grid,Row,Col} from 'react-bootstrap';
-import { bootstrapUtils } from 'react-bootstrap/lib/utils';
-import styles from './Navbar.css.js';
-import { LinkContainer } from 'react-router-bootstrap';
+var React = require('react');
+var Radium = require('radium');
+var Option = require('./NavElement');
+var Logo = require('./NavLogo');
+/*var style = {
+  width: '60%',
 
-bootstrapUtils.addStyle(Navbar, 'custom');
-bootstrapUtils.addStyle(Nav, 'custom');
+  '@media (min-width: 320px)':{
+    width: '30%'
+  },
 
-export default class Navigator extends React.Component{
+  ulBase: {
+    background: 'grey',
+    border: '2px black solid',
+    borderRadius: 4,
+    color: 'white',
+    padding: '1.5em'
+  }
+};
+*/
+
+var styles = {
+  ul: {
+    boxSizing: 'border-box',
+    listStyleType: 'none',
+    overflow:'hidden',
+    backgroundColor: '#423316',
+    width: '70%',
+    margin: '0',
+    padding: '0',
+    marginLeft: '15%',
+  '@media screen and (max-width: 400px)': {
+      width: '100%',
+      marginLeft:'0',
+    }
+  },
+};
+
+class Navigator extends React.Component{
     render(){
         return (
-            <Grid>
-                <Row>
-                    <Col xs={1} md={2} lg={1}></Col>
-                    <Col xs={10} md={8} lg={10}>
-                        <Navbar style={styles.navbar} bsStyle="custom" inverse collapseOnSelect fluid>
-                            <Navbar.Header>
-                                <Navbar.Brand>
-                                    <LinkContainer to=""><a style={styles.logo}>BattlecrafT</a></LinkContainer>
-                                </Navbar.Brand>
-                            </Navbar.Header>
-                            <Navbar.Collapse>
-                                <Nav pullRight>
-                                    <LinkContainer to="/aa"><NavItem>Tournaments</NavItem></LinkContainer>
-                                    <LinkContainer to="/bb"><NavItem>Games</NavItem></LinkContainer>
-                                    <LinkContainer to="/cc"><NavItem>Rankings</NavItem></LinkContainer>
-                                    <LinkContainer to="/zz"><NavItem>My account</NavItem></LinkContainer>
-                                </Nav>
-                            </Navbar.Collapse>
-                        </Navbar>
-                    </Col>
-                    <Col xs={1} md={2} lg={1}></Col>
-                </Row>
-            </Grid>
+          <div style = {[styles.ul]}>
+            <Option>Turnieje</Option>
+            <Option>Gry</Option>
+            <Option>Rankingi</Option>
+            <Option >MojeKonto</Option>
+            <Option>Button</Option>
+            </div>//kolejnosc wystepowania na liscie wiazaca!!
+
+        //  <li styles = {styles.li}><a style = {styles.a} href="#news">News</a></li>
+
+            /*
+          <ul style= {style.base}>
+            <li><a href="default.asp">Home</a></li>
+            <li><a href="news.asp">News</a></li>
+            <li><a href="contact.asp">Contact</a></li>
+            <li><a href="about.asp">About</a></li>
+          </ul>
+*/
         );
     }
 };
+
+module.exports = Radium(Navigator);
