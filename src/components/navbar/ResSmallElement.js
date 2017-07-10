@@ -112,7 +112,7 @@ transform:{
 };
 
 
-class NavElement extends React.Component{
+class ResSmallElement extends React.Component{
     render(){
         return (
           <li style = {styles.button}>
@@ -122,4 +122,4 @@ class NavElement extends React.Component{
     }
 };
 
-module.exports = Radium(NavElement);
+module.exports = Radium(ResSmallElement);

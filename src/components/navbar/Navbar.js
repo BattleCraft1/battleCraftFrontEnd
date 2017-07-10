@@ -24,7 +24,7 @@ var styles = {
     boxSizing: 'border-box',
     listStyleType: 'none',
     overflow:'hidden',
-    backgroundColor: '#423316',
+    //backgroundColor: '#423316',
     width: '70%',
     margin: '0',
     padding: '0',

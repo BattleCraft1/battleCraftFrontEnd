@@ -27,7 +27,6 @@ class App extends Component {
           <StyleRoot style={style.base}>
             <div>
                 <Navigator/>
-                <MyButton/>
             </div>
             </StyleRoot>
         );

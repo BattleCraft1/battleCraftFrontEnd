@@ -1,5 +1,6 @@
-var React = require('react');
+//This Component is battleground for testing and trying fancy stuff!!!!
 
+var React = require('react');
 var Radium = require('radium');
 
 const pulseAnimation = Radium.keyframes({
@@ -31,30 +32,38 @@ const style = {
         borderRadius: '50%',
         width: '120px',
         height: '120px',
+        animation: 'x 2s linear infinite',
         animationName: loaderKeyframes,
-        animation: 'x 2s linear infinite'
+        ':hover':{
+          animation: 'x 3s linear infinite',
+          animationName: loaderKeyframes,
+        }
     },
     example: {
         animation: 'x 3s ease 0s infinite',
         animationName: pulseAnimation,
         background: 'blue',
         height: '4px',
-        margin: '0 auto'
+        margin: '0 auto',
+
     }
+}
+
+
+const styles = {
+  base: {
+  backgroundColor: 'blue',
+  ':active':{
+    backgroundColor: 'red',
+  },
+  }
 }
 
 
 class Button extends React.Component {
   render() {
     return (
-      <div>
-        <div style={
-          style.example
-        } />
-        <div style={
-            style.spinner
-        } />
-      </div>
+      <button style = {[styles.base]} text = {this.props.children}/>
 
     );
   }
