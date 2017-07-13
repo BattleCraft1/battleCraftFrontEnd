@@ -6,7 +6,7 @@ logo:{
 navbar:{
     borderRadius:"0",
     marginTop:"30px",
-    zIndex: "999",
+    position:"absolute",
     fontSize: "15px",
 }
 }
