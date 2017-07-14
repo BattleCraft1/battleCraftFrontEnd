@@ -54,36 +54,47 @@ class CollectionList extends React.Component{
             });
     }
 
+
     render(){
         let columns = [];
         let rows = [];
-        let fields = [];
+        let key =0;
 
-        if(this.state.config.columnsNames!==undefined)
+        if(this.state.config.columns!==undefined)
         {
-            columns.push(<th>#</th>);
-            this.state.config.columnsNames.map(
-                columnName =>
-                    columns.push(<th>{columnName}</th>)
+            columns.push(<th key="#">#</th>);
+            this.state.config.columns.map(
+                column =>
+                    columns.push(<th key={column.name}>{column.name}</th>)
             );
 
             if(this.state.pageOfCollection.content!==undefined)
             {
                 this.state.pageOfCollection.content.map(
-                    element =>
-                rows.push(
-                    <tr>
-                        {fields.push(<th scope="row">1</th>)};
-                        {this.state.config.columnsNames.map(
-                            columnName =>
-                                fields.push(<td>{element[columnName]}</td>)
-                        )
-                        };
-                        {fields};
-                        {fields.clear};
-                    </tr>
-                )
-            );
+                    element =>{
+                        key++;
+                        console.log(element);
+                        let fields =[];
+                        fields.push(<th key={"th:"+key} scope="row">{key}</th>);
+                        this.state.config.columns.map(
+                            column =>{
+                                let fieldContent;
+                                let elementCopy=(element);
+                                column.keys.map(
+                                    key => {
+                                        fieldContent=elementCopy[key];
+                                        elementCopy=elementCopy[key];
+                                    }
+                                );
+                                fields.push(<td key={"td:"+column.name} >{fieldContent}</td>)}
+                        );
+                        rows.push(
+                            <tr key={"th:"+key}>
+                                {fields}
+                            </tr>
+                        );
+                    }
+                );
             }
         }
 
