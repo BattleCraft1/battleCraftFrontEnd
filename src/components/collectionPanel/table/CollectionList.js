@@ -17,7 +17,8 @@ class CollectionList extends React.Component{
                 searchCriteria:[
                 ]
             },
-            checkedElementsUniqueNames:[]
+            checkedElementsUniqueNames:[],
+            checkedAll:false,
         };
     }
 
@@ -65,17 +66,36 @@ class CollectionList extends React.Component{
     }
 
     addToCheckedElements(elementUniqueName){
-        console.log("added "+elementUniqueName);
+        console.log("add "+elementUniqueName);
         let checkedElementsUniqueNames=this.state.checkedElementsUniqueNames;
         checkedElementsUniqueNames.push(elementUniqueName);
         this.setState({checkedElementsUniqueNames:checkedElementsUniqueNames});
     }
 
     removeFromCheckedElements(elementUniqueName){
-        console.log("removed "+elementUniqueName);
+        console.log("remove "+elementUniqueName);
         let checkedElementsUniqueNames=this.state.checkedElementsUniqueNames;
         checkedElementsUniqueNames.splice(1,checkedElementsUniqueNames.indexOf(elementUniqueName));
         this.setState({checkedElementsUniqueNames:checkedElementsUniqueNames});
+    }
+
+
+    checkAllElements(){
+        console.log("checked all");
+        let checkedElementsUniqueNames=this.state.checkedElementsUniqueNames;
+        this.state.pageOfCollection.content.map(
+            element => {checkedElementsUniqueNames.indexOf(element[this.state.config.uniqueColumn]) === -1 ? checkedElementsUniqueNames.push(element[this.state.config.uniqueColumn]): console.log();}
+        );
+        this.setState({checkedElementsUniqueNames:checkedElementsUniqueNames});
+        this.setState({checkedAll:true});
+    }
+
+    uncheckAllElements(){
+        console.log("unchecked all");
+        let checkedElementsUniqueNames=this.state.checkedElementsUniqueNames;
+        checkedElementsUniqueNames=[];
+        this.setState({checkedElementsUniqueNames:checkedElementsUniqueNames});
+        this.setState({checkedAll:false});
     }
 
     addNewElement(){
@@ -116,15 +136,18 @@ class CollectionList extends React.Component{
             .then(res => {
                 console.log(res.data);
                 this.getPageRequest();
+                this.checkAllElements();
+                this.uncheckAllElements();
             })
             .catch(function (error) {
                 console.log(error);
             });
+
     }
 
     prepareColumnsOfTable(columns)
     {
-        columns.push(<th key="all"><input type="checkbox" value=""/></th>);
+        columns.push(<th key="all"><Checkbox checkFunction={this.checkAllElements.bind(this)} uncheckFunction={this.uncheckAllElements.bind(this)} /></th>);
         this.state.config.columns.map(
             column =>
                 columns.push(<th onClick={()=>this.sortByColumnName(column.keys.join("."))} key={column.name}>{column.name}</th>)
@@ -132,11 +155,12 @@ class CollectionList extends React.Component{
     }
 
     prepareRowsOfTable(columns,rows,key){
+
         this.state.pageOfCollection.content.map(
             element =>{
                 key++;
                 let fields =[];
-                fields.push(<th key={"th:"+key} scope="row"><Checkbox addElement={this.addToCheckedElements.bind(this)} removeElement={this.removeFromCheckedElements.bind(this)} index={element[this.state.config.uniqueColumn]}/></th>);
+                fields.push(<th key={"th:"+key} scope="row"><Checkbox checkedAll={this.state.checkedAll} checkFunction={this.addToCheckedElements.bind(this)} uncheckFunction={this.removeFromCheckedElements.bind(this)} index={element[this.state.config.uniqueColumn]}/></th>);
                 this.state.config.columns.map(
                     column =>{
                         let fieldContent;
@@ -183,7 +207,7 @@ class CollectionList extends React.Component{
                     </tr>
                     </thead>
                     <tbody>
-                    {rows}
+                        {rows}
                     </tbody>
                 </table>
                 <div className="btn-group">
@@ -191,7 +215,7 @@ class CollectionList extends React.Component{
                     <button type="button" className="btn btn-default">Edit <span className="glyphicon glyphicon-pencil"></span></button>
                     <button type="button" onClick={() => this.banCheckedElements()}className="btn btn-default">Ban <span className="glyphicon glyphicon-lock"></span></button>
                     <button type="button" onClick={() => this.unlockCheckedElements()} className="btn btn-default">Unlock <span className="glyphicon glyphicon-list-alt"></span></button>
-                    <button type="button" onClick={() => this.deleteCheckedElements()} className="btn btn-default">Delete <span className="glyphicon glyphicon-minus"></span></button>
+                    <button type="button" onClick={() => {this.deleteCheckedElements();}} className="btn btn-default">Delete <span className="glyphicon glyphicon-minus"></span></button>
                 </div>
             </div>
         );
@@ -202,21 +226,34 @@ class Checkbox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            checked:true,
+            checked:true
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.checkedAll !== this.props.checkedAll) {
+            if(this.props.checkedAll===true)
+                this.setState({checked:true});
+            else
+                this.setState({checked:false});
+        }
     }
 
     render(){
         return(
-            <input type="checkbox" onChange={() => {
-                let checked=this.state.checked;
-                checked=!checked;
-                this.setState({checked:checked});
-                if(this.state.checked)
-                    this.props.addElement(this.props.index);
-                else
-                    this.props.removeElement(this.props.index);
-            }} value=""/>
+            <input type="checkbox"
+                   onClick={
+                       () => {
+                           let checked=this.state.checked;
+                           checked=!checked;
+                           this.setState({checked:checked});
+                           if(this.state.checked)
+                               this.props.checkFunction(this.props.index);
+                           else
+                               this.props.uncheckFunction(this.props.index);
+                       }
+                   }
+                   checked={!this.state.checked}/>
         );
     }
 }
