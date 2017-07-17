@@ -10,10 +10,12 @@
     "react-animations": "^0.1.0",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-scripts": "1.0.9",
-    "redux": "^3.7.1"
+    "redux": "^3.7.1",
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
