@@ -28,8 +28,8 @@ class CollectionList extends React.Component{
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.collectionType !== this.props.collectionType || nextProps.collectionType !== undefined) {
-            this.props.collectionType=nextProps.collectionType;
+        if (nextProps.collectionType !== this.props.collectionType) {
+
             this.getConfig(this.props.collectionType);
             this.getPage(this.props.collectionType);
         }
