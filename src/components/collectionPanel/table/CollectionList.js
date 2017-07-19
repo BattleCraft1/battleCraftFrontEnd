@@ -1,68 +1,27 @@
 import axios from 'axios';
 import React from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { ActionCreators } from '../../../redux/actions';
+
 
 class CollectionList extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            config: {},
-            pageOfCollection: {},
-            getCollectionPageRequest: {pageRequest:{
-                size:10,
-                page:0,
-                direction: "ASC",
-                property: "name"
-            },
-                searchCriteria:[
-                ]
-            },
             checkedElementsUniqueNames:[],
             checkedAll:false,
         };
     }
 
-    componentDidMount() {
-        this.getConfigRequest();
-        this.getPageRequest();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.collectionType !== this.props.collectionType) {
-
-            this.getConfig(this.props.collectionType);
-            this.getPage(this.props.collectionType);
-        }
-    }
-
-    getConfigRequest(){
-        axios.get(`http://localhost:8080/config/`+this.props.collectionType)
-            .then(res => {
-                console.log(res.data);
-                this.setState({config: res.data});
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
-    getPageRequest(){
-        axios.post(`http://localhost:8080/page/`+this.props.collectionType,this.state.getCollectionPageRequest)
-            .then(res => {
-                console.log(res.data);
-                this.setState({pageOfCollection: res.data});
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
     sortByColumnName(columnName){
-        let getCollectionPageRequest=this.state.getCollectionPageRequest;
-        getCollectionPageRequest.pageRequest.property=columnName;
-        getCollectionPageRequest.pageRequest.direction=getCollectionPageRequest.pageRequest.direction==='ASC'?'DESC':'ASC';
-        this.setState({getCollectionPageRequest:getCollectionPageRequest});
-        this.getPageRequest();
+        let pageRequest=this.props.pageRequest;
+        pageRequest.pageRequest.property=columnName;
+        pageRequest.pageRequest.direction=pageRequest.pageRequest.direction==='ASC'?'DESC':'ASC';
+        this.props.setPageRequest(pageRequest);
+        this.props.getPageRequest();
     }
 
     addToCheckedElements(elementUniqueName){
@@ -83,8 +42,8 @@ class CollectionList extends React.Component{
     checkAllElements(){
         console.log("checked all");
         let checkedElementsUniqueNames=this.state.checkedElementsUniqueNames;
-        this.state.pageOfCollection.content.map(
-            element => {checkedElementsUniqueNames.indexOf(element[this.state.config.uniqueColumn]) === -1 ? checkedElementsUniqueNames.push(element[this.state.config.uniqueColumn]): console.log();}
+        this.props.page.content.map(
+            element => {checkedElementsUniqueNames.indexOf(element[this.props.config.uniqueColumn]) === -1 ? checkedElementsUniqueNames.push(element[this.props.config.uniqueColumn]): console.log();}
         );
         this.setState({checkedElementsUniqueNames:checkedElementsUniqueNames});
         this.setState({checkedAll:true});
@@ -111,7 +70,7 @@ class CollectionList extends React.Component{
         axios.post(`http://localhost:8080/ban/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
             .then(res => {
                 console.log(res.data);
-                this.getPageRequest();
+                this.props.getPageRequest();
             })
             .catch(function (error) {
                 console.log(error);
@@ -123,7 +82,7 @@ class CollectionList extends React.Component{
         axios.post(`http://localhost:8080/unlock/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
             .then(res => {
                 console.log(res.data);
-                this.getPageRequest();
+                this.props.getPageRequest();
             })
             .catch(function (error) {
                 console.log(error);
@@ -135,7 +94,7 @@ class CollectionList extends React.Component{
         axios.post(`http://localhost:8080/delete/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
             .then(res => {
                 console.log(res.data);
-                this.getPageRequest();
+                this.props.getPageRequest();
                 this.checkAllElements();
                 this.uncheckAllElements();
             })
@@ -148,7 +107,7 @@ class CollectionList extends React.Component{
     prepareColumnsOfTable(columns)
     {
         columns.push(<th key="all"><Checkbox checkFunction={this.checkAllElements.bind(this)} uncheckFunction={this.uncheckAllElements.bind(this)} /></th>);
-        this.state.config.columns.map(
+        this.props.config.columns.map(
             column =>
                 columns.push(<th onClick={()=>this.sortByColumnName(column.keys.join("."))} key={column.name}>{column.name}</th>)
         );
@@ -156,12 +115,12 @@ class CollectionList extends React.Component{
 
     prepareRowsOfTable(columns,rows,key){
 
-        this.state.pageOfCollection.content.map(
+        this.props.page.content.map(
             element =>{
                 key++;
                 let fields =[];
-                fields.push(<th key={"th:"+key} scope="row"><Checkbox checkedAll={this.state.checkedAll} checkFunction={this.addToCheckedElements.bind(this)} uncheckFunction={this.removeFromCheckedElements.bind(this)} index={element[this.state.config.uniqueColumn]}/></th>);
-                this.state.config.columns.map(
+                fields.push(<th key={"th:"+key} scope="row"><Checkbox checkedAll={this.state.checkedAll} checkFunction={this.addToCheckedElements.bind(this)} uncheckFunction={this.removeFromCheckedElements.bind(this)} index={element[this.props.config.uniqueColumn]}/></th>);
+                this.props.config.columns.map(
                     column =>{
                         let fieldContent;
                         let elementCopy=(element);
@@ -188,18 +147,18 @@ class CollectionList extends React.Component{
         let rows = [];
         let key = 0;
 
-        if(this.state.config.columns!==undefined)
+        if(this.props.config.columns!==undefined)
         {
             this.prepareColumnsOfTable(columns);
 
-            if(this.state.pageOfCollection.content!==undefined)
+            if(this.props.page.content!==undefined)
             {
                 this.prepareRowsOfTable(columns,rows,key);
             }
         }
 
         return (
-            <div>
+            <div className="row">
                 <table className="table bg-primary">
                     <thead>
                     <tr>
@@ -258,4 +217,16 @@ class Checkbox extends React.Component {
     }
 }
 
-export default CollectionList;
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
+
+function mapStateToProps( state ) {
+    return {
+        page: state.page,
+        config: state.config,
+        pageRequest: state.pageRequest
+    };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( CollectionList );
