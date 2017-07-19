@@ -158,7 +158,7 @@ class CollectionList extends React.Component{
         }
 
         return (
-            <div>
+            <div className="row">
                 <table className="table bg-primary">
                     <thead>
                     <tr>

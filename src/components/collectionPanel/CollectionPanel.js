@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React from 'react';
+
 import CollectionList from './table/CollectionList';
+import PagePanel from './pagePanel/PagePanel';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -51,6 +53,7 @@ class CollectionPanel extends React.Component{
                     </div>
                     <div className="col-sm-10 col-md-8 col-lg-8">
                         <CollectionList getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>
+                        <PagePanel getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>
                     </div>
                     <div className="col-sm-1 col-md-2 col-lg-2">
                     </div>
