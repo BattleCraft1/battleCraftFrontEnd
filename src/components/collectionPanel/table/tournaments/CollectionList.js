@@ -4,7 +4,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { ActionCreators } from '../../../redux/actions';
+import { ActionCreators } from '../../../../redux/actions/index';
+import {serverName} from '../../../../consts/server';
 
 
 class CollectionList extends React.Component{
@@ -43,7 +44,7 @@ class CollectionList extends React.Component{
         console.log("checked all");
         let checkedElementsUniqueNames=this.state.checkedElementsUniqueNames;
         this.props.page.content.map(
-            element => {checkedElementsUniqueNames.indexOf(element[this.props.config.uniqueColumn]) === -1 ? checkedElementsUniqueNames.push(element[this.props.config.uniqueColumn]): console.log();}
+            element => {checkedElementsUniqueNames.indexOf(element.name) === -1 ? checkedElementsUniqueNames.push(element.name): console.log();}
         );
         this.setState({checkedElementsUniqueNames:checkedElementsUniqueNames});
         this.setState({checkedAll:true});
@@ -67,7 +68,7 @@ class CollectionList extends React.Component{
 
     banCheckedElements(){
         console.log("ban "+this.state.checkedElementsUniqueNames);
-        axios.post(`http://localhost:8080/ban/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
+        axios.post(serverName+`ban/tournaments`,this.state.checkedElementsUniqueNames)
             .then(res => {
                 console.log(res.data);
                 this.props.getPageRequest();
@@ -79,7 +80,7 @@ class CollectionList extends React.Component{
 
     unlockCheckedElements(){
         console.log("ban "+this.state.checkedElementsUniqueNames);
-        axios.post(`http://localhost:8080/unlock/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
+        axios.post(serverName+`unlock/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
             .then(res => {
                 console.log(res.data);
                 this.props.getPageRequest();
@@ -91,7 +92,7 @@ class CollectionList extends React.Component{
 
     deleteCheckedElements(){
         console.log("delete "+this.state.checkedElementsUniqueNames);
-        axios.post(`http://localhost:8080/delete/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
+        axios.post(serverName+`delete/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
             .then(res => {
                 console.log(res.data);
                 this.props.getPageRequest();
@@ -104,34 +105,19 @@ class CollectionList extends React.Component{
 
     }
 
-    prepareColumnsOfTable(columns)
-    {
-        columns.push(<th key="all"><Checkbox checkFunction={this.checkAllElements.bind(this)} uncheckFunction={this.uncheckAllElements.bind(this)} /></th>);
-        this.props.config.columns.map(
-            column =>
-                columns.push(<th onClick={()=>this.sortByColumnName(column.keys.join("."))} key={column.name}>{column.name}</th>)
-        );
-    }
 
-    prepareRowsOfTable(columns,rows,key){
+    prepareRowsOfTable(rows,key){
 
         this.props.page.content.map(
-            element =>{
+            tournament =>{
                 key++;
                 let fields =[];
-                fields.push(<th key={"th:"+key} scope="row"><Checkbox checkedAll={this.state.checkedAll} checkFunction={this.addToCheckedElements.bind(this)} uncheckFunction={this.removeFromCheckedElements.bind(this)} index={element[this.props.config.uniqueColumn]}/></th>);
-                this.props.config.columns.map(
-                    column =>{
-                        let fieldContent;
-                        let elementCopy=(element);
-                        column.keys.map(
-                            key => {
-                                fieldContent=elementCopy[key];
-                                elementCopy=elementCopy[key];
-                            }
-                        );
-                        fields.push(<td key={"td:"+column.name} >{fieldContent}</td>)}
-                );
+                fields.push(<th key={"th:"+key} scope="row"><Checkbox checkedAll={this.state.checkedAll} checkFunction={this.addToCheckedElements.bind(this)} uncheckFunction={this.removeFromCheckedElements.bind(this)} index={"name"}/></th>);
+                fields.push(<td key={"td:name:"+key} >{tournament.name}</td>);
+                fields.push(<td key={"td:province"+key} >{tournament.address.province.location}</td>);
+                fields.push(<td key={"td:city"+key} >{tournament.address.city}</td>);
+                fields.push(<td key={"td:class"+key} >{tournament.tournamentClass}</td>);
+                fields.push(<td key={"td:date"+key} >{tournament.dateOfStart}</td>);
                 rows.push(
                     <tr key={"th:"+key}>
                         {fields}
@@ -143,18 +129,12 @@ class CollectionList extends React.Component{
 
 
     render(){
-        let columns = [];
         let rows = [];
         let key = 0;
 
-        if(this.props.config.columns!==undefined)
+        if(this.props.page.content!==undefined)
         {
-            this.prepareColumnsOfTable(columns);
-
-            if(this.props.page.content!==undefined)
-            {
-                this.prepareRowsOfTable(columns,rows,key);
-            }
+           this.prepareRowsOfTable(rows,key);
         }
 
         return (
@@ -162,7 +142,12 @@ class CollectionList extends React.Component{
                 <table className="table bg-primary">
                     <thead>
                     <tr>
-                        {columns}
+                        <th key="all"><Checkbox checkFunction={this.checkAllElements.bind(this)} uncheckFunction={this.uncheckAllElements.bind(this)} /></th>
+                        <th onClick={()=>this.sortByColumnName("name")} key="name">name</th>
+                        <th onClick={()=>this.sortByColumnName("address.province.location")} key="province">province</th>
+                        <th onClick={()=>this.sortByColumnName("address.city")} key="city">city</th>
+                        <th onClick={()=>this.sortByColumnName("tournamentClass")} key="class">class</th>
+                        <th onClick={()=>this.sortByColumnName("dateOfStart")} key="date">date</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -224,7 +209,6 @@ function mapDispatchToProps( dispatch ) {
 function mapStateToProps( state ) {
     return {
         page: state.page,
-        config: state.config,
         pageRequest: state.pageRequest
     };
 }

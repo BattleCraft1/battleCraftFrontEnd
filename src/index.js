@@ -19,7 +19,6 @@ function configureStore( initialState ) {
 }
 
 const store = configureStore( {
-    config: {},
     page: {},
     pageRequest: {pageRequest:{
         size:10,
