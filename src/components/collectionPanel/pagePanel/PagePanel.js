@@ -115,7 +115,6 @@ class PagePanel extends React.Component{
         return (
             <div className="row">
                 <div className="form-group">
-                    <div className="alert alert-danger" role="alert">{this.state.message}</div>
                     <form className="form-inline">
                         <button onClick={() => this.previousPage()}  type="button" className="btn btn-default"><span className="glyphicon glyphicon-chevron-left"></span></button>
                         <div className="input-group">
@@ -154,7 +153,6 @@ function mapDispatchToProps( dispatch ) {
 function mapStateToProps( state ) {
     return {
         page: state.page,
-        config: state.config,
         pageRequest: state.pageRequest
     };
 }
