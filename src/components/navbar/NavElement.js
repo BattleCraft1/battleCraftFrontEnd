@@ -11,7 +11,7 @@ export default class NavElement extends React.Component{
     render(){
         return (
 
-            <Link to={"#"} style = {styles.button} className={css(resp.small)}>{this.props.children}</Link>
+            <Link to={this.props.link} style = {styles.button} className={css(resp.small)}>{this.props.children}</Link>
 
         );
     }

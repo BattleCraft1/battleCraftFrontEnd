@@ -45,54 +45,59 @@ class SearchPanel extends React.Component{
     }
 
     searchTournaments(){
-        const searchCriteriaTemplate=[
-            {
-                "id":"name",
-                "keys":["name"],
-                "operation":":"
-            },
-            {
-                "id":"dateFrom",
-                "keys":["dateOfStart"],
-                "operation":">"
-            },
-            {
-                "id":"dateTo",
-                "keys":["dateOfStart"],
-                "operation":"<"
-            },
-            {
-                "id":"class",
-                "keys":["tournamentClass"],
-                "operation":":"
-            },
-            {
-                "id":"city",
-                "keys":["address", "city"],
-                "operation":":"
-            },
-            {
-                "id":"province",
-                "keys":["address", "province","location"],
-                "operation":":"
-            }
-        ];
-
         let pageRequest=this.props.pageRequest;
+        pageRequest.searchCriteria=[];
 
-        searchCriteriaTemplate.map(
-            template => {
-                if(this[template.id].value!==""){
-                    pageRequest.searchCriteria.push(
-                        {
-                            "keys":this[template.id].keys,
-                            "operation":this[template.id].operation,
-                            "value":this[template.id].value
-                        }
-                    )
+        if(this.name.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["name"],
+                    "operation":":",
+                    "value":this.name.value
                 }
-            }
-        );
+            )}
+        if(this.dateFrom.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["dateOfStart"],
+                    "operation":">",
+                    "value":this.dateFrom.value
+                }
+            )}
+        if(this.dateTo.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["dateOfStart"],
+                    "operation":"<",
+                    "value":this.dateTo.value
+                }
+            )}
+        if(this.tournamentClass.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["tournamentClass"],
+                    "operation":":",
+                    "value":this.tournamentClass.value
+                }
+            )}
+        if(this.city.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["address", "city"],
+                    "operation":":",
+                    "value":this.city.value
+                }
+            )}
+        if(this.province.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["address", "province","location"],
+                    "operation":":",
+                    "value":this.province.value
+                }
+            )}
+
+            console.log(pageRequest.searchCriteria);
 
         this.props.setPageRequest(pageRequest);
         this.props.getPageRequest();
