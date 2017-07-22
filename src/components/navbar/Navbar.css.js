@@ -5,4 +5,7 @@ export default {
     display:"inline-block",
     width:"100%",
   },
+  invisible:{
+    display:'none'
+    },
   }

@@ -38,7 +38,7 @@ var styles = {
 export default class ResSmallElement extends React.Component{
     render(){
         return (
-                  <div style = {styles.button} className={css(resp.small)} href="#"  onClick={()=>this.props.toggleList()}>{this.props.children}</div>
+                  <div style = {styles.button} className={css(resp.small)} onClick={()=>this.props.toggleList()}>{this.props.children}</div>
         );
     }
 };
