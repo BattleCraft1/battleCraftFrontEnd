@@ -53,6 +53,7 @@ class SearchPanel extends React.Component{
                 {
                     "keys":["name"],
                     "operation":":",
+                    "type":"String",
                     "value":this.name.value
                 }
             )}
@@ -61,6 +62,7 @@ class SearchPanel extends React.Component{
                 {
                     "keys":["dateOfStart"],
                     "operation":">",
+                    "type":"Date",
                     "value":this.dateFrom.value
                 }
             )}
@@ -69,6 +71,7 @@ class SearchPanel extends React.Component{
                 {
                     "keys":["dateOfStart"],
                     "operation":"<",
+                    "type":"Date",
                     "value":this.dateTo.value
                 }
             )}
@@ -77,6 +80,7 @@ class SearchPanel extends React.Component{
                 {
                     "keys":["tournamentClass"],
                     "operation":":",
+                    "type":"String",
                     "value":this.tournamentClass.value
                 }
             )}
@@ -85,6 +89,7 @@ class SearchPanel extends React.Component{
                 {
                     "keys":["address", "city"],
                     "operation":":",
+                    "type":"String",
                     "value":this.city.value
                 }
             )}
@@ -93,11 +98,12 @@ class SearchPanel extends React.Component{
                 {
                     "keys":["address", "province","location"],
                     "operation":":",
+                    "type":"String",
                     "value":this.province.value
                 }
             )}
 
-            console.log(pageRequest.searchCriteria);
+            console.log(pageRequest.searchCriteria)
 
         this.props.setPageRequest(pageRequest);
         this.props.getPageRequest();
