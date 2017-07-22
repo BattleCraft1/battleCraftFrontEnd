@@ -38,7 +38,7 @@ var styles = {
 export default class ResSmallElement extends React.Component{
     render(){
         return (
-                  <a style = {styles.button} className={css(resp.small)} href="#">{this.props.children}</a>
+                  <div style = {styles.button} className={css(resp.small)} href="#"  onClick={()=>this.props.toggleList()}>{this.props.children}</div>
         );
     }
 };
@@ -46,6 +46,8 @@ export default class ResSmallElement extends React.Component{
 
 const resp = StyleSheet.create({
     small: {
+      paddingLeft:'5%',
+      marginBottom:'1px',
       ':hover':{
           borderTopColor: 'rgb(249, 249, 249)',
           borderBottomColor: 'rgb(204, 126, 69)',

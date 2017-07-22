@@ -4,5 +4,5 @@ export default {
     background:"white",
     display:"inline-block",
     width:"100%",
-    }
+  },
   }
