@@ -12,7 +12,7 @@ export default class Navigator extends React.Component{
     render(){
         return (
             <div style = {styles.navbar} className={css(resp.small)}>
-                <Option link="#">Tournaments</Option>
+                <Option link="/collectionsPanel/tournaments">Tournaments</Option>
                 <Option link="/collectionsPanel/games">Games</Option>
                 <Option link="/collectionsPanel/rankings">Rankings</Option>
                 <Option link="/collectionsPanel/tournaments">Account</Option>
