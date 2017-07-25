@@ -1,29 +1,26 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import styles from './NavElementSmall.css.js'
+import styles from './NavStyle.css.js'
 import { StyleSheet, css } from 'aphrodite';
 
 export default class NavElementSmall extends React.Component{
-    constructor(props) {
-        super(props);
-    }
+
 
     render(){
         return (
-            <Link to={"#"} style = {styles.button} className={css(resp.small)}>{this.props.children}</Link>
+            <Link to={"#"} style = {styles.button} className={css(resp.option)}>{this.props.children}</Link>
         );
     }
 };
 
-
-
-
 const resp = StyleSheet.create({
-    small: {
+    option: {
       marginBottom:'1px',
       borderWidth:'1px',
       height:'25px',
       fontSize:'85%',
+      display:'inline-block',
+      position:'relative',
       backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#916831), to(#624722))',
       WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px;',
       ':hover':{
@@ -44,7 +41,7 @@ const resp = StyleSheet.create({
           borderBottomColor: 'rgb(249, 249, 249)',
         },
         '@media (min-width: 600px)': {
-            display: 'none',
+            width:'100%',
 
         }
     },

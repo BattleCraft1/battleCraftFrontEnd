@@ -1,9 +1,7 @@
 import React from 'react';
 import Option from './NavElement';
-import SmallOption from './NavElementSmall'
-import styles from './Navbar.css.js';
 import {StyleSheet, css} from 'aphrodite';
-import Menu from './ResSmallElement';
+import Menu from './Menu';
 import AccountDropdown from './AccountDropdown'
 import AccountOption from './AccountOption'
 
@@ -13,14 +11,35 @@ export default class Navigator extends React.Component{
 
   constructor(props) {
       super(props);
-      this.state = {isToggleOn: true};
-      this.state = {accountListVisible: false};
+      this.state = {
+        isToggleOn: true,
+        accountListVisible: true,
+        width: window.innerWidth,
+        height: window.innerHeight,
+      };
 
       // This binding is necessary to make `this` work in the callback
       this.handleClick = this.handleClick.bind(this);
       this.handleAccountList = this.handleAccountList.bind(this);
+      this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+      //console.log(window.innerWidth);
     }
 
+    updateWindowDimensions(){
+      this.setState({width: window.innerWidth, height: window.innerHeight});
+      console.log("width: " + this.state.width);
+      console.log("height:" + this.state.height);
+    }
+
+    componentDidMount(){
+      this.updateWindowDimensions();
+      window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount(){
+      this.updateWindowDimensions();
+      window.addEventListener('resize', this.updateWindowDimensions);
+    }
 
     handleClick(event) {
       this.setState(prevState => ({
@@ -37,14 +56,6 @@ export default class Navigator extends React.Component{
 
 
     render(){
-      const invisible2 =
-      {
-        display:'none'
-      }
-      const visible2 =
-      {
-        display:'inline-block'
-      }
 
       var accountSimbol
       if(this.state.accountListVisible){
@@ -53,60 +64,46 @@ export default class Navigator extends React.Component{
       else{
         accountSimbol = icons.arrowTriU
       }
-
-      var list;
-      if(this.state.isToggleOn === true)
-      {
-        list =
-        <div>
-        <SmallOption link="#" onClick={this.handleClick}>Tournaments</SmallOption>
-        <SmallOption link="/collectionsPanel/games">Games</SmallOption>
-        <SmallOption link="/collectionsPanel/rankings">Rankings</SmallOption>
-
-        <AccountDropdown toggleAccountList = {this.handleAccountList.bind(this)}>Account {accountSimbol}</AccountDropdown>
-        <div style ={this.state.accountListVisible ? {display:'none'}:{display:'block'}}>
-        <AccountOption className={css(resp.accountOption)} link="#">Link1</AccountOption>
-        <AccountOption className={css(resp.accountOption)} link="#">Link2</AccountOption>
-
-
-        </div>
-
-        <SmallOption link="/collectionsPanel/users">Users</SmallOption>
-        </div>
-      }
-
-
         return (
-            <div style = {styles.navbar} className={css(resp.small)}>
+            <div className={css(resp.navbar)}>
+             <Menu toggleList = {this.handleClick.bind(this)}>Menu <span className={css(resp.hamburger)}>{icons.menu}</span></Menu>
+             <div style ={(this.state.width < 600 && this.state.isToggleOn) ? {display:'none'}:{display:'block'}}>
                 <Option link="/collectionsPanel/tournaments">Tournaments</Option>
                 <Option link="/collectionsPanel/games">Games</Option>
                 <Option link="/collectionsPanel/rankings">Rankings</Option>
-                <Option toggleAccountList = {this.handleAccountList.bind(this)} >Account</Option>
+                <AccountDropdown toggleAccountList = {this.handleAccountList.bind(this)}>Account <span className={css(resp.arrow)}>{accountSimbol}</span></AccountDropdown>
+
+                  <div style ={this.state.accountListVisible ? {display:'none'}:{display:'block'}} className={css(resp.account)}>
+                  <div style = {{position:'relative', display:'inline-block', width:'100%'}}>
+                  <AccountOption link="#">Link1</AccountOption>
+                  <AccountOption link="#">Link2</AccountOption>
+                  </div>
+                  </div>
                 <Option link="/collectionsPanel/users">Users</Option>
-
-                <Menu toggleList = {this.handleClick.bind(this)}>Menu <span className={css(resp.hamburger)}>{icons.menu}</span></Menu>
-                {list}
-
-
               </div>
+          </div>
 
         );
     }
 };
 
 const resp = StyleSheet.create({
-    small: {
+
+    account: {
+      width:'100%',
+      position:'relative',
+      '@media (min-width: 599px)': {
+          position:'absolute',
+          width:'20%',
+          marginLeft:'60%',
+        }
+    },
+
+    navbar: {
+      position:'absolute',
       width:'80%',
       marginLeft:'10%',
       background:'none',
-    },
-    hover: {
-        ':hover': {
-            backgroundColor: 'red',
-        },
-    },
-  invisible:{
-    display:'none'
     },
 
     hamburger:{
@@ -114,10 +111,14 @@ const resp = StyleSheet.create({
       margin:'0',
       marginRight:'5%',
     },
-    accountOption:{
-      height:'20px',
-      background: 'none'
-    }
 
+    arrow:{
+      position:'absolute',
+      fontSize:'70%',
+      float:'right',
+      margin:'0',
+      marginLeft:'0.5em',
+      marginTop:'3px',
+    },
 
 });
