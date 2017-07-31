@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite';
 import Navigator from '../components/navbar/Navbar'
 import CollectionPanel from '../components/collectionPanel/CollectionPanel'
-import styles from './App.css';
 import {Switch, Route} from 'react-router-dom';
 
 class App extends Component {
@@ -15,7 +14,6 @@ class App extends Component {
                         <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
                     </Switch>
            </div>
-
         );
     }
 }

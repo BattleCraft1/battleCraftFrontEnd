@@ -1,26 +1,23 @@
-import { Link } from 'react-router-dom';
-import React from 'react';
-import styles from './NavElementSmall.css.js'
 import { StyleSheet, css } from 'aphrodite';
+import React from 'react';
+import styles from './NavStyle.css.js';
 
-export default class NavElementSmall extends React.Component{
-    constructor(props) {
-        super(props);
-    }
 
+export default class ResSmallElement extends React.Component{
     render(){
         return (
-            <Link to={"#"} style = {styles.button} className={css(resp.small)}>{this.props.children}</Link>
-        );
+                  <div style = {styles.button} className={css(resp.menu)} onClick={()=>this.props.toggleList()}>{this.props.children}</div>
+        )
     }
-};
-
-
+}
 
 
 const resp = StyleSheet.create({
-    small: {
+    menu: {
+      padding: '8px 0px',
+      paddingLeft:'8%',
       marginBottom:'1px',
+
       ':hover':{
           borderTopColor: 'rgb(249, 249, 249)',
           borderBottomColor: 'rgb(204, 126, 69)',
@@ -34,9 +31,9 @@ const resp = StyleSheet.create({
           borderTopColor: 'rgb(204, 126, 69)',
           borderBottomColor: 'rgb(249, 249, 249)',
         },
-        '@media (min-width: 600px)': {
+        '@media (min-width: 599px)': {
             display: 'none',
 
         }
     },
-});
+})

@@ -24,6 +24,6 @@ export default {
       textAlign: 'center',
       backgroundColor: '#805D2C',
       backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
-      WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px;',
+      WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px',
   },
 };

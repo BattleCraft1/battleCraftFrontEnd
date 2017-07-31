@@ -1,26 +1,21 @@
-import { Link } from 'react-router-dom';
 import React from 'react';
-import styles from './NavElementSmall.css.js'
+import styles from './NavStyle.css.js'
 import { StyleSheet, css } from 'aphrodite';
 
 export default class AccountDropdown extends React.Component{
-    constructor(props) {
-        super(props);
-    }
 
     render(){
         return (
-            <div style = {styles.button} className={css(resp.small)}  onClick={()=>this.props.toggleAccountList()}>{this.props.children}</div>
+            <div style = {styles.button} className={css(resp.dropdown)}  onClick={()=>this.props.toggleAccountList()}>{this.props.children}</div>
         );
     }
 };
 
 
-
-
 const resp = StyleSheet.create({
-    small: {
+    dropdown: {
       marginBottom:'1px',
+      borderWidth:' 2px 1px 2px 1px',
       ':hover':{
           borderTopColor: 'rgb(249, 249, 249)',
           borderBottomColor: 'rgb(204, 126, 69)',
@@ -35,8 +30,9 @@ const resp = StyleSheet.create({
           borderBottomColor: 'rgb(249, 249, 249)',
         },
         '@media (min-width: 600px)': {
-            display: 'none',
-
+                width:'20%',
+                borderWidth:' 3px 2px 3px 2px',
+                padding: '8px 0px',
         }
     },
 });
