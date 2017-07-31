@@ -6,7 +6,7 @@ export default {
         borderBottomColor: '#E0BA51',
         borderLeftColor: '#e3ca86',
 
-        borderWidth:' 4px 3px 4px 3px',
+        borderWidth:' 3px 2px 3px 2px',
         borderStyle: 'solid',
         WebkitBorderRadius: '1px',
         MozBorderRadius: '1px',
@@ -26,4 +26,8 @@ export default {
         backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
         WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px;',
     },
+    invisible:{
+      display:'none',
+      color:'red'
+    }
 };
