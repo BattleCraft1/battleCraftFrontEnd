@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 
 import ReactScrollbar from 'react-scrollbar-js';
@@ -36,6 +35,8 @@ class PagePanel extends React.Component{
         {
             let pageRequest=this.props.pageRequest;
             pageRequest.pageRequest.size=this.pageSizeInput.value;
+            pageRequest.pageRequest.page = 0;
+            this.pageNumberInput.value = 1;
             this.props.setPageRequest(pageRequest);
             this.props.getPageRequest();
         }
@@ -116,14 +117,14 @@ class PagePanel extends React.Component{
             <div className="row">
                 <div className="form-group">
                     <form className="form-inline">
-                        <button onClick={() => this.previousPage()}  type="button" className="btn btn-default"><span className="glyphicon glyphicon-chevron-left"></span></button>
+                        <button onClick={() => this.previousPage()}  type="button" className="btn btn-default"><span className="glyphicon glyphicon-chevron-left"/></button>
                         <div className="input-group">
                             <span className="input-group-btn">
                                 <button  type="button" className="btn btn-default">Page number:</button>
                             </span>
                             <input ref={(control) => this.pageNumberInput = control} type="text" className="form-control" placeholder="Page number"/>
                             <span className="input-group-btn">
-                                <button onClick={() => this.changePageByInput()} type="button" className="btn btn-default"><span className="glyphicon glyphicon-share-alt"></span></button>
+                                <button onClick={() => this.changePageByInput()} type="button" className="btn btn-default"><span className="glyphicon glyphicon-share-alt"/></button>
                             </span>
                         </div>
                         <div className="input-group">
@@ -132,10 +133,10 @@ class PagePanel extends React.Component{
                             </span>
                             <input ref={(control) => this.pageSizeInput = control} type="text" className="form-control" placeholder="Page size"/>
                             <span className="input-group-btn">
-                                <button onClick={() => this.changePageSize()} type="button" className="btn btn-default"><span className="glyphicon glyphicon-ok"></span></button>
+                                <button onClick={() => this.changePageSize()} type="button" className="btn btn-default"><span className="glyphicon glyphicon-ok"/></button>
                             </span>
                         </div>
-                        <button onClick={() => this.nextPage()} type="button" className="btn btn-default"><span className="glyphicon glyphicon-chevron-right"></span></button>
+                        <button onClick={() => this.nextPage()} type="button" className="btn btn-default"><span className="glyphicon glyphicon-chevron-right"/></button>
                     </form>
                     <ReactScrollbar style={myScrollbar}>
                         <div>{pagesButtons}</div>

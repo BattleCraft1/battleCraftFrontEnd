@@ -39,8 +39,8 @@ class CollectionPanel extends React.Component{
         let collectionList;
         let collectionSearchPanel;
         if(this.props.match.params.collectionType==='tournaments'){
-            collectionList=<TournamentsList getPageRequest={this.getPageRequest.bind(this)}/>;
-            collectionSearchPanel=<TournamentsSearchForm getPageRequest={this.getPageRequest.bind(this)}/>;
+            collectionList=<TournamentsList getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>;
+            collectionSearchPanel=<TournamentsSearchForm getPageRequest={this.getPageRequest.bind(this)} />;
         }
 
 

@@ -34,7 +34,7 @@ class SearchPanel extends React.Component{
     }
 
     getAllTournamentClassesNames(){
-        axios.get(serverName+`get/allTournamentClasses/names`)
+        axios.get(serverName+`get/allGames/names`)
             .then(res => {
                 console.log(res.data);
                 this.setState({tournamentsClassesNames:res.data});
@@ -53,7 +53,6 @@ class SearchPanel extends React.Component{
                 {
                     "keys":["name"],
                     "operation":":",
-                    "type":"String",
                     "value":this.name.value
                 }
             )}
@@ -62,7 +61,6 @@ class SearchPanel extends React.Component{
                 {
                     "keys":["dateOfStart"],
                     "operation":">",
-                    "type":"Date",
                     "value":this.dateFrom.value
                 }
             )}
@@ -71,17 +69,15 @@ class SearchPanel extends React.Component{
                 {
                     "keys":["dateOfStart"],
                     "operation":"<",
-                    "type":"Date",
                     "value":this.dateTo.value
                 }
             )}
-        if(this.tournamentClass.value!==""){
+        if(this.game.value!==""){
             pageRequest.searchCriteria.push(
                 {
-                    "keys":["tournamentClass"],
+                    "keys":["game","name"],
                     "operation":":",
-                    "type":"String",
-                    "value":this.tournamentClass.value
+                    "value":this.game.value
                 }
             )}
         if(this.city.value!==""){
@@ -89,7 +85,6 @@ class SearchPanel extends React.Component{
                 {
                     "keys":["address", "city"],
                     "operation":":",
-                    "type":"String",
                     "value":this.city.value
                 }
             )}
@@ -98,19 +93,66 @@ class SearchPanel extends React.Component{
                 {
                     "keys":["address", "province","location"],
                     "operation":":",
-                    "type":"String",
                     "value":this.province.value
                 }
             )}
+        if(this.banned.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["banned"],
+                    "operation":":",
+                    "value":JSON.parse(this.banned.value)
+                }
+            )}
+        if(this.active.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["active"],
+                    "operation":":",
+                    "value":JSON.parse(this.active.value)
+                }
+            )}
+        if(this.accepted.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["accepted"],
+                    "operation":":",
+                    "value":JSON.parse(this.accepted.value)
+                }
+            )}
+        if(this.freeSlots.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["freeSlots"],
+                    "operation":">",
+                    "value":parseInt(this.freeSlots.value)
+                }
+            )}
+        if(this.maxPlayers.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["maxPlayers"],
+                    "operation":"<",
+                    "value":parseInt(this.maxPlayers.value)
+                }
+            )}
+        if(this.playersNumber.value!==""){
+            pageRequest.searchCriteria.push(
+                {
+                    "keys":["playersNumber"],
+                    "operation":"<",
+                    "value":parseInt(this.playersNumber.value)
+                }
+            )}
 
-            console.log(pageRequest.searchCriteria)
+        console.log(pageRequest.searchCriteria)
 
         this.props.setPageRequest(pageRequest);
         this.props.getPageRequest();
     }
 
     prepareProvinceOptions(provincesOptions){
-        provincesOptions.push(<option key="nullOption"></option>);
+        provincesOptions.push(<option key="nullOption"/>);
         this.state.provincesNames.map(
             provincesName => {
                 provincesOptions.push(<option key={provincesName}>{provincesName}</option>);
@@ -119,7 +161,7 @@ class SearchPanel extends React.Component{
     }
 
     prepareTournamentClassesOptions(tournamentClassesOptions){
-        tournamentClassesOptions.push(<option key="nullOption"></option>);
+        tournamentClassesOptions.push(<option key="nullOption"/>);
         this.state.tournamentsClassesNames.map(
             tournamentName => {
                 tournamentClassesOptions.push(<option key={tournamentName}>{tournamentName}</option>);
@@ -139,11 +181,13 @@ class SearchPanel extends React.Component{
                 <form>
                     <div className="input-group">
                         <span className="input-group-addon">Name:</span>
-                        <input ref={(control) => this.name = control} id="name" type="text" className="form-control" name="name" placeholder="Tournament2017"/>
+                        <input ref={(control) => this.name = control} id="name" type="text" className="form-control" name="name"
+                               placeholder="Tournament2017"/>
                     </div>
                     <div className="input-group">
                         <span className="input-group-addon">City:</span>
-                        <input ref={(control) => this.city = control} id="city" type="text" className="form-control" name="city" placeholder="Lublin"/>
+                        <input ref={(control) => this.city = control} id="city" type="text" className="form-control" name="city"
+                               placeholder="Lublin"/>
                     </div>
                     <div className="input-group">
                         <span className="input-group-addon">Province:</span>
@@ -152,8 +196,8 @@ class SearchPanel extends React.Component{
                         </select>
                     </div>
                     <div className="input-group">
-                        <span className="input-group-addon">Class:</span>
-                        <select ref={(control) => this.tournamentClass = control} className="form-control" id="class">
+                        <span className="input-group-addon">Game:</span>
+                        <select ref={(control) => this.game = control} className="form-control" id="class">
                             {tournamentClassesOptions}
                         </select>
                     </div>
@@ -164,6 +208,34 @@ class SearchPanel extends React.Component{
                     <div className="input-group">
                         <span className="input-group-addon">To:</span>
                         <input ref={(control) => this.dateTo = control}  type="date" className="form-control" id="dateTo"/>
+                    </div>
+                    <div className="input-group">
+                        <span className="input-group-addon">Max players:</span>
+                        <input ref={(control) => this.maxPlayers = control} id="maxPlayers" type="number" className="form-control" name="maxPlayers"/>
+                        <span className="input-group-addon">Players number:</span>
+                        <input ref={(control) => this.playersNumber = control} id="playersNumber" type="number" className="form-control" name="playersNumber"/>
+                        <span className="input-group-addon">Free slots:</span>
+                        <input ref={(control) => this.freeSlots = control} id="freeSlots" type="number" className="form-control" name="freeSlots"/>
+                    </div>
+                    <div className="input-group">
+                        <span className="input-group-addon">Banned:</span>
+                        <select ref={(control) => this.banned = control} className="form-control" id="banned">
+                            <option key="nevermind" value=""/>
+                            <option key="yes" value={true}>yes</option>
+                            <option key="no" value={false}>no</option>
+                        </select>
+                        <span className="input-group-addon">Active:</span>
+                        <select ref={(control) => this.active = control} className="form-control" id="active">
+                            <option key="nevermind" value=""/>
+                            <option key="yes" value={true}>yes</option>
+                            <option key="no" value={false}>no</option>
+                        </select>
+                        <span className="input-group-addon">Accepted:</span>
+                        <select ref={(control) => this.accepted = control} className="form-control" id="active">
+                            <option key="nevermind" value=""/>
+                            <option key="yes" value={true}>yes</option>
+                            <option key="no" value={false}>no</option>
+                        </select>
                     </div>
                     <button onClick={()=>this.searchTournaments()} type="button" className="btn btn-default">Search</button>
                 </form>
