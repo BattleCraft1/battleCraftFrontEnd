@@ -19,6 +19,7 @@ function configureStore( initialState ) {
 }
 
 const store = configureStore( {
+    isShownConfirmationDialog: false,
     page: {},
     pageRequest: {pageRequest:{
         size:10,

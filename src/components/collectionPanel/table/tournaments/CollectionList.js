@@ -7,6 +7,9 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../../../redux/actions/index';
 import {serverName} from '../../../../consts/server';
 
+import ConfirmDialog from './../../../confirmDialog/ConfirmDialog';
+
+import dateFormat from 'dateformat';
 
 class CollectionList extends React.Component{
     constructor(props) {
@@ -14,6 +17,10 @@ class CollectionList extends React.Component{
         this.state = {
             checkedElementsUniqueNames:[],
             checkedAll:false,
+            confirmationHeader:"",
+            confirmationMessage:"",
+            onConfirmFunction: function () {
+            }
         };
     }
 
@@ -59,76 +66,113 @@ class CollectionList extends React.Component{
     }
 
     addNewElement(){
-
+//to do
     }
 
     editCheckedElements(){
+//to do
+    }
 
+    showConfirmDialog(confirmationHeader, confirmationMessage, onConfirmFunction){
+        this.setState({confirmationHeader: confirmationHeader});
+        this.setState({confirmationMessage: confirmationMessage});
+        this.setState({onConfirmFunction: onConfirmFunction});
+        this.props.showConfirmationDialog(true);
     }
 
     banCheckedElements(){
-        console.log("ban "+this.state.checkedElementsUniqueNames);
-        axios.post(serverName+`ban/tournaments`,this.state.checkedElementsUniqueNames)
-            .then(res => {
-                console.log(res.data);
-                this.props.getPageRequest();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        if(this.state.checkedElementsUniqueNames.length>0){
+            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
+            const collectionType = this.props.collectionType;
+            const getPageRequest = this.props.getPageRequest;
+        this.showConfirmDialog("Ban checked tournaments","Are you sure?",
+            function(){
+            axios.post(serverName+`ban/tournaments`+collectionType,checkedElementsUniqueNames)
+                .then(res => {
+                    console.log(res.data);
+                    getPageRequest();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })});
+        }
     }
 
     unlockCheckedElements(){
-        console.log("ban "+this.state.checkedElementsUniqueNames);
-        axios.post(serverName+`unlock/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
-            .then(res => {
-                console.log(res.data);
-                this.props.getPageRequest();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        if(this.state.checkedElementsUniqueNames.length>0){
+            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
+            const collectionType = this.props.collectionType;
+            const getPageRequest = this.props.getPageRequest;
+            this.showConfirmDialog("Unlock checked tournaments","Are you sure?",
+                function(){axios.post(serverName+`unlock/`+collectionType,checkedElementsUniqueNames)
+                    .then(res => {
+                        console.log(res.data);
+                        getPageRequest();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })});
+        }
     }
 
     deleteCheckedElements(){
-        console.log("delete "+this.state.checkedElementsUniqueNames);
-        axios.post(serverName+`delete/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
-            .then(res => {
-                console.log(res.data);
-                this.props.getPageRequest();
-                this.checkAllElements();
-                this.uncheckAllElements();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        if(this.state.checkedElementsUniqueNames.length>0){
+            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
+            const collectionType = this.props.collectionType;
+            const getPageRequest = this.props.getPageRequest;
+            const checkAllElements = this.checkAllElements;
+            const uncheckAllElements = this.uncheckAllElements;
+        this.showConfirmDialog("Delete checked tournaments","Are you sure?",
+            function(){
+            axios.post(serverName+`delete/`+collectionType,checkedElementsUniqueNames)
+                .then(res => {
+                    console.log(res.data);
+                    getPageRequest();
+                    checkAllElements();
+                    uncheckAllElements();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })});
+        }
     }
 
     acceptCheckedElements(){
-        axios.post(serverName+`accept/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
-            .then(res => {
-                console.log(res.data);
-                this.props.getPageRequest();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        if(this.state.checkedElementsUniqueNames.length>0){
+            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
+            const collectionType = this.props.collectionType;
+            const getPageRequest = this.props.getPageRequest;
+        this.showConfirmDialog("Accept checked tournaments","Are you sure?",
+            function(){axios.post(serverName+`accept/`+collectionType,checkedElementsUniqueNames)
+                .then(res => {
+                    console.log(res.data);
+                    getPageRequest();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })});
+        }
     }
 
     cancelAcceptCheckedElements(){
-        axios.post(serverName+`cancel/accept/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
-            .then(res => {
-                console.log(res.data);
-                this.props.getPageRequest();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        if(this.state.checkedElementsUniqueNames.length>0){
+            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
+            const collectionType = this.props.collectionType;
+            const getPageRequest = this.props.getPageRequest;
+        this.showConfirmDialog("Cencel accept checked tournaments","Are you sure?",
+            function(){axios.post(serverName+`cancel/accept/`+collectionType,checkedElementsUniqueNames)
+                .then(res => {
+                    console.log(res.data);
+                    getPageRequest();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })});
+        }
     }
 
 
     prepareRowsOfTable(rows,key){
-
         this.props.page.content.map(
             tournament =>{
                 key++;
@@ -138,13 +182,13 @@ class CollectionList extends React.Component{
                         <th key={"th:"+key} scope="row"><Checkbox checkedAll={this.state.checkedAll}
                                                                   checkFunction={this.addToCheckedElements.bind(this)}
                                                                   uncheckFunction={this.removeFromCheckedElements.bind(this)}
-                                                                  index={"name"}/></th>
+                                                                  index={tournament.name}/></th>
                         <td key={"td:name:"+key} >{tournament.name}</td>
                         <td key={"td:province"+key} >{tournament.province}</td>
                         <td key={"td:city"+key} >{tournament.city}</td>
                         <td key={"td:game"+key} >{tournament.game}</td>
                         <td key={"td:players"+key} >{tournament.playersNumber}/{tournament.maxPlayers}</td>
-                        <td key={"td:date"+key} >{tournament.dateOfStart}</td>
+                        <td key={"td:date"+key} >{dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm:ss")}</td>
                     </tr>
                 );
             }
@@ -162,42 +206,46 @@ class CollectionList extends React.Component{
         }
 
         return (
-            <div className="row">
-                <table className="table bg-primary">
-                    <thead>
-                    <tr>
-                        <th key="all"><Checkbox checkFunction={this.checkAllElements.bind(this)}
-                                                uncheckFunction={this.uncheckAllElements.bind(this)} /></th>
-                        <th onClick={()=>this.sortByColumnName("name")} key="name">name</th>
-                        <th onClick={()=>this.sortByColumnName("province.location")} key="province">province</th>
-                        <th onClick={()=>this.sortByColumnName("address.city")} key="city">city</th>
-                        <th onClick={()=>this.sortByColumnName("game.name")} key="class">game</th>
-                        <th onClick={()=>this.sortByColumnName("freeSlots")} key="players">players</th>
-                        <th onClick={()=>this.sortByColumnName("dateOfStart")} key="date">date</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {rows}
-                    </tbody>
-                </table>
-                <div className="btn-group">
-                    <button type="button" className="btn btn-default">Add <span className="glyphicon glyphicon-plus"/></button>
-                    <button type="button" className="btn btn-default">Edit <span className="glyphicon glyphicon-pencil"/></button>
-                    <button type="button" onClick={() => this.banCheckedElements()}className="btn btn-default">Ban
-                        <span className="glyphicon glyphicon-lock"/></button>
-                    <button type="button" onClick={() => this.unlockCheckedElements()} className="btn btn-default">Unlock
-                        <span className="glyphicon glyphicon-list-alt"/></button>
-                    <button type="button" onClick={() => {this.deleteCheckedElements();}} className="btn btn-default">Delete
-                        <span className="glyphicon glyphicon-minus"/></button>
-                    <button type="button" onClick={() => {this.acceptCheckedElements();}} className="btn btn-default">Accept
-                        <span className="glyphicon glyphicon-ok"/></button>
-                    <button type="button" onClick={() => {this.cancelAcceptCheckedElements();}} className="btn btn-default">Cancel accept
-                        <span className="glyphicon glyphicon-remove"/></button>
+            <div>
+                <ConfirmDialog header={this.state.confirmationHeader} message={this.state.confirmationMessage}
+                               onConfirm={this.state.onConfirmFunction}/>
+                <div className="row">
+                    <table className="table bg-primary">
+                        <thead>
+                        <tr>
+                            <th key="all"><Checkbox checkFunction={this.checkAllElements.bind(this)}
+                                                    uncheckFunction={this.uncheckAllElements.bind(this)} /></th>
+                            <th onClick={()=>this.sortByColumnName("name")} key="name">name</th>
+                            <th onClick={()=>this.sortByColumnName("province.location")} key="province">province</th>
+                            <th onClick={()=>this.sortByColumnName("address.city")} key="city">city</th>
+                            <th onClick={()=>this.sortByColumnName("game.name")} key="class">game</th>
+                            <th onClick={()=>this.sortByColumnName("freeSlots")} key="players">players</th>
+                            <th onClick={()=>this.sortByColumnName("dateOfStart")} key="date">date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {rows}
+                        </tbody>
+                    </table>
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-default">Add <span className="glyphicon glyphicon-plus"/></button>
+                        <button type="button" className="btn btn-default">Edit <span className="glyphicon glyphicon-pencil"/></button>
+                        <button type="button" onClick={() => this.banCheckedElements()}className="btn btn-default">Ban
+                            <span className="glyphicon glyphicon-lock"/></button>
+                        <button type="button" onClick={() => this.unlockCheckedElements()} className="btn btn-default">Unlock
+                            <span className="glyphicon glyphicon-list-alt"/></button>
+                        <button type="button" onClick={() => {this.deleteCheckedElements();}} className="btn btn-default">Delete
+                            <span className="glyphicon glyphicon-minus"/></button>
+                        <button type="button" onClick={() => {this.acceptCheckedElements();}} className="btn btn-default">Accept
+                            <span className="glyphicon glyphicon-ok"/></button>
+                        <button type="button" onClick={() => {this.cancelAcceptCheckedElements();}} className="btn btn-default">Cancel accept
+                            <span className="glyphicon glyphicon-remove"/></button>
+                    </div>
                 </div>
             </div>
         );
     }
-};
+}
 
 class Checkbox extends React.Component {
     constructor(props) {
@@ -242,7 +290,8 @@ function mapDispatchToProps( dispatch ) {
 function mapStateToProps( state ) {
     return {
         page: state.page,
-        pageRequest: state.pageRequest
+        pageRequest: state.pageRequest,
+        isShownConfirmationDialog: state.isShownConfirmationDialog,
     };
 }
 
