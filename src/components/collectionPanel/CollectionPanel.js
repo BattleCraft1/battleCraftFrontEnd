@@ -1,13 +1,17 @@
 import { ActionCreators } from '../../redux/actions';
-import axios from 'axios';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import PagePanel from './pagePanel/PagePanel';
+
 import React from 'react';
-import {serverName} from '../../consts/server'
 import {StyleSheet, css} from 'aphrodite';
 import TournamentsList from './table/tournaments/CollectionList';
 import TournamentsSearchForm from './searchPanel/tournaments/SearchPanel';
+import PagePanel from './pagePanel/PagePanel';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {serverName} from '../../consts/server'
+
+import $ from 'jquery';
 
 class CollectionPanel extends React.Component{
     componentDidMount() {
@@ -21,14 +25,31 @@ class CollectionPanel extends React.Component{
     }
 
     getPageRequest(){
-                this.props.setPage(MyContext);
-            }
+        $.ajax({
+            url: serverName+`page/`+this.props.match.params.collectionType,
+            type: 'POST',
+            contentType: "application/json",
+            dataType: 'json',
+            success: (function(data) {
+                this.props.setPage(data);
+            }).bind(this),
+            error: (function (xhr, ajaxOptions, thrownError) {
+                this.props.showMessageBox({
+                    isShown: true,
+                    messageText: xhr.responseText,
+                    messageType: "alert-danger"
+                });
+            }).bind(this),
+            data:JSON.stringify(this.props.pageRequest)
+        });
+    }
 
     render(){
         let collectionList;
         let collectionSearchPanel;
         if(this.props.match.params.collectionType==='tournaments'){
-            collectionList=<TournamentsList getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>;
+            collectionList=<TournamentsList getPageRequest={this.getPageRequest.bind(this)}
+                                            collectionType={this.props.match.params.collectionType}/>;
             collectionSearchPanel=<TournamentsSearchForm getPageRequest={this.getPageRequest.bind(this)} />;
         }
 
@@ -36,15 +57,9 @@ class CollectionPanel extends React.Component{
         return (
             <div className={css(resp.container)}>
                 <div className="row">
-                    <div className="col-sm-1 col-md-2 col-lg-2">
-                    </div>
-                    <div className="col-sm-10 col-md-8 col-lg-8">
-                        {/*  {collectionSearchPanel}  //uncomment it later!!!*/}
+                        {collectionSearchPanel}
                         {collectionList}
                         <PagePanel getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>
-                    </div>
-                    <div className="col-sm-1 col-md-2 col-lg-2">
-                    </div>
                 </div>
             </div>
         );
@@ -59,6 +74,7 @@ function mapStateToProps( state ) {
     return {
         page: state.page,
         pageRequest: state.pageRequest,
+        message: state.message
     };
 }
 

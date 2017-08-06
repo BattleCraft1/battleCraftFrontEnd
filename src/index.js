@@ -19,6 +19,18 @@ function configureStore( initialState ) {
 }
 
 const store = configureStore( {
+    confirmation: {
+        header:"",
+        message:"",
+        onConfirmFunction: function () {
+        },
+        isShown: false
+    },
+    message:{
+        isShown: false,
+        messageText: "",
+        messageType: ""
+    },
     page: {},
     pageRequest: {pageRequest:{
         size:10,

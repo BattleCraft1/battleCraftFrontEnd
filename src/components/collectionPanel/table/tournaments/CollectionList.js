@@ -6,13 +6,14 @@ import React from 'react';
 import {serverName} from '../../../../consts/server';
 import {StyleSheet, css} from 'aphrodite';
 
+import dateFormat from 'dateformat';
 
 class CollectionList extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             checkedElementsUniqueNames:[],
-            checkedAll:false,
+            checkedAll:false
         };
     }
 
@@ -58,76 +59,130 @@ class CollectionList extends React.Component{
     }
 
     addNewElement(){
-
+//to do
     }
 
     editCheckedElements(){
-
+//to do
     }
 
     banCheckedElements(){
-        console.log("ban "+this.state.checkedElementsUniqueNames);
-        axios.post(serverName+`ban/tournaments`,this.state.checkedElementsUniqueNames)
-            .then(res => {
-                console.log(res.data);
-                this.props.getPageRequest();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        if(this.state.checkedElementsUniqueNames.length>0){
+            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
+            const collectionType = this.props.collectionType;
+            const getPageRequest = this.props.getPageRequest;
+            this.props.showConfirmationDialog(
+                {
+                    header:"Ban checked tournaments",
+                    message:"Are you sure?",
+                    onConfirmFunction:function(){
+                        axios.post(serverName+`ban/`+collectionType,checkedElementsUniqueNames)
+                            .then(res => {
+                                console.log(res.data);
+                                getPageRequest();
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            })},
+                    isShown: true
+                });
+        }
     }
 
     unlockCheckedElements(){
-        console.log("ban "+this.state.checkedElementsUniqueNames);
-        axios.post(serverName+`unlock/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
-            .then(res => {
-                console.log(res.data);
-                this.props.getPageRequest();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        if(this.state.checkedElementsUniqueNames.length>0){
+            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
+            const collectionType = this.props.collectionType;
+            const getPageRequest = this.props.getPageRequest;
+            this.props.showConfirmationDialog(
+                {
+                    header:"Unlock checked tournaments",
+                    message:"Are you sure?",
+                    onConfirmFunction:function(){axios.post(serverName+`unlock/`+collectionType,checkedElementsUniqueNames)
+                        .then(res => {
+                            console.log(res.data);
+                            getPageRequest();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })},
+                    isShown: true
+                });
+        }
     }
 
     deleteCheckedElements(){
-        console.log("delete "+this.state.checkedElementsUniqueNames);
-        axios.post(serverName+`delete/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
-            .then(res => {
-                console.log(res.data);
-                this.props.getPageRequest();
-                this.checkAllElements();
-                this.uncheckAllElements();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        if(this.state.checkedElementsUniqueNames.length>0){
+            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
+            const collectionType = this.props.collectionType;
+            const getPageRequest = this.props.getPageRequest;
+            const checkAllElements = this.checkAllElements;
+            const uncheckAllElements = this.uncheckAllElements;
+            this.props.showConfirmationDialog(
+                {
+                    header:"Delete checked tournaments",
+                    message:"Are you sure?",
+                    onConfirmFunction:function(){axios.post(serverName+`delete/`+collectionType,checkedElementsUniqueNames)
+                        .then(res => {
+                            console.log(res.data);
+                            getPageRequest();
+                            checkAllElements();
+                            uncheckAllElements();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })},
+                    isShown: true
+                });
+        }
     }
 
     acceptCheckedElements(){
-        axios.post(serverName+`accept/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
-            .then(res => {
-                console.log(res.data);
-                this.props.getPageRequest();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        if(this.state.checkedElementsUniqueNames.length>0){
+            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
+            const collectionType = this.props.collectionType;
+            const getPageRequest = this.props.getPageRequest;
+            this.props.showConfirmationDialog(
+                {
+                    header:"Accept checked tournaments",
+                    message:"Are you sure?",
+                    onConfirmFunction:function(){axios.post(serverName+`accept/`+collectionType,checkedElementsUniqueNames)
+                        .then(res => {
+                            console.log(res.data);
+                            getPageRequest();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })},
+                    isShown: true
+                });
+        }
     }
 
     cancelAcceptCheckedElements(){
-        axios.post(serverName+`cancel/accept/`+this.props.collectionType,this.state.checkedElementsUniqueNames)
-            .then(res => {
-                console.log(res.data);
-                this.props.getPageRequest();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        if(this.state.checkedElementsUniqueNames.length>0){
+            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
+            const collectionType = this.props.collectionType;
+            const getPageRequest = this.props.getPageRequest;
+            this.props.showConfirmationDialog(
+                {
+                    header:"Cancel accept checked tournaments",
+                    message:"Are you sure?",
+                    onConfirmFunction:function(){axios.post(serverName+`cancel/accept/`+collectionType,checkedElementsUniqueNames)
+                        .then(res => {
+                            console.log(res.data);
+                            getPageRequest();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })},
+                    isShown: true
+                });
+        }
     }
 
 
     prepareRowsOfTable(rows,key){
-
         this.props.page.content.map(
             tournament =>{
                 key++;
@@ -135,17 +190,16 @@ class CollectionList extends React.Component{
                     <tr key={"tr:"+key}
                         className={tournament.banned?"danger":tournament.active?"warning":tournament.accepted?"success":""}>
                         <th key={"th:"+key} scope="row" style = {Object.assign({}, styles.thead, styles.checkbox, {borderRadius: '0px'})}>
-                          <Checkbox checkedAll={this.state.checkedAll}
-                                    checkFunction={this.addToCheckedElements.bind(this)}
-                                    uncheckFunction={this.removeFromCheckedElements.bind(this)}
-                                    index={"name"}/>
-                        </th>
-                        <td key={"td:name:"   +key} style={Object.assign({}, styles.thead, styles.rowContent)} >{tournament.name}</td>
-                        <td key={"td:province"+key} style={Object.assign({}, styles.thead, styles.rowContent)} >{tournament.province}</td>
-                        <td key={"td:city"    +key} style={Object.assign({}, styles.thead, styles.rowContent)} >{tournament.city}</td>
-                        <td key={"td:game"    +key} style={Object.assign({}, styles.thead, styles.rowContent)} >{tournament.game}</td>
-                        <td key={"td:players" +key} style={Object.assign({}, styles.thead, styles.rowContent, {textAlign:"center"})} >{tournament.playersNumber}/{tournament.maxPlayers}</td>
-                        <td key={"td:date"    +key} style={Object.assign({}, styles.thead, styles.rowContent, {textAlign:"center"})} >{tournament.dateOfStart}</td>
+                            <Checkbox checkedAll={this.state.checkedAll}
+                                                                  checkFunction={this.addToCheckedElements.bind(this)}
+                                                                  uncheckFunction={this.removeFromCheckedElements.bind(this)}
+                                                                  index={tournament.name}/></th>
+                        <td key={"td:name:"+key} style={Object.assign({}, styles.thead, styles.rowContent)} >{tournament.name}</td>
+                        <td key={"td:province"+key}  style={Object.assign({}, styles.thead, styles.rowContent)}>{tournament.province}</td>
+                        <td key={"td:city"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>{tournament.city}</td>
+                        <td key={"td:game"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>{tournament.game}</td>
+                        <td key={"td:players"+key} style={Object.assign({}, styles.thead, styles.rowContent, {textAlign:"center"})}>{tournament.playersNumber}/{tournament.maxPlayers}</td>
+                        <td key={"td:date"+key} style={Object.assign({}, styles.thead, styles.rowContent, {textAlign:"center"})}>{dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm")}</td>
                     </tr>
                 );
             }
@@ -163,45 +217,45 @@ class CollectionList extends React.Component{
         }
 
         return (
-            <div className="row">
-          {/*<table className="table bg-primary">*/}
-                <table style={styles.table}>
-                    <thead>
-                    <tr>
-                        <th key="all" style={styles.thead}>
-                          <Checkbox checkFunction={this.checkAllElements.bind(this)}
-                                    uncheckFunction={this.uncheckAllElements.bind(this)}/>
-                        </th>
-                        <th onClick={()=>this.sortByColumnName("name")}              key="name"     style={styles.thead}>name</th>
-                        <th onClick={()=>this.sortByColumnName("province.location")} key="province" style={styles.thead}>province</th>
-                        <th onClick={()=>this.sortByColumnName("address.city")}      key="city"     style={styles.thead}>city</th>
-                        <th onClick={()=>this.sortByColumnName("game.name")}         key="class"    style={styles.thead}>game</th>
-                        <th onClick={()=>this.sortByColumnName("freeSlots")}         key="players"  style={styles.thead}>players</th>
-                        <th onClick={()=>this.sortByColumnName("dateOfStart")}       key="date"     style={styles.thead}>date</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {rows}
-                    </tbody>
-                </table>
-                <div className="btn-group">
-                    <button type="button" className="btn btn-default">Add <span className="glyphicon glyphicon-plus"/></button>
-                    <button type="button" className="btn btn-default">Edit <span className="glyphicon glyphicon-pencil"/></button>
-                    <button type="button" onClick={() => this.banCheckedElements()}className="btn btn-default">Ban
-                        <span className="glyphicon glyphicon-lock"/></button>
-                    <button type="button" onClick={() => this.unlockCheckedElements()} className="btn btn-default">Unlock
-                        <span className="glyphicon glyphicon-list-alt"/></button>
-                    <button type="button" onClick={() => {this.deleteCheckedElements();}} className="btn btn-default">Delete
-                        <span className="glyphicon glyphicon-minus"/></button>
-                    <button type="button" onClick={() => {this.acceptCheckedElements();}} className="btn btn-default">Accept
-                        <span className="glyphicon glyphicon-ok"/></button>
-                    <button type="button" onClick={() => {this.cancelAcceptCheckedElements();}} className="btn btn-default">Cancel accept
-                        <span className="glyphicon glyphicon-remove"/></button>
+            <div>
+                <div className="row">
+                    <table className="table bg-primary" style={styles.table}>
+                        <thead>
+                        <tr>
+                            <th key="all" style={styles.thead}>
+                                <Checkbox checkFunction={this.checkAllElements.bind(this)}
+                                                    uncheckFunction={this.uncheckAllElements.bind(this)} /></th>
+                            <th onClick={()=>this.sortByColumnName("name")}              key="name"     style={styles.thead}>name</th>
+                            <th onClick={()=>this.sortByColumnName("province.location")} key="province" style={styles.thead}>province</th>
+                            <th onClick={()=>this.sortByColumnName("address.city")}      key="city"     style={styles.thead}>city</th>
+                            <th onClick={()=>this.sortByColumnName("game.name")}         key="class"    style={styles.thead}>game</th>
+                            <th onClick={()=>this.sortByColumnName("freeSlots")}         key="players"  style={styles.thead}>players</th>
+                            <th onClick={()=>this.sortByColumnName("dateOfStart")}       key="date"     style={styles.thead}>date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {rows}
+                        </tbody>
+                    </table>
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-default">Add <span className="glyphicon glyphicon-plus"/></button>
+                        <button type="button" className="btn btn-default">Edit <span className="glyphicon glyphicon-pencil"/></button>
+                        <button type="button" onClick={() => this.banCheckedElements()}className="btn btn-default">Ban
+                            <span className="glyphicon glyphicon-lock"/></button>
+                        <button type="button" onClick={() => this.unlockCheckedElements()} className="btn btn-default">Unlock
+                            <span className="glyphicon glyphicon-list-alt"/></button>
+                        <button type="button" onClick={() => {this.deleteCheckedElements();}} className="btn btn-default">Delete
+                            <span className="glyphicon glyphicon-minus"/></button>
+                        <button type="button" onClick={() => {this.acceptCheckedElements();}} className="btn btn-default">Accept
+                            <span className="glyphicon glyphicon-ok"/></button>
+                        <button type="button" onClick={() => {this.cancelAcceptCheckedElements();}} className="btn btn-default">Cancel accept
+                            <span className="glyphicon glyphicon-remove"/></button>
+                    </div>
                 </div>
             </div>
         );
     }
-};
+}
 
 class Checkbox extends React.Component {
     constructor(props) {
@@ -246,7 +300,8 @@ function mapDispatchToProps( dispatch ) {
 function mapStateToProps( state ) {
     return {
         page: state.page,
-        pageRequest: state.pageRequest
+        pageRequest: state.pageRequest,
+        confirmation: state.confirmation,
     };
 }
 

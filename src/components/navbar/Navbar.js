@@ -27,8 +27,6 @@ export default class Navigator extends React.Component{
 
     updateWindowDimensions(){
       this.setState({width: window.innerWidth, height: window.innerHeight});
-      console.log("width: " + this.state.width);
-      console.log("height:" + this.state.height);
     }
 
     componentDidMount(){
@@ -45,13 +43,11 @@ export default class Navigator extends React.Component{
       this.setState(prevState => ({
         isToggleOn: !prevState.isToggleOn
       }));
-      console.log('The link was clicked.');
     }
     handleAccountList(event) {
       this.setState(prevState => ({
         accountListVisible: !prevState.accountListVisible
       }));
-      console.log('account list toggle');
     }
 
 
