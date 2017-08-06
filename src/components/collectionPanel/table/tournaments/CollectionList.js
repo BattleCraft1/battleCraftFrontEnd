@@ -7,8 +7,6 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../../../redux/actions/index';
 import {serverName} from '../../../../consts/server';
 
-import ConfirmDialog from './../../../confirmDialog/ConfirmDialog';
-
 import dateFormat from 'dateformat';
 
 class CollectionList extends React.Component{
@@ -16,11 +14,7 @@ class CollectionList extends React.Component{
         super(props);
         this.state = {
             checkedElementsUniqueNames:[],
-            checkedAll:false,
-            confirmationHeader:"",
-            confirmationMessage:"",
-            onConfirmFunction: function () {
-            }
+            checkedAll:false
         };
     }
 
@@ -73,28 +67,26 @@ class CollectionList extends React.Component{
 //to do
     }
 
-    showConfirmDialog(confirmationHeader, confirmationMessage, onConfirmFunction){
-        this.setState({confirmationHeader: confirmationHeader});
-        this.setState({confirmationMessage: confirmationMessage});
-        this.setState({onConfirmFunction: onConfirmFunction});
-        this.props.showConfirmationDialog(true);
-    }
-
     banCheckedElements(){
         if(this.state.checkedElementsUniqueNames.length>0){
             const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
             const collectionType = this.props.collectionType;
             const getPageRequest = this.props.getPageRequest;
-        this.showConfirmDialog("Ban checked tournaments","Are you sure?",
-            function(){
-            axios.post(serverName+`ban/tournaments`+collectionType,checkedElementsUniqueNames)
-                .then(res => {
-                    console.log(res.data);
-                    getPageRequest();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })});
+            this.props.showConfirmationDialog(
+                {
+                    header:"Ban checked tournaments",
+                    message:"Are you sure?",
+                    onConfirmFunction:function(){
+                        axios.post(serverName+`ban/`+collectionType,checkedElementsUniqueNames)
+                            .then(res => {
+                                console.log(res.data);
+                                getPageRequest();
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            })},
+                    isShown: true
+                });
         }
     }
 
@@ -103,15 +95,20 @@ class CollectionList extends React.Component{
             const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
             const collectionType = this.props.collectionType;
             const getPageRequest = this.props.getPageRequest;
-            this.showConfirmDialog("Unlock checked tournaments","Are you sure?",
-                function(){axios.post(serverName+`unlock/`+collectionType,checkedElementsUniqueNames)
-                    .then(res => {
-                        console.log(res.data);
-                        getPageRequest();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })});
+            this.props.showConfirmationDialog(
+                {
+                    header:"Unlock checked tournaments",
+                    message:"Are you sure?",
+                    onConfirmFunction:function(){axios.post(serverName+`unlock/`+collectionType,checkedElementsUniqueNames)
+                        .then(res => {
+                            console.log(res.data);
+                            getPageRequest();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })},
+                    isShown: true
+                });
         }
     }
 
@@ -122,18 +119,22 @@ class CollectionList extends React.Component{
             const getPageRequest = this.props.getPageRequest;
             const checkAllElements = this.checkAllElements;
             const uncheckAllElements = this.uncheckAllElements;
-        this.showConfirmDialog("Delete checked tournaments","Are you sure?",
-            function(){
-            axios.post(serverName+`delete/`+collectionType,checkedElementsUniqueNames)
-                .then(res => {
-                    console.log(res.data);
-                    getPageRequest();
-                    checkAllElements();
-                    uncheckAllElements();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })});
+            this.props.showConfirmationDialog(
+                {
+                    header:"Delete checked tournaments",
+                    message:"Are you sure?",
+                    onConfirmFunction:function(){axios.post(serverName+`delete/`+collectionType,checkedElementsUniqueNames)
+                        .then(res => {
+                            console.log(res.data);
+                            getPageRequest();
+                            checkAllElements();
+                            uncheckAllElements();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })},
+                    isShown: true
+                });
         }
     }
 
@@ -142,15 +143,20 @@ class CollectionList extends React.Component{
             const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
             const collectionType = this.props.collectionType;
             const getPageRequest = this.props.getPageRequest;
-        this.showConfirmDialog("Accept checked tournaments","Are you sure?",
-            function(){axios.post(serverName+`accept/`+collectionType,checkedElementsUniqueNames)
-                .then(res => {
-                    console.log(res.data);
-                    getPageRequest();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })});
+            this.props.showConfirmationDialog(
+                {
+                    header:"Accept checked tournaments",
+                    message:"Are you sure?",
+                    onConfirmFunction:function(){axios.post(serverName+`accept/`+collectionType,checkedElementsUniqueNames)
+                        .then(res => {
+                            console.log(res.data);
+                            getPageRequest();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })},
+                    isShown: true
+                });
         }
     }
 
@@ -159,15 +165,20 @@ class CollectionList extends React.Component{
             const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
             const collectionType = this.props.collectionType;
             const getPageRequest = this.props.getPageRequest;
-        this.showConfirmDialog("Cencel accept checked tournaments","Are you sure?",
-            function(){axios.post(serverName+`cancel/accept/`+collectionType,checkedElementsUniqueNames)
-                .then(res => {
-                    console.log(res.data);
-                    getPageRequest();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })});
+            this.props.showConfirmationDialog(
+                {
+                    header:"Cancel accept checked tournaments",
+                    message:"Are you sure?",
+                    onConfirmFunction:function(){axios.post(serverName+`cancel/accept/`+collectionType,checkedElementsUniqueNames)
+                        .then(res => {
+                            console.log(res.data);
+                            getPageRequest();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })},
+                    isShown: true
+                });
         }
     }
 
@@ -188,7 +199,7 @@ class CollectionList extends React.Component{
                         <td key={"td:city"+key} >{tournament.city}</td>
                         <td key={"td:game"+key} >{tournament.game}</td>
                         <td key={"td:players"+key} >{tournament.playersNumber}/{tournament.maxPlayers}</td>
-                        <td key={"td:date"+key} >{dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm:ss")}</td>
+                        <td key={"td:date"+key} >{dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm")}</td>
                     </tr>
                 );
             }
@@ -207,8 +218,6 @@ class CollectionList extends React.Component{
 
         return (
             <div>
-                <ConfirmDialog header={this.state.confirmationHeader} message={this.state.confirmationMessage}
-                               onConfirm={this.state.onConfirmFunction}/>
                 <div className="row">
                     <table className="table bg-primary">
                         <thead>
@@ -291,7 +300,7 @@ function mapStateToProps( state ) {
     return {
         page: state.page,
         pageRequest: state.pageRequest,
-        isShownConfirmationDialog: state.isShownConfirmationDialog,
+        confirmation: state.confirmation,
     };
 }
 

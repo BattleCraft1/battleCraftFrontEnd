@@ -23,7 +23,7 @@ class ConfirmDialog extends React.Component {
 
     handleClickOutside(event) {
         if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-            this.props.showConfirmationDialog(false);
+            this.hideConfirmationDialog();
         }
     }
 
@@ -31,29 +31,37 @@ class ConfirmDialog extends React.Component {
         this.wrapperRef = node;
     }
 
+    hideConfirmationDialog(){
+        let confirmation=this.props.confirmation;
+        confirmation.isShown=false;
+        this.props.showConfirmationDialog(confirmation);
+        this.forceUpdate();
+    }
+
     render(){
         return (
             <div>
-                {this.props.isShownConfirmationDialog &&
+                {this.props.confirmation.isShown &&
                 <div style={{position:'fixed',zIndex: 1,left: 0, top: 0, width: '100%', height: '100%',
-                    overflow: 'auto', backgroundColor: 'rgb(0,0,0)', backgroundColor: 'rgba(0,0,0,0.4)'}}>
-                    <div className="modal-dialog" style={{margin: '30% auto', padding: '20px'}} ref={this.setWrapperRef}>
+                    backgroundColor: 'rgb(0,0,0)', backgroundColor: 'rgba(0,0,0,0.4)'}}>
+                    <div className="modal-dialog" style={{margin: '15% auto', padding: '20px'}} ref={this.setWrapperRef}>
                         <div className="modal-content">
                             <div className="modal-header">
-                                <button type="button" className="close" data-dismiss="modal" onClick={()=>this.props.showConfirmationDialog(false)}
+                                <button type="button" className="close" data-dismiss="modal"
+                                        onClick={()=>this.hideConfirmationDialog()}
                                         aria-label="Close"><span aria-hidden="true">&times;
                             </span></button>
-                                <h4 className="modal-title">{this.props.header}</h4>
+                                <h4 className="modal-title">{this.props.confirmation.header}</h4>
                             </div>
                             <div className="modal-body">
-                                <p>{this.props.message}</p>
+                                <p>{this.props.confirmation.message}</p>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-primary" data-dismiss="modal"
-                                        onClick={()=>this.props.showConfirmationDialog(false)}>Close</button>
+                                        onClick={()=>this.hideConfirmationDialog()}>Close</button>
                                 <button type="button" className="btn btn-danger"
-                                        onClick={()=>{this.props.onConfirm();
-                                            this.props.showConfirmationDialog(false);
+                                        onClick={()=>{this.props.confirmation.onConfirmFunction();
+                                            this.hideConfirmationDialog();
                                         }}>OK</button>
                             </div>
                         </div>
@@ -70,7 +78,7 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
-        isShownConfirmationDialog: state.isShownConfirmationDialog,
+        confirmation: state.confirmation,
     };
 }
 

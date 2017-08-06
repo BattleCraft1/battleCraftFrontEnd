@@ -1,4 +1,4 @@
-import axios from 'axios';
+import $ from 'jquery';
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -23,25 +23,39 @@ class SearchPanel extends React.Component{
     }
 
     getAllProvincesNames(){
-        axios.get(serverName+`get/allProvinces/names`)
-            .then(res => {
-                console.log(res.data);
-                this.setState({provincesNames:res.data});
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        $.ajax({
+            url: serverName+`get/allProvinces/names`,
+            type: 'GET',
+            contentType: "application/json",
+            success: (function(data) {
+                this.setState({provincesNames:data});
+            }).bind(this),
+            error: (function (xhr, ajaxOptions, thrownError) {
+                this.props.showMessageBox({
+                    isShown: true,
+                    messageText: xhr.responseText,
+                    messageType: "alert-danger"
+                });
+            }).bind(this),
+        });
     }
 
     getAllTournamentClassesNames(){
-        axios.get(serverName+`get/allGames/names`)
-            .then(res => {
-                console.log(res.data);
-                this.setState({tournamentsClassesNames:res.data});
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        $.ajax({
+            url: serverName+`get/allGames/names`,
+            type: 'GET',
+            contentType: "application/json",
+            success: (function(data) {
+                this.setState({tournamentsClassesNames:data});
+            }).bind(this),
+            error: (function (xhr, ajaxOptions, thrownError) {
+                this.props.showMessageBox({
+                    isShown: true,
+                    messageText: xhr.responseText,
+                    messageType: "alert-danger"
+                });
+            }).bind(this),
+        });
     }
 
     searchTournaments(){
@@ -144,8 +158,6 @@ class SearchPanel extends React.Component{
                     "value":parseInt(this.playersNumber.value)
                 }
             )}
-
-        console.log(pageRequest.searchCriteria)
 
         this.props.setPageRequest(pageRequest);
         this.props.getPageRequest();

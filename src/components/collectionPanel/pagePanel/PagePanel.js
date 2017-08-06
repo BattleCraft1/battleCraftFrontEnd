@@ -11,9 +11,6 @@ import { ActionCreators } from '../../../redux/actions';
 class PagePanel extends React.Component{
     constructor(props) {
         super(props);
-        this.state = {
-            message:""
-        };
     }
 
     componentDidMount(){
@@ -41,7 +38,11 @@ class PagePanel extends React.Component{
             this.props.getPageRequest();
         }
         else{
-            this.setState({message:"Page size must be between 1 and 10"});
+            this.props.showMessageBox({
+                isShown: true,
+                messageText: "Page size must be between 1 and 10",
+                messageType: "alert-danger"
+            });
             this.pageSizeInput.value=this.props.pageRequest.pageRequest.size;
         }
     }
@@ -55,7 +56,11 @@ class PagePanel extends React.Component{
             this.props.getPageRequest();
         }
         else{
-            this.setState({message:"Page "+this.pageNumberInput.value+" don't exist"});
+            this.props.showMessageBox({
+                isShown: true,
+                messageText: "Page "+this.pageNumberInput.value+" don't exist",
+                messageType: "alert-danger"
+            });
             this.pageNumberInput.value=this.props.pageRequest.pageRequest.page+1;
         }
     }
@@ -69,7 +74,11 @@ class PagePanel extends React.Component{
             this.props.getPageRequest();
         }
         else{
-            this.setState({message:"Page "+number+" don't exist"});
+            this.props.showMessageBox({
+                isShown: true,
+                messageText: "Page "+number+" don't exist",
+                messageType: "alert-danger"
+            });
         }
     }
 
@@ -82,7 +91,11 @@ class PagePanel extends React.Component{
             this.props.getPageRequest();
         }
         else{
-            this.setState({message:"Page "+(pageRequest.pageRequest.page+2)+" don't exist"});
+            this.props.showMessageBox({
+                isShown: true,
+                messageText: "Page "+(pageRequest.pageRequest.page+2)+" don't exist",
+                messageType: "alert-danger"
+            });
         }
     }
 
@@ -95,7 +108,11 @@ class PagePanel extends React.Component{
             this.props.getPageRequest();
         }
         else{
-            this.setState({message:"Page "+(pageRequest.pageRequest.page)+" don't exist"});
+            this.props.showMessageBox({
+                isShown: true,
+                messageText: "Page "+(pageRequest.pageRequest.page)+" don't exist",
+                messageType: "alert-danger"
+            });
         }
     }
 
@@ -154,7 +171,8 @@ function mapDispatchToProps( dispatch ) {
 function mapStateToProps( state ) {
     return {
         page: state.page,
-        pageRequest: state.pageRequest
+        pageRequest: state.pageRequest,
+        message: state.message
     };
 }
 
