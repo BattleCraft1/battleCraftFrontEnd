@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 
 import TournamentsList from './table/tournaments/CollectionList';
@@ -12,6 +11,7 @@ import { ActionCreators } from '../../redux/actions';
 
 import {serverName} from '../../consts/server'
 
+import $ from 'jquery';
 
 class CollectionPanel extends React.Component{
     componentDidMount() {
@@ -25,14 +25,23 @@ class CollectionPanel extends React.Component{
     }
 
     getPageRequest(){
-        axios.post(serverName+`page/`+this.props.match.params.collectionType,this.props.pageRequest)
-            .then(res => {
-                console.log(res.data);
-                this.props.setPage(res.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        $.ajax({
+            url: serverName+`page/`+this.props.match.params.collectionType,
+            type: 'POST',
+            contentType: "application/json",
+            dataType: 'json',
+            success: (function(data) {
+                this.props.setPage(data);
+            }).bind(this),
+            error: (function (xhr, ajaxOptions, thrownError) {
+                this.props.showMessageBox({
+                    isShown: true,
+                    messageText: xhr.responseText,
+                    messageType: "alert-danger"
+                });
+            }).bind(this),
+            data:JSON.stringify(this.props.pageRequest)
+        });
     }
 
     render(){
@@ -46,18 +55,10 @@ class CollectionPanel extends React.Component{
 
 
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-1 col-md-2 col-lg-2">
-                    </div>
-                    <div className="col-sm-10 col-md-8 col-lg-8">
-                        {collectionSearchPanel}
-                        {collectionList}
-                        <PagePanel getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>
-                    </div>
-                    <div className="col-sm-1 col-md-2 col-lg-2">
-                    </div>
-                </div>
+            <div>
+                {collectionSearchPanel}
+                {collectionList}
+                <PagePanel getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>
             </div>
         );
     }
@@ -71,6 +72,7 @@ function mapStateToProps( state ) {
     return {
         page: state.page,
         pageRequest: state.pageRequest,
+        message: state.message
     };
 }
 
