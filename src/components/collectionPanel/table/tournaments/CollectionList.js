@@ -1,11 +1,10 @@
-import axios from 'axios';
-import React from 'react';
-
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
 import { ActionCreators } from '../../../../redux/actions/index';
+import axios from 'axios';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import React from 'react';
 import {serverName} from '../../../../consts/server';
+import {StyleSheet, css} from 'aphrodite';
 
 
 class CollectionList extends React.Component{
@@ -133,18 +132,20 @@ class CollectionList extends React.Component{
             tournament =>{
                 key++;
                 rows.push(
-                    <tr key={"tr:"+key} style={{color:"black"}}
+                    <tr key={"tr:"+key}
                         className={tournament.banned?"danger":tournament.active?"warning":tournament.accepted?"success":""}>
-                        <th key={"th:"+key} scope="row"><Checkbox checkedAll={this.state.checkedAll}
-                                                                  checkFunction={this.addToCheckedElements.bind(this)}
-                                                                  uncheckFunction={this.removeFromCheckedElements.bind(this)}
-                                                                  index={"name"}/></th>
-                        <td key={"td:name:"+key} >{tournament.name}</td>
-                        <td key={"td:province"+key} >{tournament.province}</td>
-                        <td key={"td:city"+key} >{tournament.city}</td>
-                        <td key={"td:game"+key} >{tournament.game}</td>
-                        <td key={"td:players"+key} >{tournament.playersNumber}/{tournament.maxPlayers}</td>
-                        <td key={"td:date"+key} >{tournament.dateOfStart}</td>
+                        <th key={"th:"+key} scope="row" style = {Object.assign({}, styles.thead, styles.checkbox, {borderRadius: '0px'})}>
+                          <Checkbox checkedAll={this.state.checkedAll}
+                                    checkFunction={this.addToCheckedElements.bind(this)}
+                                    uncheckFunction={this.removeFromCheckedElements.bind(this)}
+                                    index={"name"}/>
+                        </th>
+                        <td key={"td:name:"   +key} style={Object.assign({}, styles.thead, styles.rowContent)} >{tournament.name}</td>
+                        <td key={"td:province"+key} style={Object.assign({}, styles.thead, styles.rowContent)} >{tournament.province}</td>
+                        <td key={"td:city"    +key} style={Object.assign({}, styles.thead, styles.rowContent)} >{tournament.city}</td>
+                        <td key={"td:game"    +key} style={Object.assign({}, styles.thead, styles.rowContent)} >{tournament.game}</td>
+                        <td key={"td:players" +key} style={Object.assign({}, styles.thead, styles.rowContent, {textAlign:"center"})} >{tournament.playersNumber}/{tournament.maxPlayers}</td>
+                        <td key={"td:date"    +key} style={Object.assign({}, styles.thead, styles.rowContent, {textAlign:"center"})} >{tournament.dateOfStart}</td>
                     </tr>
                 );
             }
@@ -163,17 +164,20 @@ class CollectionList extends React.Component{
 
         return (
             <div className="row">
-                <table className="table bg-primary">
+          {/*<table className="table bg-primary">*/}
+                <table style={styles.table}>
                     <thead>
                     <tr>
-                        <th key="all"><Checkbox checkFunction={this.checkAllElements.bind(this)}
-                                                uncheckFunction={this.uncheckAllElements.bind(this)} /></th>
-                        <th onClick={()=>this.sortByColumnName("name")} key="name">name</th>
-                        <th onClick={()=>this.sortByColumnName("province.location")} key="province">province</th>
-                        <th onClick={()=>this.sortByColumnName("address.city")} key="city">city</th>
-                        <th onClick={()=>this.sortByColumnName("game.name")} key="class">game</th>
-                        <th onClick={()=>this.sortByColumnName("freeSlots")} key="players">players</th>
-                        <th onClick={()=>this.sortByColumnName("dateOfStart")} key="date">date</th>
+                        <th key="all" style={styles.thead}>
+                          <Checkbox checkFunction={this.checkAllElements.bind(this)}
+                                    uncheckFunction={this.uncheckAllElements.bind(this)}/>
+                        </th>
+                        <th onClick={()=>this.sortByColumnName("name")}              key="name"     style={styles.thead}>name</th>
+                        <th onClick={()=>this.sortByColumnName("province.location")} key="province" style={styles.thead}>province</th>
+                        <th onClick={()=>this.sortByColumnName("address.city")}      key="city"     style={styles.thead}>city</th>
+                        <th onClick={()=>this.sortByColumnName("game.name")}         key="class"    style={styles.thead}>game</th>
+                        <th onClick={()=>this.sortByColumnName("freeSlots")}         key="players"  style={styles.thead}>players</th>
+                        <th onClick={()=>this.sortByColumnName("dateOfStart")}       key="date"     style={styles.thead}>date</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -247,3 +251,69 @@ function mapStateToProps( state ) {
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( CollectionList );
+
+
+
+const styles = {
+
+  rowContent:{
+    borderRadius:'0',
+    background:'#c6a57d',
+    border:'1px solid',
+    padding: '8px',
+    paddingLeft:'8px',
+    textAlign: 'none',
+    backgroundImage: '',
+    WebkitBorderImage: '',
+    color:'black',
+    borderTopColor:'#dfd19e',
+    borderBottomColor:'#886e4b',
+    borderLeftColor:'#dfd19e',
+    borderRightColor:'#886e4b',
+    textShadow:' ',
+  },
+  thead:{
+    borderCollapse: 'separate',
+    borderRadius: '4px 4px 0 0',
+    border:'1px solid',
+    color:'white',
+    //
+    borderTopColor: '#E0BA51',
+    borderRightColor: '#805D2C',
+    borderBottomColor: '#E0BA51',
+    borderLeftColor: '#e3ca86',
+    //borderColor:'#4e3e28',
+    background:'#735630',
+    textAlign: 'center',
+    padding: '8px',
+    paddingLeft:'4px',
+    paddingRight:'4px',
+    // backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#b48443), to(#654a25))',
+    // WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px',
+    backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
+    fontFamily:'arial, helvetica, sans-serif',
+    textShadow:'-1px -1px 0 rgba(0,0,0,0.3)',
+  },
+  table:{
+    position:'relative',
+    background:'black',
+    width: '100%',
+    borderCollapse:'separate',
+  },
+  checkbox:{
+    textAlign: 'center',
+    padding: '8px',
+    paddingLeft:'4px',
+    paddingRight:'4px',
+    borderRight: '0px',
+    //backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#d19c55), to(#906b3a))',
+    borderBottomColor:'#775930',
+
+
+  }
+
+}
+
+const resp = StyleSheet.create({
+
+})

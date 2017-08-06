@@ -89,7 +89,7 @@ export default class Navigator extends React.Component{
 
 const resp = StyleSheet.create({
 
-    account: {
+    account:{
       width:'100%',
       position:'relative',
       '@media (min-width: 599px)': {
@@ -99,8 +99,9 @@ const resp = StyleSheet.create({
         }
     },
 
-    navbar: {
-      position:'absolute',
+    navbar:{
+      position:'relative',
+      marginBottom:'20px',
       width:'80%',
       marginLeft:'10%',
       background:'none',

@@ -21,6 +21,7 @@ const resp = StyleSheet.create({
       fontSize:'85%',
       display:'inline-block',
       position:'relative',
+      zIndex:'1000',
       backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#916831), to(#624722))',
       WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px;',
       ':hover':{
