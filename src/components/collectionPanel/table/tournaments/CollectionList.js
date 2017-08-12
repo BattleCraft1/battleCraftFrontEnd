@@ -3,18 +3,16 @@ import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
-import {serverName} from '../../../../consts/server';
+import {serverName} from '../../../../main/consts/server';
 import {StyleSheet, css} from 'aphrodite';
+import Checkbox from '../../../checkBox/Checkbox'
+import MultiCheckbox from '../../../checkBox/MultiCheckbox'
 
 import dateFormat from 'dateformat';
 
 class CollectionList extends React.Component{
     constructor(props) {
         super(props);
-        this.state = {
-            checkedElementsUniqueNames:[],
-            checkedAll:false
-        };
     }
 
     sortByColumnName(columnName){
@@ -25,39 +23,6 @@ class CollectionList extends React.Component{
         this.props.getPageRequest();
     }
 
-    addToCheckedElements(elementUniqueName){
-        console.log("add "+elementUniqueName);
-        let checkedElementsUniqueNames=this.state.checkedElementsUniqueNames;
-        checkedElementsUniqueNames.push(elementUniqueName);
-        this.setState({checkedElementsUniqueNames:checkedElementsUniqueNames});
-    }
-
-    removeFromCheckedElements(elementUniqueName){
-        console.log("remove "+elementUniqueName);
-        let checkedElementsUniqueNames=this.state.checkedElementsUniqueNames;
-        checkedElementsUniqueNames.splice(1,checkedElementsUniqueNames.indexOf(elementUniqueName));
-        this.setState({checkedElementsUniqueNames:checkedElementsUniqueNames});
-    }
-
-
-    checkAllElements(){
-        console.log("checked all");
-        let checkedElementsUniqueNames=this.state.checkedElementsUniqueNames;
-        this.props.page.content.map(
-            element => {checkedElementsUniqueNames.indexOf(element.name) === -1 ? checkedElementsUniqueNames.push(element.name): console.log();}
-        );
-        this.setState({checkedElementsUniqueNames:checkedElementsUniqueNames});
-        this.setState({checkedAll:true});
-    }
-
-    uncheckAllElements(){
-        console.log("unchecked all");
-        let checkedElementsUniqueNames=this.state.checkedElementsUniqueNames;
-        checkedElementsUniqueNames=[];
-        this.setState({checkedElementsUniqueNames:checkedElementsUniqueNames});
-        this.setState({checkedAll:false});
-    }
-
     addNewElement(){
 //to do
     }
@@ -66,119 +31,206 @@ class CollectionList extends React.Component{
 //to do
     }
 
-    banCheckedElements(){
-        if(this.state.checkedElementsUniqueNames.length>0){
-            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
-            const collectionType = this.props.collectionType;
-            const getPageRequest = this.props.getPageRequest;
+    makeOperation(elements, link, failure, confirmation, successMessage, operationImpossibleMessage){
+        let showMessage = this.props.showMessageBox;
+        if(elements.length>0) {
+            let collectionType = this.props.collectionType;
+            let getPageRequest = this.props.getPageRequest;
+            let haveFailure=false;
+            if(failure.canBeFailed)
+            {
+                haveFailure = (failure.elements.length > 0);
+            }
+            let uniqueElementsNames = elements.map(function(item) {
+                return item['name'];
+            });
             this.props.showConfirmationDialog(
                 {
-                    header:"Ban checked tournaments",
-                    message:"Are you sure?",
-                    onConfirmFunction:function(){
-                        axios.post(serverName+`ban/`+collectionType,checkedElementsUniqueNames)
-                            .then(res => {
-                                console.log(res.data);
-                                getPageRequest();
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            })},
+                    header: confirmation.header,
+                    message: confirmation.message,
+                    onConfirmFunction:function(){axios.post(serverName+link+collectionType, uniqueElementsNames)
+                        .then(res => {
+                            console.log(res.data);
+                            getPageRequest();
+                            if(failure.canBeFailed)
+                            if(haveFailure)
+                                showMessage(failure.message);
+                            else
+                                showMessage(successMessage)
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })},
                     isShown: true
                 });
         }
+        else{
+            showMessage(operationImpossibleMessage)
+        }
+    }
+
+    banCheckedElements(){
+        let checkedElements = this.props.page.content.filter(element => element.checked===true);
+        let elementsToBan = checkedElements.filter(element => element.banned===false);
+        this.makeOperation(
+            elementsToBan
+            ,
+            `ban/`,
+            {
+                canBeFailed: false
+            },
+            {
+                header:"Ban checked tournaments",
+                message:"Are you sure?"
+            },
+            {
+                isShown: true,
+                messageText: "Elements "+elementsToBan.map(function(element){return element.name}).join(", ")+" are banned",
+                messageType: "alert-success"
+            },
+            {
+                isShown: true,
+                messageText: "Nothing to ban",
+                messageType: "alert-danger"
+            }
+        );
     }
 
     unlockCheckedElements(){
-        if(this.state.checkedElementsUniqueNames.length>0){
-            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
-            const collectionType = this.props.collectionType;
-            const getPageRequest = this.props.getPageRequest;
-            this.props.showConfirmationDialog(
-                {
-                    header:"Unlock checked tournaments",
-                    message:"Are you sure?",
-                    onConfirmFunction:function(){axios.post(serverName+`unlock/`+collectionType,checkedElementsUniqueNames)
-                        .then(res => {
-                            console.log(res.data);
-                            getPageRequest();
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        })},
-                    isShown: true
-                });
-        }
+        let checkedElements = this.props.page.content.filter(element => element.checked===true);
+        let elementsToUnlock = checkedElements.filter(element => element.banned===true);
+        this.makeOperation(
+            elementsToUnlock
+            ,
+            `unlock/`,
+            {
+                canBeFailed: false,
+            },
+            {
+                header:"Unlock checked tournaments",
+                message:"Are you sure?"
+            },
+            {
+                isShown: true,
+                messageText: "Elements "+elementsToUnlock.map(function(element){return element.name}).join(", ")+" are unlock",
+                messageType: "alert-success"
+            },
+            {
+                isShown: true,
+                messageText: "Nothing to unlock",
+                messageType: "alert-danger"
+            }
+        );
     }
 
     deleteCheckedElements(){
-        if(this.state.checkedElementsUniqueNames.length>0){
-            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
-            const collectionType = this.props.collectionType;
-            const getPageRequest = this.props.getPageRequest;
-            const checkAllElements = this.checkAllElements;
-            const uncheckAllElements = this.uncheckAllElements;
-            this.props.showConfirmationDialog(
-                {
-                    header:"Delete checked tournaments",
-                    message:"Are you sure?",
-                    onConfirmFunction:function(){axios.post(serverName+`delete/`+collectionType,checkedElementsUniqueNames)
-                        .then(res => {
-                            console.log(res.data);
-                            getPageRequest();
-                            checkAllElements();
-                            uncheckAllElements();
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        })},
-                    isShown: true
-                });
-        }
+        let checkedElements = this.props.page.content.filter(element => element.checked===true);
+        let elementsToDelete = checkedElements.filter(element => element.banned===true);
+        let elementsWhichCannotBeDeleted = checkedElements.filter(element => !element.banned)
+        this.makeOperation(
+            elementsToDelete
+            ,
+            `delete/`,
+            {
+                canBeFailed: true,
+                elements: elementsWhichCannotBeDeleted,
+                message:{
+                    isShown: true,
+                    messageText: "Elements "+elementsWhichCannotBeDeleted
+                        .map(function(element){return element.name}).join(", ")+" are not deleted " +
+                        "because if you want delete element you must ban it firstly",
+                    messageType: "alert-danger"
+                }
+            },
+            {
+                header:"Delete checked tournaments",
+                message:"Are you sure?"
+            },
+            {
+                isShown: true,
+                messageText: "Elements "+elementsToDelete.map(function(element){return element.name}).join(", ")+" are deleted",
+                messageType: "alert-success"
+            },
+            {
+                isShown: true,
+                messageText: "Nothing to delete",
+                messageType: "alert-danger"
+            }
+        );
     }
 
     acceptCheckedElements(){
-        if(this.state.checkedElementsUniqueNames.length>0){
-            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
-            const collectionType = this.props.collectionType;
-            const getPageRequest = this.props.getPageRequest;
-            this.props.showConfirmationDialog(
-                {
-                    header:"Accept checked tournaments",
-                    message:"Are you sure?",
-                    onConfirmFunction:function(){axios.post(serverName+`accept/`+collectionType,checkedElementsUniqueNames)
-                        .then(res => {
-                            console.log(res.data);
-                            getPageRequest();
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        })},
-                    isShown: true
-                });
-        }
+        let checkedElements = this.props.page.content.filter(element => element.checked===true);
+        let elementsToAccept = checkedElements.filter(element =>
+        element.tournamentStatus==="NEW" && element.banned===false);
+        let elementsWhichCannotBeAccept = checkedElements.filter(element => element.tournamentStatus!=="NEW");
+        this.makeOperation(
+            elementsToAccept
+            ,
+            `accept/`,
+            {
+                canBeFailed: true,
+                elements: elementsWhichCannotBeAccept,
+                message:{
+                    isShown: true,
+                    messageText: "Elements "+elementsWhichCannotBeAccept
+                        .map(function(element){return element.name}).join(", ")+" are not accepted " +
+                    "because you can accept only new elements and not banned",
+                    messageType: "alert-danger"
+                }
+            },
+            {
+                header:"Accept checked tournaments",
+                message:"Are you sure?"
+            },
+            {
+                isShown: true,
+                messageText: "Elements "+elementsToAccept.map(function(element){return element.name}).join(", ")+" are accepted",
+                messageType: "alert-success"
+            },
+            {
+                isShown: true,
+                messageText: "Nothing to accept",
+                messageType: "alert-danger"
+            }
+        );
     }
 
     cancelAcceptCheckedElements(){
-        if(this.state.checkedElementsUniqueNames.length>0){
-            const checkedElementsUniqueNames = this.state.checkedElementsUniqueNames;
-            const collectionType = this.props.collectionType;
-            const getPageRequest = this.props.getPageRequest;
-            this.props.showConfirmationDialog(
-                {
-                    header:"Cancel accept checked tournaments",
-                    message:"Are you sure?",
-                    onConfirmFunction:function(){axios.post(serverName+`cancel/accept/`+collectionType,checkedElementsUniqueNames)
-                        .then(res => {
-                            console.log(res.data);
-                            getPageRequest();
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        })},
-                    isShown: true
-                });
-        }
+        let checkedElements = this.props.page.content.filter(element => element.checked===true);
+        let elementsToCancelAccept = checkedElements.filter(element =>
+        element.tournamentStatus==="ACCEPTED"  && element.banned===false);
+        let elementsWithFailedCancellation = checkedElements.filter(element => element.tournamentStatus!=="ACCEPTED");
+        this.makeOperation(
+            elementsToCancelAccept
+            ,
+            `cancel/accept/`,
+            {
+                canBeFailed: true,
+                elements: elementsWithFailedCancellation,
+                message:{
+                    isShown: true,
+                    messageText: "Elements "+elementsWithFailedCancellation
+                        .map(function(element){return element.name}).join(", ")+" are still accepted " +
+                        "because you can cancel accept only for accepted and not banned elements",
+                    messageType: "alert-danger"
+                }
+            },
+            {
+                header:"Cancel acceptations of checked tournaments",
+                message:"Are you sure?"
+            },
+            {
+                isShown: true,
+                messageText: "Acceptations for "+elementsToCancelAccept.map(function(element){return element.name}).join(", ")+" are canceled",
+                messageType: "alert-success"
+            },
+            {
+                isShown: true,
+                messageText: "Nothing to cancel accept",
+                messageType: "alert-danger"
+            }
+        );
     }
 
 
@@ -188,18 +240,19 @@ class CollectionList extends React.Component{
                 key++;
                 rows.push(
                     <tr key={"tr:"+key}
-                        className={tournament.banned?"danger":tournament.active?"warning":tournament.accepted?"success":""}>
+                        className={tournament.banned?"danger":
+                            tournament.tournamentStatus==="FINISHED"?"primary":
+                            tournament.tournamentStatus==="ACCEPTED"?"success":"danger"}>
                         <th key={"th:"+key} scope="row" style = {Object.assign({}, styles.thead, styles.checkbox, {borderRadius: '0px'})}>
-                            <Checkbox checkedAll={this.state.checkedAll}
-                                                                  checkFunction={this.addToCheckedElements.bind(this)}
-                                                                  uncheckFunction={this.removeFromCheckedElements.bind(this)}
-                                                                  index={tournament.name}/></th>
+                            <Checkbox name={tournament.name}/></th>
                         <td key={"td:name:"+key} style={Object.assign({}, styles.thead, styles.rowContent)} >{tournament.name}</td>
                         <td key={"td:province"+key}  style={Object.assign({}, styles.thead, styles.rowContent)}>{tournament.province}</td>
                         <td key={"td:city"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>{tournament.city}</td>
                         <td key={"td:game"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>{tournament.game}</td>
-                        <td key={"td:players"+key} style={Object.assign({}, styles.thead, styles.rowContent, {textAlign:"center"})}>{tournament.playersNumber}/{tournament.maxPlayers}</td>
-                        <td key={"td:date"+key} style={Object.assign({}, styles.thead, styles.rowContent, {textAlign:"center"})}>{dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm")}</td>
+                        <td key={"td:players"+key} style={Object.assign({}, styles.thead, styles.rowContent,
+                            {textAlign:"center"})}>{tournament.playersNumber}/{tournament.maxPlayers}</td>
+                        <td key={"td:date"+key} style={Object.assign({}, styles.thead, styles.rowContent,
+                            {textAlign:"center"})}>{dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm")}</td>
                     </tr>
                 );
             }
@@ -223,8 +276,7 @@ class CollectionList extends React.Component{
                         <thead>
                         <tr>
                             <th key="all" style={styles.thead}>
-                                <Checkbox checkFunction={this.checkAllElements.bind(this)}
-                                                    uncheckFunction={this.uncheckAllElements.bind(this)} /></th>
+                                <MultiCheckbox /></th>
                             <th onClick={()=>this.sortByColumnName("name")}              key="name"     style={styles.thead}>name</th>
                             <th onClick={()=>this.sortByColumnName("province.location")} key="province" style={styles.thead}>province</th>
                             <th onClick={()=>this.sortByColumnName("address.city")}      key="city"     style={styles.thead}>city</th>
@@ -257,42 +309,6 @@ class CollectionList extends React.Component{
     }
 }
 
-class Checkbox extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            checked:true
-        };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.checkedAll !== this.props.checkedAll) {
-            if(this.props.checkedAll===true)
-                this.setState({checked:true});
-            else
-                this.setState({checked:false});
-        }
-    }
-
-    render(){
-        return(
-            <input type="checkbox"
-                   onClick={
-                       () => {
-                           let checked=this.state.checked;
-                           checked=!checked;
-                           this.setState({checked:checked});
-                           if(this.state.checked)
-                               this.props.checkFunction(this.props.index);
-                           else
-                               this.props.uncheckFunction(this.props.index);
-                       }
-                   }
-                   checked={!this.state.checked}/>
-        );
-    }
-}
-
 function mapDispatchToProps( dispatch ) {
     return bindActionCreators( ActionCreators, dispatch );
 }
@@ -306,8 +322,6 @@ function mapStateToProps( state ) {
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( CollectionList );
-
-
 
 const styles = {
 

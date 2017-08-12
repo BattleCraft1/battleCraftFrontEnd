@@ -9,7 +9,7 @@ import PagePanel from './pagePanel/PagePanel';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {serverName} from '../../consts/server'
+import {serverName} from '../../main/consts/server'
 
 import $ from 'jquery';
 
@@ -19,7 +19,8 @@ class CollectionPanel extends React.Component{
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.match.params.collectionType !== this.props.match.params.collectionType) {
+        if (nextProps.match.params.collectionType!==undefined &&
+            nextProps.match.params.collectionType !== this.props.match.params.collectionType) {
             this.getPageRequest();
         }
     }
@@ -32,6 +33,7 @@ class CollectionPanel extends React.Component{
             dataType: 'json',
             success: (function(data) {
                 this.props.setPage(data);
+                console.log(data);
             }).bind(this),
             error: (function (xhr, ajaxOptions, thrownError) {
                 this.props.showMessageBox({

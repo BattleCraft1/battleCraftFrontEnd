@@ -18,20 +18,21 @@ class App extends Component {
             <div className = {css(resp.base)}>
                 <Navigator/>
                 <ConfirmDialog/>
-                <Switch>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-sm-1 col-md-1 col-lg-1">
-                            </div>
-                            <div className="col-sm-10 col-md-10 col-lg-10">
-                                <Message/>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-1 col-md-1 col-lg-1">
+                        </div>
+                        <div className="col-sm-10 col-md-10 col-lg-10">
+                            <Message/>
+                            <Switch>
                                 <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
-                            </div>
-                            <div className="col-sm-1 col-md-1 col-lg-1">
-                            </div>
+                            </Switch>
+                        </div>
+                        <div className="col-sm-1 col-md-1 col-lg-1">
                         </div>
                     </div>
-                </Switch>
+                </div>
+
             </div>
         );
     }
@@ -48,13 +49,4 @@ const resp = StyleSheet.create({
     }
 });
 
-function mapDispatchToProps( dispatch ) {
-    return bindActionCreators( ActionCreators, dispatch );
-}
-
-function mapStateToProps( state ) {
-    return {
-    };
-}
-
-export default connect( mapStateToProps, mapDispatchToProps )( App );
+export default App

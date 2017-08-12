@@ -31,7 +31,9 @@ const store = configureStore( {
         messageText: "",
         messageType: ""
     },
-    page: {},
+    page: {
+        content: []
+    },
     pageRequest: {pageRequest:{
         size:10,
         page:0,

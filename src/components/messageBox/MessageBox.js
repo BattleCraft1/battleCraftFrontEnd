@@ -14,7 +14,7 @@ class MessageBox extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.message.isShown !== this.props.message.isShown) {
+        if (nextProps.message.isShown!==undefined && nextProps.message.isShown !== this.props.message.isShown) {
             if(nextProps.message.isShown){
                 window.scrollTo(0,0);
                 setTimeout(function(){

@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import { ActionCreators } from '../../../../redux/actions/index';
 
-import {serverName} from '../../../../consts/server';
+import {serverName} from '../../../../main/consts/server';
 
 class SearchPanel extends React.Component{
     constructor(props) {
