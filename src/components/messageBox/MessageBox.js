@@ -19,7 +19,7 @@ class MessageBox extends React.Component {
                 window.scrollTo(0,0);
                 setTimeout(function(){
                     this.hideMessageBox();
-                }.bind(this), 4000);
+                }.bind(this), 5000);
             }
         }
     }

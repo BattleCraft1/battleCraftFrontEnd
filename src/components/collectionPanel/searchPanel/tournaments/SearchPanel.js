@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -8,54 +7,48 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 import {serverName} from '../../../../main/consts/server';
 
+import axios from 'axios';
+
 class SearchPanel extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             provincesNames:[],
-            tournamentsClassesNames:[]
+            tournamentsGames:[]
         };
     }
 
     componentDidMount(){
         this.getAllProvincesNames();
-        this.getAllTournamentClassesNames();
+        this.getAllTournamentGames();
     }
 
     getAllProvincesNames(){
-        $.ajax({
-            url: serverName+`get/allProvinces/names`,
-            type: 'GET',
-            contentType: "application/json",
-            success: (function(data) {
-                this.setState({provincesNames:data});
-            }).bind(this),
-            error: (function (xhr, ajaxOptions, thrownError) {
+        axios.get(serverName+`get/allProvinces/names`)
+            .then(res => {
+                this.setState({provincesNames:res.data});
+            })
+            .catch(function (error) {
                 this.props.showMessageBox({
                     isShown: true,
-                    messageText: xhr.responseText,
+                    messageText: error.response.data,
                     messageType: "alert-danger"
                 });
-            }).bind(this),
-        });
+            });
     }
 
-    getAllTournamentClassesNames(){
-        $.ajax({
-            url: serverName+`get/allGames/names`,
-            type: 'GET',
-            contentType: "application/json",
-            success: (function(data) {
-                this.setState({tournamentsClassesNames:data});
-            }).bind(this),
-            error: (function (xhr, ajaxOptions, thrownError) {
+    getAllTournamentGames(){
+        axios.get(serverName+`get/allGames/names`)
+            .then(res => {
+                this.setState({tournamentsGames:res.data});
+            })
+            .catch(function (error) {
                 this.props.showMessageBox({
                     isShown: true,
-                    messageText: xhr.responseText,
+                    messageText: error.response.data,
                     messageType: "alert-danger"
                 });
-            }).bind(this),
-        });
+            });
     }
 
     searchTournaments(){
@@ -172,21 +165,21 @@ class SearchPanel extends React.Component{
         )
     }
 
-    prepareTournamentClassesOptions(tournamentClassesOptions){
-        tournamentClassesOptions.push(<option key="nullOption"/>);
-        this.state.tournamentsClassesNames.map(
-            tournamentName => {
-                tournamentClassesOptions.push(<option key={tournamentName}>{tournamentName}</option>);
+    prepareTournamentGamesOptions(tournamentGamesOptions){
+        tournamentGamesOptions.push(<option key="nullOption"/>);
+        this.state.tournamentsGames.map(
+            tournamentGame => {
+                tournamentGamesOptions.push(<option key={tournamentGame}>{tournamentGame}</option>);
             }
         )
     }
 
     render(){
         let provincesOptions = [];
-        let tournamentClassesOptions = [];
+        let tournamentGamesOptions = [];
 
         this.prepareProvinceOptions(provincesOptions);
-        this.prepareTournamentClassesOptions(tournamentClassesOptions);
+        this.prepareTournamentGamesOptions(tournamentGamesOptions);
 
         return (
             <div className="row">
@@ -210,7 +203,7 @@ class SearchPanel extends React.Component{
                     <div className="input-group">
                         <span className="input-group-addon">Game:</span>
                         <select ref={(control) => this.game = control} className="form-control" id="class">
-                            {tournamentClassesOptions}
+                            {tournamentGamesOptions}
                         </select>
                     </div>
                     <div className="input-group">

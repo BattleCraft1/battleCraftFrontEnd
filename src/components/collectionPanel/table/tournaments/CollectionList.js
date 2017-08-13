@@ -48,18 +48,29 @@ class CollectionList extends React.Component{
                 {
                     header: confirmation.header,
                     message: confirmation.message,
-                    onConfirmFunction:function(){axios.post(serverName+link+collectionType, uniqueElementsNames)
+                    onConfirmFunction:function(){axios.post(serverName+link+'/'+collectionType, uniqueElementsNames)
                         .then(res => {
                             console.log(res.data);
                             getPageRequest();
                             if(failure.canBeFailed)
                             if(haveFailure)
+                            {
                                 showMessage(failure.message);
+                                return;
+                            }
                             else
-                                showMessage(successMessage)
+                            {
+                                showMessage(successMessage);
+                                return;
+                            }
+                            showMessage(successMessage);
                         })
                         .catch(function (error) {
-                            console.log(error);
+                            this.props.showMessageBox({
+                                isShown: true,
+                                messageText: error.response.data,
+                                messageType: "alert-danger"
+                            });
                         })},
                     isShown: true
                 });
@@ -75,7 +86,7 @@ class CollectionList extends React.Component{
         this.makeOperation(
             elementsToBan
             ,
-            `ban/`,
+            `ban`,
             {
                 canBeFailed: false
             },
@@ -102,7 +113,7 @@ class CollectionList extends React.Component{
         this.makeOperation(
             elementsToUnlock
             ,
-            `unlock/`,
+            `unlock`,
             {
                 canBeFailed: false,
             },
@@ -126,11 +137,12 @@ class CollectionList extends React.Component{
     deleteCheckedElements(){
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
         let elementsToDelete = checkedElements.filter(element => element.banned===true);
-        let elementsWhichCannotBeDeleted = checkedElements.filter(element => !element.banned)
+        let elementsWhichCannotBeDeleted = checkedElements.filter(element => !element.banned);
+        this.props.checkAllElements(false);
         this.makeOperation(
             elementsToDelete
             ,
-            `delete/`,
+            `delete`,
             {
                 canBeFailed: true,
                 elements: elementsWhichCannotBeDeleted,
@@ -167,7 +179,7 @@ class CollectionList extends React.Component{
         this.makeOperation(
             elementsToAccept
             ,
-            `accept/`,
+            `accept`,
             {
                 canBeFailed: true,
                 elements: elementsWhichCannotBeAccept,
@@ -204,7 +216,7 @@ class CollectionList extends React.Component{
         this.makeOperation(
             elementsToCancelAccept
             ,
-            `cancel/accept/`,
+            `cancel/accept`,
             {
                 canBeFailed: true,
                 elements: elementsWithFailedCancellation,

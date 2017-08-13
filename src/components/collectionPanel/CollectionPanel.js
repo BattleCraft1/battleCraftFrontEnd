@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 
 import {serverName} from '../../main/consts/server'
 
-import $ from 'jquery';
+import axios from 'axios';
 
 class CollectionPanel extends React.Component{
     componentDidMount() {
@@ -26,24 +26,17 @@ class CollectionPanel extends React.Component{
     }
 
     getPageRequest(){
-        $.ajax({
-            url: serverName+`page/`+this.props.match.params.collectionType,
-            type: 'POST',
-            contentType: "application/json",
-            dataType: 'json',
-            success: (function(data) {
-                this.props.setPage(data);
-                console.log(data);
-            }).bind(this),
-            error: (function (xhr, ajaxOptions, thrownError) {
+        axios.post(serverName+`page/`+this.props.match.params.collectionType,this.props.pageRequest)
+            .then(res => {
+                this.props.setPage(res.data);
+            })
+            .catch(error => {
                 this.props.showMessageBox({
                     isShown: true,
-                    messageText: xhr.responseText,
+                    messageText: error.response.data,
                     messageType: "alert-danger"
                 });
-            }).bind(this),
-            data:JSON.stringify(this.props.pageRequest)
-        });
+            });
     }
 
     render(){
