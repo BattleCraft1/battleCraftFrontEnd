@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { ActionCreators } from '../../redux/actions/index';
+import { ActionCreators } from '../../../redux/actions/index';
 
 class MessageBox extends React.Component {
     constructor(props) {

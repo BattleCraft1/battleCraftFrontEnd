@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import React from 'react';
 import {serverName} from '../../../../main/consts/server';
 import {StyleSheet, css} from 'aphrodite';
-import Checkbox from '../../../checkBox/Checkbox'
-import MultiCheckbox from '../../../checkBox/MultiCheckbox'
+import Checkbox from '../../../commonComponents/checkBox/Checkbox'
+import MultiCheckbox from '../../../commonComponents/checkBox/MultiCheckbox'
+import TextOutput from '../../../commonComponents/textOutput/TextOutput'
 
 import dateFormat from 'dateformat';
 
@@ -24,11 +25,11 @@ class CollectionList extends React.Component{
     }
 
     addNewElement(){
-//to do
+        console.log("TO DO ADD");
     }
 
     editCheckedElements(){
-//to do
+        console.log("TO DO EDIT");
     }
 
     makeOperation(elements, link, failure, confirmation, successMessage, operationImpossibleMessage){
@@ -53,16 +54,16 @@ class CollectionList extends React.Component{
                             console.log(res.data);
                             getPageRequest();
                             if(failure.canBeFailed)
-                            if(haveFailure)
-                            {
-                                showMessage(failure.message);
-                                return;
-                            }
-                            else
-                            {
-                                showMessage(successMessage);
-                                return;
-                            }
+                                if(haveFailure)
+                                {
+                                    showMessage(failure.message);
+                                    return;
+                                }
+                                else
+                                {
+                                    showMessage(successMessage);
+                                    return;
+                                }
                             showMessage(successMessage);
                         })
                         .catch(function (error) {
@@ -150,7 +151,7 @@ class CollectionList extends React.Component{
                     isShown: true,
                     messageText: "Elements "+elementsWhichCannotBeDeleted
                         .map(function(element){return element.name}).join(", ")+" are not deleted " +
-                        "because if you want delete element you must ban it firstly",
+                    "because if you want delete element you must ban it firstly",
                     messageType: "alert-danger"
                 }
             },
@@ -224,7 +225,7 @@ class CollectionList extends React.Component{
                     isShown: true,
                     messageText: "Elements "+elementsWithFailedCancellation
                         .map(function(element){return element.name}).join(", ")+" are still accepted " +
-                        "because you can cancel accept only for accepted and not banned elements",
+                    "because you can cancel accept only for accepted and not banned elements",
                     messageType: "alert-danger"
                 }
             },
@@ -254,13 +255,17 @@ class CollectionList extends React.Component{
                     <tr key={"tr:"+key}
                         className={tournament.banned?"danger":
                             tournament.tournamentStatus==="FINISHED"?"primary":
-                            tournament.tournamentStatus==="ACCEPTED"?"success":"danger"}>
+                                tournament.tournamentStatus==="ACCEPTED"?"success":"danger"}>
                         <th key={"th:"+key} scope="row" style = {Object.assign({}, styles.thead, styles.checkbox, {borderRadius: '0px'})}>
                             <Checkbox name={tournament.name}/></th>
-                        <td key={"td:name:"+key} style={Object.assign({}, styles.thead, styles.rowContent)} >{tournament.name}</td>
-                        <td key={"td:province"+key}  style={Object.assign({}, styles.thead, styles.rowContent)}>{tournament.province}</td>
-                        <td key={"td:city"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>{tournament.city}</td>
-                        <td key={"td:game"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>{tournament.game}</td>
+                        <td key={"td:name:"+key} style={Object.assign({}, styles.thead, styles.rowContent)}
+                            onClick={() => {this.editCheckedElements()}}><TextOutput text={tournament.name} limit={17}/></td>
+                        <td key={"td:province"+key}  style={Object.assign({}, styles.thead, styles.rowContent)}>
+                            <TextOutput text={tournament.province} limit={17}/></td>
+                        <td key={"td:city"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>
+                            <TextOutput text={tournament.city} limit={17}/></td>
+                        <td key={"td:game"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>
+                            <TextOutput text={tournament.game} limit={17}/></td>
                         <td key={"td:players"+key} style={Object.assign({}, styles.thead, styles.rowContent,
                             {textAlign:"center"})}>{tournament.playersNumber}/{tournament.maxPlayers}</td>
                         <td key={"td:date"+key} style={Object.assign({}, styles.thead, styles.rowContent,
@@ -302,8 +307,8 @@ class CollectionList extends React.Component{
                         </tbody>
                     </table>
                     <div className="btn-group">
-                        <button type="button" className="btn btn-default">Add <span className="glyphicon glyphicon-plus"/></button>
-                        <button type="button" className="btn btn-default">Edit <span className="glyphicon glyphicon-pencil"/></button>
+                        <button type="button" onClick={() => this.addNewElement()} className="btn btn-default">Add
+                            <span className="glyphicon glyphicon-plus"/></button>
                         <button type="button" onClick={() => this.banCheckedElements()}className="btn btn-default">Ban
                             <span className="glyphicon glyphicon-lock"/></button>
                         <button type="button" onClick={() => this.unlockCheckedElements()} className="btn btn-default">Unlock
@@ -337,61 +342,61 @@ export default connect( mapStateToProps, mapDispatchToProps )( CollectionList );
 
 const styles = {
 
-  rowContent:{
-    borderRadius:'0',
-    background:'#c6a57d',
-    border:'1px solid',
-    padding: '8px',
-    paddingLeft:'8px',
-    textAlign: 'none',
-    backgroundImage: '',
-    WebkitBorderImage: '',
-    color:'black',
-    borderTopColor:'#dfd19e',
-    borderBottomColor:'#886e4b',
-    borderLeftColor:'#dfd19e',
-    borderRightColor:'#886e4b',
-    textShadow:' ',
-  },
-  thead:{
-    borderCollapse: 'separate',
-    borderRadius: '4px 4px 0 0',
-    border:'1px solid',
-    color:'white',
-    //
-    borderTopColor: '#E0BA51',
-    borderRightColor: '#805D2C',
-    borderBottomColor: '#E0BA51',
-    borderLeftColor: '#e3ca86',
-    //borderColor:'#4e3e28',
-    background:'#735630',
-    textAlign: 'center',
-    padding: '8px',
-    paddingLeft:'4px',
-    paddingRight:'4px',
-    // backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#b48443), to(#654a25))',
-    // WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px',
-    backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
-    fontFamily:'arial, helvetica, sans-serif',
-    textShadow:'-1px -1px 0 rgba(0,0,0,0.3)',
-  },
-  table:{
-    position:'relative',
-    background:'black',
-    width: '100%',
-    borderCollapse:'separate',
-  },
-  checkbox:{
-    textAlign: 'center',
-    padding: '8px',
-    paddingLeft:'4px',
-    paddingRight:'4px',
-    borderRight: '0px',
-    //backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#d19c55), to(#906b3a))',
-    borderBottomColor:'#775930',
+    rowContent:{
+        borderRadius:'0',
+        background:'#c6a57d',
+        border:'1px solid',
+        padding: '8px',
+        paddingLeft:'8px',
+        textAlign: 'none',
+        backgroundImage: '',
+        WebkitBorderImage: '',
+        color:'black',
+        borderTopColor:'#dfd19e',
+        borderBottomColor:'#886e4b',
+        borderLeftColor:'#dfd19e',
+        borderRightColor:'#886e4b',
+        textShadow:' ',
+    },
+    thead:{
+        borderCollapse: 'separate',
+        borderRadius: '4px 4px 0 0',
+        border:'1px solid',
+        color:'white',
+        //
+        borderTopColor: '#E0BA51',
+        borderRightColor: '#805D2C',
+        borderBottomColor: '#E0BA51',
+        borderLeftColor: '#e3ca86',
+        //borderColor:'#4e3e28',
+        background:'#735630',
+        textAlign: 'center',
+        padding: '8px',
+        paddingLeft:'4px',
+        paddingRight:'4px',
+        // backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#b48443), to(#654a25))',
+        // WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px',
+        backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
+        fontFamily:'arial, helvetica, sans-serif',
+        textShadow:'-1px -1px 0 rgba(0,0,0,0.3)',
+    },
+    table:{
+        position:'relative',
+        background:'black',
+        width: '100%',
+        borderCollapse:'separate',
+    },
+    checkbox:{
+        textAlign: 'center',
+        padding: '8px',
+        paddingLeft:'4px',
+        paddingRight:'4px',
+        borderRight: '0px',
+        //backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#d19c55), to(#906b3a))',
+        borderBottomColor:'#775930',
 
 
-  }
+    }
 
 }
 

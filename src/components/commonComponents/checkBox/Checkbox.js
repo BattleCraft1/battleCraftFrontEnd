@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ActionCreators } from '../../redux/actions/index';
+import { ActionCreators } from '../../../redux/actions/index';
 
 class Checkbox extends React.Component {
     constructor(props) {

@@ -3,8 +3,8 @@ import {StyleSheet, css} from 'aphrodite';
 import Navigator from '../components/navbar/Navbar'
 import CollectionPanel from '../components/collectionPanel/CollectionPanel'
 import {Switch, Route} from 'react-router-dom';
-import ConfirmDialog from '../components/confirmDialog/ConfirmDialog';
-import Message from '../components/messageBox/MessageBox';
+import ConfirmDialog from '../components/commonComponents/confirmDialog/ConfirmDialog';
+import Message from '../components/commonComponents/messageBox/MessageBox';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
