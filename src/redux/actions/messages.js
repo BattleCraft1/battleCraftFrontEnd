@@ -6,3 +6,10 @@ export function showMessageBox(message) {
         message: message
     }
 }
+
+export function showNetworkErrorMessageBox(error) {
+    return {
+        type: types.SHOW_NETWORK_ERROR_MESSAGE_BOX,
+        error: error
+    }
+}

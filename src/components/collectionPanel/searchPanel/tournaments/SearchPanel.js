@@ -28,12 +28,8 @@ class SearchPanel extends React.Component{
             .then(res => {
                 this.setState({provincesNames:res.data});
             })
-            .catch(function (error) {
-                this.props.showMessageBox({
-                    isShown: true,
-                    messageText: error.response.data,
-                    messageType: "alert-danger"
-                });
+            .catch(error => {
+                this.props.showNetworkErrorMessageBox(error);
             });
     }
 
@@ -42,12 +38,8 @@ class SearchPanel extends React.Component{
             .then(res => {
                 this.setState({tournamentsGames:res.data});
             })
-            .catch(function (error) {
-                this.props.showMessageBox({
-                    isShown: true,
-                    messageText: error.response.data,
-                    messageType: "alert-danger"
-                });
+            .catch(error => {
+                this.props.showNetworkErrorMessageBox(error);
             });
     }
 

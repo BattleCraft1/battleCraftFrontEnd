@@ -67,13 +67,8 @@ class CollectionList extends React.Component{
                             showMessage(successMessage);
                         })
                         .catch(function (error) {
-                            this.props.showMessageBox({
-                                isShown: true,
-                                messageText: error.response.data,
-                                messageType: "alert-danger"
-                            });
-                        })},
-                    isShown: true
+                            this.props.showErrorMessageBox(error);
+                        })}
                 });
         }
         else{
@@ -96,12 +91,10 @@ class CollectionList extends React.Component{
                 message:"Are you sure?"
             },
             {
-                isShown: true,
                 messageText: "Elements "+elementsToBan.map(function(element){return element.name}).join(", ")+" are banned",
                 messageType: "alert-success"
             },
             {
-                isShown: true,
                 messageText: "Nothing to ban",
                 messageType: "alert-danger"
             }
@@ -123,12 +116,10 @@ class CollectionList extends React.Component{
                 message:"Are you sure?"
             },
             {
-                isShown: true,
                 messageText: "Elements "+elementsToUnlock.map(function(element){return element.name}).join(", ")+" are unlock",
                 messageType: "alert-success"
             },
             {
-                isShown: true,
                 messageText: "Nothing to unlock",
                 messageType: "alert-danger"
             }
@@ -148,7 +139,6 @@ class CollectionList extends React.Component{
                 canBeFailed: true,
                 elements: elementsWhichCannotBeDeleted,
                 message:{
-                    isShown: true,
                     messageText: "Elements "+elementsWhichCannotBeDeleted
                         .map(function(element){return element.name}).join(", ")+" are not deleted " +
                     "because if you want delete element you must ban it firstly",
@@ -160,12 +150,10 @@ class CollectionList extends React.Component{
                 message:"Are you sure?"
             },
             {
-                isShown: true,
                 messageText: "Elements "+elementsToDelete.map(function(element){return element.name}).join(", ")+" are deleted",
                 messageType: "alert-success"
             },
             {
-                isShown: true,
                 messageText: "Nothing to delete",
                 messageType: "alert-danger"
             }
@@ -185,7 +173,6 @@ class CollectionList extends React.Component{
                 canBeFailed: true,
                 elements: elementsWhichCannotBeAccept,
                 message:{
-                    isShown: true,
                     messageText: "Elements "+elementsWhichCannotBeAccept
                         .map(function(element){return element.name}).join(", ")+" are not accepted " +
                     "because you can accept only new elements and not banned",
@@ -197,12 +184,10 @@ class CollectionList extends React.Component{
                 message:"Are you sure?"
             },
             {
-                isShown: true,
                 messageText: "Elements "+elementsToAccept.map(function(element){return element.name}).join(", ")+" are accepted",
                 messageType: "alert-success"
             },
             {
-                isShown: true,
                 messageText: "Nothing to accept",
                 messageType: "alert-danger"
             }
@@ -222,7 +207,6 @@ class CollectionList extends React.Component{
                 canBeFailed: true,
                 elements: elementsWithFailedCancellation,
                 message:{
-                    isShown: true,
                     messageText: "Elements "+elementsWithFailedCancellation
                         .map(function(element){return element.name}).join(", ")+" are still accepted " +
                     "because you can cancel accept only for accepted and not banned elements",
@@ -234,12 +218,10 @@ class CollectionList extends React.Component{
                 message:"Are you sure?"
             },
             {
-                isShown: true,
                 messageText: "Acceptations for "+elementsToCancelAccept.map(function(element){return element.name}).join(", ")+" are canceled",
                 messageType: "alert-success"
             },
             {
-                isShown: true,
                 messageText: "Nothing to cancel accept",
                 messageType: "alert-danger"
             }

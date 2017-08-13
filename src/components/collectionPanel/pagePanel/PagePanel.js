@@ -39,7 +39,6 @@ class PagePanel extends React.Component{
         }
         else{
             this.props.showMessageBox({
-                isShown: true,
                 messageText: "Page size must be between 1 and 10",
                 messageType: "alert-danger"
             });
@@ -57,7 +56,6 @@ class PagePanel extends React.Component{
         }
         else{
             this.props.showMessageBox({
-                isShown: true,
                 messageText: "Page "+this.pageNumberInput.value+" don't exist",
                 messageType: "alert-danger"
             });
@@ -75,7 +73,6 @@ class PagePanel extends React.Component{
         }
         else{
             this.props.showMessageBox({
-                isShown: true,
                 messageText: "Page "+number+" don't exist",
                 messageType: "alert-danger"
             });
@@ -92,7 +89,6 @@ class PagePanel extends React.Component{
         }
         else{
             this.props.showMessageBox({
-                isShown: true,
                 messageText: "Page "+(pageRequest.pageRequest.page+2)+" don't exist",
                 messageType: "alert-danger"
             });
@@ -109,7 +105,6 @@ class PagePanel extends React.Component{
         }
         else{
             this.props.showMessageBox({
-                isShown: true,
                 messageText: "Page "+(pageRequest.pageRequest.page)+" don't exist",
                 messageType: "alert-danger"
             });

@@ -31,11 +31,7 @@ class CollectionPanel extends React.Component{
                 this.props.setPage(res.data);
             })
             .catch(error => {
-                this.props.showMessageBox({
-                    isShown: true,
-                    messageText: error.response.data,
-                    messageType: "alert-danger"
-                });
+                this.props.showNetworkErrorMessageBox(error);
             });
     }
 
