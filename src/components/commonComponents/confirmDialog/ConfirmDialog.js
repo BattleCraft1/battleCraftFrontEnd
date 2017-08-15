@@ -34,7 +34,6 @@ class ConfirmDialog extends React.Component {
     hideConfirmationDialog(){
         let confirmation=this.props.confirmation;
         confirmation.isShown=false;
-        this.props.showConfirmationDialog(confirmation);
         this.forceUpdate();
     }
 

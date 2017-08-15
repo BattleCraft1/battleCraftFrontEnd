@@ -36,7 +36,8 @@ class CollectionList extends React.Component{
         let showMessage = this.props.showMessageBox;
         if(elements.length>0) {
             let collectionType = this.props.collectionType;
-            let getPageRequest = this.props.getPageRequest;
+            let setPage = this.props.setPage;
+            let showNetworkErrorMessageBox = this.props.showNetworkErrorMessageBox;
             let haveFailure=false;
             if(failure.canBeFailed)
             {
@@ -45,14 +46,18 @@ class CollectionList extends React.Component{
             let uniqueElementsNames = elements.map(function(item) {
                 return item['name'];
             });
+            let getPageAndModifyDataObjectsWrapper = {
+                namesOfObjectsToModify: uniqueElementsNames,
+                getPageObjectsWrapper: this.props.pageRequest
+            };
             this.props.showConfirmationDialog(
                 {
                     header: confirmation.header,
                     message: confirmation.message,
-                    onConfirmFunction:function(){axios.post(serverName+link+'/'+collectionType, uniqueElementsNames)
+                    onConfirmFunction:function(){axios.post(serverName+link+'/'+collectionType,
+                        getPageAndModifyDataObjectsWrapper)
                         .then(res => {
-                            console.log(res.data);
-                            getPageRequest();
+                            setPage(res.data);
                             if(failure.canBeFailed)
                                 if(haveFailure)
                                 {
@@ -66,8 +71,8 @@ class CollectionList extends React.Component{
                                 }
                             showMessage(successMessage);
                         })
-                        .catch(function (error) {
-                            this.props.showErrorMessageBox(error);
+                        .catch(error => {
+                            showNetworkErrorMessageBox(error);
                         })}
                 });
         }
@@ -279,7 +284,7 @@ class CollectionList extends React.Component{
                             <th onClick={()=>this.sortByColumnName("name")}              key="name"     style={styles.thead}>name</th>
                             <th onClick={()=>this.sortByColumnName("province.location")} key="province" style={styles.thead}>province</th>
                             <th onClick={()=>this.sortByColumnName("address.city")}      key="city"     style={styles.thead}>city</th>
-                            <th onClick={()=>this.sortByColumnName("game.name")}         key="class"    style={styles.thead}>game</th>
+                            <th onClick={()=>this.sortByColumnName("game.name")}         key="game"    style={styles.thead}>game</th>
                             <th onClick={()=>this.sortByColumnName("freeSlots")}         key="players"  style={styles.thead}>players</th>
                             <th onClick={()=>this.sortByColumnName("dateOfStart")}       key="date"     style={styles.thead}>date</th>
                         </tr>
@@ -317,6 +322,7 @@ function mapStateToProps( state ) {
         page: state.page,
         pageRequest: state.pageRequest,
         confirmation: state.confirmation,
+        message: state.message,
     };
 }
 

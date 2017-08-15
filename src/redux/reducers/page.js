@@ -12,6 +12,7 @@ export const page = createReducer( {}, {
                     element.checked=false;
             }
         );
+        console.log(action.page);
         return action.page;
     },
 
