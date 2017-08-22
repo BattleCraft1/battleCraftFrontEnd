@@ -14,29 +14,22 @@ class SearchPanel extends React.Component{
         super(props);
         this.state = {
             provincesNames:[],
-            tournamentsGames:[]
+            tournamentsGames:[],
+            tournamentStatus:[]
         };
     }
 
     componentDidMount(){
-        this.getAllProvincesNames();
-        this.getAllTournamentGames();
+        this.getAllTournamentsEnums();
     }
 
-    getAllProvincesNames(){
-        axios.get(serverName+`get/allProvinces/names`)
+    getAllTournamentsEnums(){
+        axios.get(serverName+`get/tournaments/enums`)
             .then(res => {
-                this.setState({provincesNames:res.data});
-            })
-            .catch(error => {
-                this.props.showNetworkErrorMessageBox(error);
-            });
-    }
-
-    getAllTournamentGames(){
-        axios.get(serverName+`get/allGames/names`)
-            .then(res => {
-                this.setState({tournamentsGames:res.data});
+                this.setState({provincesNames:res.data.provincesNames});
+                this.setState({tournamentsGames:res.data.gamesNames});
+                res.data.tournamentStatus.push("BANNED");
+                this.setState({tournamentStatus:res.data.tournamentStatus});
             })
             .catch(error => {
                 this.props.showNetworkErrorMessageBox(error);
@@ -46,6 +39,7 @@ class SearchPanel extends React.Component{
     searchTournaments(){
         let pageRequest=this.props.pageRequest;
         pageRequest.searchCriteria=[];
+
 
         if(this.name.value!==""){
             pageRequest.searchCriteria.push(
@@ -95,30 +89,24 @@ class SearchPanel extends React.Component{
                     "value":this.province.value
                 }
             )}
-        if(this.banned.value!==""){
-            pageRequest.searchCriteria.push(
-                {
-                    "keys":["banned"],
-                    "operation":":",
-                    "value":JSON.parse(this.banned.value)
-                }
-            )}
-        if(this.active.value!==""){
-            pageRequest.searchCriteria.push(
-                {
-                    "keys":["active"],
-                    "operation":":",
-                    "value":JSON.parse(this.active.value)
-                }
-            )}
-        if(this.accepted.value!==""){
-            pageRequest.searchCriteria.push(
-                {
-                    "keys":["accepted"],
-                    "operation":":",
-                    "value":JSON.parse(this.accepted.value)
-                }
-            )}
+        if(this.tournamentStatus.value!==""){
+            if(this.tournamentStatus.value==='BANNED')
+                pageRequest.searchCriteria.push(
+                    {
+                        "keys":["banned"],
+                        "operation":":",
+                        "value":true
+                    }
+                );
+            else
+                pageRequest.searchCriteria.push(
+                    {
+                        "keys":["tournamentStatus"],
+                        "operation":":",
+                        "value":this.tournamentStatus.value
+                    }
+                );
+        }
         if(this.freeSlots.value!==""){
             pageRequest.searchCriteria.push(
                 {
@@ -166,12 +154,23 @@ class SearchPanel extends React.Component{
         )
     }
 
+    prepareTournamentStatusOptions(tournamentStatusOptions){
+        tournamentStatusOptions.push(<option key="nullOption"/>);
+        this.state.tournamentStatus.map(
+            tournamentStatus => {
+                tournamentStatusOptions.push(<option key={tournamentStatus}>{tournamentStatus}</option>);
+            }
+        )
+    }
+
     render(){
         let provincesOptions = [];
         let tournamentGamesOptions = [];
+        let tournamentStatusOptions = [];
 
         this.prepareProvinceOptions(provincesOptions);
         this.prepareTournamentGamesOptions(tournamentGamesOptions);
+        this.prepareTournamentStatusOptions(tournamentStatusOptions);
 
         return (
             <div className="row">
@@ -215,23 +214,9 @@ class SearchPanel extends React.Component{
                         <input ref={(control) => this.freeSlots = control} id="freeSlots" type="number" className="form-control" name="freeSlots"/>
                     </div>
                     <div className="input-group">
-                        <span className="input-group-addon">Banned:</span>
-                        <select ref={(control) => this.banned = control} className="form-control" id="banned">
-                            <option key="nevermind" value=""/>
-                            <option key="yes" value={true}>yes</option>
-                            <option key="no" value={false}>no</option>
-                        </select>
-                        <span className="input-group-addon">Active:</span>
-                        <select ref={(control) => this.active = control} className="form-control" id="active">
-                            <option key="nevermind" value=""/>
-                            <option key="yes" value={true}>yes</option>
-                            <option key="no" value={false}>no</option>
-                        </select>
-                        <span className="input-group-addon">Accepted:</span>
-                        <select ref={(control) => this.accepted = control} className="form-control" id="active">
-                            <option key="nevermind" value=""/>
-                            <option key="yes" value={true}>yes</option>
-                            <option key="no" value={false}>no</option>
+                        <span className="input-group-addon">Status:</span>
+                        <select ref={(control) => this.tournamentStatus = control} className="form-control" id="banned">
+                            {tournamentStatusOptions}
                         </select>
                     </div>
                     <button onClick={()=>this.searchTournaments()} type="button" className="btn btn-default">Search</button>
