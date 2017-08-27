@@ -255,8 +255,10 @@ class CollectionList extends React.Component{
                             <TextOutput text={tournament.game} limit={17}/></td>
                         <td key={"td:players"+key} style={Object.assign({}, styles.thead, styles.rowContent,
                             {textAlign:"center"})}>{tournament.playersNumber}/{tournament.maxPlayers}</td>
-                        <td key={"td:date"+key} style={Object.assign({}, styles.thead, styles.rowContent,
+                        <td key={"td:dateStart"+key} style={Object.assign({}, styles.thead, styles.rowContent,
                             {textAlign:"center"})}>{dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm")}</td>
+                        <td key={"td:dateEnd"+key} style={Object.assign({}, styles.thead, styles.rowContent,
+                            {textAlign:"center"})}>{dateFormat((new Date(tournament.dateOfEnd)),"dd-MM-yyyy hh:mm")}</td>
                     </tr>
                 );
             }
@@ -286,7 +288,8 @@ class CollectionList extends React.Component{
                             <th onClick={()=>this.sortByColumnName("address.city")}      key="city"     style={styles.thead}>city</th>
                             <th onClick={()=>this.sortByColumnName("game.name")}         key="game"    style={styles.thead}>game</th>
                             <th onClick={()=>this.sortByColumnName("freeSlots")}         key="players"  style={styles.thead}>players</th>
-                            <th onClick={()=>this.sortByColumnName("dateOfStart")}       key="date"     style={styles.thead}>date</th>
+                            <th onClick={()=>this.sortByColumnName("dateOfStart")}       key="start date"     style={styles.thead}>start date</th>
+                            <th onClick={()=>this.sortByColumnName("dateOfEnd")}       key="end date"     style={styles.thead}>end date</th>
                         </tr>
                         </thead>
                         <tbody>
