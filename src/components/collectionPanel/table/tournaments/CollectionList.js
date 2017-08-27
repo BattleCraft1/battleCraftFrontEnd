@@ -11,6 +11,20 @@ import TextOutput from '../../../commonComponents/textOutput/TextOutput'
 
 import dateFormat from 'dateformat';
 
+var icons = require('glyphicons');
+
+const NEW_COLOR =             'rgb(230, 197, 158)'
+const ACCEPTED_COLOR =        'rgb(116, 152, 88)'
+const IN_PROGRESS_COLOR =     'rgb(142, 108, 63)'
+const FINISHED_COLOR =        'rgb(96, 146, 162)'
+const BANNED_COLOR =          'rgb(156, 99, 87)'
+
+const NEW_COLOR_ACTIVE =          'rgb(226, 203, 175)'
+const ACCEPTED_COLOR_ACTIVE =     'rgb(157, 186, 134)'
+const IN_PROGRESS_COLOR_ACTIVE =  'rgb(140, 115, 82)'
+const FINISHED_COLOR_ACTIVE =     'rgb(120, 170, 186)'
+const BANNED_COLOR_ACTIVE =       'rgb(200, 143, 131)'
+
 class CollectionList extends React.Component{
     constructor(props) {
         super(props);
@@ -30,29 +44,45 @@ class CollectionList extends React.Component{
         let pageRequest=this.props.pageRequest;
         pageRequest.pageRequest.property=columnName;
         pageRequest.pageRequest.direction=pageRequest.pageRequest.direction==='ASC'?'DESC':'ASC';
+        this.setState({direction:pageRequest.pageRequest.direction})
         this.props.setPageRequest(pageRequest);
         this.props.getPageRequest();
         this.handleTheadClick();
     }
 
+    getArrowGlyph(columnName){
+      if(this.state.activeColumn == columnName){
+        if(this.state.direction === 'ASC'){
+            return icons.arrowTriD
+        }
+        else{
+            return icons.arrowTriU
+        }
+      }
+    }
+
     getColor(columnName, tournament){
       if(this.state.activeColumn != columnName){
         if(tournament.banned)
-          return 'rgb(156, 99, 87)'
+          return BANNED_COLOR
         else if(tournament.tournamentStatus == "ACCEPTED")
-          return 'rgb(116, 152, 88)'
+          return ACCEPTED_COLOR
         else if(tournament.tournamentStatus == "FINISHED")
-          return 'rgb(96, 146, 162)'
-        return 'rgb(230, 197, 158)'
+          return FINISHED_COLOR
+        else if(tournament.tournamentStatus == "IN_PROGRESS")
+          return IN_PROGRESS_COLOR
+        return NEW_COLOR
       }
       else{
         if(tournament.banned)
-          return 'rgb(200, 143, 131)'
+          return BANNED_COLOR_ACTIVE
         else if(tournament.tournamentStatus == "ACCEPTED")
-          return 'rgb(157, 186, 134)'
+          return ACCEPTED_COLOR_ACTIVE
         else if(tournament.tournamentStatus == "FINISHED")
-          return 'rgb(120, 170, 186)'
-        return 'rgb(226, 203, 175)'
+          return FINISHED_COLOR_ACTIVE
+        else if(tournament.tournamentStatus == "IN_PROGRESS")
+          return IN_PROGRESS_COLOR_ACTIVE
+        return NEW_COLOR_ACTIVE
       }
     }
 
@@ -292,22 +322,41 @@ class CollectionList extends React.Component{
             tournament =>{
                 key++;
                 rows.push(
-                    <tr key={"tr:"+key}
-                        className={tournament.banned?{color:'#906a3d'}:tournament.tournamentStatus==="FINISHED"?{color:'#906a3d'}:tournament.tournamentStatus==="ACCEPTED"?{color:'#ad4949'}:{color:'#8f3d3d'}}>
-                        <th key={"th:"+key} scope="row" style = {Object.assign({}, styles.checkbox, styles.thead, {borderRadius: '0px'})}>
+                    <tr key={"tr:"+key}>
+
+                        <th key={"th:"+key} scope="row" className = {css(resp.rowContent, resp.rowLabel)} className = {css(resp.rowContent, resp.smallCheckbox)} style = {Object.assign({}, styles.checkbox, styles.thead, {borderRadius: '0px'})}>
                             <Checkbox name={tournament.name}/></th>
-                        <td key={"td:name:"+key}        style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("name", tournament)})}
+
+                        <th onClick={()=>{this.sortByColumnName("name")             ; this.handleTheadClick("name"             )}} key="name"
+                            style={(this.state.activeColumn === "name"             ) ?  styles.theadActive : styles.thead} className = {css(resp.rowContent)+" "+css(resp.nameLabel)}>name{this.getArrowGlyph("name")}</th>
+                        <td key={"td:name:"+key}      className = {css(resp.rowContent)}  style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.getColor("name", tournament)})}
                             onClick={() => {this.editCheckedElements()}}><TextOutput text={tournament.name} limit={17}/></td>
-                        <td key={"td:province"+key}     style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("province.location", tournament)} )}>
+
+                        <th onClick={()=>{this.sortByColumnName("province.location"); this.handleTheadClick("province")}} key="province"
+                            style={(this.state.activeColumn === "province") ? styles.theadActive : styles.thead } className = {css(resp.rowContent)+" "+css(resp.rowLabel)}>province{this.getArrowGlyph("province")}</th>
+                        <td key={"td:province"+key}   className = {css(resp.rowContent)}  style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.getColor("province", tournament)} )}>
                             <TextOutput text={tournament.province} limit={17}/></td>
-                        <td key={"td:city"+key}         style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("address.city", tournament)} )}>
+
+                        <th onClick={()=>{this.sortByColumnName("address.city")     ; this.handleTheadClick("city"     )}} key="city"
+                            style={(this.state.activeColumn === "city"     ) ? styles.theadActive : styles.thead } className = {css(resp.rowContent)+" "+css(resp.rowLabel)}>city{this.getArrowGlyph("city")}</th>
+                        <td key={"td:city"+key}       className = {css(resp.rowContent)}  style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.getColor("city", tournament)} )}>
                             <TextOutput text={tournament.city} limit={17}/></td>
-                        <td key={"td:game"+key}         style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("game.name", tournament)} )}>
+
+                        <th onClick={()=>{this.sortByColumnName("game.name")        ; this.handleTheadClick("game"        )}} key="game"
+                            style={(this.state.activeColumn === "game"        ) ? styles.theadActive : styles.thead } className = {css(resp.rowContent)+" "+css(resp.rowLabel)}>game{this.getArrowGlyph("game")}</th>
+                        <td key={"td:game"+key}       className = {css(resp.rowContent)}  style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.getColor("game", tournament)} )}>
                             <TextOutput text={tournament.game} limit={17}/></td>
-                        <td key={"td:players"+key}      style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("freeSlots", tournament)} )}>
+
+                        <th onClick={()=>{this.sortByColumnName("freeSlots")        ; this.handleTheadClick("players"        )}} key="players"
+                            style={(this.state.activeColumn === "players"        ) ? styles.theadActive : styles.thead } className = {css(resp.rowContent)+" "+css(resp.rowLabel)}>players{this.getArrowGlyph("players")}</th>
+                        <td key={"td:players"+key}    className = {css(resp.rowContent)}  style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.getColor("players", tournament)} )}>
                             {tournament.playersNumber}/{tournament.maxPlayers}</td>
-                        <td key={"td:date"+key}         style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("dateOfStart", tournament)} )}>
+
+                        <th onClick={()=>{this.sortByColumnName("dateOfStart")      ; this.handleTheadClick("date"      )}} key="date"
+                            style={(this.state.activeColumn === "date"      ) ? styles.theadActive : styles.thead } className = {css(resp.rowContent)+" "+css(resp.rowLabel)}>date{this.getArrowGlyph("date")}</th>
+                        <td key={"td:date"+key}       className = {css(resp.rowContent)}  style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.getColor("date", tournament), marginBottom:'4px'} )}>
                             {dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm")}</td>
+
                     </tr>
                 );
             }
@@ -327,23 +376,31 @@ class CollectionList extends React.Component{
         return (
             <div>
                 <div className="row">
+                <div className = {css(resp.legend)}>
+                  <th style={Object.assign({}, styles.thead, {display:'block', width:'100%', textAlign:'center', padding:'3px'})} >Legend</th>
+                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(230, 197, 158)'})} className = {css(resp.legendOption)}>NEW</span>
+                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(116, 152, 88)'})} className = {css(resp.legendOption)}>ACCEPTED</span>
+                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(142, 108, 63)'})} className = {css(resp.legendOption)}>IN PROGRESS</span>
+                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(96, 146, 162)'})} className = {css(resp.legendOption)}>FINISHED</span>
+                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(156, 99, 87)'})} className = {css(resp.legendOption)}>BANNED</span>
+                </div>
                     <table className="table bg-primary" style={styles.table}>
                         <thead>
                         <tr>
                             <th key="all" style={styles.thead} className = {css(resp.theadElement)}>
                                 <MultiCheckbox /></th>
                             <th onClick={()=>{this.sortByColumnName("name")             ; this.handleTheadClick("name"             )}} key="name"
-                            style={styles.thead, (this.state.activeColumn === "name"             ) ?  styles.theadActive : styles.thead} className = {css(resp.theadElement)}>name</th>
-                            <th onClick={()=>{this.sortByColumnName("province.location"); this.handleTheadClick("province.location")}} key="province"
-                            style={styles.thead, (this.state.activeColumn === "province.location") ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>province</th>
-                            <th onClick={()=>{this.sortByColumnName("address.city")     ; this.handleTheadClick("address.city"     )}} key="city"
-                            style={styles.thead, (this.state.activeColumn === "address.city"     ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>city</th>
-                            <th onClick={()=>{this.sortByColumnName("game.name")        ; this.handleTheadClick("game.name"        )}} key="game"
-                            style={styles.thead, (this.state.activeColumn === "game.name"        ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>game</th>
-                            <th onClick={()=>{this.sortByColumnName("freeSlots")        ; this.handleTheadClick("freeSlots"        )}} key="players"
-                            style={styles.thead, (this.state.activeColumn === "freeSlots"        ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>players</th>
-                            <th onClick={()=>{this.sortByColumnName("dateOfStart")      ; this.handleTheadClick("dateOfStart"      )}} key="date"
-                            style={styles.thead, (this.state.activeColumn === "dateOfStart"      ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>date</th>
+                            style={styles.thead, (this.state.activeColumn === "name"             ) ?  styles.theadActive : styles.thead} className = {css(resp.theadElement)}>name {this.getArrowGlyph("name")}</th>
+                            <th onClick={()=>{this.sortByColumnName("province.location"); this.handleTheadClick("province")}} key="province"
+                            style={styles.thead, (this.state.activeColumn === "province") ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>province {this.getArrowGlyph("province")}</th>
+                            <th onClick={()=>{this.sortByColumnName("address.city")     ; this.handleTheadClick("city"     )}} key="city"
+                            style={styles.thead, (this.state.activeColumn === "city"     ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>city {this.getArrowGlyph("city")}</th>
+                            <th onClick={()=>{this.sortByColumnName("game.name")        ; this.handleTheadClick("game"        )}} key="game"
+                            style={styles.thead, (this.state.activeColumn === "game"        ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>game {this.getArrowGlyph("game")}</th>
+                            <th onClick={()=>{this.sortByColumnName("freeSlots")        ; this.handleTheadClick("players"        )}} key="players"
+                            style={styles.thead, (this.state.activeColumn === "players"        ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>players {this.getArrowGlyph("players")}</th>
+                            <th onClick={()=>{this.sortByColumnName("dateOfStart")      ; this.handleTheadClick("date"      )}} key="date"
+                            style={styles.thead, (this.state.activeColumn === "date"      ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>date {this.getArrowGlyph("date")}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -438,7 +495,8 @@ const styles = {
     table:{
         position:'relative',
         background:'black',
-        width: '100%',
+        width: '90%',
+        marginLeft:'5%',
         borderCollapse:'separate',
     },
     checkbox:{
@@ -449,7 +507,11 @@ const styles = {
         //backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#d19c55), to(#906b3a))',
         borderBottomColor:'#775930',
         textAlign: 'center',
+    },
+    name:{
+      width:'90%',
     }
+
 
 }
 
@@ -461,6 +523,10 @@ const resp = StyleSheet.create({
       paddingLeft:'4px',
       paddingRight:'4px',
       textAlign: 'center',
+
+      '@media (max-width: 600px)': {
+        display:'none',
+      },
 
       ':hover':{
           borderTopColor: 'rgb(249, 249, 249)',
@@ -476,5 +542,62 @@ const resp = StyleSheet.create({
           borderBottomColor: 'rgb(249, 249, 249)',
         },
 
+    },
+
+    rowContent:{
+      position:'relative',
+      textAlign:'center',
+      '@media (max-width: 599px)': {
+        width:'70%',
+        display: 'inline-block',
+        borderRadius:'0'
+      }
+    },
+    rowLabel:{
+       width:'30%',
+      '@media (min-width: 600px)': {
+        display:'none',
+      }
+    },
+    rowContainer:{
+      position:'static',
+      padding:'10px',
+      background:'white',
+      '@media (max-width: 600px)': {
+        marginBottom:'10px',
+      }
+    },
+    nameLabel:{
+      width:'20%',
+      '@media (min-width: 600px)': {
+        display:'none',
+      },
+    },
+    legend:{
+      position:'relative',
+      width:'90%',
+      marginLeft:'5%',
+      marginBottom:'10px',
+    },
+
+    legendOption:{
+      fontSize:'80%',
+      textAlign:'center',
+      display:'inline-block',
+      position:'relative',
+      width:'20%',
+      padding:'5px',
+      '@media (max-width: 600px)': {
+        width:'50%',
+      },
+    },
+
+    smallCheckbox:{
+      '@media (max-width: 599px)': {
+        width:'10%',
+        margin:'0',
+        paddingTop:'7px',
+        paddingBottom:'7px',
+      }
     },
 })
