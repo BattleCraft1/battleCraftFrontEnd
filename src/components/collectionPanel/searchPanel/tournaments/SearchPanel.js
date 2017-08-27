@@ -60,7 +60,7 @@ class SearchPanel extends React.Component{
         if(this.dateTo.value!==""){
             pageRequest.searchCriteria.push(
                 {
-                    "keys":["dateOfStart"],
+                    "keys":["dateOfEnd"],
                     "operation":"<",
                     "value":this.dateTo.value
                 }
