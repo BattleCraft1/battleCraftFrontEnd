@@ -17,6 +17,13 @@ export const message = createReducer( {}, {
                 messageType: "alert-danger"
             };
         }
+        if(action.error.message.indexOf('Request failed with status code ') !== -1){
+            message={
+                isShown: true,
+                messageText: "There are not recognized problems on the server side. Please contact with administrator.",
+                messageType: "alert-danger"
+            };
+        }
         else
             message={
                 isShown: true,
