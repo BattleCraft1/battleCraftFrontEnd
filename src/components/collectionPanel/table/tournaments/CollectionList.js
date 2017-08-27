@@ -14,6 +14,16 @@ import dateFormat from 'dateformat';
 class CollectionList extends React.Component{
     constructor(props) {
         super(props);
+
+        this.state = {
+          activeColumn: ""
+        };
+    }
+
+    handleTheadClick(activeColumn)
+    {
+      this.setState({activeColumn:activeColumn})
+      console.log("clicked on: " + this.state.activeColumn);
     }
 
     sortByColumnName(columnName){
@@ -22,6 +32,50 @@ class CollectionList extends React.Component{
         pageRequest.pageRequest.direction=pageRequest.pageRequest.direction==='ASC'?'DESC':'ASC';
         this.props.setPageRequest(pageRequest);
         this.props.getPageRequest();
+        this.handleTheadClick();
+    }
+
+    getColor(columnName, tournament){
+      if(this.state.activeColumn != columnName){
+        if(tournament.banned)
+          return 'rgb(156, 99, 87)'
+        else if(tournament.tournamentStatus == "ACCEPTED")
+          return 'rgb(116, 152, 88)'
+        else if(tournament.tournamentStatus == "FINISHED")
+          return 'rgb(96, 146, 162)'
+        return 'rgb(230, 197, 158)'
+      }
+      else{
+        if(tournament.banned)
+          return 'rgb(200, 143, 131)'
+        else if(tournament.tournamentStatus == "ACCEPTED")
+          return 'rgb(157, 186, 134)'
+        else if(tournament.tournamentStatus == "FINISHED")
+          return 'rgb(120, 170, 186)'
+        return 'rgb(226, 203, 175)'
+      }
+    }
+
+    getGradient(columnName, tournament){
+      if(this.state.activeColumn == columnName){
+        if(tournament.banned)
+          return '-webkit-gradient(linear, left top, left bottom, from(rgba(255, 0, 0, 0.2)), to(rgb(230, 197, 158)))'
+        else if(tournament.tournamentStatus == "ACCEPTED")
+          return '-webkit-gradient(linear, left top, left bottom, from(rgba(0, 255, 0, 0.2)), to(rgb(230, 197, 158)))'
+        else if(tournament.tournamentStatus == "FINISHED")
+          return '-webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 255, 0.2)), to(rgb(230, 197, 158)))'
+        return '-webkit-gradient(linear, left top, left bottom, from(rgba(255, 0, 0, 0)), to(rgb(230, 197, 158)))'
+      }
+        else{
+          if(tournament.banned)
+            return '-webkit-linear-gradient(rgba(255, 0, 0, 0.3), rgb(230, 197, 158), rgb(230, 197, 158))'
+          else if(tournament.tournamentStatus == "ACCEPTED")
+            return '-webkit-gradient(linear, left bottom, left top, from(rgba(0, 255, 0, 0.3)), to(rgb(230, 197, 158)))'
+          else if(tournament.tournamentStatus == "FINISHED")
+            return '-webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 255, 0.3)), to(rgb(230, 197, 158)))'
+          return '-webkit-gradient(linear, left bottom, left top, from(rgba(255, 0, 0, 0)), to(rgb(230, 197, 158)))'
+
+        }
     }
 
     addNewElement(){
@@ -137,8 +191,7 @@ class CollectionList extends React.Component{
         let elementsWhichCannotBeDeleted = checkedElements.filter(element => !element.banned);
         this.props.checkAllElements(false);
         this.makeOperation(
-            elementsToDelete
-            ,
+            elementsToDelete,
             `delete`,
             {
                 canBeFailed: true,
@@ -240,23 +293,21 @@ class CollectionList extends React.Component{
                 key++;
                 rows.push(
                     <tr key={"tr:"+key}
-                        className={tournament.banned?"danger":
-                            tournament.tournamentStatus==="FINISHED"?"primary":
-                                tournament.tournamentStatus==="ACCEPTED"?"success":"danger"}>
-                        <th key={"th:"+key} scope="row" style = {Object.assign({}, styles.thead, styles.checkbox, {borderRadius: '0px'})}>
+                        className={tournament.banned?{color:'#906a3d'}:tournament.tournamentStatus==="FINISHED"?{color:'#906a3d'}:tournament.tournamentStatus==="ACCEPTED"?{color:'#ad4949'}:{color:'#8f3d3d'}}>
+                        <th key={"th:"+key} scope="row" style = {Object.assign({}, styles.checkbox, styles.thead, {borderRadius: '0px'})}>
                             <Checkbox name={tournament.name}/></th>
-                        <td key={"td:name:"+key} style={Object.assign({}, styles.thead, styles.rowContent)}
+                        <td key={"td:name:"+key}        style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("name", tournament)})}
                             onClick={() => {this.editCheckedElements()}}><TextOutput text={tournament.name} limit={17}/></td>
-                        <td key={"td:province"+key}  style={Object.assign({}, styles.thead, styles.rowContent)}>
+                        <td key={"td:province"+key}     style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("province.location", tournament)} )}>
                             <TextOutput text={tournament.province} limit={17}/></td>
-                        <td key={"td:city"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>
+                        <td key={"td:city"+key}         style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("address.city", tournament)} )}>
                             <TextOutput text={tournament.city} limit={17}/></td>
-                        <td key={"td:game"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>
+                        <td key={"td:game"+key}         style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("game.name", tournament)} )}>
                             <TextOutput text={tournament.game} limit={17}/></td>
-                        <td key={"td:players"+key} style={Object.assign({}, styles.thead, styles.rowContent,
-                            {textAlign:"center"})}>{tournament.playersNumber}/{tournament.maxPlayers}</td>
-                        <td key={"td:date"+key} style={Object.assign({}, styles.thead, styles.rowContent,
-                            {textAlign:"center"})}>{dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm")}</td>
+                        <td key={"td:players"+key}      style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("freeSlots", tournament)} )}>
+                            {tournament.playersNumber}/{tournament.maxPlayers}</td>
+                        <td key={"td:date"+key}         style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundImage: this.getGradient("dateOfStart", tournament)} )}>
+                            {dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm")}</td>
                     </tr>
                 );
             }
@@ -279,14 +330,20 @@ class CollectionList extends React.Component{
                     <table className="table bg-primary" style={styles.table}>
                         <thead>
                         <tr>
-                            <th key="all" style={styles.thead}>
+                            <th key="all" style={styles.thead} className = {css(resp.theadElement)}>
                                 <MultiCheckbox /></th>
-                            <th onClick={()=>this.sortByColumnName("name")}              key="name"     style={styles.thead}>name</th>
-                            <th onClick={()=>this.sortByColumnName("province.location")} key="province" style={styles.thead}>province</th>
-                            <th onClick={()=>this.sortByColumnName("address.city")}      key="city"     style={styles.thead}>city</th>
-                            <th onClick={()=>this.sortByColumnName("game.name")}         key="game"    style={styles.thead}>game</th>
-                            <th onClick={()=>this.sortByColumnName("freeSlots")}         key="players"  style={styles.thead}>players</th>
-                            <th onClick={()=>this.sortByColumnName("dateOfStart")}       key="date"     style={styles.thead}>date</th>
+                            <th onClick={()=>{this.sortByColumnName("name")             ; this.handleTheadClick("name"             )}} key="name"
+                            style={styles.thead, (this.state.activeColumn === "name"             ) ?  styles.theadActive : styles.thead} className = {css(resp.theadElement)}>name</th>
+                            <th onClick={()=>{this.sortByColumnName("province.location"); this.handleTheadClick("province.location")}} key="province"
+                            style={styles.thead, (this.state.activeColumn === "province.location") ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>province</th>
+                            <th onClick={()=>{this.sortByColumnName("address.city")     ; this.handleTheadClick("address.city"     )}} key="city"
+                            style={styles.thead, (this.state.activeColumn === "address.city"     ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>city</th>
+                            <th onClick={()=>{this.sortByColumnName("game.name")        ; this.handleTheadClick("game.name"        )}} key="game"
+                            style={styles.thead, (this.state.activeColumn === "game.name"        ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>game</th>
+                            <th onClick={()=>{this.sortByColumnName("freeSlots")        ; this.handleTheadClick("freeSlots"        )}} key="players"
+                            style={styles.thead, (this.state.activeColumn === "freeSlots"        ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>players</th>
+                            <th onClick={()=>{this.sortByColumnName("dateOfStart")      ; this.handleTheadClick("dateOfStart"      )}} key="date"
+                            style={styles.thead, (this.state.activeColumn === "dateOfStart"      ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>date</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -294,17 +351,17 @@ class CollectionList extends React.Component{
                         </tbody>
                     </table>
                     <div className="btn-group">
-                        <button type="button" onClick={() => this.addNewElement()} className="btn btn-default">Add
+                        <button type="button" onClick={() => {this.addNewElement();}}                   className="btn btn-default">Add
                             <span className="glyphicon glyphicon-plus"/></button>
-                        <button type="button" onClick={() => this.banCheckedElements()}className="btn btn-default">Ban
+                        <button type="button" onClick={() => {this.banCheckedElements();}}              className="btn btn-default">Ban
                             <span className="glyphicon glyphicon-lock"/></button>
-                        <button type="button" onClick={() => this.unlockCheckedElements()} className="btn btn-default">Unlock
+                        <button type="button" onClick={() => {this.unlockCheckedElements();}}           className="btn btn-default">Unlock
                             <span className="glyphicon glyphicon-list-alt"/></button>
-                        <button type="button" onClick={() => {this.deleteCheckedElements();}} className="btn btn-default">Delete
+                        <button type="button" onClick={() => {this.deleteCheckedElements();}}           className="btn btn-default">Delete
                             <span className="glyphicon glyphicon-minus"/></button>
-                        <button type="button" onClick={() => {this.acceptCheckedElements();}} className="btn btn-default">Accept
+                        <button type="button" onClick={() => {this.acceptCheckedElements();}}           className="btn btn-default">Accept
                             <span className="glyphicon glyphicon-ok"/></button>
-                        <button type="button" onClick={() => {this.cancelAcceptCheckedElements();}} className="btn btn-default">Cancel accept
+                        <button type="button" onClick={() => {this.cancelAcceptCheckedElements();}}     className="btn btn-default">Cancel accept
                             <span className="glyphicon glyphicon-remove"/></button>
                     </div>
                 </div>
@@ -346,6 +403,9 @@ const styles = {
         borderRightColor:'#886e4b',
         textShadow:' ',
     },
+    rowContentActive:{
+        background:'#906a3d'
+    },
     thead:{
         borderCollapse: 'separate',
         borderRadius: '4px 4px 0 0',
@@ -353,20 +413,27 @@ const styles = {
         color:'white',
         //
         borderTopColor: '#E0BA51',
-        borderRightColor: '#805D2C',
         borderBottomColor: '#E0BA51',
+        borderRightColor: '#805D2C',
         borderLeftColor: '#e3ca86',
         //borderColor:'#4e3e28',
         background:'#735630',
-        textAlign: 'center',
-        padding: '8px',
-        paddingLeft:'4px',
-        paddingRight:'4px',
+
         // backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#b48443), to(#654a25))',
         // WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px',
         backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
-        fontFamily:'arial, helvetica, sans-serif',
-        textShadow:'-1px -1px 0 rgba(0,0,0,0.3)',
+    },
+    theadActive:{
+        borderCollapse: 'separate',
+        borderRadius: '4px 4px 0 0',
+        border:'1px solid',
+
+        color:'lightGrey',
+        borderTopColor: 'rgb(204, 126, 69)',
+        borderBottomColor: 'rgb(249, 249, 249)',
+        background:'#735630',
+
+        backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#473419), to(#735327))',
     },
     table:{
         position:'relative',
@@ -375,19 +442,39 @@ const styles = {
         borderCollapse:'separate',
     },
     checkbox:{
-        textAlign: 'center',
         padding: '8px',
         paddingLeft:'4px',
         paddingRight:'4px',
         borderRight: '0px',
         //backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#d19c55), to(#906b3a))',
         borderBottomColor:'#775930',
-
-
+        textAlign: 'center',
     }
 
 }
 
 const resp = StyleSheet.create({
+    theadElement:{
+      fontFamily:'arial, helvetica, sans-serif',
+      textShadow:'-1px -1px 0 rgba(0,0,0,0.3)',
+      padding: '8px',
+      paddingLeft:'4px',
+      paddingRight:'4px',
+      textAlign: 'center',
 
+      ':hover':{
+          borderTopColor: 'rgb(249, 249, 249)',
+          borderBottomColor: 'rgb(204, 126, 69)',
+      },
+      ':focus':{
+          borderTopColor: 'rgb(249, 249, 249)',
+          borderBottomColor: 'rgb(204, 161, 130)',
+        },
+      ':active':{
+          color:'lightGrey',
+          borderTopColor: 'rgb(204, 126, 69)',
+          borderBottomColor: 'rgb(249, 249, 249)',
+        },
+
+    },
 })
