@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { ActionCreators } from '../../../redux/actions';
+import {StyleSheet, css} from 'aphrodite';
 
+import './scrollbar.css';
 
 class PagePanel extends React.Component{
     constructor(props) {
@@ -22,7 +24,7 @@ class PagePanel extends React.Component{
         let pagesButtons = [];
         for(let i=0;i<this.props.page.totalPages;i++)
         {
-            pagesButtons.push(<button onClick={()=>this.changePage(i)} key={'pageButton'+i} type="button" className="btn btn-default">{i+1}</button>);
+            pagesButtons.push(<button onClick={()=>this.changePage(i)} key={'pageButton'+i} type="button" className="">{i+1}</button>);
         }
         return pagesButtons;
     }
@@ -121,40 +123,37 @@ class PagePanel extends React.Component{
         }
 
 
-        const myScrollbar = {
-            width: "100%",
-        };
-
         return (
-            <div className="row">
-                <div className="form-group">
+
+            <div className={css(resp.navigationBar)}>
                     <form className="form-inline">
-                        <button onClick={() => this.previousPage()}  type="button" className="btn btn-default"><span className="glyphicon glyphicon-chevron-left"/></button>
-                        <div className="input-group">
-                            <span className="input-group-btn">
-                                <button  type="button" className="btn btn-default">Page number:</button>
-                            </span>
-                            <input ref={(control) => this.pageNumberInput = control} type="text" className="form-control" placeholder="Page number"/>
-                            <span className="input-group-btn">
-                                <button onClick={() => this.changePageByInput()} type="button" className="btn btn-default"><span className="glyphicon glyphicon-share-alt"/></button>
-                            </span>
+
+                        <div className={css(resp.pageOptionsBar)}>
+                                <span className="">Page number:</span>
+                            <input ref={(control) => this.pageNumberInput = control} type="text" className="" placeholder="Page number"/>
+                                <button onClick={() => this.changePageByInput()} type="button" className=""><span className="glyphicon glyphicon-share-alt"/></button>
+                                <span className="">Page size:</span>
+                            <input ref={(control) => this.pageSizeInput = control} type="text" className="" placeholder="Page size"/>
+                                <button onClick={() => this.changePageSize()} type="button" className=""><span className="glyphicon glyphicon-ok"/></button>
                         </div>
-                        <div className="input-group">
-                            <span className="input-group-btn">
-                                <button type="button" className="btn btn-default">Page size:</button>
-                            </span>
-                            <input ref={(control) => this.pageSizeInput = control} type="text" className="form-control" placeholder="Page size"/>
-                            <span className="input-group-btn">
-                                <button onClick={() => this.changePageSize()} type="button" className="btn btn-default"><span className="glyphicon glyphicon-ok"/></button>
-                            </span>
-                        </div>
-                        <button onClick={() => this.nextPage()} type="button" className="btn btn-default"><span className="glyphicon glyphicon-chevron-right"/></button>
                     </form>
-                    <ReactScrollbar style={myScrollbar}>
-                        <div>{pagesButtons}</div>
+
+
+                    <div className={css(resp.container)}>
+                    <button onClick={() => this.previousPage()}  type="button" className={css(resp.navigatorButtonLeft)}><span className="glyphicon glyphicon-chevron-left"/></button>
+                    <span className={css(resp.temp)}>
+                    <ReactScrollbar >
+                    <div className={css(resp.pager)}>
+                        {pagesButtons}
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                    </div>
                     </ReactScrollbar>
-                </div>
-            </div>
+                    </span>
+                    <button onClick={() => this.nextPage()} type="button" className={css(resp.navigatorButtonRight)}><span className="glyphicon glyphicon-chevron-right"/></button>
+                    </div>
+
+          </div>
+
         );
     }
 };
@@ -173,3 +172,57 @@ function mapStateToProps( state ) {
 
 export default connect( mapStateToProps, mapDispatchToProps )( PagePanel );
 
+
+const resp = StyleSheet.create({
+  navigationBar:{
+    position:'relative',
+    width:'90%',
+    marginLeft:'5%',
+    paddingBottom:'10px',
+  },
+  pageOptionsBar:{
+    background:'blue',
+    position:'relative',
+    display:'block',
+    width:'100%',
+  },
+  navigatorButtonLeft:{
+    position:'relative',
+    background:'green',
+    float:'left',
+  },
+  navigatorButtonRight:{
+    position:'relative',
+    background:'green',
+    float:'right',
+  },
+  navigatorInput:{
+
+  },
+  pager:{
+    background:'red',
+    position:'relative',
+    display:'inline-block',
+    paddingBottom:'0px',
+    width:'100%',
+    background:'pink',
+  },
+  container:{
+    background:'pink',
+    textAlign:'center',
+    position:'relative',
+    display:'inline-block',
+    width:'100%',
+    textAlign:'center',
+    overflow:'hidden',
+},
+
+  temp:{
+    textAlign:'center',
+    position:'relative',
+    display:'inline-block',
+    textAlign:'center',
+
+
+  },
+})

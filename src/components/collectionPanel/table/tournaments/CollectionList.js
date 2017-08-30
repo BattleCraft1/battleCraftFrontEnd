@@ -322,7 +322,7 @@ class CollectionList extends React.Component{
             tournament =>{
                 key++;
                 rows.push(
-                    <tr key={"tr:"+key}>
+                    <tr key={"tr:"+key} className={css(resp.tableRow)}>
 
                         <th key={"th:"+key} scope="row" className = {css(resp.rowContent, resp.rowLabel)} className = {css(resp.rowContent, resp.smallCheckbox)} style = {Object.assign({}, styles.checkbox, styles.thead, {borderRadius: '0px'})}>
                             <Checkbox name={tournament.name}/></th>
@@ -354,7 +354,7 @@ class CollectionList extends React.Component{
 
                         <th onClick={()=>{this.sortByColumnName("dateOfStart")      ; this.handleTheadClick("date"      )}} key="date"
                             style={(this.state.activeColumn === "date"      ) ? styles.theadActive : styles.thead } className = {css(resp.rowContent)+" "+css(resp.rowLabel)}>date{this.getArrowGlyph("date")}</th>
-                        <td key={"td:date"+key}       className = {css(resp.rowContent)}  style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.getColor("date", tournament), marginBottom:'4px'} )}>
+                        <td key={"td:date"+key}       className = {css(resp.rowContent)}  style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.getColor("date", tournament)} )}>
                             {dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm")}</td>
 
                     </tr>
@@ -377,14 +377,14 @@ class CollectionList extends React.Component{
             <div>
                 <div className="row">
                 <div className = {css(resp.legend)}>
-                  <th style={Object.assign({}, styles.thead, {display:'block', width:'100%', textAlign:'center', padding:'3px'})} >Legend</th>
+                  <th style={Object.assign({}, styles.thead, {display:'block', width:'100%', textAlign:'center', padding:'3px', boxShadow:'inset 0 2px 2px #9c7239'})} >Legend</th>
                   <span style={Object.assign({}, styles.rowContent, {background:'rgb(230, 197, 158)'})} className = {css(resp.legendOption)}>NEW</span>
                   <span style={Object.assign({}, styles.rowContent, {background:'rgb(116, 152, 88)'})} className = {css(resp.legendOption)}>ACCEPTED</span>
                   <span style={Object.assign({}, styles.rowContent, {background:'rgb(142, 108, 63)'})} className = {css(resp.legendOption)}>IN PROGRESS</span>
                   <span style={Object.assign({}, styles.rowContent, {background:'rgb(96, 146, 162)'})} className = {css(resp.legendOption)}>FINISHED</span>
                   <span style={Object.assign({}, styles.rowContent, {background:'rgb(156, 99, 87)'})} className = {css(resp.legendOption)}>BANNED</span>
                 </div>
-                    <table className="table bg-primary" style={styles.table}>
+                    <table className="" style={styles.table}>
                         <thead>
                         <tr>
                             <th key="all" style={styles.thead} className = {css(resp.theadElement)}>
@@ -392,34 +392,34 @@ class CollectionList extends React.Component{
                             <th onClick={()=>{this.sortByColumnName("name")             ; this.handleTheadClick("name"             )}} key="name"
                             style={styles.thead, (this.state.activeColumn === "name"             ) ?  styles.theadActive : styles.thead} className = {css(resp.theadElement)}>name {this.getArrowGlyph("name")}</th>
                             <th onClick={()=>{this.sortByColumnName("province.location"); this.handleTheadClick("province")}} key="province"
-                            style={styles.thead, (this.state.activeColumn === "province") ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>province {this.getArrowGlyph("province")}</th>
+                            style={styles.thead, (this.state.activeColumn === "province") ? styles.theadActive : styles.thead } className          = {css(resp.theadElement)}>province {this.getArrowGlyph("province")}</th>
                             <th onClick={()=>{this.sortByColumnName("address.city")     ; this.handleTheadClick("city"     )}} key="city"
-                            style={styles.thead, (this.state.activeColumn === "city"     ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>city {this.getArrowGlyph("city")}</th>
+                            style={styles.thead, (this.state.activeColumn === "city"     ) ? styles.theadActive : styles.thead } className         = {css(resp.theadElement)}>city {this.getArrowGlyph("city")}</th>
                             <th onClick={()=>{this.sortByColumnName("game.name")        ; this.handleTheadClick("game"        )}} key="game"
-                            style={styles.thead, (this.state.activeColumn === "game"        ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>game {this.getArrowGlyph("game")}</th>
+                            style={styles.thead, (this.state.activeColumn === "game"        ) ? styles.theadActive : styles.thead } className      = {css(resp.theadElement)}>game {this.getArrowGlyph("game")}</th>
                             <th onClick={()=>{this.sortByColumnName("freeSlots")        ; this.handleTheadClick("players"        )}} key="players"
-                            style={styles.thead, (this.state.activeColumn === "players"        ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>players {this.getArrowGlyph("players")}</th>
+                            style={styles.thead, (this.state.activeColumn === "players"        ) ? styles.theadActive : styles.thead } className   = {css(resp.theadElement)}>players {this.getArrowGlyph("players")}</th>
                             <th onClick={()=>{this.sortByColumnName("dateOfStart")      ; this.handleTheadClick("date"      )}} key="date"
-                            style={styles.thead, (this.state.activeColumn === "date"      ) ? styles.theadActive : styles.thead } className = {css(resp.theadElement)}>date {this.getArrowGlyph("date")}</th>
+                            style={styles.thead, (this.state.activeColumn === "date"      ) ? styles.theadActive : styles.thead } className        = {css(resp.theadElement)}>date {this.getArrowGlyph("date")}</th>
                         </tr>
                         </thead>
                         <tbody>
                         {rows}
                         </tbody>
                     </table>
-                    <div className="btn-group">
-                        <button type="button" onClick={() => {this.addNewElement();}}                   className="btn btn-default">Add
-                            <span className="glyphicon glyphicon-plus"/></button>
-                        <button type="button" onClick={() => {this.banCheckedElements();}}              className="btn btn-default">Ban
-                            <span className="glyphicon glyphicon-lock"/></button>
-                        <button type="button" onClick={() => {this.unlockCheckedElements();}}           className="btn btn-default">Unlock
-                            <span className="glyphicon glyphicon-list-alt"/></button>
-                        <button type="button" onClick={() => {this.deleteCheckedElements();}}           className="btn btn-default">Delete
-                            <span className="glyphicon glyphicon-minus"/></button>
-                        <button type="button" onClick={() => {this.acceptCheckedElements();}}           className="btn btn-default">Accept
-                            <span className="glyphicon glyphicon-ok"/></button>
-                        <button type="button" onClick={() => {this.cancelAcceptCheckedElements();}}     className="btn btn-default">Cancel accept
-                            <span className="glyphicon glyphicon-remove"/></button>
+                    <div className={css(resp.buttonGroup)}>
+                        <button type="button" onClick={() => {this.addNewElement();}}                   className={css(resp.theadElement) +" "+ css(resp.button)}>
+                        Add {icons.plus}</button>
+                        <button type="button" onClick={() => {this.banCheckedElements();}}              className={css(resp.theadElement) +" "+ css(resp.button)}>
+                        Ban {icons.skullAndBones}</button>
+                        <button type="button" onClick={() => {this.unlockCheckedElements();}}           className={css(resp.theadElement) +" "+ css(resp.button)}>
+                        Unlock {icons.lockOpen}</button>
+                        <button type="button" onClick={() => {this.deleteCheckedElements();}}           className={css(resp.theadElement) +" "+ css(resp.button)}>
+                        Delete {icons.warning}</button>
+                        <button type="button" onClick={() => {this.acceptCheckedElements();}}           className={css(resp.theadElement) +" "+ css(resp.button)}>
+                        Accept {icons.checkHeavyWhite}</button>
+                        <button type="button" onClick={() => {this.cancelAcceptCheckedElements();}}     className={css(resp.theadElement) +" "+ css(resp.button)}>
+                        Cancel {icons.noEntry}</button>
                     </div>
                 </div>
             </div>
@@ -497,6 +497,7 @@ const styles = {
         background:'black',
         width: '90%',
         marginLeft:'5%',
+        marginBottom:'4px',
         borderCollapse:'separate',
     },
     checkbox:{
@@ -517,6 +518,7 @@ const styles = {
 
 const resp = StyleSheet.create({
     theadElement:{
+      boxShadow:'inset 0 2px 2px #9c7239',
       fontFamily:'arial, helvetica, sans-serif',
       textShadow:'-1px -1px 0 rgba(0,0,0,0.3)',
       padding: '8px',
@@ -544,6 +546,63 @@ const resp = StyleSheet.create({
 
     },
 
+    button:{
+      textAlign:'center',
+      dislay:'inline-block',
+      position:'relative',
+      width:'16%',
+      padding: '4px',
+      margin:'1px',
+      borderTopColor: '#E0BA51',
+      borderBottomColor: '#E0BA51',
+      borderRightColor: '#805D2C',
+      borderLeftColor: '#e3ca86',
+      backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#7d150e), to(#8c3731))',
+      backgroundImage: 'linear-gradient(#f66060, #7d150e, #5b0f0a)',
+      boxShadow:'inset 0 0 7px #9c7239',
+      color:'white',
+      outline:'0',
+      borderRadius:'2px',
+      ':active':{
+          borderTopColor: 'rgb(204, 126, 69)',
+          borderBottomColor: 'rgb(249, 249, 249)',
+          color:'lightGrey',
+          backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#473419), to(#735327))',
+          backgroundImage: 'linear-gradient( #4b110d, #6f1913, #dd5353 )',
+        },
+
+        '@media (max-width: 600px)': {
+          display:'inline-block',
+          width:'30%',
+        },
+    },
+
+    tableRow:{
+      '@media (max-width: 600px)': {
+        display:'block',
+        position:'relative',
+        marginBottom:'4px',
+      },
+    },
+
+    buttonGroup:{
+      width:'90%',
+      marginLeft:'5%',
+      textAlign:'center',
+      paddingTop:'4px',
+      paddingBottom:'4px',
+      background:'#45341d',
+      boxShadow:'inset 0 0 4px #9c7239',
+      borderCollapse: 'separate',
+
+      border:'1px solid',
+      color:'rgb(204, 126, 69)',
+      borderTopColor: '#E0BA51',
+      borderBottomColor: '#614722',
+      borderRightColor: '#805D2C',
+      borderLeftColor: '#e3ca86',
+    },
+
     rowContent:{
       position:'relative',
       textAlign:'center',
@@ -554,6 +613,8 @@ const resp = StyleSheet.create({
       }
     },
     rowLabel:{
+      paddingTop:'8px',
+      paddingBottom:'8px',
        width:'30%',
       '@media (min-width: 600px)': {
         display:'none',
@@ -568,6 +629,8 @@ const resp = StyleSheet.create({
       }
     },
     nameLabel:{
+      paddingTop:'8px',
+      paddingBottom:'8px',
       width:'20%',
       '@media (min-width: 600px)': {
         display:'none',

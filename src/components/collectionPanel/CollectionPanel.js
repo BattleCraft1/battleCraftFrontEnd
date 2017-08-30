@@ -76,7 +76,7 @@ const resp = StyleSheet.create({
 
 })
 
-const MyContext = 
+const MyContext =
   {
   "content": [
   {
