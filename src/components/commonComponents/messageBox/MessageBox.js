@@ -19,7 +19,7 @@ class MessageBox extends React.Component {
                 window.scrollTo(0,0);
                 setTimeout(function(){
                     this.hideMessageBox();
-                }.bind(this), 5000);
+                }.bind(this), 10000);
             }
         }
     }
@@ -41,7 +41,7 @@ class MessageBox extends React.Component {
     hideMessageBox(){
         let message=this.props.message;
         message.isShown=false;
-        this.props.showMessageBox(message);
+        this.props.hideMessageBox();
         this.forceUpdate();
     }
 

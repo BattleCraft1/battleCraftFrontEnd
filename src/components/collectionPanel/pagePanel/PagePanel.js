@@ -14,8 +14,16 @@ class PagePanel extends React.Component{
     }
 
     componentDidMount(){
-        this.pageNumberInput.value=this.props.pageRequest.pageRequest.page+1;
-        this.pageSizeInput.value=this.props.pageRequest.pageRequest.size;
+        this.pageNumberInput.value=this.props.page.number+1;
+        this.pageSizeInput.value=this.props.page.size;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.page !== undefined &&
+            nextProps.page !== this.props.page) {
+            this.pageNumberInput.value=nextProps.page.number+1;
+            this.pageSizeInput.value=nextProps.page.size;
+        }
     }
 
     preparePagesButtons(){

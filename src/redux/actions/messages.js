@@ -13,3 +13,9 @@ export function showNetworkErrorMessageBox(error) {
         error: error
     }
 }
+
+export function hideMessageBox() {
+    return {
+        type: types.HIDE_MESSAGE_BOX
+    }
+}

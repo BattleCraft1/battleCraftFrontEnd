@@ -29,6 +29,11 @@ class CollectionPanel extends React.Component{
         axios.post(serverName+`page/`+this.props.match.params.collectionType,this.props.pageRequest)
             .then(res => {
                 this.props.setPage(res.data);
+
+                let pageRequest = this.props.pageRequest;
+                pageRequest.pageRequest.page=this.props.page.number;
+                pageRequest.pageRequest.size=this.props.page.size;
+                this.props.setPageRequest(pageRequest);
             })
             .catch(error => {
                 this.props.showNetworkErrorMessageBox(error);
