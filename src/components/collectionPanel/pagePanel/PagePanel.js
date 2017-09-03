@@ -43,7 +43,7 @@ class PagePanel extends React.Component{
             pageRequest.pageRequest.page = 0;
             this.pageNumberInput.value = 1;
             this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest();
+            this.props.getPageRequest(this.props.collectionType);
         }
         else{
             this.props.showMessageBox({
@@ -60,7 +60,7 @@ class PagePanel extends React.Component{
             let pageRequest=this.props.pageRequest;
             pageRequest.pageRequest.page=this.pageNumberInput.value-1;
             this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest();
+            this.props.getPageRequest(this.props.collectionType);
         }
         else{
             this.props.showMessageBox({
@@ -77,7 +77,7 @@ class PagePanel extends React.Component{
             pageRequest.pageRequest.page = number;
             this.pageNumberInput.value = number+1;
             this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest();
+            this.props.getPageRequest(this.props.collectionType);
         }
         else{
             this.props.showMessageBox({
@@ -93,7 +93,7 @@ class PagePanel extends React.Component{
             pageRequest.pageRequest.page+=1;
             this.pageNumberInput.value=pageRequest.pageRequest.page+1;
             this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest();
+            this.props.getPageRequest(this.props.collectionType);
         }
         else{
             this.props.showMessageBox({
@@ -109,7 +109,7 @@ class PagePanel extends React.Component{
             pageRequest.pageRequest.page-=1;
             this.pageNumberInput.value=pageRequest.pageRequest.page+1;
             this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest();
+            this.props.getPageRequest(this.props.collectionType);
         }
         else{
             this.props.showMessageBox({

@@ -16,19 +16,32 @@ import {serverName} from '../../main/consts/server'
 import axios from 'axios';
 
 class CollectionPanel extends React.Component{
-    componentDidMount() {
-        this.getPageRequest(this.props.match.params.collectionType);
-    }
+    constructor(props) {
+        super(props);
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.match.params.collectionType !== undefined &&
-            nextProps.match.params.collectionType !== this.props.match.params.collectionType) {
-            this.getPageRequest(nextProps.match.params.collectionType);
+        this.state = {
+            collectionType:""
         }
     }
 
-    getPageRequest(collectionType){
-        axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
+    async componentDidMount() {
+        this.setState({collectionType: ""});
+        await this.getPageRequest(this.props.match.params.collectionType);
+        this.setState({collectionType: this.props.match.params.collectionType});
+    }
+
+    async componentWillReceiveProps(nextProps) {
+        if (nextProps.match.params.collectionType !== undefined &&
+            nextProps.match.params.collectionType !== this.props.match.params.collectionType) {
+            this.setState({collectionType: ""});
+            await this.getPageRequest(nextProps.match.params.collectionType);
+            this.setState({collectionType: nextProps.match.params.collectionType});
+        }
+    }
+
+    async getPageRequest(collectionType){
+        console.log(this.props.pageRequest);
+        await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
             .then(res => {
                 this.props.setPage(res.data);
 
@@ -43,26 +56,28 @@ class CollectionPanel extends React.Component{
     }
 
     render(){
-        let collectionList;
-        let collectionSearchPanel;
-        if(this.props.match.params.collectionType==='tournaments'){
+        let collectionList ="";
+        let collectionSearchPanel ="";
+        if(this.state.collectionType==='tournaments'){
             collectionList=<TournamentsList getPageRequest={this.getPageRequest.bind(this)}
-                                            collectionType={this.props.match.params.collectionType}/>;
-            collectionSearchPanel=<TournamentsSearchForm getPageRequest={this.getPageRequest.bind(this)} />;
+                                            collectionType={this.state.collectionType}/>;
+            collectionSearchPanel=<TournamentsSearchForm collectionType={this.state.collectionType}
+                                                         getPageRequest={this.getPageRequest.bind(this)} />;
         }
-        else if(this.props.match.params.collectionType==='users'){
+        else if(this.state.collectionType==='users'){
             collectionList=<UsersList getPageRequest={this.getPageRequest.bind(this)}
-                                            collectionType={this.props.match.params.collectionType}/>;
-            collectionSearchPanel=<UsersSearchForm getPageRequest={this.getPageRequest.bind(this)} />;
+                                      collectionType={this.state.collectionType}/>;
+            collectionSearchPanel=<UsersSearchForm collectionType={this.state.collectionType}
+                                                   getPageRequest={this.getPageRequest.bind(this)} />;
         }
 
 
         return (
             <div className={css(resp.container)}>
                 <div className="row">
-                        {collectionSearchPanel}
-                        {collectionList}
-                        <PagePanel getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>
+                    {collectionSearchPanel}
+                    {collectionList}
+                    <PagePanel getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>
                 </div>
             </div>
         );
@@ -85,12 +100,12 @@ export default connect( mapStateToProps, mapDispatchToProps )( CollectionPanel )
 
 
 const resp = StyleSheet.create({
-  container:{
-    display:'block',
-    position:'relative',
-    width:'100%',
-    zIndex:'1',
-  },
+    container:{
+        display:'block',
+        position:'relative',
+        width:'100%',
+        zIndex:'1',
+    },
 
 })
 

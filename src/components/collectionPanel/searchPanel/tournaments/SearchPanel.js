@@ -133,7 +133,7 @@ class SearchPanel extends React.Component{
             )}
 
         this.props.setPageRequest(pageRequest);
-        this.props.getPageRequest();
+        this.props.getPageRequest(this.props.collectionType);
     }
 
     prepareProvinceOptions(provincesOptions){

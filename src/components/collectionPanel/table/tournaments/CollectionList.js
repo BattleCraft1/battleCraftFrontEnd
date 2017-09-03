@@ -20,7 +20,7 @@ class CollectionList extends React.Component{
         pageRequest.pageRequest.property=columnName;
         pageRequest.pageRequest.direction=pageRequest.pageRequest.direction==='ASC'?'DESC':'ASC';
         this.props.setPageRequest(pageRequest);
-        this.props.getPageRequest();
+        this.props.getPageRequest(this.props.collectionType);
     }
 
     prepareRowsOfTable(rows,key){

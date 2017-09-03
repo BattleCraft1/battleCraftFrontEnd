@@ -13,7 +13,7 @@ class SearchPanel extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            userTypes:[],
+            usersTypes:[],
             provincesNames:[]
         };
     }
@@ -25,9 +25,9 @@ class SearchPanel extends React.Component{
     getAllUsersEnums(){
         axios.get(serverName+`get/users/enums`)
             .then(res => {
-                res.data.userTypes.push("BANNED");
-                this.setState({userTypes:res.data.userTypes});
                 this.setState({provincesNames:res.data.provincesNames});
+                res.data.usersTypes.push("BANNED");
+                this.setState({usersTypes:res.data.usersTypes});
             })
             .catch(error => {
                 this.props.showNetworkErrorMessageBox(error);
@@ -87,22 +87,14 @@ class SearchPanel extends React.Component{
                     "value":this.city.value
                 }
             )}
-        if(this.phoneNumber.value!=="" && /^\d+$/.test(this.phoneNumber.value)){
-            pageRequest.searchCriteria.push(
-                {
-                    "keys":["phoneNumber"],
-                    "operation":">",
-                    "value":parseInt(this.phoneNumber.value)
-                }
-            )}
 
         this.props.setPageRequest(pageRequest);
-        this.props.getPageRequest();
+        this.props.getPageRequest(this.props.collectionType);
     }
 
     prepareUserTypesOptions(userTypesOptions){
         userTypesOptions.push(<option key="nullOption"/>);
-        this.state.userTypes.map(
+        this.state.usersTypes.map(
             userType => {
                 userTypesOptions.push(<option key={userType}>{userType}</option>);
             }
@@ -135,9 +127,8 @@ class SearchPanel extends React.Component{
                     </div>
                     <div className="input-group">
                         <span className="input-group-addon">Name:</span>
-                        <select ref={(control) => this.name = control} name="name"  className="form-control" id="name">
-                            {provincesOptions}
-                        </select>
+                        <input ref={(control) => this.name = control} id="name" type="text" className="form-control" name="name"
+                               placeholder="Jarek"/>
                     </div>
                     <div className="input-group">
                         <span className="input-group-addon">Surname:</span>
