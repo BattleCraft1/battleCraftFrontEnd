@@ -54,7 +54,8 @@ class CollectionList extends React.Component{
                 {
                     header: confirmation.header,
                     message: confirmation.message,
-                    onConfirmFunction:function(){axios.post(serverName+link+'/'+collectionType,
+                    onConfirmFunction:function(){
+                        axios.post(serverName+link+'/'+collectionType,
                         getPageAndModifyDataObjectsWrapper)
                         .then(res => {
                             setPage(res.data);
