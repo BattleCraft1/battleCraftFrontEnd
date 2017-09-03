@@ -15,12 +15,13 @@ export const message = createReducer( {}, {
                 messageType: "alert-danger"
             };
         }
-        else if(action.error.message.indexOf('Request failed with status code ') !== -1 && action.error.response.data!==undefined)
+        else if(action.error.message.indexOf('Request failed with status code ') !== -1 && action.error.response.data!==undefined){
             message={
                 isShown: true,
                 messageText: action.error.response.data,
                 messageType: "alert-danger"
             };
+        }
         else{
             message={
                 isShown: true,

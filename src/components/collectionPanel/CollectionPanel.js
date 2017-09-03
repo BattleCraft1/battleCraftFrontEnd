@@ -4,6 +4,8 @@ import React from 'react';
 import {StyleSheet, css} from 'aphrodite';
 import TournamentsList from './table/tournaments/CollectionList';
 import TournamentsSearchForm from './searchPanel/tournaments/SearchPanel';
+import UsersList from './table/users/CollectionList';
+import UsersSearchForm from './searchPanel/users/SearchPanel';
 import PagePanel from './pagePanel/PagePanel';
 
 import { connect } from 'react-redux';
@@ -15,18 +17,18 @@ import axios from 'axios';
 
 class CollectionPanel extends React.Component{
     componentDidMount() {
-        this.getPageRequest();
+        this.getPageRequest(this.props.match.params.collectionType);
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.match.params.collectionType!==undefined &&
+        if (nextProps.match.params.collectionType !== undefined &&
             nextProps.match.params.collectionType !== this.props.match.params.collectionType) {
-            this.getPageRequest();
+            this.getPageRequest(nextProps.match.params.collectionType);
         }
     }
 
-    getPageRequest(){
-        axios.post(serverName+`page/`+this.props.match.params.collectionType,this.props.pageRequest)
+    getPageRequest(collectionType){
+        axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
             .then(res => {
                 this.props.setPage(res.data);
 
@@ -47,6 +49,11 @@ class CollectionPanel extends React.Component{
             collectionList=<TournamentsList getPageRequest={this.getPageRequest.bind(this)}
                                             collectionType={this.props.match.params.collectionType}/>;
             collectionSearchPanel=<TournamentsSearchForm getPageRequest={this.getPageRequest.bind(this)} />;
+        }
+        else if(this.props.match.params.collectionType==='users'){
+            collectionList=<UsersList getPageRequest={this.getPageRequest.bind(this)}
+                                            collectionType={this.props.match.params.collectionType}/>;
+            collectionSearchPanel=<UsersSearchForm getPageRequest={this.getPageRequest.bind(this)} />;
         }
 
 

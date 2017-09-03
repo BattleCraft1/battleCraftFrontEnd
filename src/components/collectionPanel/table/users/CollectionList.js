@@ -25,29 +25,26 @@ class CollectionList extends React.Component{
 
     prepareRowsOfTable(rows,key){
         this.props.page.content.map(
-            tournament =>{
+            user =>{
                 key++;
                 rows.push(
-                    <tr key={"tr:"+key}
-                        className={tournament.banned?"danger":
-                            tournament.tournamentStatus==="FINISHED"?"primary":
-                                tournament.tournamentStatus==="ACCEPTED"?"success":"danger"}>
+                    <tr key={"tr:"+key}>
                         <th key={"th:"+key} scope="row" style = {Object.assign({}, styles.thead, styles.checkbox, {borderRadius: '0px'})}>
-                            <Checkbox name={tournament.name}/></th>
-                        <td key={"td:name:"+key} style={Object.assign({}, styles.thead, styles.rowContent)}
-                            onClick={() => {this.editCheckedElements()}}><TextOutput text={tournament.name} limit={17}/></td>
-                        <td key={"td:province"+key}  style={Object.assign({}, styles.thead, styles.rowContent)}>
-                            <TextOutput text={tournament.province} limit={17}/></td>
+                            <Checkbox name={user.name}/></th>
+                        <td key={"td:username:"+key} style={Object.assign({}, styles.thead, styles.rowContent)}
+                            onClick={() => {this.editCheckedElements()}}><TextOutput text={user.username} limit={17}/></td>
+                        <td key={"td:name"+key}  style={Object.assign({}, styles.thead, styles.rowContent)}>
+                            <TextOutput text={user.name} limit={17}/></td>
+                        <td key={"td:surname"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>
+                            <TextOutput text={user.surname} limit={17}/></td>
+                        <td key={"td:email"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>
+                            <TextOutput text={user.email} limit={17}/></td>
+                        <td key={"td:province"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>
+                            <TextOutput text={user.province} limit={17}/></td>
                         <td key={"td:city"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>
-                            <TextOutput text={tournament.city} limit={17}/></td>
-                        <td key={"td:game"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>
-                            <TextOutput text={tournament.game} limit={17}/></td>
-                        <td key={"td:players"+key} style={Object.assign({}, styles.thead, styles.rowContent,
-                            {textAlign:"center"})}>{tournament.playersNumber}/{tournament.maxPlayers}</td>
-                        <td key={"td:dateStart"+key} style={Object.assign({}, styles.thead, styles.rowContent,
-                            {textAlign:"center"})}>{dateFormat((new Date(tournament.dateOfStart)),"dd-MM-yyyy hh:mm")}</td>
-                        <td key={"td:dateEnd"+key} style={Object.assign({}, styles.thead, styles.rowContent,
-                            {textAlign:"center"})}>{dateFormat((new Date(tournament.dateOfEnd)),"dd-MM-yyyy hh:mm")}</td>
+                            <TextOutput text={user.city} limit={17}/></td>
+                        <td key={"td:phoneNumber"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>
+                            <TextOutput text={user.phoneNumber?user.phoneNumber:'no phone number'} limit={17}/></td>
                     </tr>
                 );
             }
@@ -72,13 +69,13 @@ class CollectionList extends React.Component{
                         <tr>
                             <th key="all" style={styles.thead}>
                                 <MultiCheckbox /></th>
-                            <th onClick={()=>this.sortByColumnName("name")}              key="name"     style={styles.thead}>name</th>
-                            <th onClick={()=>this.sortByColumnName("province.location")} key="province" style={styles.thead}>province</th>
-                            <th onClick={()=>this.sortByColumnName("address.city")}      key="city"     style={styles.thead}>city</th>
-                            <th onClick={()=>this.sortByColumnName("game.name")}         key="game"    style={styles.thead}>game</th>
-                            <th onClick={()=>this.sortByColumnName("freeSlots")}         key="players"  style={styles.thead}>players</th>
-                            <th onClick={()=>this.sortByColumnName("dateOfStart")}       key="start date"     style={styles.thead}>start date</th>
-                            <th onClick={()=>this.sortByColumnName("dateOfEnd")}       key="end date"     style={styles.thead}>end date</th>
+                            <th onClick={()=>this.sortByColumnName("username")}              key="username"     style={styles.thead}>username</th>
+                            <th onClick={()=>this.sortByColumnName("name")} key="name" style={styles.thead}>name</th>
+                            <th onClick={()=>this.sortByColumnName("surname")}      key="surname"     style={styles.thead}>surname</th>
+                            <th onClick={()=>this.sortByColumnName("email")}         key="email"    style={styles.thead}>email</th>
+                            <th onClick={()=>this.sortByColumnName("province.location")}         key="province"  style={styles.thead}>province</th>
+                            <th onClick={()=>this.sortByColumnName("address.city")}       key="city"     style={styles.thead}>city</th>
+                            <th onClick={()=>this.sortByColumnName("phoneNumber")}       key="phoneNumber"     style={styles.thead}>phoneNumber</th>
                         </tr>
                         </thead>
                         <tbody>
