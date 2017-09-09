@@ -23,6 +23,7 @@
     "react-scripts": "1.0.9",
     "react-scrollbar": "^0.5.1",
     "react-scrollbar-js": "^1.0.1",
+    "react-scrollbars": "0.0.5",
     "redux": "^3.7.1",
     "redux-thunk": "^2.2.0",
     "source-map": "^0.5.6",

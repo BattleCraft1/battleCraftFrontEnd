@@ -1,14 +1,13 @@
 import React from 'react';
-
 import ReactScrollbar from 'react-scrollbar-js';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { ActionCreators } from '../../../redux/actions';
 import {StyleSheet, css} from 'aphrodite';
-
 import './scrollbar.css';
+
+var icons = require('glyphicons');
+
 
 class PagePanel extends React.Component{
     constructor(props) {
@@ -22,9 +21,9 @@ class PagePanel extends React.Component{
 
     preparePagesButtons(){
         let pagesButtons = [];
-        for(let i=0;i<this.props.page.totalPages;i++)
+        for(let i=0;i<this.props.page.totalPages + 50;i++)
         {
-            pagesButtons.push(<button onClick={()=>this.changePage(i)} key={'pageButton'+i} type="button" className="">{i+1}</button>);
+            pagesButtons.push(<button onClick={()=>this.changePage(i)} key={'pageButton'+i} type="button" className={css(resp.pageButton)}>{i+1}</button>);
         }
         return pagesButtons;
     }
@@ -113,7 +112,15 @@ class PagePanel extends React.Component{
         }
     }
 
+
     render(){
+
+      const myScrollbar = {
+        width:'84%',
+        border: '1px #374550 solid',
+        float:'left',
+        background:'rgb(218, 188, 109)',
+      };
 
         let pagesButtons = [];
 
@@ -126,32 +133,26 @@ class PagePanel extends React.Component{
         return (
 
             <div className={css(resp.navigationBar)}>
-                    <form className="form-inline">
-
+                    <form>
                         <div className={css(resp.pageOptionsBar)}>
-                                <span className="">Page number:</span>
-                            <input ref={(control) => this.pageNumberInput = control} type="text" className="" placeholder="Page number"/>
-                                <button onClick={() => this.changePageByInput()} type="button" className=""><span className="glyphicon glyphicon-share-alt"/></button>
-                                <span className="">Page size:</span>
-                            <input ref={(control) => this.pageSizeInput = control} type="text" className="" placeholder="Page size"/>
-                                <button onClick={() => this.changePageSize()} type="button" className=""><span className="glyphicon glyphicon-ok"/></button>
+                                <div className={css(resp.navigatorLabel) }>Page No:</div>
+                            <input ref={(control) => this.pageNumberInput = control} type="text" className={css(resp.navigatorInput)}/>
+                                <button onClick={() => this.changePageByInput()} type="button" className={css(resp.navigatorButton)}><span/>go</button>
+                                <div className={css(resp.navigatorLabel)}>Page size:</div>
+                            <input ref={(control) => this.pageSizeInput = control} type="text" className={css(resp.navigatorInput)}/>
+                                <button onClick={() => this.changePageSize()} type="button" className={css(resp.navigatorButton)}><span/>ok</button>
                         </div>
                     </form>
 
-
                     <div className={css(resp.container)}>
-                    <button onClick={() => this.previousPage()}  type="button" className={css(resp.navigatorButtonLeft)}><span className="glyphicon glyphicon-chevron-left"/></button>
-                    <span className={css(resp.temp)}>
-                    <ReactScrollbar >
-                    <div className={css(resp.pager)}>
-                        {pagesButtons}
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    </div>
+                    <button onClick={() => this.previousPage()} type="button" className={css(resp.navigatorButtonArrow) + " " + css(resp.goldAndBrownTheme)}>{icons.arrowTriL}</button>
+                    <ReactScrollbar style={myScrollbar}>
+                          <div className={css(resp.pager)}>
+                          {pagesButtons}
+                          </div>
                     </ReactScrollbar>
-                    </span>
-                    <button onClick={() => this.nextPage()} type="button" className={css(resp.navigatorButtonRight)}><span className="glyphicon glyphicon-chevron-right"/></button>
+                    <button onClick={() => this.nextPage()} type="button" className={css(resp.navigatorButtonArrow) + " " + css(resp.goldAndBrownTheme)}>{icons.arrowTriR}</button>
                     </div>
-
           </div>
 
         );
@@ -175,46 +176,126 @@ export default connect( mapStateToProps, mapDispatchToProps )( PagePanel );
 
 const resp = StyleSheet.create({
   navigationBar:{
+    margin:'0',
+    marginTop:'20px',
     position:'relative',
     width:'90%',
     marginLeft:'5%',
     paddingBottom:'10px',
   },
   pageOptionsBar:{
-    background:'blue',
     position:'relative',
-    display:'block',
+    display:'inline-block',
     width:'100%',
+    height:'auto',
+    textAlign:'center',
   },
-  navigatorButtonLeft:{
+  navigatorButtonArrow:{
+    width:'8%',
+    minHeight:'32px',
     position:'relative',
-    background:'green',
     float:'left',
+    background:'#473419',
+    color:'rgb(189, 185, 189)',
+    border:'1px solid rgb(64, 62, 63)',
+    boxShadow:'inset 0 0 4px #9c7239',
+    outline:'none',
+    ':hover':{
+        borderTopColor: 'rgb(249, 249, 249)',
+        borderBottomColor: 'rgb(204, 126, 69)',
+    },
+    ':active':{
+        color:'lightGrey',
+        borderTopColor: 'rgb(204, 126, 69)',
+        borderBottomColor: 'rgb(249, 249, 249)',
+      },
   },
-  navigatorButtonRight:{
-    position:'relative',
-    background:'green',
-    float:'right',
-  },
+  // navigatorButtonRight:{
+  //   width:'8%',
+  //   minHeight:'26px',
+  //   position:'relative',
+  //   float:'right',
+  //   background:'#473419',
+  //   color:'rgb(189, 185, 189)',
+  //   border:'1px solid rgb(64, 62, 63)',
+  // },
   navigatorInput:{
+  position:'relative',
+  width:'8%',
+  height:'100%',
+  height:'auto',
+  paddingTop:"3px",
+  paddingBottom:'3px',
+  background:'white',
+  display:'inline-block',
+  backgroundColor:'lightgrey',
+  textAlign:'center',
+  border:'1px solid',
+  },
+  navigatorLabel:{
+  position:'relative',
+  width:'16%',
+  height:'100%',
+  paddingTop:"3px",
+  paddingBottom:'3px',
+  background:'white',
+  display:'inline-block',
+  marginLeft:'1%',
+  border:'1px solid',
+  color:'rgb(218, 188, 109)',
+  borderTopColor: '#E0BA51',
+  borderBottomColor: '#614722',
+  borderRightColor: '#805D2C',
+  borderLeftColor: '#e3ca86',
+  background:'#473419',
+  boxShadow:'inset 0 0 4px #9c7239',
+},
+  navigatorButton:{
+    marginRight:'1%',
+    position:'relative',
+    display:'inline-block',
+    border:'1px solid',
+    color:'rgb(218, 188, 109)',
+    borderTopColor: '#E0BA51',
+    borderBottomColor: '#614722',
+    borderRightColor: '#805D2C',
+    borderLeftColor: '#e3ca86',
+    background:'#473419',
+    paddingTop:"3px",
+    paddingBottom:'3px',
+    outline:'none',
+    boxShadow:'inset 0 0 4px #9c7239',
+    ':hover':{
+        borderTopColor: 'rgb(249, 249, 249)',
+        borderBottomColor: 'rgb(204, 126, 69)',
+    },
+    ':active':{
+        color:'lightGrey',
+        borderTopColor: 'rgb(204, 126, 69)',
+        borderBottomColor: 'rgb(249, 249, 249)',
+      },
 
   },
   pager:{
-    background:'red',
     position:'relative',
     display:'inline-block',
     paddingBottom:'0px',
-    width:'100%',
-    background:'pink',
+    background: '#EEE',
+    minWidth: '10px',
+    whiteSpace:'nowrap',
+    height:'100%',
+    paddingBottom:"5px",
+    background:'rgb(218, 188, 109)',
   },
   container:{
-    background:'pink',
     textAlign:'center',
     position:'relative',
     display:'inline-block',
     width:'100%',
     textAlign:'center',
     overflow:'hidden',
+    float:'left',
+    marginTop:'4px',
 },
 
   temp:{
@@ -222,7 +303,20 @@ const resp = StyleSheet.create({
     position:'relative',
     display:'inline-block',
     textAlign:'center',
+  },
 
+  pageButton:{
+    background:'#473419',
+    color:'rgb(189, 185, 189)',
+    border:'1px solid rgb(64, 62, 63)',
+  },
 
+  goldAndBrownTheme:{
+    border:'1px solid',
+    color:'rgb(218, 188, 109)',
+    borderTopColor: '#E0BA51',
+    borderBottomColor: '#614722',
+    borderRightColor: '#805D2C',
+    borderLeftColor: '#e3ca86',
   },
 })

@@ -7,6 +7,9 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 import {serverName} from '../../../../main/consts/server';
 
+import {StyleSheet, css} from 'aphrodite';
+
+
 import axios from 'axios';
 
 class SearchPanel extends React.Component{
@@ -174,39 +177,39 @@ class SearchPanel extends React.Component{
         this.prepareTournamentGamesOptions(tournamentGamesOptions);
 
         return (
-            <div className="row">
+            <div className={css(resp.popupContent)}>
                 <form>
-                    <div className="input-group">
-                        <span className="input-group-addon">Name:</span>
-                        <input ref={(control) => this.name = control} id="name" type="text" className="form-control" name="name"
+                    <div className={css(resp.optionContainer)}>
+                        <span className={css(resp.optionLabel)}>Name:</span>
+                        <input ref={(control) => this.name = control} id="name" type="text" className={css(resp.optionInput)} name="name"
                                placeholder="Tournament2017"/>
                     </div>
-                    <div className="input-group">
-                        <span className="input-group-addon">City:</span>
-                        <input ref={(control) => this.city = control} id="city" type="text" className="form-control" name="city"
+                    <div className={css(resp.optionContainer)}>
+                        <span className={css(resp.optionLabel)}>City:</span>
+                        <input ref={(control) => this.city = control} id="city" type="text" className={css(resp.optionInput)} name="city"
                                placeholder="Lublin"/>
                     </div>
-                    <div className="input-group">
-                        <span className="input-group-addon">Province:</span>
-                        <select ref={(control) => this.province = control} className="form-control" id="province">
+                    <div className={css(resp.optionContainer)}>
+                        <span className={css(resp.optionLabel)}>Province:</span>
+                        <select ref={(control) => this.province = control} className={css(resp.optionInput)} id="province">
                             {provincesOptions}
                         </select>
                     </div>
-                    <div className="input-group">
-                        <span className="input-group-addon">Game:</span>
-                        <select ref={(control) => this.game = control} className="form-control" id="class">
+                    <div className={css(resp.optionContainer)}>
+                        <span className={css(resp.optionLabel)}>Game:</span>
+                        <select ref={(control) => this.game = control} className={css(resp.optionInput)} id="class">
                             {tournamentGamesOptions}
                         </select>
                     </div>
-                    <div className="input-group">
-                        <span className="input-group-addon">From:</span>
-                        <input ref={(control) => this.dateFrom = control} type="date" className="form-control" id="dateFrom"/>
+                    <div className={css(resp.optionContainer)}>
+                        <span className={css(resp.optionLabel)}>From:</span>
+                        <input ref={(control) => this.dateFrom = control} type="date" className={css(resp.optionInput)} id="dateFrom"/>
                     </div>
-                    <div className="input-group">
-                        <span className="input-group-addon">To:</span>
-                        <input ref={(control) => this.dateTo = control}  type="date" className="form-control" id="dateTo"/>
+                    <div className={css(resp.optionContainer)}>
+                        <span className={css(resp.optionLabel)}>To:</span>
+                        <input ref={(control) => this.dateTo = control}  type="date" className={css(resp.optionInput)} id="dateTo"/>
                     </div>
-                    <div className="input-group">
+                    <div className={css(resp.optionContainer)}>
                         <span className="input-group-addon">Max players:</span>
                         <input ref={(control) => this.maxPlayers = control} id="maxPlayers" type="number" className="form-control" name="maxPlayers"/>
                         <span className="input-group-addon">Players number:</span>
@@ -214,7 +217,7 @@ class SearchPanel extends React.Component{
                         <span className="input-group-addon">Free slots:</span>
                         <input ref={(control) => this.freeSlots = control} id="freeSlots" type="number" className="form-control" name="freeSlots"/>
                     </div>
-                    <div className="input-group">
+                    <div className={css(resp.optionContainer)}>
                         <span className="input-group-addon">Banned:</span>
                         <select ref={(control) => this.banned = control} className="form-control" id="banned">
                             <option key="nevermind" value=""/>
@@ -234,7 +237,7 @@ class SearchPanel extends React.Component{
                             <option key="no" value={false}>no</option>
                         </select>
                     </div>
-                    <button onClick={()=>this.searchTournaments()} type="button" className="btn btn-default">Search</button>
+                    <button onClick={()=>this.searchTournaments()} type="button" className={css(resp.searchButton)}>Search</button>
                 </form>
             </div>
         );
@@ -254,3 +257,43 @@ function mapStateToProps( state ) {
 
 export default connect( mapStateToProps, mapDispatchToProps )( SearchPanel );
 
+const resp = StyleSheet.create({
+  popupContent:{
+    position:'fixed',
+    width:'80%',
+    padding:'2%',
+    zIndex:'100',
+    background:'red',
+  },
+
+  optionContainer:{
+    position:'relative',
+    display:'inline-block',
+    width:'48%',
+    background:'green',
+    float:'left',
+    marginLeft:'1%',
+    marginRight:'1%',
+  },
+
+  optionLabel:{
+  position:'relative',
+  display:'inline-block',
+  width:'100%',
+  textAlign:'center',
+  },
+
+  optionInput:{
+  position:'relative',
+  display:'inline-block',
+  width:'100%',
+  },
+
+  searchButton:{
+    width:'20%',
+    float:'right',
+    marginTop:'1%',
+    marginRight:'1%',
+  },
+
+})
