@@ -7,8 +7,7 @@ import Checkbox from '../../../commonComponents/checkBox/Checkbox'
 import MultiCheckbox from '../../../commonComponents/checkBox/MultiCheckbox'
 import TextOutput from '../../../commonComponents/textOutput/TextOutput'
 import OptionPanel from '../../optionPanel/tournaments/OptionPanel'
-
-import dateFormat from 'dateformat';
+import {serverName} from '../../../../main/consts/server';
 
 class CollectionList extends React.Component{
     constructor(props) {
@@ -31,6 +30,8 @@ class CollectionList extends React.Component{
                     <tr key={"tr:"+key}>
                         <th key={"th:"+key} scope="row" style = {Object.assign({}, styles.thead, styles.checkbox, {borderRadius: '0px'})}>
                             <Checkbox name={user.name}/></th>
+                        <td key={"td:avatar:"+key} style={Object.assign({}, styles.thead, styles.rowContent)}>
+                            <img src={serverName+`/get/user/`+user.username+`/avatar`} alt="avatar" className="img-responsive"/></td>
                         <td key={"td:username:"+key} style={Object.assign({}, styles.thead, styles.rowContent)}
                             onClick={() => {this.editCheckedElements()}}><TextOutput text={user.username} limit={17}/></td>
                         <td key={"td:name"+key}  style={Object.assign({}, styles.thead, styles.rowContent)}>
@@ -69,13 +70,14 @@ class CollectionList extends React.Component{
                         <tr>
                             <th key="all" style={styles.thead}>
                                 <MultiCheckbox /></th>
-                            <th onClick={()=>this.sortByColumnName("username")}              key="username"     style={styles.thead}>username</th>
-                            <th onClick={()=>this.sortByColumnName("name")} key="name" style={styles.thead}>name</th>
-                            <th onClick={()=>this.sortByColumnName("surname")}      key="surname"     style={styles.thead}>surname</th>
-                            <th onClick={()=>this.sortByColumnName("email")}         key="email"    style={styles.thead}>email</th>
-                            <th onClick={()=>this.sortByColumnName("province.location")}         key="province"  style={styles.thead}>province</th>
-                            <th onClick={()=>this.sortByColumnName("address.city")}       key="city"     style={styles.thead}>city</th>
-                            <th onClick={()=>this.sortByColumnName("phoneNumber")}       key="phoneNumber"     style={styles.thead}>phoneNumber</th>
+                            <th key="avatar" style={styles.thead}>avatar</th>
+                            <th onClick={()=>this.sortByColumnName("username")}           key="username"     style={styles.thead}>username</th>
+                            <th onClick={()=>this.sortByColumnName("name")}               key="name"         style={styles.thead}>name</th>
+                            <th onClick={()=>this.sortByColumnName("surname")}            key="surname"      style={styles.thead}>surname</th>
+                            <th onClick={()=>this.sortByColumnName("email")}              key="email"        style={styles.thead}>email</th>
+                            <th onClick={()=>this.sortByColumnName("province.location")}  key="province"     style={styles.thead}>province</th>
+                            <th onClick={()=>this.sortByColumnName("address.city")}       key="city"         style={styles.thead}>city</th>
+                            <th onClick={()=>this.sortByColumnName("phoneNumber")}        key="phoneNumber"  style={styles.thead}>phoneNumber</th>
                         </tr>
                         </thead>
                         <tbody>
