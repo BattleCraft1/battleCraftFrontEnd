@@ -53,9 +53,9 @@ class CollectionPanel extends React.Component{
         return (
             <div className={css(resp.container)}>
                 <div className="row">
-                        {collectionSearchPanel}
-                        {collectionList}
-                        <PagePanel getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>
+                    {collectionSearchPanel}
+                    {collectionList}
+                    <PagePanel getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>
                 </div>
             </div>
         );
@@ -78,163 +78,154 @@ export default connect( mapStateToProps, mapDispatchToProps )( CollectionPanel )
 
 
 const resp = StyleSheet.create({
-  container:{
-    display:'block',
-    position:'relative',
-    width:'100%',
-    zIndex:'1',
-  },
+    container:{
+        display:'block',
+        position:'relative',
+        width:'100%',
+        zIndex:'1',
+    },
 
 })
 
-const MyContext = {
-    "content": [
-        {
-            "game": "Warhammer",
-            "maxPlayers": 6,
-            "freeSlots": 4,
-            "province": "lubelskie",
-            "city": "Lublin",
-            "name": "Tournament1",
-            "dateOfStart": 1483877100000,
-            "playersNumber": 2,
-            "active": true,
-            "accepted": true,
-            "banned": true
-        },
-        {
-            "game": "Cyber punk",
-            "maxPlayers": 6,
-            "freeSlots": 4,
-            "province": "podlaskie",
-            "city": "Białystok",
-            "name": "Tournament10",
-            "dateOfStart": 1535299500000,
-            "playersNumber": 2,
-            "active": false,
-            "accepted": true,
-            "banned": false
-        },
-        {
-            "game": "Star wars",
-            "maxPlayers": 8,
-            "freeSlots": 6,
-            "province": "lubelskie",
-            "city": "Zamość",
-            "name": "Tournament2",
-            "dateOfStart": 1518181860000,
-            "playersNumber": 2,
-            "active": false,
-            "accepted": true,
-            "banned": false
-        },
-        {
-            "game": "Warhammer 40k",
-            "maxPlayers": 6,
-            "freeSlots": 4,
-            "province": "dolnośląskie",
-            "city": "Wrocław",
-            "name": "Tournament3",
-            "dateOfStart": 1489328100000,
-            "playersNumber": 2,
-            "active": true,
-            "accepted": true,
-            "banned": false
-        },
-        {
-            "game": "Cyber punk",
-            "maxPlayers": 10,
-            "freeSlots": 8,
-            "province": "małopolskie",
-            "city": "Kraków",
-            "name": "Tournament4",
-            "dateOfStart": 1524666300000,
-            "playersNumber": 2,
-            "active": true,
-            "accepted": false,
-            "banned": false
-        },
-        {
-            "game": "Heroes",
-            "maxPlayers": 8,
-            "freeSlots": 6,
-            "province": "śląskie",
-            "city": "Katowice",
-            "name": "Tournament5",
-            "dateOfStart": 1494667440000,
-            "playersNumber": 2,
-            "active": true,
-            "accepted": true,
-            "banned": false
-        },
-        {
-            "game": "Lord of the rings",
-            "maxPlayers": 6,
-            "freeSlots": 4,
-            "province": "zachodiopomorskie",
-            "city": "Szczecin",
-            "name": "Tournament6",
-            "dateOfStart": 1541927580000,
-            "playersNumber": 2,
-            "active": false,
-            "accepted": false,
-            "banned": false
-        },
-        {
-            "game": "Warhammer",
-            "maxPlayers": 4,
-            "freeSlots": 2,
-            "province": "wielkopolskie",
-            "city": "Poznań",
-            "name": "Tournament7",
-            "dateOfStart": 1512122760000,
-            "playersNumber": 2,
-            "active": true,
-            "accepted": true,
-            "banned": true
-        },
-        {
-            "game": "Star wars",
-            "maxPlayers": 20,
-            "freeSlots": 18,
-            "province": "opolskie",
-            "city": "Opole",
-            "name": "Tournament8",
-            "dateOfStart": 1527934320000,
-            "playersNumber": 2,
-            "active": false,
-            "accepted": false,
-            "banned": false
-        },
-        {
-            "game": "Warhammer 40k",
-            "maxPlayers": 8,
-            "freeSlots": 6,
-            "province": "łódzkie",
-            "city": "Łódź",
-            "name": "Tournament9",
-            "dateOfStart": 1499959020000,
-            "playersNumber": 2,
-            "active": true,
-            "accepted": true,
-            "banned": false
-        }
-    ],
-    "totalPages": 1,
-    "totalElements": 10,
-    "last": true,
-    "size": 10,
-    "number": 0,
-    "sort": [
-        {
-            "direction": "ASC",
-            "property": "name",
-            "ignoreCase": false,
-            "nullHandling": "NATIVE",
-            "ascending": true,
-            "descending": false
-        }
-    ],
-    "first": true,
-    "numberOfElements": 10
-}
+const MyContext =
+    {
+        "content": [
+            {
+                "tournamentStatus": "ACCEPTED",
+                "game": "Warhammer",
+                "maxPlayers": 6,
+                "freeSlots": 4,
+                "province": "lubelskie",
+                "city": "Lublin",
+                "name": "Tournament1",
+                "dateOfStart": 1483880700000,
+                "playersNumber": 2,
+                "banned": false
+            },
+            {
+                "tournamentStatus": "NEW",
+                "game": "Cyber punk",
+                "maxPlayers": 6,
+                "freeSlots": 4,
+                "province": "podlaskie",
+                "city": "Białystok",
+                "name": "Tournament10",
+                "dateOfStart": 1535306700000,
+                "playersNumber": 2,
+                "banned": false
+            },
+            {
+                "tournamentStatus": "NEW",
+                "game": "Star wars",
+                "maxPlayers": 8,
+                "freeSlots": 6,
+                "province": "lubelskie",
+                "city": "Zamość",
+                "name": "Tournament2xxxxxxxx",
+                "dateOfStart": 1518185460000,
+                "playersNumber": 2,
+                "banned": false
+            },
+            {
+                "tournamentStatus": "NEW",
+                "game": "Warhammer 40k",
+                "maxPlayers": 6,
+                "freeSlots": 4,
+                "province": "dolnośląskie",
+                "city": "Wrocław",
+                "name": "Tournament3",
+                "dateOfStart": 1489331700000,
+                "playersNumber": 2,
+                "banned": true
+            },
+            {
+                "tournamentStatus": "FINISHED",
+                "game": "Cyber punk",
+                "maxPlayers": 10,
+                "freeSlots": 8,
+                "province": "małopolskie",
+                "city": "Kraków",
+                "name": "Tournament4",
+                "dateOfStart": 1524673500000,
+                "playersNumber": 2,
+                "banned": false
+            },
+            {
+                "tournamentStatus": "ACCEPTED",
+                "game": "Heroes",
+                "maxPlayers": 8,
+                "freeSlots": 6,
+                "province": "śląskie",
+                "city": "Katowice",
+                "name": "Tournament5",
+                "dateOfStart": 1494674640000,
+                "playersNumber": 2,
+                "banned": false
+            },
+            {
+                "tournamentStatus": "FINISHED",
+                "game": "Lord of the rings",
+                "maxPlayers": 6,
+                "freeSlots": 4,
+                "province": "zachodiopomorskie",
+                "city": "Szczecin",
+                "name": "Tournament6",
+                "dateOfStart": 1541931180000,
+                "playersNumber": 2,
+                "banned": true
+            },
+            {
+                "tournamentStatus": "ACCEPTED",
+                "game": "Warhammer",
+                "maxPlayers": 4,
+                "freeSlots": 2,
+                "province": "wielkopolskie",
+                "city": "Poznań",
+                "name": "Tournament7",
+                "dateOfStart": 1512126360000,
+                "playersNumber": 2,
+                "banned": false
+            },
+            {
+                "tournamentStatus": "FINISHED",
+                "game": "Star wars",
+                "maxPlayers": 20,
+                "freeSlots": 18,
+                "province": "opolskie",
+                "city": "Opole",
+                "name": "Tournament8",
+                "dateOfStart": 1527898320000,
+                "playersNumber": 2,
+                "banned": false
+            },
+            {
+                "tournamentStatus": "ACCEPTED",
+                "game": "Warhammer 40k",
+                "maxPlayers": 8,
+                "freeSlots": 6,
+                "province": "łódzkie",
+                "city": "Łódź",
+                "name": "Tournament9",
+                "dateOfStart": 1499966220000,
+                "playersNumber": 2,
+                "banned": false
+            }
+        ],
+        "last": true,
+        "totalElements": 10,
+        "totalPages": 1,
+        "size": 10,
+        "number": 0,
+        "sort": [
+            {
+                "direction": "ASC",
+                "property": "name",
+                "ignoreCase": false,
+                "nullHandling": "NATIVE",
+                "ascending": true,
+                "descending": false
+            }
+        ],
+        "numberOfElements": 10,
+        "first": true
+    }

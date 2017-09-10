@@ -98,8 +98,8 @@ const resp = StyleSheet.create({
     navbar:{
       position:'relative',
       marginBottom:'20px',
-      width:'80%',
-      marginLeft:'10%',
+      width:'70%',
+      marginLeft:'15%',
       background:'none',
     },
 

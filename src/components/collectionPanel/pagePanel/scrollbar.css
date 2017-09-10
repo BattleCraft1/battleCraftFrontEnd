@@ -1,0 +1,9 @@
+.react-scrollbar-default .-reactjs-scrollbar-track\:horizontal {
+  height: 10px;
+  top: 24px;
+  right: 0;
+  border: 1px #374550 solid ;
+  float: left ;
+  background: rgb(218, 188, 109);
+  color: rgb(218, 188, 109);
+}
