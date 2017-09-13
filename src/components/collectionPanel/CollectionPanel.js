@@ -4,6 +4,8 @@ import React from 'react';
 import {StyleSheet, css} from 'aphrodite';
 import TournamentsList from './table/tournaments/CollectionList';
 import TournamentsSearchForm from './searchPanel/tournaments/SearchPanel';
+import UsersList from './table/users/CollectionList';
+import UsersSearchForm from './searchPanel/users/SearchPanel';
 import PagePanel from './pagePanel/PagePanel';
 
 import { connect } from 'react-redux';
@@ -14,25 +16,38 @@ import {serverName} from '../../main/consts/server'
 import axios from 'axios';
 
 class CollectionPanel extends React.Component{
-    componentDidMount() {
-        this.getPageRequest();
-    }
+    constructor(props) {
+        super(props);
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.match.params.collectionType!==undefined &&
-            nextProps.match.params.collectionType !== this.props.match.params.collectionType) {
-            this.getPageRequest();
+        this.state = {
+            collectionType:""
         }
     }
 
-    getPageRequest(){
-        axios.post(serverName+`page/`+this.props.match.params.collectionType,this.props.pageRequest)
+    async componentDidMount() {
+        this.setState({collectionType: ""});
+        await this.getPageRequest(this.props.match.params.collectionType);
+        this.setState({collectionType: this.props.match.params.collectionType});
+    }
+
+    async componentWillReceiveProps(nextProps) {
+        if (nextProps.match.params.collectionType !== undefined &&
+            nextProps.match.params.collectionType !== this.props.match.params.collectionType) {
+            this.setState({collectionType: ""});
+            await this.getPageRequest(nextProps.match.params.collectionType);
+            this.setState({collectionType: nextProps.match.params.collectionType});
+        }
+    }
+
+    async getPageRequest(collectionType){
+        console.log(this.props.pageRequest);
+        await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
             .then(res => {
                 this.props.setPage(res.data);
 
                 let pageRequest = this.props.pageRequest;
                 pageRequest.pageRequest.page=this.props.page.number;
-                pageRequest.pageRequest.size=this.props.page.size;
+                pageRequest.pageRequest.size=this.props.page.numberOfElements;
                 this.props.setPageRequest(pageRequest);
             })
             .catch(error => {
@@ -41,19 +56,25 @@ class CollectionPanel extends React.Component{
     }
 
     render(){
-        let collectionList;
-        let collectionSearchPanel;
-        if(this.props.match.params.collectionType==='tournaments'){
+        let collectionList ="";
+        let collectionSearchPanel ="";
+        if(this.state.collectionType==='tournaments'){
             collectionList=<TournamentsList getPageRequest={this.getPageRequest.bind(this)}
-                                            collectionType={this.props.match.params.collectionType}/>;
-            collectionSearchPanel=<TournamentsSearchForm getPageRequest={this.getPageRequest.bind(this)} />;
+                                            collectionType={this.state.collectionType}/>;
+            collectionSearchPanel=<TournamentsSearchForm collectionType={this.state.collectionType}
+                                                         getPageRequest={this.getPageRequest.bind(this)} />;
+        }
+        else if(this.state.collectionType==='users'){
+            collectionList=<UsersList getPageRequest={this.getPageRequest.bind(this)}
+                                      collectionType={this.state.collectionType}/>;
+            collectionSearchPanel=<UsersSearchForm collectionType={this.state.collectionType}
+                                                   getPageRequest={this.getPageRequest.bind(this)} />;
         }
 
 
         return (
             <div className={css(resp.container)}>
                 <div className="row">
-                    {collectionSearchPanel}
                     {collectionList}
                     <PagePanel getPageRequest={this.getPageRequest.bind(this)} collectionType={this.props.match.params.collectionType}/>
                 </div>
@@ -85,7 +106,7 @@ const resp = StyleSheet.create({
         zIndex:'1',
     },
 
-})
+});
 
 const MyContext =
     {

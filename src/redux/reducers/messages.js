@@ -8,6 +8,7 @@ export const message = createReducer( {}, {
     },
     [types.SHOW_NETWORK_ERROR_MESSAGE_BOX]( state, action ) {
         let message;
+        console.log(action.error.response);
         if(action.error===undefined || action.error.message==='Network Error'){
             message={
                 isShown: true,
@@ -15,12 +16,13 @@ export const message = createReducer( {}, {
                 messageType: "alert-danger"
             };
         }
-        else if(action.error.message.indexOf('Request failed with status code ') !== -1 && action.error.response.data!==undefined)
+        else if(action.error.response.status !== 200 && action.error.response.data!==undefined){
             message={
                 isShown: true,
                 messageText: action.error.response.data,
                 messageType: "alert-danger"
             };
+        }
         else{
             message={
                 isShown: true,

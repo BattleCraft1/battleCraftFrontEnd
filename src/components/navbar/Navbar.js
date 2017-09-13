@@ -67,6 +67,7 @@ export default class Navigator extends React.Component{
                 <Option link="/collectionsPanel/tournaments">Tournaments</Option>
                 <Option link="/collectionsPanel/games">Games</Option>
                 <Option link="/collectionsPanel/rankings">Rankings</Option>
+                 <Option link="/collectionsPanel/users">Users</Option>
                 <AccountDropdown toggleAccountList = {this.handleAccountList.bind(this)}>Account <span className={css(resp.arrow)}>{accountSimbol}</span></AccountDropdown>
 
                   <div style ={this.state.accountListVisible ? {display:'none'}:{display:'block'}} className={css(resp.account)}>
@@ -75,7 +76,6 @@ export default class Navigator extends React.Component{
                   <AccountOption link="#">Link2</AccountOption>
                   </div>
                   </div>
-                <Option link="/collectionsPanel/users">Users</Option>
               </div>
           </div>
 
