@@ -12,10 +12,11 @@ export function checkAllElements(checked) {
         checked: checked
     }
 }
-export function checkElement(name,checked) {
+export function checkElement(property,value,checked) {
     return {
         type: types.CHECK_ELEMENT,
         checked: checked,
-        name: name
+        property: property,
+        value: value
     }
 }

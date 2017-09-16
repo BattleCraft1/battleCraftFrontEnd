@@ -227,7 +227,7 @@ class SearchPanel extends React.Component{
             </div>
         );
     }
-};
+}
 
 function mapDispatchToProps( dispatch ) {
     return bindActionCreators( ActionCreators, dispatch );
@@ -281,4 +281,4 @@ const resp = StyleSheet.create({
     marginRight:'1%',
   },
 
-})
+});

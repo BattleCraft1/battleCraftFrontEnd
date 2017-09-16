@@ -32,7 +32,7 @@ class Checkbox extends React.Component {
                            let checked=this.state.checked;
                            checked=!checked;
                            this.setState({checked:checked});
-                           this.props.checkElement(this.props.name, checked);
+                           this.props.checkElement(this.props.property,this.props.value, checked);
                        }
                    }
                    checked={this.state.checked}/>

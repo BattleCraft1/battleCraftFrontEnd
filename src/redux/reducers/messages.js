@@ -8,6 +8,7 @@ export const message = createReducer( {}, {
     },
     [types.SHOW_NETWORK_ERROR_MESSAGE_BOX]( state, action ) {
         let message;
+        try {
         console.log(action.error.response);
         if(action.error===undefined || action.error.message==='Network Error'){
             message={
@@ -16,7 +17,9 @@ export const message = createReducer( {}, {
                 messageType: "alert-danger"
             };
         }
-        else if(action.error.response.status !== 200 && action.error.response.data!==undefined){
+        else if(action.error.response.status !== 200 &&
+            action.error.response.data!==undefined &&
+            typeof action.error.response.data==="string"){
             message={
                 isShown: true,
                 messageText: action.error.response.data,
@@ -30,8 +33,16 @@ export const message = createReducer( {}, {
                 messageType: "alert-danger"
             };
         }
-
-        return message;
+            return message;
+        }
+        catch (e){
+            message={
+                isShown: true,
+                messageText: "There are not recognized problems on the server side. Please contact with administrator.",
+                messageType: "alert-danger"
+            };
+            return message;
+        }
     },
     [types.HIDE_MESSAGE_BOX]( state, action ) {
         let message = {};

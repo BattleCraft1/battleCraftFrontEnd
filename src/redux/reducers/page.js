@@ -4,7 +4,7 @@ import * as types from '../types/page'
 export const page = createReducer( {}, {
     [types.SET_PAGE]( state, action ) {
         action.page.content.forEach((element) =>{
-                let previousElement=state.content.filter(previousElement1 => previousElement1.name===element.name)[0];
+                let previousElement=state.content.find(previousElement1 => previousElement1.name===element.name);
                 if(previousElement!==undefined && previousElement.hasOwnProperty('checked')){
                     element.checked=previousElement.checked;
                 }
@@ -24,7 +24,7 @@ export const page = createReducer( {}, {
     },
 
     [types.CHECK_ELEMENT]( state, action ){
-        let elementToCheck=state.content.filter(element => element.name===action.name)[0];
+        let elementToCheck=state.content.find(element => element[action.property]===action.value);
         elementToCheck.checked=action.checked;
         return Object.create(state);
     }
