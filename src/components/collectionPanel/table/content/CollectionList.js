@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import {StyleSheet, css} from 'aphrodite';
 
-import OptionPanel from '../../optionPanel/tournaments/OptionPanel'
+import OptionPanel from '../../optionPanel/OptionPanel'
 import LegendPanel from '../../legendPanel/LegendPanel'
 import TournamentRow from './row/tournaments/Row'
 import UserRow from './row/users/Row'
@@ -45,20 +45,21 @@ class CollectionList extends React.Component{
         }
     }
 
-    prepareRowsOfTable(rows,key){
-        let row;
+    prepareRowsOfTable(key){
+        let rows = [];
+        let rowType;
 
         if(this.props.collectionType==="tournaments")
-            row = TournamentRow;
+            rowType = TournamentRow;
         else
-            row = UserRow;
+            rowType = UserRow;
 
         this.props.page.content.map(
             element =>{
                 key++;
                 rows.push(
                     React.createElement(
-                        row,
+                        rowType,
                         {key : key,
                         element : element,
                         isColumnActive : this.isColumnActive.bind(this),
@@ -68,6 +69,7 @@ class CollectionList extends React.Component{
                 )
             }
         );
+        return rows;
     }
 
 
@@ -78,7 +80,7 @@ class CollectionList extends React.Component{
 
         if(this.props.page.content!==undefined)
         {
-            this.prepareRowsOfTable(rows,key);
+            rows = this.prepareRowsOfTable(key);
         }
 
         if(this.props.collectionType==="tournaments")
