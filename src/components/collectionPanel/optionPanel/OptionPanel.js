@@ -8,6 +8,8 @@ import CancelAcceptOperation from './operations/CancelAcceptOperation'
 import DeleteOperation from './operations/DeleteOperation'
 import EditOperation from './operations/EditOperation'
 import UnclokOperation from './operations/UnlockOperation'
+import AdvanceOperation from './operations/AdvanceOperation'
+import DegradeOperation from './operations/DegradeOperation'
 
 export default class OptionPanel extends React.Component {
     constructor(props) {
@@ -22,7 +24,9 @@ export default class OptionPanel extends React.Component {
             "Delete":DeleteOperation,
             "Edit":EditOperation,
             "Unlock":UnclokOperation,
-            "Accept":AcceptOperation
+            "Accept":AcceptOperation,
+            "Advance":AdvanceOperation,
+            "Degrade":DegradeOperation
         };
 
         let operations = [];

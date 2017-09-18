@@ -2,7 +2,7 @@ export const noServerContext =
     {
         "content": [
             {
-                "tournamentStatus": "ACCEPTED",
+                "status": "ACCEPTED",
                 "game": "Warhammer",
                 "maxPlayers": 6,
                 "freeSlots": 4,
@@ -14,7 +14,7 @@ export const noServerContext =
                 "banned": false
             },
             {
-                "tournamentStatus": "NEW",
+                "status": "NEW",
                 "game": "Cyber punk",
                 "maxPlayers": 6,
                 "freeSlots": 4,
@@ -26,7 +26,7 @@ export const noServerContext =
                 "banned": false
             },
             {
-                "tournamentStatus": "NEW",
+                "status": "NEW",
                 "game": "Star wars",
                 "maxPlayers": 8,
                 "freeSlots": 6,
@@ -38,7 +38,7 @@ export const noServerContext =
                 "banned": false
             },
             {
-                "tournamentStatus": "NEW",
+                "status": "NEW",
                 "game": "Warhammer 40k",
                 "maxPlayers": 6,
                 "freeSlots": 4,
@@ -50,7 +50,7 @@ export const noServerContext =
                 "banned": true
             },
             {
-                "tournamentStatus": "FINISHED",
+                "status": "FINISHED",
                 "game": "Cyber punk",
                 "maxPlayers": 10,
                 "freeSlots": 8,
@@ -62,7 +62,7 @@ export const noServerContext =
                 "banned": false
             },
             {
-                "tournamentStatus": "ACCEPTED",
+                "status": "ACCEPTED",
                 "game": "Heroes",
                 "maxPlayers": 8,
                 "freeSlots": 6,
@@ -74,7 +74,7 @@ export const noServerContext =
                 "banned": false
             },
             {
-                "tournamentStatus": "FINISHED",
+                "status": "FINISHED",
                 "game": "Lord of the rings",
                 "maxPlayers": 6,
                 "freeSlots": 4,
@@ -86,7 +86,7 @@ export const noServerContext =
                 "banned": true
             },
             {
-                "tournamentStatus": "ACCEPTED",
+                "status": "ACCEPTED",
                 "game": "Warhammer",
                 "maxPlayers": 4,
                 "freeSlots": 2,
@@ -98,7 +98,7 @@ export const noServerContext =
                 "banned": false
             },
             {
-                "tournamentStatus": "FINISHED",
+                "status": "FINISHED",
                 "game": "Star wars",
                 "maxPlayers": 20,
                 "freeSlots": 18,
@@ -110,7 +110,7 @@ export const noServerContext =
                 "banned": false
             },
             {
-                "tournamentStatus": "ACCEPTED",
+                "status": "ACCEPTED",
                 "game": "Warhammer 40k",
                 "maxPlayers": 8,
                 "freeSlots": 6,

@@ -19,13 +19,13 @@ export default class Row extends React.Component{
             if(tournament.banned)
                 return colors["tournaments"]["active"]["BANNED"];
             else
-                return colors["tournaments"]["active"][tournament.tournamentStatus]
+                return colors["tournaments"]["active"][tournament.status]
         }
         else{
             if(tournament.banned)
                 return colors["tournaments"]["normal"]["BANNED"];
             else
-                return colors["tournaments"]["normal"][tournament.tournamentStatus]
+                return colors["tournaments"]["normal"][tournament.status]
         }
     }
 

@@ -8,25 +8,47 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
-class DeleteOperation extends React.Component {
+let uniqueNameProperty;
+
+class AcceptOperation extends React.Component {
     constructor(props) {
         super(props);
+
+        if(this.props.collectionType === 'tournaments'){
+            uniqueNameProperty = 'name'
+        }
+        else if(this.props.collectionType === 'users'){
+            uniqueNameProperty = 'username'
+        }
+    }
+
+    getFailureMessage(elementsWhichCannotBeAccept){
+        return "Elements " +
+            elementsWhichCannotBeAccept.map(function(element){return element[uniqueNameProperty]}).join(", ")+
+            " are not accepted because you can accept only new elements and not banned"
+    }
+
+    getSuccessMessage(elementsToAccept){
+        return "Elements "+elementsToAccept.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are accepted";
     }
 
     acceptElements(){
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
         let elementsToAccept = checkedElements.filter(element =>
-            element.tournamentStatus==="NEW" && element.banned===false);
-        let elementsWhichCannotBeAccept = checkedElements.filter(element => element.tournamentStatus!=="NEW");
+            element.status==="NEW" && element.banned===false);
+        let elementsWhichCannotBeAccept = checkedElements.filter(element => element.status!=="NEW");
 
-        let showMessage = this.props.showMessageBox;
+        let showSuccessMessage = this.props.showSuccessMessage;
+        let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
         let setPage = this.props.setPage;
-        let showNetworkErrorMessageBox = this.props.showNetworkErrorMessageBox;
+        let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
+        let getFailureMessage = this.getFailureMessage;
+        let getSuccessMessage = this.getSuccessMessage;
 
         if(elementsToAccept.length>0) {
             let uniqueElementsToBanNames = elementsToAccept.map(function(item) {
-                return item['name'];
+                return item[uniqueNameProperty];
             });
             let getPageAndModifyDataObjectsWrapper = {
                 namesOfObjectsToModify: uniqueElementsToBanNames,
@@ -39,40 +61,35 @@ class DeleteOperation extends React.Component {
                     .then(res => {
                         setPage(res.data);
                         if(elementsWhichCannotBeAccept.length>0)
-                            showMessage(
+                            showFailureMessage(
                                 {
-                                    messageText: "Elements "+elementsWhichCannotBeAccept
-                                        .map(function(element){return element.name}).join(", ")+" are not accepted " +
-                                    "because you can accept only new elements and not banned",
-                                    messageType: "alert-danger"
+                                    messageText: getFailureMessage(elementsWhichCannotBeAccept)
                                 }
                             );
                         else
-                            showMessage(
+                            showSuccessMessage(
                                 {
-                                    messageText: "Elements "+elementsToAccept.map(function(element){return element.name}).join(", ")+" are accepted",
-                                    messageType: "alert-success"
+                                    messageText: getSuccessMessage(elementsWhichCannotBeAccept)
                                 }
                             );
                     })
                     .catch(error => {
-                        showNetworkErrorMessageBox(error);
+                        showNetworkErrorMessage(error);
                     })
             };
 
             this.props.showConfirmationDialog(
                 {
-                    header:"Accept checked tournaments",
+                    header:"Accept checked elements",
                     message:"Are you sure?",
                     onConfirmFunction: operationFunction
                 }
             )
         }
         else{
-            showMessage(
+            showFailureMessage(
                 {
-                    messageText: "Nothing to cancel accept",
-                    messageType: "alert-danger"
+                    messageText: "Nothing to accept. Only new elements can be accepted."
                 }
             )
         }
@@ -81,7 +98,7 @@ class DeleteOperation extends React.Component {
     render() {
         return (
             <OperationButton
-                name = "Unlock"
+                name = "Accept"
                 icon = {icons.checkHeavyWhite}
                 operation = {this.acceptElements.bind(this)}
             />
@@ -102,4 +119,4 @@ function mapStateToProps( state ) {
     };
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( DeleteOperation );
+export default connect( mapStateToProps, mapDispatchToProps )( AcceptOperation );

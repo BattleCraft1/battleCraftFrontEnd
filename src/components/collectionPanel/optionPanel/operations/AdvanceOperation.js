@@ -8,70 +8,59 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
-let acceptedCollectionStatus;
-let uniqueNameProperty;
+let uniqueNameProperty = 'username';
 
-class CancelAcceptOperation extends React.Component {
+class AdvanceOperation extends React.Component {
     constructor(props) {
         super(props);
-        if(this.props.collectionType === 'tournaments'){
-            acceptedCollectionStatus = 'ACCEPTED';
-            uniqueNameProperty = 'name'
-        }
-        else if(this.props.collectionType === 'users'){
-            acceptedCollectionStatus = 'PLAYER';
-            uniqueNameProperty = 'username'
-        }
     }
 
-    getSuccessMessage(elementsToCancelAccept){
-        return "Acceptations for "+elementsToCancelAccept.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are canceled";
+    getFailureMessage(elementsWhichCannotBeAdvance){
+        return "Users "+elementsWhichCannotBeAdvance
+                .map(function(element){return element[uniqueNameProperty]}).join(", ")+" are not advance to Organizer " +
+            "because if you want advance user to Organizer he must by a Player"
     }
 
-    getFailureMessage(elementsWithFailedCancellation){
-        return "Elements "+elementsWithFailedCancellation
-                .map(function(element){return element[uniqueNameProperty]}).join(", ")+" are still accepted " +
-            "because you can cancel acceptation only for accepted and not banned elements"
+    getSuccessMessage(elementsToAdvance){
+        return "Users "+elementsToAdvance.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are advanced to Organizer"
     }
 
-    cancelAcceptElements(){
+    advanceElements(){
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        let elementsToCancelAccept = checkedElements.filter(element =>
-            element.status===acceptedCollectionStatus  && element.banned===false);
-        let elementsWithFailedCancellation = checkedElements.filter(element => element.status!==acceptedCollectionStatus);
+        let elementsToAdvance = checkedElements.filter(element => element.status==='PLAYER');
+        let elementsWhichCannotBeAdvance = checkedElements.filter(element => element.status!=='PLAYER');
 
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
-        let collectionType = this.props.collectionType;
         let setPage = this.props.setPage;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
         let getFailureMessage = this.getFailureMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
-        if(elementsToCancelAccept.length>0) {
-            let uniqueElementsToBanNames = elementsToCancelAccept.map(function(item) {
+        if(elementsToAdvance.length>0) {
+            let uniqueElementsToAdvanceNames = elementsToAdvance.map(function(item) {
                 return item[uniqueNameProperty];
             });
             let getPageAndModifyDataObjectsWrapper = {
-                namesOfObjectsToModify: uniqueElementsToBanNames,
+                namesOfObjectsToModify: uniqueElementsToAdvanceNames,
                 getPageObjectsWrapper: this.props.pageRequest
             };
 
             let operationFunction = function(){
-                axios.post(serverName+`cancel/accept/`+collectionType,
+                axios.post(serverName+`advance/players`,
                     getPageAndModifyDataObjectsWrapper)
                     .then(res => {
                         setPage(res.data);
-                        if(elementsWithFailedCancellation.length>0)
+                        if(elementsWhichCannotBeAdvance.length>0)
                             showFailureMessage(
                                 {
-                                    messageText: getFailureMessage(elementsWithFailedCancellation)
+                                    messageText: getFailureMessage(elementsWhichCannotBeAdvance)
                                 }
                             );
                         else
                             showSuccessMessage(
                                 {
-                                    messageText: getSuccessMessage(elementsToCancelAccept)
+                                    messageText: getSuccessMessage(elementsToAdvance)
                                 }
                             );
                     })
@@ -82,7 +71,7 @@ class CancelAcceptOperation extends React.Component {
 
             this.props.showConfirmationDialog(
                 {
-                    header:"Cancel acceptations of checked elements",
+                    header:"Advance checked elements",
                     message:"Are you sure?",
                     onConfirmFunction: operationFunction
                 }
@@ -91,7 +80,7 @@ class CancelAcceptOperation extends React.Component {
         else{
             showFailureMessage(
                 {
-                    messageText: "Nothing to cancel acceptation. You can cancel acceptation only for accepted and not banned elements."
+                    messageText: "Nothing to advance. Only Players can be advanced."
                 }
             )
         }
@@ -100,9 +89,9 @@ class CancelAcceptOperation extends React.Component {
     render() {
         return (
             <OperationButton
-                name = "No accept"
-                icon = {icons.noEntry}
-                operation = {this.cancelAcceptElements.bind(this)}
+                name = "Advance"
+                icon = {icons.arrowN}
+                operation = {this.advanceElements.bind(this)}
             />
         );
     }
@@ -121,4 +110,4 @@ function mapStateToProps( state ) {
     };
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( CancelAcceptOperation );
+export default connect( mapStateToProps, mapDispatchToProps )( AdvanceOperation );

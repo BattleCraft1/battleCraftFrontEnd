@@ -8,9 +8,27 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
+let uniqueNameProperty;
+
 class DeleteOperation extends React.Component {
     constructor(props) {
         super(props);
+        if(this.props.collectionType === 'tournaments'){
+            uniqueNameProperty = 'name'
+        }
+        else if(this.props.collectionType === 'users'){
+            uniqueNameProperty = 'username'
+        }
+    }
+
+    getSuccessMessage(elementsToDelete){
+        return "Elements "+elementsToDelete.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are deleted";
+    }
+
+    getFailureMessage(elementsWhichCannotBeDeleted){
+        return "Elements "+elementsWhichCannotBeDeleted
+                .map(function(element){return element[uniqueNameProperty]}).join(", ")+" are not deleted " +
+            "because if you want delete element you must ban it firstly"
     }
 
     deleteElements(){
@@ -19,14 +37,17 @@ class DeleteOperation extends React.Component {
         let elementsWhichCannotBeDeleted = checkedElements.filter(element => !element.banned);
         this.props.checkAllElements(false);
 
-        let showMessage = this.props.showMessageBox;
+        let showSuccessMessage = this.props.showSuccessMessage;
+        let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
         let setPage = this.props.setPage;
-        let showNetworkErrorMessageBox = this.props.showNetworkErrorMessageBox;
+        let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
+        let getFailureMessage = this.getFailureMessage;
+        let getSuccessMessage = this.getSuccessMessage;
 
         if(elementsToDelete.length>0) {
             let uniqueElementsToBanNames = elementsToDelete.map(function(item) {
-                return item['name'];
+                return item[uniqueNameProperty];
             });
             let getPageAndModifyDataObjectsWrapper = {
                 namesOfObjectsToModify: uniqueElementsToBanNames,
@@ -39,40 +60,35 @@ class DeleteOperation extends React.Component {
                     .then(res => {
                         setPage(res.data);
                         if(elementsWhichCannotBeDeleted.length>0)
-                            showMessage(
+                            showFailureMessage(
                                 {
-                                    messageText: "Elements "+elementsWhichCannotBeDeleted
-                                        .map(function(element){return element.name}).join(", ")+" are not deleted " +
-                                    "because if you want delete element you must ban it firstly",
-                                    messageType: "alert-danger"
+                                    messageText: getFailureMessage(elementsWhichCannotBeDeleted)
                                 }
                             );
                         else
-                            showMessage(
+                            showSuccessMessage(
                                 {
-                                    messageText: "Elements "+elementsToDelete.map(function(element){return element.name}).join(", ")+" are deleted",
-                                    messageType: "alert-success"
+                                    messageText: getSuccessMessage(elementsToDelete)
                                 }
                             );
                     })
                     .catch(error => {
-                        showNetworkErrorMessageBox(error);
+                        showNetworkErrorMessage(error);
                     })
             };
 
             this.props.showConfirmationDialog(
                 {
-                    header:"Delete checked tournaments",
+                    header:"Delete checked elements",
                     message:"Are you sure?",
                     onConfirmFunction: operationFunction
                 }
             )
         }
         else{
-            showMessage(
+            showFailureMessage(
                 {
-                    messageText: "Nothing to delete",
-                    messageType: "alert-danger"
+                    messageText: "Nothing to delete. You can delete only banned elements."
                 }
             )
         }

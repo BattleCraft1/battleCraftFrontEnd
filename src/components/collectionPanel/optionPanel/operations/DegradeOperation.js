@@ -8,70 +8,59 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
-let acceptedCollectionStatus;
-let uniqueNameProperty;
+let uniqueNameProperty = 'username';
 
-class CancelAcceptOperation extends React.Component {
+class DegradeOperation extends React.Component {
     constructor(props) {
         super(props);
-        if(this.props.collectionType === 'tournaments'){
-            acceptedCollectionStatus = 'ACCEPTED';
-            uniqueNameProperty = 'name'
-        }
-        else if(this.props.collectionType === 'users'){
-            acceptedCollectionStatus = 'PLAYER';
-            uniqueNameProperty = 'username'
-        }
     }
 
-    getSuccessMessage(elementsToCancelAccept){
-        return "Acceptations for "+elementsToCancelAccept.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are canceled";
+    getFailureMessage(elementsWhichCannotBeDegrade){
+        return "Users "+elementsWhichCannotBeDegrade
+                .map(function(element){return element[uniqueNameProperty]}).join(", ")+" are not degrade to Player " +
+            "because if you want advance user to Player he must by a Organizer"
     }
 
-    getFailureMessage(elementsWithFailedCancellation){
-        return "Elements "+elementsWithFailedCancellation
-                .map(function(element){return element[uniqueNameProperty]}).join(", ")+" are still accepted " +
-            "because you can cancel acceptation only for accepted and not banned elements"
+    getSuccessMessage(elementsToDegrade){
+        return "Users "+elementsToDegrade.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are degrade to Player"
     }
 
-    cancelAcceptElements(){
+    degradeElements(){
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        let elementsToCancelAccept = checkedElements.filter(element =>
-            element.status===acceptedCollectionStatus  && element.banned===false);
-        let elementsWithFailedCancellation = checkedElements.filter(element => element.status!==acceptedCollectionStatus);
+        let elementsToDegrade = checkedElements.filter(element => element.status==='ORGANIZER');
+        let elementsWhichCannotBeDegrade = checkedElements.filter(element => element.status!=='ORGANIZER');
 
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
-        let collectionType = this.props.collectionType;
         let setPage = this.props.setPage;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
         let getFailureMessage = this.getFailureMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
-        if(elementsToCancelAccept.length>0) {
-            let uniqueElementsToBanNames = elementsToCancelAccept.map(function(item) {
+        if(elementsToDegrade.length>0) {
+            let uniqueElementsToDegradeNames = elementsToDegrade.map(function(item) {
                 return item[uniqueNameProperty];
             });
             let getPageAndModifyDataObjectsWrapper = {
-                namesOfObjectsToModify: uniqueElementsToBanNames,
+                namesOfObjectsToModify: uniqueElementsToDegradeNames,
                 getPageObjectsWrapper: this.props.pageRequest
             };
 
             let operationFunction = function(){
-                axios.post(serverName+`cancel/accept/`+collectionType,
+                axios.post(serverName+`degrade/organizers`,
                     getPageAndModifyDataObjectsWrapper)
                     .then(res => {
                         setPage(res.data);
-                        if(elementsWithFailedCancellation.length>0)
+                        if(elementsWhichCannotBeDegrade.length>0)
                             showFailureMessage(
                                 {
-                                    messageText: getFailureMessage(elementsWithFailedCancellation)
+                                    messageText: getFailureMessage(elementsWhichCannotBeDegrade)
                                 }
                             );
                         else
                             showSuccessMessage(
                                 {
-                                    messageText: getSuccessMessage(elementsToCancelAccept)
+                                    messageText: getSuccessMessage(elementsToDegrade)
                                 }
                             );
                     })
@@ -82,7 +71,7 @@ class CancelAcceptOperation extends React.Component {
 
             this.props.showConfirmationDialog(
                 {
-                    header:"Cancel acceptations of checked elements",
+                    header:"Degrade checked elements",
                     message:"Are you sure?",
                     onConfirmFunction: operationFunction
                 }
@@ -91,7 +80,7 @@ class CancelAcceptOperation extends React.Component {
         else{
             showFailureMessage(
                 {
-                    messageText: "Nothing to cancel acceptation. You can cancel acceptation only for accepted and not banned elements."
+                    messageText: "Nothing to degrade. You can only degrade Organizers"
                 }
             )
         }
@@ -100,9 +89,9 @@ class CancelAcceptOperation extends React.Component {
     render() {
         return (
             <OperationButton
-                name = "No accept"
-                icon = {icons.noEntry}
-                operation = {this.cancelAcceptElements.bind(this)}
+                name = "Degrade"
+                icon = {icons.arrowS}
+                operation = {this.degradeElements.bind(this)}
             />
         );
     }
@@ -121,4 +110,4 @@ function mapStateToProps( state ) {
     };
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( CancelAcceptOperation );
+export default connect( mapStateToProps, mapDispatchToProps )( DegradeOperation );

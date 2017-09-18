@@ -50,7 +50,7 @@ class CollectionPanel extends React.Component{
             })
             .catch(error => {
                 console.log()
-                this.props.showNetworkErrorMessageBox(error);
+                this.props.showNetworkErrorMessage(error);
             });
     }
 

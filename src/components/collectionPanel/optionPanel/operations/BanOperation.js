@@ -8,25 +8,38 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
+let uniqueNameProperty;
+
 class BanOperation extends React.Component {
     constructor(props) {
         super(props);
+
+        if(this.props.collectionType === 'tournaments'){
+            uniqueNameProperty = 'name'
+        }
+        else if(this.props.collectionType === 'users'){
+            uniqueNameProperty = 'username'
+        }
+    }
+
+    getSuccessMessage(elementsToBan){
+        return "Elements "+elementsToBan.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are banned";
     }
 
     benElements(){
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
         let elementsToBan = checkedElements.filter(element => element.banned===false);
 
-        let showMessage = this.props.showMessageBox;
+        let showSuccessMessage = this.props.showSuccessMessage;
+        let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
         let setPage = this.props.setPage;
-        let showNetworkErrorMessageBox = this.props.showNetworkErrorMessageBox;
-
-
+        let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
+        let getSuccessMessage = this.getSuccessMessage;
 
         if(elementsToBan.length>0) {
             let uniqueElementsToBanNames = elementsToBan.map(function(item) {
-                return item['name'];
+                return item[uniqueNameProperty];
             });
             let getPageAndModifyDataObjectsWrapper = {
                 namesOfObjectsToModify: uniqueElementsToBanNames,
@@ -38,31 +51,29 @@ class BanOperation extends React.Component {
                     getPageAndModifyDataObjectsWrapper)
                     .then(res => {
                         setPage(res.data);
-                        showMessage(
+                        showSuccessMessage(
                             {
-                                messageText: "Elements "+elementsToBan.map(function(element){return element.name}).join(", ")+" are banned",
-                                messageType: "alert-success"
+                                messageText: getSuccessMessage(elementsToBan)
                             }
                         );
                     })
                     .catch(error => {
-                        showNetworkErrorMessageBox(error);
+                        showNetworkErrorMessage(error);
                     })
             };
 
             this.props.showConfirmationDialog(
                 {
-                    header:"Ban checked tournaments",
+                    header:"Ban checked elements",
                     message:"Are you sure?",
                     onConfirmFunction: operationFunction
                 }
             )
         }
         else{
-            showMessage(
+            showFailureMessage(
                 {
-                    messageText: "Nothing to ban",
-                    messageType: "alert-danger"
+                    messageText: "Nothing to ban. You can ban only not banned elements."
                 }
             )
         }

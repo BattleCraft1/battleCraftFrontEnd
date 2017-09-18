@@ -18,7 +18,7 @@ class SearchPanel extends React.Component{
         this.state = {
             provincesNames:[],
             tournamentsGames:[],
-            tournamentStatus:[]
+            status:[]
         };
     }
 
@@ -31,11 +31,11 @@ class SearchPanel extends React.Component{
             .then(res => {
                 this.setState({provincesNames:res.data.provincesNames});
                 this.setState({tournamentsGames:res.data.gamesNames});
-                res.data.tournamentStatus.push("BANNED");
-                this.setState({tournamentStatus:res.data.tournamentStatus});
+                res.data.status.push("BANNED");
+                this.setState({status:res.data.status});
             })
             .catch(error => {
-                this.props.showNetworkErrorMessageBox(error);
+                this.props.showNetworkErrorMessage(error);
             });
     }
 
@@ -92,8 +92,8 @@ class SearchPanel extends React.Component{
                     "value":this.province.value
                 }
             )}
-        if(this.tournamentStatus.value!==""){
-            if(this.tournamentStatus.value==='BANNED')
+        if(this.status.value!==""){
+            if(this.status.value==='BANNED')
                 pageRequest.searchCriteria.push(
                     {
                         "keys":["banned"],
@@ -104,9 +104,9 @@ class SearchPanel extends React.Component{
             else
                 pageRequest.searchCriteria.push(
                     {
-                        "keys":["tournamentStatus"],
+                        "keys":["status"],
                         "operation":":",
-                        "value":this.tournamentStatus.value
+                        "value":this.status.value
                     }
                 );
         }
@@ -157,11 +157,11 @@ class SearchPanel extends React.Component{
         )
     }
 
-    prepareTournamentStatusOptions(tournamentStatusOptions){
-        tournamentStatusOptions.push(<option key="nullOption"/>);
-        this.state.tournamentStatus.map(
-            tournamentStatus => {
-                tournamentStatusOptions.push(<option key={tournamentStatus}>{tournamentStatus}</option>);
+    prepareTournamentStatusOptions(turnamentStatusOptions){
+        turnamentStatusOptions.push(<option key="nullOption"/>);
+        this.state.status.map(
+            status => {
+                turnamentStatusOptions.push(<option key={status}>{status}</option>);
             }
         )
     }
@@ -218,7 +218,7 @@ class SearchPanel extends React.Component{
                     </div>
                     <div className="input-group">
                         <span className="input-group-addon">Status:</span>
-                        <select ref={(control) => this.tournamentStatus = control} className="form-control" id="banned">
+                        <select ref={(control) => this.status = control} className="form-control" id="banned">
                             {tournamentStatusOptions}
                         </select>
                     </div>

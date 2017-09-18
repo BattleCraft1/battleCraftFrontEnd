@@ -30,7 +30,7 @@ class SearchPanel extends React.Component{
                 this.setState({usersTypes:res.data.usersTypes});
             })
             .catch(error => {
-                this.props.showNetworkErrorMessageBox(error);
+                this.props.showNetworkErrorMessage(error);
             });
     }
 
@@ -92,11 +92,11 @@ class SearchPanel extends React.Component{
         this.props.getPageRequest(this.props.collectionType);
     }
 
-    prepareUserTypesOptions(userTypesOptions){
-        userTypesOptions.push(<option key="nullOption"/>);
+    prepareUserTypeOptions(userTypeOptions){
+        userTypeOptions.push(<option key="nullOption"/>);
         this.state.usersTypes.map(
-            userType => {
-                userTypesOptions.push(<option key={userType}>{userType}</option>);
+            status => {
+                userTypeOptions.push(<option key={status}>{status}</option>);
             }
         )
     }
@@ -111,11 +111,11 @@ class SearchPanel extends React.Component{
     }
 
     render(){
-        let userTypesOptions = [];
+        let userTypeOptions = [];
         let provincesOptions = [];
 
         this.prepareProvinceOptions(provincesOptions);
-        this.prepareUserTypesOptions(userTypesOptions);
+        this.prepareUserTypeOptions(userTypeOptions);
 
         return (
             <div className="row">
@@ -142,8 +142,8 @@ class SearchPanel extends React.Component{
                     </div>
                     <div className="input-group">
                         <span className="input-group-addon">User type:</span>
-                        <select ref={(control) => this.userType = control} className="form-control" id="userType" name="userType">
-                            {userTypesOptions}
+                        <select ref={(control) => this.status = control} className="form-control" id="status" name="status">
+                            {userTypeOptions}
                         </select>
                     </div>
                     <div className="input-group">

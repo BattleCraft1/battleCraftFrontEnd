@@ -8,23 +8,37 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
+let uniqueNameProperty;
+
 class UnlockOperation extends React.Component {
     constructor(props) {
         super(props);
+        if(this.props.collectionType === 'tournaments'){
+            uniqueNameProperty = 'name'
+        }
+        else if(this.props.collectionType === 'users'){
+            uniqueNameProperty = 'username'
+        }
+    }
+
+    getSuccessMessage(elementsToUnlock){
+        return "Elements "+elementsToUnlock.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are unlock";
     }
 
     unlockElements(){
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
         let elementsToUnlock = checkedElements.filter(element => element.banned===true);
 
-        let showMessage = this.props.showMessageBox;
+        let showSuccessMessage = this.props.showSuccessMessage;
+        let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
         let setPage = this.props.setPage;
-        let showNetworkErrorMessageBox = this.props.showNetworkErrorMessageBox;
+        let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
+        let getSuccessMessage = this.getSuccessMessage;
 
         if(elementsToUnlock.length>0) {
             let uniqueElementsToBanNames = elementsToUnlock.map(function(item) {
-                return item['name'];
+                return item[uniqueNameProperty];
             });
             let getPageAndModifyDataObjectsWrapper = {
                 namesOfObjectsToModify: uniqueElementsToBanNames,
@@ -36,30 +50,28 @@ class UnlockOperation extends React.Component {
                     getPageAndModifyDataObjectsWrapper)
                     .then(res => {
                         setPage(res.data);
-                        showMessage(
+                        showSuccessMessage(
                             {
-                                messageText: "Elements "+elementsToUnlock.map(function(element){return element.name}).join(", ")+" are unlock",
-                                messageType: "alert-success"
+                                messageText: getSuccessMessage(elementsToUnlock)
                             }
                         );
                     })
                     .catch(error => {
-                        showNetworkErrorMessageBox(error);
+                        showNetworkErrorMessage(error);
                     })
             };
             this.props.showConfirmationDialog(
                 {
-                    header:"Unlock checked tournaments",
+                    header:"Unlock checked elements",
                     message:"Are you sure?",
                     onConfirmFunction: operationFunction
                 }
             )
         }
         else{
-            showMessage(
+            showFailureMessage(
                 {
-                    messageText: "Nothing to unlock",
-                    messageType: "alert-danger"
+                    messageText: "Nothing to unlock. Only banned elements can be unlock."
                 }
             )
         }

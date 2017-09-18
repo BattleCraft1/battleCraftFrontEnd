@@ -20,13 +20,13 @@ export default class Row extends React.Component{
             if(user.banned)
                 return colors["users"]["active"]["BANNED"];
             else
-                return colors["users"]["active"][user.userType]
+                return colors["users"]["active"][user.status]
         }
         else{
             if(user.banned)
                 return colors["users"]["normal"]["BANNED"];
             else
-                return colors["users"]["normal"][user.userType]
+                return colors["users"]["normal"][user.status]
         }
     }
 
