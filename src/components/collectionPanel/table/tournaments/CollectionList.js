@@ -650,6 +650,7 @@ const resp = StyleSheet.create({
       position:'relative',
       width:'20%',
       padding:'5px',
+      margin:'0',
       '@media (max-width: 600px)': {
         width:'50%',
       },

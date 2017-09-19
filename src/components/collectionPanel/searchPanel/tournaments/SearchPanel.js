@@ -264,6 +264,7 @@ const resp = StyleSheet.create({
     padding:'2%',
     zIndex:'100',
     background:'red',
+    display:'none',
   },
 
   optionContainer:{
