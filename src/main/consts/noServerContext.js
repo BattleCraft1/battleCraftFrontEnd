@@ -10,6 +10,7 @@ export const noServerContext =
                 "city": "Lublin",
                 "name": "Tournament1",
                 "dateOfStart": 1483880700000,
+                "dateOfEnd": 1483880700000,
                 "playersNumber": 2,
                 "banned": false
             },
@@ -22,6 +23,7 @@ export const noServerContext =
                 "city": "Białystok",
                 "name": "Tournament10",
                 "dateOfStart": 1535306700000,
+                "dateOfEnd": 1483880700000,
                 "playersNumber": 2,
                 "banned": false
             },
@@ -34,6 +36,7 @@ export const noServerContext =
                 "city": "Zamość",
                 "name": "Tournament2xxxxxxxx",
                 "dateOfStart": 1518185460000,
+                "dateOfEnd": 1483880700000,
                 "playersNumber": 2,
                 "banned": false
             },
@@ -46,6 +49,7 @@ export const noServerContext =
                 "city": "Wrocław",
                 "name": "Tournament3",
                 "dateOfStart": 1489331700000,
+                "dateOfEnd": 1483880700000,
                 "playersNumber": 2,
                 "banned": true
             },
@@ -58,6 +62,7 @@ export const noServerContext =
                 "city": "Kraków",
                 "name": "Tournament4",
                 "dateOfStart": 1524673500000,
+                "dateOfEnd": 1483880700000,
                 "playersNumber": 2,
                 "banned": false
             },
@@ -70,6 +75,7 @@ export const noServerContext =
                 "city": "Katowice",
                 "name": "Tournament5",
                 "dateOfStart": 1494674640000,
+                "dateOfEnd": 1483880700000,
                 "playersNumber": 2,
                 "banned": false
             },
@@ -82,6 +88,7 @@ export const noServerContext =
                 "city": "Szczecin",
                 "name": "Tournament6",
                 "dateOfStart": 1541931180000,
+                "dateOfEnd": 1483880700000,
                 "playersNumber": 2,
                 "banned": true
             },
@@ -94,6 +101,7 @@ export const noServerContext =
                 "city": "Poznań",
                 "name": "Tournament7",
                 "dateOfStart": 1512126360000,
+                "dateOfEnd": 1483880700000,
                 "playersNumber": 2,
                 "banned": false
             },
@@ -106,6 +114,7 @@ export const noServerContext =
                 "city": "Opole",
                 "name": "Tournament8",
                 "dateOfStart": 1527898320000,
+                "dateOfEnd": 1483880700000,
                 "playersNumber": 2,
                 "banned": false
             },
@@ -118,6 +127,7 @@ export const noServerContext =
                 "city": "Łódź",
                 "name": "Tournament9",
                 "dateOfStart": 1499966220000,
+                "dateOfEnd": 1483880700000,
                 "playersNumber": 2,
                 "banned": false
             }
@@ -139,4 +149,4 @@ export const noServerContext =
         ],
         "numberOfElements": 10,
         "first": true
-    }
+    };

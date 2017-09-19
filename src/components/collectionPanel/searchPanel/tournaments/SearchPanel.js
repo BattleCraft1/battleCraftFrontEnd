@@ -176,39 +176,39 @@ class SearchPanel extends React.Component{
         this.prepareTournamentStatusOptions(tournamentStatusOptions);
 
         return (
-            <div className={css(resp.popupContent)}>
+            <div className="row">
                 <form>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>Name:</span>
-                        <input ref={(control) => this.name = control} id="name" type="text" className={css(resp.optionInput)} name="name"
+                    <div className="input-group">
+                        <span className="input-group-addon">Name:</span>
+                        <input ref={(control) => this.name = control} id="name" type="text" className="form-control" name="name"
                                placeholder="Tournament2017"/>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>City:</span>
-                        <input ref={(control) => this.city = control} id="city" type="text" className={css(resp.optionInput)} name="city"
+                    <div className="input-group">
+                        <span className="input-group-addon">City:</span>
+                        <input ref={(control) => this.city = control} id="city" type="text" className="form-control" name="city"
                                placeholder="Lublin"/>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>Province:</span>
-                        <select ref={(control) => this.province = control} className={css(resp.optionInput)} id="province">
+                    <div className="input-group">
+                        <span className="input-group-addon">Province:</span>
+                        <select ref={(control) => this.province = control} className="form-control" id="province">
                             {provincesOptions}
                         </select>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>Game:</span>
-                        <select ref={(control) => this.game = control} className={css(resp.optionInput)} id="class">
+                    <div className="input-group">
+                        <span className="input-group-addon">Game:</span>
+                        <select ref={(control) => this.game = control} className="form-control" id="class">
                             {tournamentGamesOptions}
                         </select>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>From:</span>
-                        <input ref={(control) => this.dateFrom = control} type="date" className={css(resp.optionInput)} id="dateFrom"/>
+                    <div className="input-group">
+                        <span className="input-group-addon">From:</span>
+                        <input ref={(control) => this.dateFrom = control} type="date" className="form-control" id="dateFrom"/>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>To:</span>
-                        <input ref={(control) => this.dateTo = control}  type="date" className={css(resp.optionInput)} id="dateTo"/>
+                    <div className="input-group">
+                        <span className="input-group-addon">To:</span>
+                        <input ref={(control) => this.dateTo = control}  type="date" className="form-control" id="dateTo"/>
                     </div>
-                    <div className={css(resp.optionContainer)}>
+                    <div className="input-group">
                         <span className="input-group-addon">Max players:</span>
                         <input ref={(control) => this.maxPlayers = control} id="maxPlayers" type="number" className="form-control" name="maxPlayers"/>
                         <span className="input-group-addon">Players number:</span>
@@ -218,11 +218,11 @@ class SearchPanel extends React.Component{
                     </div>
                     <div className="input-group">
                         <span className="input-group-addon">Status:</span>
-                        <select ref={(control) => this.status = control} className="form-control" id="banned">
+                        <select ref={(control) => this.tournamentStatus = control} className="form-control" id="banned">
                             {tournamentStatusOptions}
                         </select>
                     </div>
-                    <button onClick={()=>this.searchTournaments()} type="button" className={css(resp.searchButton)}>Search</button>
+                    <button onClick={()=>this.searchTournaments()} type="button" className="btn btn-default">Search</button>
                 </form>
             </div>
         );
@@ -241,44 +241,3 @@ function mapStateToProps( state ) {
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( SearchPanel );
-
-const resp = StyleSheet.create({
-  popupContent:{
-    position:'fixed',
-    width:'80%',
-    padding:'2%',
-    zIndex:'100',
-    background:'red',
-  },
-
-  optionContainer:{
-    position:'relative',
-    display:'inline-block',
-    width:'48%',
-    background:'green',
-    float:'left',
-    marginLeft:'1%',
-    marginRight:'1%',
-  },
-
-  optionLabel:{
-  position:'relative',
-  display:'inline-block',
-  width:'100%',
-  textAlign:'center',
-  },
-
-  optionInput:{
-  position:'relative',
-  display:'inline-block',
-  width:'100%',
-  },
-
-  searchButton:{
-    width:'20%',
-    float:'right',
-    marginTop:'1%',
-    marginRight:'1%',
-  },
-
-});

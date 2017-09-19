@@ -4,12 +4,13 @@ import React from 'react';
 import {StyleSheet, css} from 'aphrodite';
 import CollectionList from './table/content/CollectionList';
 import PagePanel from './pagePanel/PagePanel';
+import SearchPanel from './searchPanel/SearchPanel'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {serverName} from '../../main/consts/server'
-import {noServerContex} from '../../main/consts/noServerContex'
+import {noServerContext} from '../../main/consts/noServerContext'
 
 import axios from 'axios';
 
@@ -38,20 +39,14 @@ class CollectionPanel extends React.Component{
     }
 
     async getPageRequest(collectionType){
-        console.log(this.props.pageRequest);
-        await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
-            .then(res => {
-                this.props.setPage(res.data);
 
-                let pageRequest = this.props.pageRequest;
-                pageRequest.pageRequest.page=this.props.page.number;
-                pageRequest.pageRequest.size=this.props.page.numberOfElements;
-                this.props.setPageRequest(pageRequest);
-            })
-            .catch(error => {
-                console.log()
-                this.props.showNetworkErrorMessage(error);
-            });
+        this.props.setPage(noServerContext);
+
+        let pageRequest = this.props.pageRequest;
+        pageRequest.pageRequest.page=this.props.page.number;
+        pageRequest.pageRequest.size=this.props.page.numberOfElements;
+        this.props.setPageRequest(pageRequest);
+
     }
 
     render(){
@@ -60,8 +55,6 @@ class CollectionPanel extends React.Component{
                 <div className="row">
                     <CollectionList getPageRequest={this.getPageRequest.bind(this)}
                                     collectionType={this.state.collectionType}/>
-                    {/*<SearchForm collectionType={this.state.collectionType}
-                                getPageRequest={this.getPageRequest.bind(this)} />*/}
                     <PagePanel getPageRequest={this.getPageRequest.bind(this)}
                                collectionType={this.props.match.params.collectionType}/>
                 </div>
