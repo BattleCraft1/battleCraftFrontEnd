@@ -13,7 +13,7 @@ let uniqueNameProperty;
 class DeleteOperation extends React.Component {
     constructor(props) {
         super(props);
-        if(this.props.collectionType === 'tournaments'){
+        if(this.props.collectionType === 'tournaments' || this.props.collectionType === 'games'){
             uniqueNameProperty = 'name'
         }
         else if(this.props.collectionType === 'users'){

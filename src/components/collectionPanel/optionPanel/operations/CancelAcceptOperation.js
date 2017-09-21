@@ -14,7 +14,7 @@ let uniqueNameProperty;
 class CancelAcceptOperation extends React.Component {
     constructor(props) {
         super(props);
-        if(this.props.collectionType === 'tournaments'){
+        if(this.props.collectionType === 'tournaments' || this.props.collectionType === 'games'){
             acceptedCollectionStatus = 'ACCEPTED';
             uniqueNameProperty = 'name'
         }

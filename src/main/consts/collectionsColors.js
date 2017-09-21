@@ -32,5 +32,17 @@ export const colors = {
             "ADMIN": 'rgb(156, 99, 87)',
             "BANNED": 'rgb(200, 143, 131)'
         }
+    },
+    "games": {
+        "normal":{
+            "NEW": 'rgb(230, 197, 158)',
+            "ACCEPTED": 'rgb(116, 152, 88)',
+            "BANNED": 'rgb(156, 99, 87)',
+        },
+        "active":{
+            "NEW": 'rgb(226, 203, 175)',
+            "ACCEPTED": 'rgb(157, 186, 134)',
+            "BANNED": 'rgb(200, 143, 131)'
+        }
     }
 };
