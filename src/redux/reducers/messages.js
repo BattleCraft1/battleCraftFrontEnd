@@ -24,6 +24,8 @@ export const message = createReducer( {}, {
                 };
             }
             else if(action.error.response.status !== 200){
+                if((typeof action.error.response.data)!=="string")
+                    throw "error is not a string value";
                 message={
                     isShown: true,
                     messageText: action.error.response.data,

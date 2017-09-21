@@ -10,6 +10,7 @@ export default class LegendPanel extends React.Component{
         for(let colorName in colors[this.props.collectionType]["normal"]){
             legendFields.push(
                 <LegendField
+                    key = {colorName}
                     color = {colors[this.props.collectionType]["normal"][colorName]}
                     name = {colorName}
                 />
