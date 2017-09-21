@@ -324,8 +324,8 @@ class CollectionList extends React.Component{
                 rows.push(
                     <tr key={"tr:"+key} className={css(resp.tableRow)}>
 
-                        <th key={"th:"+key} scope="row" className = {css(resp.rowContent, resp.rowLabel)} className = {css(resp.rowContent, resp.smallCheckbox)} style = {Object.assign({}, styles.checkbox, styles.thead, {borderRadius: '0px'})}>
-                            <Checkbox name={tournament.name}/></th>
+                        <th key={"th:"+key} className = {css(resp.rowContent, resp.rowLabel)} className = {css(resp.rowContent, resp.smallCheckbox)} style = {Object.assign({}, styles.checkbox, styles.thead, {borderRadius: '0px'})}>
+                            <Checkbox style = { Object.assign({}, {margin:'0px'}) } name={tournament.name}/></th>
 
                         <th onClick={()=>{this.sortByColumnName("name")             ; this.handleTheadClick("name"             )}} key="name"
                             style={(this.state.activeColumn === "name"             ) ?  styles.theadActive : styles.thead} className = {css(resp.rowContent)+" "+css(resp.nameLabel)}>name{this.getArrowGlyph("name")}</th>
@@ -375,14 +375,14 @@ class CollectionList extends React.Component{
 
         return (
             <div>
-                <div className="row">
+                <div>
                 <div className = {css(resp.legend)}>
-                  <th style={Object.assign({}, styles.thead, {display:'block', width:'100%', textAlign:'center', padding:'3px', boxShadow:'inset 0 2px 2px #9c7239'})} >Legend</th>
-                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(230, 197, 158)'})} className = {css(resp.legendOption)}>NEW</span>
-                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(116, 152, 88)'})} className = {css(resp.legendOption)}>ACCEPTED</span>
-                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(142, 108, 63)'})} className = {css(resp.legendOption)}>IN PROGRESS</span>
-                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(96, 146, 162)'})} className = {css(resp.legendOption)}>FINISHED</span>
-                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(156, 99, 87)'})} className = {css(resp.legendOption)}>BANNED</span>
+                  <th style={Object.assign({}, styles.thead, {boxSizing: 'border-box', position:'relative', display:'inline-block', width:'100%', textAlign:'center', padding:'3px 0 3px 0', boxShadow:'inset 0 2px 2px #9c7239'})} >Legend</th>
+                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(230, 197, 158)'})} className = {css(resp.legendOption)}>NEW        </span>
+                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(116, 152, 88)'})}  className = {css(resp.legendOption)}>ACCEPTED   </span>
+                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(142, 108, 63)'})}  className = {css(resp.legendOption)}>IN PROGRESS</span>
+                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(96, 146, 162)'})}  className = {css(resp.legendOption)}>FINISHED   </span>
+                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(156, 99, 87)'})}   className = {css(resp.legendOption)}>BANNED     </span>
                 </div>
                     <table className="" style={styles.table}>
                         <thead>
@@ -448,9 +448,7 @@ const styles = {
         borderRadius:'0',
         background:'#c6a57d',
         border:'1px solid',
-        padding: '8px',
-        paddingLeft:'8px',
-        textAlign: 'none',
+        textAlign: 'center',
         backgroundImage: '',
         WebkitBorderImage: '',
         color:'black',
@@ -459,6 +457,7 @@ const styles = {
         borderLeftColor:'#dfd19e',
         borderRightColor:'#886e4b',
         textShadow:' ',
+        boxSizing: 'border-box',
     },
     rowContentActive:{
         background:'#906a3d'
@@ -493,6 +492,7 @@ const styles = {
         backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#473419), to(#735327))',
     },
     table:{
+        borderSpacing:'0px',
         position:'relative',
         background:'black',
         width: '90%',
@@ -501,12 +501,9 @@ const styles = {
         borderCollapse:'separate',
     },
     checkbox:{
-        padding: '8px',
-        paddingLeft:'4px',
-        paddingRight:'4px',
+        margin: '0',
+        height:'10%',
         borderRight: '0px',
-        //backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#d19c55), to(#906b3a))',
-        borderBottomColor:'#775930',
         textAlign: 'center',
     },
     name:{
@@ -552,7 +549,7 @@ const resp = StyleSheet.create({
       position:'relative',
       width:'16%',
       padding: '4px',
-      margin:'1px',
+      margin:'0',
       borderTopColor: '#E0BA51',
       borderBottomColor: '#E0BA51',
       borderRightColor: '#805D2C',
@@ -581,11 +578,11 @@ const resp = StyleSheet.create({
       '@media (max-width: 600px)': {
         display:'block',
         position:'relative',
-        marginBottom:'4px',
       },
     },
 
     buttonGroup:{
+      boxSizing:'border-box',
       width:'90%',
       marginLeft:'5%',
       textAlign:'center',
@@ -604,18 +601,25 @@ const resp = StyleSheet.create({
     },
 
     rowContent:{
+      boxSizing:'border-box',
       position:'relative',
       textAlign:'center',
+      margin:'0',
+      paddingTop:'8px',
+      paddingBottom:'8px',
       '@media (max-width: 599px)': {
         width:'70%',
+        paddingTop: '2%',
+        paddingBottom: '2%',
         display: 'inline-block',
         borderRadius:'0'
       }
     },
     rowLabel:{
-      paddingTop:'8px',
-      paddingBottom:'8px',
+      boxSizing:'border-box',
        width:'30%',
+       paddingTop: '2%',
+       paddingBottom: '2%',
       '@media (min-width: 600px)': {
         display:'none',
       }
@@ -629,9 +633,12 @@ const resp = StyleSheet.create({
       }
     },
     nameLabel:{
-      paddingTop:'8px',
-      paddingBottom:'8px',
+      height:'30%',
       width:'20%',
+      margin:'0',
+      paddingTop: '2%',
+      paddingBottom: '2%',
+      boxSizing:'border-box',
       '@media (min-width: 600px)': {
         display:'none',
       },
@@ -641,27 +648,31 @@ const resp = StyleSheet.create({
       width:'90%',
       marginLeft:'5%',
       marginBottom:'10px',
+      padding:'0',
     },
 
     legendOption:{
-      fontSize:'80%',
-      textAlign:'center',
       display:'inline-block',
       position:'relative',
       width:'20%',
-      padding:'5px',
-      margin:'0',
+      paddingTop:'3px',
+      paddingBottom:'3px',
       '@media (max-width: 600px)': {
-        width:'50%',
+        display:'inline-block',
+        width:'100%',
+        margin:'0',
+
       },
     },
 
     smallCheckbox:{
+      boxSizing:'border-box',
+      textAlign:'center',
       '@media (max-width: 599px)': {
         width:'10%',
         margin:'0',
-        paddingTop:'7px',
-        paddingBottom:'7px',
+        paddingTop: '2.5%',
+        paddingBottom: '1.5%',
       }
     },
 })

@@ -2,6 +2,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ActionCreators } from '../../../redux/actions/index';
+import {StyleSheet, css} from 'aphrodite';
+
 
 class Checkbox extends React.Component {
     constructor(props) {
@@ -26,7 +28,7 @@ class Checkbox extends React.Component {
 
     render(){
         return(
-            <input type="checkbox"
+            <input type="checkbox" className = {css(resp.checkbox)}
                    onClick={
                        () => {
                            let checked=this.state.checked;
@@ -51,3 +53,15 @@ function mapStateToProps( state ) {
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Checkbox );
+
+
+const resp = StyleSheet.create({
+  checkbox:{
+    textAlign:'center',
+    position:'relative',
+    margin:'0',
+    padding:'0',
+    height:'14px',
+    width:'14px',
+  }
+})

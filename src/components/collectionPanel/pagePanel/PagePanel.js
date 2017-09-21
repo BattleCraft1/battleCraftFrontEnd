@@ -116,8 +116,10 @@ class PagePanel extends React.Component{
     render(){
 
       const myScrollbar = {
+        boxSizing:'border-box',
         width:'84%',
         border: '1px #374550 solid',
+        borderTop:'0px',
         float:'left',
         background:'rgb(218, 188, 109)',
       };
@@ -148,7 +150,7 @@ class PagePanel extends React.Component{
                     <button onClick={() => this.previousPage()} type="button" className={css(resp.navigatorButtonArrow) + " " + css(resp.goldAndBrownTheme)}>{icons.arrowTriL}</button>
                     <ReactScrollbar style={myScrollbar}>
                           <div className={css(resp.pager)}>
-                          {pagesButtons}
+                            {pagesButtons}
                           </div>
                     </ReactScrollbar>
                     <button onClick={() => this.nextPage()} type="button" className={css(resp.navigatorButtonArrow) + " " + css(resp.goldAndBrownTheme)}>{icons.arrowTriR}</button>
@@ -220,19 +222,22 @@ const resp = StyleSheet.create({
   //   border:'1px solid rgb(64, 62, 63)',
   // },
   navigatorInput:{
+  boxSizing:'border-box',
   position:'relative',
   width:'8%',
   height:'100%',
   height:'auto',
-  paddingTop:"3px",
-  paddingBottom:'3px',
+  paddingTop:"5px",
+  paddingBottom:'5px',
   background:'white',
   display:'inline-block',
   backgroundColor:'lightgrey',
   textAlign:'center',
-  border:'1px solid',
+  border:'1px solid grey',
   },
+
   navigatorLabel:{
+  boxSizing:'border-box',
   position:'relative',
   width:'16%',
   height:'100%',
@@ -251,6 +256,7 @@ const resp = StyleSheet.create({
   boxShadow:'inset 0 0 4px #9c7239',
 },
   navigatorButton:{
+    boxSizing:'border-box',
     marginRight:'1%',
     position:'relative',
     display:'inline-block',
@@ -261,8 +267,8 @@ const resp = StyleSheet.create({
     borderRightColor: '#805D2C',
     borderLeftColor: '#e3ca86',
     background:'#473419',
-    paddingTop:"3px",
-    paddingBottom:'3px',
+    paddingTop:"5px",
+    paddingBottom:'5px',
     outline:'none',
     boxShadow:'inset 0 0 4px #9c7239',
     ':hover':{
@@ -277,17 +283,18 @@ const resp = StyleSheet.create({
 
   },
   pager:{
+    boxSizing:'border-box',
     position:'relative',
     display:'inline-block',
-    paddingBottom:'0px',
     background: '#EEE',
     minWidth: '10px',
     whiteSpace:'nowrap',
-    height:'100%',
-    paddingBottom:"5px",
+    paddingBottom:"6px",
     background:'rgb(218, 188, 109)',
   },
   container:{
+    boxSizing:'border-box',
+    marginTop:'1px',
     textAlign:'center',
     position:'relative',
     display:'inline-block',
@@ -295,23 +302,18 @@ const resp = StyleSheet.create({
     textAlign:'center',
     overflow:'hidden',
     float:'left',
-    marginTop:'4px',
 },
 
-  temp:{
-    textAlign:'center',
-    position:'relative',
-    display:'inline-block',
-    textAlign:'center',
-  },
-
   pageButton:{
+    boxSizing:'border-box',
     background:'#473419',
     color:'rgb(189, 185, 189)',
     border:'1px solid rgb(64, 62, 63)',
+    height:'24px',
   },
 
   goldAndBrownTheme:{
+    boxSizing:'border-box',
     border:'1px solid',
     color:'rgb(218, 188, 109)',
     borderTopColor: '#E0BA51',

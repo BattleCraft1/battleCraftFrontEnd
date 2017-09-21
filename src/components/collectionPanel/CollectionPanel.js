@@ -70,8 +70,13 @@ const resp = StyleSheet.create({
   container:{
     display:'block',
     position:'relative',
-    width:'100%',
+    width:'90%',
+    marginLeft:'5%',
     zIndex:'1',
+    '@media (max-width: 600px)': {
+      width:'100%',
+      margin:'0',
+    },
   },
 
 })

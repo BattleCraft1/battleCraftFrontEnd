@@ -25,7 +25,7 @@ class App extends Component {
                 <ConfirmDialog/>
                 <div className="container">
                     <div className="row">
-                            <Message/>
+                        <Message/>
                             <Switch>
                                 <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
                             </Switch>
