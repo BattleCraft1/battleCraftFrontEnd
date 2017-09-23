@@ -34,7 +34,15 @@ class CollectionPanel extends React.Component{
             this.setState({collectionType: nextProps.match.params.collectionType});
 
             let pageRequest = this.props.pageRequest;
-            pageRequest.pageRequest.size = 10;
+            pageRequest={pageRequest:{
+                size:10,
+                page:0,
+                direction: "ASC",
+                property: "name"
+            },
+                searchCriteria:[
+                ]
+            };
             this.props.setPageRequest(pageRequest);
 
             await this.getPageRequest(nextProps.match.params.collectionType);

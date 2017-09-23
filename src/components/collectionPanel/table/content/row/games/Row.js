@@ -48,9 +48,13 @@ class Row extends React.Component{
     downloadGameRules(gameName){
         axios.get(serverName+`/get/game/`+gameName+`/rules`)
             .then(res => {
-                this.props.showSuccessMessage({
-                    messageText: "rules of game: "+gameName+" downloaded"
-                });
+                let headers = res.headers;
+                let blob = new Blob([res.data],{type:headers['content-type']});
+                let link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "Filename";
+                link.click();
+
             })
             .catch(error => {
                 this.props.showNetworkErrorMessage(error);
