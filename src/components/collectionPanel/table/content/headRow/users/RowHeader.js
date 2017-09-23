@@ -17,18 +17,25 @@ export default class RowHeader extends React.Component{
                     content="avatar"
                 />
                 <TableHeader
-                    sortBy = "username"
+                    sortBy = "name"
                     sort = {this.props.sortByColumnName.bind(this)}
-                    isActive = {this.props.isColumnActive("username")}
-                    arrow = {this.props.getArrowGlyph("username")}
-                    content="username"
+                    isActive = {this.props.isColumnActive("name")}
+                    arrow = {this.props.getArrowGlyph("name")}
+                    content="name"
                 />
                 <TableHeader
-                    sortBy = "surname"
+                    sortBy = "firstname"
                     sort = {this.props.sortByColumnName.bind(this)}
-                    isActive = {this.props.isColumnActive("surname")}
-                    arrow = {this.props.getArrowGlyph("surname")}
-                    content="surname"
+                    isActive = {this.props.isColumnActive("firstname")}
+                    arrow = {this.props.getArrowGlyph("firstname")}
+                    content="firstname"
+                />
+                <TableHeader
+                    sortBy = "lastname"
+                    sort = {this.props.sortByColumnName.bind(this)}
+                    isActive = {this.props.isColumnActive("lastname")}
+                    arrow = {this.props.getArrowGlyph("lastname")}
+                    content="lastname"
                 />
                 <TableHeader
                     sortBy = "email"

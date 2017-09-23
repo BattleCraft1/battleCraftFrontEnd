@@ -7,7 +7,7 @@ export default class RowChecbox extends React.Component {
         return(
         <th className = {css(resp.rowContent, resp.smallCheckbox)}
             style = {Object.assign({}, styles.checkbox, styles.thead, {borderRadius: '0px'})}>
-            <Checkbox property={this.props.property} value={this.props.value}/>
+            <Checkbox value={this.props.value}/>
         </th>
         );
     }

@@ -8,7 +8,7 @@ export default class TableAvatarCell extends React.Component{
             <td className = {css(resp.rowContent)}
                 style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.props.color})}
                 onClick={() => {this.props.onClick()}}>
-                <img src={serverName+`/get/user/`+this.props.username+`/avatar`} alt="avatar" className="img-responsive"/></td>
+                <img src={serverName+`/get/user/`+this.props.name+`/avatar`} alt="avatar" className="img-responsive"/></td>
         )
     }
 }

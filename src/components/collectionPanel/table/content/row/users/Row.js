@@ -42,8 +42,7 @@ export default class Row extends React.Component{
         return (
             <tr className={css(resp.tableRow)}>
                 <RowChecbox
-                    property = "username"
-                    value = {this.props.element.username}
+                    value = {this.props.element.name}
                 />
 
                 <TableRespNeutralHeader
@@ -53,35 +52,49 @@ export default class Row extends React.Component{
                     columnName = "avatar"
                     color = {this.getColor("avatar", this.props.element)}
                     onClick = {this.editCheckedElements.bind(this)}
-                    username = {this.props.element.username}
+                    name = {this.props.element.name}
                 />
 
                 <TableResponsiveHeader
-                    isActive = {this.props.isColumnActive("username")}
-                    sortBy = "username"
+                    isActive = {this.props.isColumnActive("name")}
+                    sortBy = "name"
                     sort = {this.props.sortByColumnName.bind(this)}
-                    arrow = {this.props.getArrowGlyph("username")}
-                    headerName = "username"
+                    arrow = {this.props.getArrowGlyph("name")}
+                    headerName = "name"
                 />
                 <TableCell
-                    columnName = "username"
-                    color = {this.getColor("username", this.props.element)}
+                    columnName = "name"
+                    color = {this.getColor("name", this.props.element)}
                     onClick = {this.editCheckedElements.bind(this)}
-                    content = {this.props.element.username}
+                    content = {this.props.element.name}
                 />
 
                 <TableResponsiveHeader
-                    isActive = {this.props.isColumnActive("surname")}
-                    sortBy = "surname"
+                    isActive = {this.props.isColumnActive("firstname")}
+                    sortBy = "firstname"
                     sort = {this.props.sortByColumnName.bind(this)}
-                    arrow = {this.props.getArrowGlyph("surname")}
-                    headerName = "surname"
+                    arrow = {this.props.getArrowGlyph("firstname")}
+                    headerName = "firstname"
                 />
                 <TableCell
-                    columnName = "surname"
-                    color = {this.getColor("surname", this.props.element)}
+                    columnName = "firstname"
+                    color = {this.getColor("firstname", this.props.element)}
                     onClick = {this.editCheckedElements.bind(this)}
-                    content = {this.props.element.surname}
+                    content = {this.props.element.firstname}
+                />
+
+                <TableResponsiveHeader
+                    isActive = {this.props.isColumnActive("lastname")}
+                    sortBy = "lastname"
+                    sort = {this.props.sortByColumnName.bind(this)}
+                    arrow = {this.props.getArrowGlyph("lastname")}
+                    headerName = "lastname"
+                />
+                <TableCell
+                    columnName = "lastname"
+                    color = {this.getColor("lastname", this.props.element)}
+                    onClick = {this.editCheckedElements.bind(this)}
+                    content = {this.props.element.lastname}
                 />
 
                 <TableResponsiveHeader

@@ -8,8 +8,6 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
-let uniqueNameProperty = 'username';
-
 class DegradeOperation extends React.Component {
     constructor(props) {
         super(props);
@@ -17,12 +15,12 @@ class DegradeOperation extends React.Component {
 
     getFailureMessage(elementsWhichCannotBeDegrade){
         return "Users "+elementsWhichCannotBeDegrade
-                .map(function(element){return element[uniqueNameProperty]}).join(", ")+" are not degrade to Player " +
-            "because if you want advance user to Player he must by a Organizer"
+                .map(function(element){return element.name}).join(", ")+" are not degrade to Accepted " +
+            "because if you want degrade user to Accepted he must by a Organizer"
     }
 
     getSuccessMessage(elementsToDegrade){
-        return "Users "+elementsToDegrade.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are degrade to Player"
+        return "Users "+elementsToDegrade.map(function(element){return element.name}).join(", ")+" are degrade to Accepted"
     }
 
     degradeElements(){
@@ -39,7 +37,7 @@ class DegradeOperation extends React.Component {
 
         if(elementsToDegrade.length>0) {
             let uniqueElementsToDegradeNames = elementsToDegrade.map(function(item) {
-                return item[uniqueNameProperty];
+                return item.name;
             });
             let getPageAndModifyDataObjectsWrapper = {
                 namesOfObjectsToModify: uniqueElementsToDegradeNames,

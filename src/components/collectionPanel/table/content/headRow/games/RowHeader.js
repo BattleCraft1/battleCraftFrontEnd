@@ -28,11 +28,18 @@ export default class RowHeader extends React.Component{
                     content="tournaments number"
                 />
                 <TableHeader
-                    sortBy = "creator.username"
+                    sortBy = "creator.name"
                     sort = {this.props.sortByColumnName.bind(this)}
-                    isActive = {this.props.isColumnActive("creatorUsername")}
-                    arrow = {this.props.getArrowGlyph("creatorUsername")}
-                    content="creator username"
+                    isActive = {this.props.isColumnActive("creatorName")}
+                    arrow = {this.props.getArrowGlyph("creatorName")}
+                    content="creator name"
+                />
+                <TableHeader
+                    sortBy = "dateOfCreation"
+                    sort = {this.props.sortByColumnName.bind(this)}
+                    isActive = {this.props.isColumnActive("dateOfCreation")}
+                    arrow = {this.props.getArrowGlyph("dateOfCreation")}
+                    content="creation date"
                 />
                 <TableNeutralHeader
                     content="rules"

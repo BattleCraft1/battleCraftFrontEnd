@@ -13,6 +13,7 @@ import { ActionCreators } from '../../../../../../redux/actions';
 import {serverName} from "../../../../../../main/consts/server";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import setDate from './../../../../../../main/functions/setDateFunction'
 
 let icons = require('glyphicons');
 
@@ -60,7 +61,6 @@ class Row extends React.Component{
         return (
             <tr className={css(resp.tableRow)}>
                 <RowChecbox
-                    property = "name"
                     value = {this.props.element.name}
                 />
 
@@ -93,17 +93,31 @@ class Row extends React.Component{
                 />
 
                 <TableResponsiveHeader
-                    isActive = {this.props.isColumnActive("creatorUsername")}
-                    sortBy = "creator.username"
+                    isActive = {this.props.isColumnActive("creatorName")}
+                    sortBy = "creator.name"
                     sort = {this.props.sortByColumnName.bind(this)}
-                    arrow = {this.props.getArrowGlyph("creatorUsername")}
-                    headerName = "creatorUsername"
+                    arrow = {this.props.getArrowGlyph("creatorName")}
+                    headerName = "creatorName"
                 />
                 <TableCell
-                    columnName = "creatorUsername"
-                    color = {this.getColor("creatorUsername", this.props.element)}
+                    columnName = "creatorName"
+                    color = {this.getColor("creatorName", this.props.element)}
                     onClick = {this.editCheckedElements.bind(this)}
-                    content = {this.props.element.creatorUsername}
+                    content = {this.props.element.creatorName}
+                />
+
+                <TableResponsiveHeader
+                    isActive = {this.props.isColumnActive("dateOfCreation")}
+                    sortBy = "dateOfCreation"
+                    sort = {this.props.sortByColumnName.bind(this)}
+                    arrow = {this.props.getArrowGlyph("dateOfCreation")}
+                    headerName = "creation date"
+                />
+                <TableCell
+                    columnName = "dateOfCreation"
+                    color = {this.getColor("dateOfCreation", this.props.element)}
+                    onClick = {this.editCheckedElements.bind(this)}
+                    content = {setDate(this.props.element.dateOfCreation)}
                 />
 
                 <TableRespNeutralHeader

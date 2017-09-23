@@ -25,6 +25,12 @@ class SearchPanel extends React.Component{
         await this.getEnums();
     }
 
+    async componentWillReceiveProps(nextProps) {
+        if (nextProps.collectionType!==undefined && nextProps.collectionType !== this.props.collectionType) {
+            await this.getEnums();
+        }
+    }
+
     async getEnums(){
         await axios.get(serverName+`get/`+this.props.collectionType+`/enums`)
             .then(res => {

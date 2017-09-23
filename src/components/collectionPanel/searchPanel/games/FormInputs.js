@@ -2,6 +2,7 @@ import React from 'react';
 import TextInput from './../inputs/TextInput'
 import NumberInput from './../inputs/NumberInput'
 import StatusInput from './../inputs/StatusInput'
+import DateInput from './../inputs/DateInput'
 
 export default class FormInputs extends React.Component{
     constructor(props) {
@@ -12,7 +13,7 @@ export default class FormInputs extends React.Component{
             searchFormField: {
                 "name":{},
                 "tournamentsNumber":{},
-                "creatorUsername":{},
+                "creatorName":{},
                 "gameStatus":{}
             }
         }
@@ -25,12 +26,14 @@ export default class FormInputs extends React.Component{
     prepareGamesStatusOptions(){
         let gamesStatusOptions = [];
         gamesStatusOptions.push(<option key="nullOption"/>);
-        this.state.status.map(
-            statusName => {
-                gamesStatusOptions.push(<option key={statusName}>{statusName}</option>);
-            }
-        );
-        gamesStatusOptions.push(<option key="BANNED">BANNED</option>);
+        if(this.state.status!==undefined) {
+            this.state.status.map(
+                statusName => {
+                    gamesStatusOptions.push(<option key={statusName}>{statusName}</option>);
+                }
+            );
+            gamesStatusOptions.push(<option key="BANNED">BANNED</option>);
+        }
         return gamesStatusOptions;
     }
 
@@ -61,15 +64,22 @@ export default class FormInputs extends React.Component{
                     changeSearchForm = {this.changeSearchForm.bind(this)}
                 />
                 <TextInput
-                    name = "Creator username"
+                    name = "Creator name"
                     placeholder = "Jarek123"
-                    keys = {["creatorUsername"]}
+                    keys = {["creatorName"]}
                     operation = ":"
-                    indexOfSearchFields = "creatorUsername"
+                    indexOfSearchFields = "creatorName"
                     changeSearchForm = {this.changeSearchForm.bind(this)}
                 />
                 <StatusInput
                     options = {gamesStatusOptions}
+                    changeSearchForm = {this.changeSearchForm.bind(this)}
+                />
+                <DateInput
+                    name = "Creation date"
+                    keys = {["dateOfCreation"]}
+                    operation = "<"
+                    indexOfSearchFields = "dateOfCreation"
                     changeSearchForm = {this.changeSearchForm.bind(this)}
                 />
                 <button onClick={()=>this.props.search(this.state.searchFormField)}

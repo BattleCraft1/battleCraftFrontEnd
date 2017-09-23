@@ -35,7 +35,8 @@ export default class OptionPanel extends React.Component {
             operations.push(
                 React.createElement(
                     mapOfOperations[possibleOperations[this.props.collectionType][possibleOperation]],
-                    {collectionType:this.props.collectionType},
+                    {collectionType:this.props.collectionType,
+                    key:possibleOperation},
                     null
                 )
             );

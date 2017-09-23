@@ -8,26 +8,19 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
-let uniqueNameProperty;
 
 class DeleteOperation extends React.Component {
     constructor(props) {
         super(props);
-        if(this.props.collectionType === 'tournaments' || this.props.collectionType === 'games'){
-            uniqueNameProperty = 'name'
-        }
-        else if(this.props.collectionType === 'users'){
-            uniqueNameProperty = 'username'
-        }
     }
 
     getSuccessMessage(elementsToDelete){
-        return "Elements "+elementsToDelete.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are deleted";
+        return "Elements "+elementsToDelete.map(function(element){return element.name}).join(", ")+" are deleted";
     }
 
     getFailureMessage(elementsWhichCannotBeDeleted){
         return "Elements "+elementsWhichCannotBeDeleted
-                .map(function(element){return element[uniqueNameProperty]}).join(", ")+" are not deleted " +
+                .map(function(element){return element.name}).join(", ")+" are not deleted " +
             "because if you want delete element you must ban it firstly"
     }
 
@@ -47,7 +40,7 @@ class DeleteOperation extends React.Component {
 
         if(elementsToDelete.length>0) {
             let uniqueElementsToBanNames = elementsToDelete.map(function(item) {
-                return item[uniqueNameProperty];
+                return item.name;
             });
             let getPageAndModifyDataObjectsWrapper = {
                 namesOfObjectsToModify: uniqueElementsToBanNames,
