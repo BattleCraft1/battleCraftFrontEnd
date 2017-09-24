@@ -30,8 +30,8 @@ export default class RowHeader extends React.Component{
                 <TableHeader
                     sortBy = "creator.name"
                     sort = {this.props.sortByColumnName.bind(this)}
-                    isActive = {this.props.isColumnActive("creatorName")}
-                    arrow = {this.props.getArrowGlyph("creatorName")}
+                    isActive = {this.props.isColumnActive("creator.name")}
+                    arrow = {this.props.getArrowGlyph("creator.name")}
                     content="creator name"
                 />
                 <TableHeader

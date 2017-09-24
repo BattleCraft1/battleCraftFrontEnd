@@ -25,7 +25,6 @@ class AdvanceOperation extends React.Component {
 
     advanceElements(){
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        console.log(checkedElements);
         let elementsToAdvance = checkedElements.filter(element => element.status==='ACCEPTED');
         let elementsWhichCannotBeAdvance = checkedElements.filter(element => element.status!=='ACCEPTED');
 

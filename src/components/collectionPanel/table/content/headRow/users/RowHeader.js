@@ -47,15 +47,15 @@ export default class RowHeader extends React.Component{
                 <TableHeader
                     sortBy = "province.location"
                     sort = {this.props.sortByColumnName.bind(this)}
-                    isActive = {this.props.isColumnActive("province")}
-                    arrow = {this.props.getArrowGlyph("province")}
+                    isActive = {this.props.isColumnActive("province.location")}
+                    arrow = {this.props.getArrowGlyph("province.location")}
                     content="province"
                 />
                 <TableHeader
                     sortBy = "address.city"
                     sort = {this.props.sortByColumnName.bind(this)}
-                    isActive = {this.props.isColumnActive("city")}
-                    arrow = {this.props.getArrowGlyph("city")}
+                    isActive = {this.props.isColumnActive("address.city")}
+                    arrow = {this.props.getArrowGlyph("address.city")}
                     content="city"
                 />
                 <TableHeader

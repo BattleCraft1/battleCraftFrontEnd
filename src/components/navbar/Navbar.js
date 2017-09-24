@@ -22,7 +22,6 @@ export default class Navigator extends React.Component{
       this.handleClick = this.handleClick.bind(this);
       this.handleAccountList = this.handleAccountList.bind(this);
       this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-      //console.log(window.innerWidth);
     }
 
     updateWindowDimensions(){
