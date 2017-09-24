@@ -22,17 +22,17 @@ class SearchPanel extends React.Component{
     }
 
     async componentDidMount(){
-        await this.getEnums();
+        await this.getEnums(this.props.collectionType);
     }
 
     async componentWillReceiveProps(nextProps) {
         if (nextProps.collectionType!==undefined && nextProps.collectionType !== this.props.collectionType) {
-            await this.getEnums();
+            await this.getEnums(nextProps.collectionType);
         }
     }
 
-    async getEnums(){
-        await axios.get(serverName+`get/`+this.props.collectionType+`/enums`)
+    async getEnums(collectionType){
+        await axios.get(serverName+`get/`+collectionType+`/enums`)
             .then(res => {
                 this.setState({enums:res.data});
             })

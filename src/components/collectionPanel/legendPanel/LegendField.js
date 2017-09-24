@@ -27,7 +27,6 @@ const styles = {
         borderBottomColor: '#886e4b',
         borderLeftColor: '#dfd19e',
         borderRightColor: '#886e4b',
-        textShadow: ' ',
     }
 };
 
