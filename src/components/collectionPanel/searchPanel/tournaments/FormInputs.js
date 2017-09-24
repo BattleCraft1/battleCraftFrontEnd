@@ -27,6 +27,14 @@ export default class FormInputs extends React.Component{
         }
     }
 
+    async componentWillReceiveProps(nextProps) {
+        if (nextProps.enums!==undefined && nextProps.enums !== this.props.enums) {
+            this.setState({provincesNames:nextProps.enums.provincesNames});
+            this.setState({tournamentsGames:nextProps.enums.gamesNames});
+            this.setState({status:nextProps.enums.tournamentStatus});
+        }
+    }
+
     componentDidMount(){
         this.setState({provincesNames:this.props.enums.provincesNames});
         this.setState({tournamentsGames:this.props.enums.gamesNames});

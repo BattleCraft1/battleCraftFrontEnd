@@ -21,6 +21,13 @@ export default class FormInputs extends React.Component{
         }
     }
 
+    async componentWillReceiveProps(nextProps) {
+        if (nextProps.enums!==undefined && nextProps.enums !== this.props.enums) {
+            this.setState({provincesNames:nextProps.enums.provincesNames});
+            this.setState({status:nextProps.enums.usersTypes});
+        }
+    }
+
     componentDidMount(){
         this.setState({provincesNames:this.props.enums.provincesNames});
         this.setState({status:this.props.enums.usersTypes});

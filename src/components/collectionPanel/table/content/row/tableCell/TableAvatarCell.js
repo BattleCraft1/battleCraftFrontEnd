@@ -44,8 +44,7 @@ const styles = {
         borderTopColor: '#dfd19e',
         borderBottomColor: '#886e4b',
         borderLeftColor: '#dfd19e',
-        borderRightColor: '#886e4b',
-        textShadow: ' ',
+        borderRightColor: '#886e4b'
     },
 };
 

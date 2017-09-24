@@ -31,6 +31,7 @@ class CollectionPanel extends React.Component{
     async componentWillReceiveProps(nextProps) {
         if (nextProps.match.params.collectionType !== undefined &&
             nextProps.match.params.collectionType !== this.props.match.params.collectionType) {
+
             this.setState({collectionType: nextProps.match.params.collectionType});
 
             let pageRequest = this.props.pageRequest;
@@ -41,6 +42,7 @@ class CollectionPanel extends React.Component{
             pageRequest.searchCriteria = [];
             this.props.setPageRequest(pageRequest);
             await this.getPageRequest(nextProps.match.params.collectionType);
+
         }
     }
 
