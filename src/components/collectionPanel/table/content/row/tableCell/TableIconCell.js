@@ -1,28 +1,19 @@
 import React from 'react';
-import Checkbox from '../../../../../commonComponents/checkBox/Checkbox'
+import TextOutput from '../../../../../commonComponents/textOutput/TextOutput'
 import {StyleSheet, css} from 'aphrodite';
 
-export default class RowChecbox extends React.Component {
-    render() {
+export default class TableCell extends React.Component{
+    render(){
         return(
-        <th className = {css(resp.rowContent, resp.smallCheckbox)}
-            style = {Object.assign({}, styles.checkbox, styles.thead, {borderRadius: '0px'})}>
-            <Checkbox value={this.props.value}/>
-        </th>
-        );
+            <td className = {css(resp.rowContent)}
+                style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.props.color})}
+                onClick={() => {this.props.onClick()}}>
+                {this.props.icon}</td>
+        )
     }
 }
 
 const styles = {
-    checkbox: {
-        padding: '8px',
-        paddingLeft: '4px',
-        paddingRight: '4px',
-        borderRight: '0px',
-        //backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#d19c55), to(#906b3a))',
-        borderBottomColor: '#775930',
-        textAlign: 'center',
-    },
     thead: {
         borderCollapse: 'separate',
         borderRadius: '4px 4px 0 0',
@@ -40,24 +31,32 @@ const styles = {
         // WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px',
         backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
     },
+    rowContent: {
+        borderRadius: '0',
+        background: '#c6a57d',
+        border: '1px solid',
+        padding: '8px',
+        paddingLeft: '8px',
+        textAlign: 'none',
+        backgroundImage: '',
+        WebkitBorderImage: '',
+        color: 'black',
+        borderTopColor: '#dfd19e',
+        borderBottomColor: '#886e4b',
+        borderLeftColor: '#dfd19e',
+        borderRightColor: '#886e4b',
+        textShadow: ' ',
+    },
 };
 
 const resp = StyleSheet.create({
-    smallCheckbox:{
-        '@media (max-width: 599px)': {
-            width:'10%',
-            margin:'0',
-            paddingTop:'7px',
-            paddingBottom:'7px',
-        }
-    },
     rowContent:{
         position:'relative',
         textAlign:'center',
         '@media (max-width: 599px)': {
-            width:'100%',
-            display: 'block',
+            width:'70%',
+            display: 'inline-block',
             borderRadius:'0'
         }
-    }
+    },
 });

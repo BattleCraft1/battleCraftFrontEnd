@@ -8,37 +8,27 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
-let acceptedCollectionStatus;
-let uniqueNameProperty;
 
 class CancelAcceptOperation extends React.Component {
     constructor(props) {
         super(props);
-        if(this.props.collectionType === 'tournaments'){
-            acceptedCollectionStatus = 'ACCEPTED';
-            uniqueNameProperty = 'name'
-        }
-        else if(this.props.collectionType === 'users'){
-            acceptedCollectionStatus = 'PLAYER';
-            uniqueNameProperty = 'username'
-        }
     }
 
     getSuccessMessage(elementsToCancelAccept){
-        return "Acceptations for "+elementsToCancelAccept.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are canceled";
+        return "Acceptations for "+elementsToCancelAccept.map(function(element){return element.name}).join(", ")+" are canceled";
     }
 
     getFailureMessage(elementsWithFailedCancellation){
         return "Elements "+elementsWithFailedCancellation
-                .map(function(element){return element[uniqueNameProperty]}).join(", ")+" are still accepted " +
+                .map(function(element){return element.name}).join(", ")+" are still accepted " +
             "because you can cancel acceptation only for accepted and not banned elements"
     }
 
     cancelAcceptElements(){
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
         let elementsToCancelAccept = checkedElements.filter(element =>
-            element.status===acceptedCollectionStatus  && element.banned===false);
-        let elementsWithFailedCancellation = checkedElements.filter(element => element.status!==acceptedCollectionStatus);
+            element.status==='ACCEPTED'  && element.banned===false);
+        let elementsWithFailedCancellation = checkedElements.filter(element => element.status!=='ACCEPTED');
 
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
@@ -50,7 +40,7 @@ class CancelAcceptOperation extends React.Component {
 
         if(elementsToCancelAccept.length>0) {
             let uniqueElementsToBanNames = elementsToCancelAccept.map(function(item) {
-                return item[uniqueNameProperty];
+                return item.name;
             });
             let getPageAndModifyDataObjectsWrapper = {
                 namesOfObjectsToModify: uniqueElementsToBanNames,

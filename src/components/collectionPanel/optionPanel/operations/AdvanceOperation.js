@@ -8,8 +8,6 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
-let uniqueNameProperty = 'username';
-
 class AdvanceOperation extends React.Component {
     constructor(props) {
         super(props);
@@ -17,18 +15,19 @@ class AdvanceOperation extends React.Component {
 
     getFailureMessage(elementsWhichCannotBeAdvance){
         return "Users "+elementsWhichCannotBeAdvance
-                .map(function(element){return element[uniqueNameProperty]}).join(", ")+" are not advance to Organizer " +
-            "because if you want advance user to Organizer he must by a Player"
+                .map(function(element){return element.name}).join(", ")+" are not advance to Organizer " +
+            "because if you want advance user to Organizer he must by a Accepted"
     }
 
     getSuccessMessage(elementsToAdvance){
-        return "Users "+elementsToAdvance.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are advanced to Organizer"
+        return "Users "+elementsToAdvance.map(function(element){return element.name}).join(", ")+" are advanced to Organizer"
     }
 
     advanceElements(){
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        let elementsToAdvance = checkedElements.filter(element => element.status==='PLAYER');
-        let elementsWhichCannotBeAdvance = checkedElements.filter(element => element.status!=='PLAYER');
+        console.log(checkedElements);
+        let elementsToAdvance = checkedElements.filter(element => element.status==='ACCEPTED');
+        let elementsWhichCannotBeAdvance = checkedElements.filter(element => element.status!=='ACCEPTED');
 
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
@@ -39,7 +38,7 @@ class AdvanceOperation extends React.Component {
 
         if(elementsToAdvance.length>0) {
             let uniqueElementsToAdvanceNames = elementsToAdvance.map(function(item) {
-                return item[uniqueNameProperty];
+                return item.name;
             });
             let getPageAndModifyDataObjectsWrapper = {
                 namesOfObjectsToModify: uniqueElementsToAdvanceNames,
@@ -80,7 +79,7 @@ class AdvanceOperation extends React.Component {
         else{
             showFailureMessage(
                 {
-                    messageText: "Nothing to advance. Only Players can be advanced."
+                    messageText: "Nothing to advance. Only Accepted users can be advanced."
                 }
             )
         }

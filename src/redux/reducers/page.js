@@ -24,7 +24,7 @@ export const page = createReducer( {}, {
     },
 
     [types.CHECK_ELEMENT]( state, action ){
-        let elementToCheck=state.content.find(element => element[action.property]===action.value);
+        let elementToCheck=state.content.find(element => element.name===action.value);
         elementToCheck.checked=action.checked;
         return Object.create(state);
     }

@@ -32,6 +32,19 @@ class CollectionPanel extends React.Component{
         if (nextProps.match.params.collectionType !== undefined &&
             nextProps.match.params.collectionType !== this.props.match.params.collectionType) {
             this.setState({collectionType: nextProps.match.params.collectionType});
+
+            let pageRequest = this.props.pageRequest;
+            pageRequest={pageRequest:{
+                size:10,
+                page:0,
+                direction: "ASC",
+                property: "name"
+            },
+                searchCriteria:[
+                ]
+            };
+            this.props.setPageRequest(pageRequest);
+
             await this.getPageRequest(nextProps.match.params.collectionType);
         }
     }
@@ -55,8 +68,14 @@ class CollectionPanel extends React.Component{
     render(){
         let searchPanel = "loading...";
         if(this.state.collectionType!=="")
-            searchPanel = <SearchPanel collectionType={this.state.collectionType}
-                         getPageRequest={this.getPageRequest.bind(this)} />;
+            searchPanel = React.createElement(
+                SearchPanel,
+                {
+                    collectionType:this.state.collectionType,
+                    getPageRequest:this.getPageRequest.bind(this)
+                },
+                null
+            );
         return (
             <div className={css(resp.container)}>
                 <div className="row">

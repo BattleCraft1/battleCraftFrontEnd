@@ -4,7 +4,7 @@ import TableCell from './../../row/tableCell/TableCell'
 import RowChecbox from './../../row/rowCheckbox/RowChecbox'
 import TableResponsiveHeader from './../../headRow/tableHeader/TableResponsiveHeader'
 
-import dateFormat from 'dateformat';
+import setDate from './../../../../../../main/functions/setDateFunction'
 
 import {StyleSheet, css} from 'aphrodite';
 import {colors} from './../../../../../../main/consts/collectionsColors'
@@ -41,7 +41,6 @@ export default class Row extends React.Component{
         return (
             <tr className={css(resp.tableRow)}>
                 <RowChecbox
-                    property = "name"
                     value = {this.props.element.name}
                 />
 
@@ -126,7 +125,7 @@ export default class Row extends React.Component{
                     columnName = "dateOfStart"
                     color = {this.getColor("dateOfStart", this.props.element)}
                     onClick = {this.editCheckedElements.bind(this)}
-                    content = {dateFormat((new Date(this.props.element.dateOfStart)),"dd-MM-yyyy hh:mm")}
+                    content = {setDate(this.props.element.dateOfStart)}
                 />
 
                 <TableResponsiveHeader
@@ -140,7 +139,7 @@ export default class Row extends React.Component{
                     columnName = "dateOfEnd"
                     color = {this.getColor("dateOfEnd", this.props.element)}
                     onClick = {this.editCheckedElements.bind(this)}
-                    content = {dateFormat((new Date(this.props.element.dateOfEnd)),"dd-MM-yyyy hh:mm")}
+                    content = {setDate(this.props.element.dateOfEnd)}
                 />
             </tr>
         );

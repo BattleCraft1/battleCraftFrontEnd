@@ -12,6 +12,8 @@ import TournamentRow from './row/tournaments/Row'
 import UserRow from './row/users/Row'
 import TournamentRowHeader from './headRow/tournaments/RowHeader'
 import UserRowHeader from './headRow/users/RowHeader'
+import GameRow from './row/games/Row'
+import GameRowHeader from './headRow/games/RowHeader'
 
 let icons = require('glyphicons');
 
@@ -51,6 +53,8 @@ class CollectionList extends React.Component{
 
         if(this.props.collectionType==="tournaments")
             rowType = TournamentRow;
+        else if(this.props.collectionType==="games")
+            rowType = GameRow;
         else
             rowType = UserRow;
 
@@ -86,6 +90,10 @@ class CollectionList extends React.Component{
         if(this.props.collectionType==="tournaments")
         {
             rowHeader = TournamentRowHeader;
+        }
+        else if(this.props.collectionType==="games")
+        {
+            rowHeader = GameRowHeader;
         }
         else
             rowHeader = UserRowHeader;

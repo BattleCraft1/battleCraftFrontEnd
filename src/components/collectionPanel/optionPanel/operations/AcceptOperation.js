@@ -8,34 +8,26 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
-let uniqueNameProperty;
 
 class AcceptOperation extends React.Component {
     constructor(props) {
         super(props);
-
-        if(this.props.collectionType === 'tournaments'){
-            uniqueNameProperty = 'name'
-        }
-        else if(this.props.collectionType === 'users'){
-            uniqueNameProperty = 'username'
-        }
     }
 
     getFailureMessage(elementsWhichCannotBeAccept){
         return "Elements " +
-            elementsWhichCannotBeAccept.map(function(element){return element[uniqueNameProperty]}).join(", ")+
+            elementsWhichCannotBeAccept.map(function(element){return element.name}).join(", ")+
             " are not accepted because you can accept only new elements and not banned"
     }
 
     getSuccessMessage(elementsToAccept){
-        return "Elements "+elementsToAccept.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are accepted";
+        return "Elements "+elementsToAccept.map(function(element){return element.name}).join(", ")+" are accepted";
     }
 
     acceptElements(){
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
         let elementsToAccept = checkedElements.filter(element =>
-            element.status==="NEW" && element.banned===false);
+            element.status==="NEW" && (element.banned===false || element.banned===null));
         let elementsWhichCannotBeAccept = checkedElements.filter(element => element.status!=="NEW");
 
         let showSuccessMessage = this.props.showSuccessMessage;
@@ -48,7 +40,7 @@ class AcceptOperation extends React.Component {
 
         if(elementsToAccept.length>0) {
             let uniqueElementsToBanNames = elementsToAccept.map(function(item) {
-                return item[uniqueNameProperty];
+                return item.name;
             });
             let getPageAndModifyDataObjectsWrapper = {
                 namesOfObjectsToModify: uniqueElementsToBanNames,

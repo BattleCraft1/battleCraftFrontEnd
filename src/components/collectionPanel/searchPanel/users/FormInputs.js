@@ -10,9 +10,9 @@ export default class FormInputs extends React.Component{
             provincesNames:[],
             status:[],
             searchFormField: {
-                "username":{},
                 "name":{},
-                "surname":{},
+                "firstname":{},
+                "lastname":{},
                 "email":{},
                 "province":{},
                 "city":{},
@@ -29,22 +29,26 @@ export default class FormInputs extends React.Component{
     prepareProvinceOptions(){
         let provincesOptions = [];
         provincesOptions.push(<option key="nullOption"/>);
-        this.state.provincesNames.map(
-            provincesName => {
-                provincesOptions.push(<option key={provincesName}>{provincesName}</option>);
-            }
-        );
+        if(this.state.provincesNames!==undefined){
+            this.state.provincesNames.map(
+                provincesName => {
+                    provincesOptions.push(<option key={provincesName}>{provincesName}</option>);
+                }
+            );
+        }
         return provincesOptions;
     }
 
     prepareUserTypeOptions(){
         let userTypeOptions = [];
         userTypeOptions.push(<option key="nullOption"/>);
-        this.state.status.map(
-            statusName => {
-                userTypeOptions.push(<option key={statusName}>{statusName}</option>);
-            }
-        );
+        if(this.state.status!==undefined){
+            this.state.status.map(
+                statusName => {
+                    userTypeOptions.push(<option key={statusName}>{statusName}</option>);
+                }
+            );
+        }
         userTypeOptions.push(<option key="BANNED">BANNED</option>);
         return userTypeOptions;
     }
@@ -62,19 +66,27 @@ export default class FormInputs extends React.Component{
         return (
             <div>
                 <TextInput
-                    name = "Username"
+                    name = "Name"
                     placeholder = "Jarek123"
-                    keys = {["username"]}
+                    keys = {["name"]}
                     operation = ":"
-                    indexOfSearchFields = "username"
+                    indexOfSearchFields = "Name"
                     changeSearchForm = {this.changeSearchForm.bind(this)}
                 />
                 <TextInput
-                    name = "Name"
-                    placeholder = "Kowalski"
-                    keys = {["name"]}
+                    name = "First name"
+                    placeholder = "Jarek"
+                    keys = {["firstname"]}
                     operation = ":"
-                    indexOfSearchFields = "name"
+                    indexOfSearchFields = "firstname"
+                    changeSearchForm = {this.changeSearchForm.bind(this)}
+                />
+                <TextInput
+                    name = "Last name"
+                    placeholder = "Kowalski"
+                    keys = {["lastname"]}
+                    operation = ":"
+                    indexOfSearchFields = "lastname"
                     changeSearchForm = {this.changeSearchForm.bind(this)}
                 />
                 <TextInput

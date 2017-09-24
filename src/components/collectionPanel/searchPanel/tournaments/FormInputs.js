@@ -36,33 +36,39 @@ export default class FormInputs extends React.Component{
     prepareProvinceOptions(){
         let provincesOptions = [];
         provincesOptions.push(<option key="nullOption"/>);
-        this.state.provincesNames.map(
-            provincesName => {
-                provincesOptions.push(<option key={provincesName}>{provincesName}</option>);
-            }
-        );
+        if(this.state.provincesNames!==undefined) {
+            this.state.provincesNames.map(
+                provincesName => {
+                    provincesOptions.push(<option key={provincesName}>{provincesName}</option>);
+                }
+            );
+        }
         return provincesOptions;
     }
 
     prepareTournamentGamesOptions(){
         let tournamentGamesOptions = [];
         tournamentGamesOptions.push(<option key="nullOption"/>);
-        this.state.tournamentsGames.map(
-            tournamentGame => {
-                tournamentGamesOptions.push(<option key={tournamentGame}>{tournamentGame}</option>);
-            }
-        );
+        if(this.state.tournamentsGames!==undefined) {
+            this.state.tournamentsGames.map(
+                tournamentGame => {
+                    tournamentGamesOptions.push(<option key={tournamentGame}>{tournamentGame}</option>);
+                }
+            );
+        }
         return tournamentGamesOptions;
     }
 
     prepareTournamentStatusOptions(){
         let tournamentStatusOptions = [];
         tournamentStatusOptions.push(<option key="nullOption"/>);
-        this.state.status.map(
-            status => {
-                tournamentStatusOptions.push(<option key={status}>{status}</option>);
-            }
-        );
+        if(this.state.status!==undefined) {
+            this.state.status.map(
+                status => {
+                    tournamentStatusOptions.push(<option key={status}>{status}</option>);
+                }
+            );
+        }
         tournamentStatusOptions.push(<option key="BANNED">BANNED</option>);
         return tournamentStatusOptions;
     }

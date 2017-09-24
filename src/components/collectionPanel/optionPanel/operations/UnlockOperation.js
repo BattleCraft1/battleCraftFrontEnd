@@ -8,21 +8,14 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
-let uniqueNameProperty;
 
 class UnlockOperation extends React.Component {
     constructor(props) {
         super(props);
-        if(this.props.collectionType === 'tournaments'){
-            uniqueNameProperty = 'name'
-        }
-        else if(this.props.collectionType === 'users'){
-            uniqueNameProperty = 'username'
-        }
     }
 
     getSuccessMessage(elementsToUnlock){
-        return "Elements "+elementsToUnlock.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are unlock";
+        return "Elements "+elementsToUnlock.map(function(element){return element.name}).join(", ")+" are unlock";
     }
 
     unlockElements(){
@@ -38,7 +31,7 @@ class UnlockOperation extends React.Component {
 
         if(elementsToUnlock.length>0) {
             let uniqueElementsToBanNames = elementsToUnlock.map(function(item) {
-                return item[uniqueNameProperty];
+                return item.name;
             });
             let getPageAndModifyDataObjectsWrapper = {
                 namesOfObjectsToModify: uniqueElementsToBanNames,

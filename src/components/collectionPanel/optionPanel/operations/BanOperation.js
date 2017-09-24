@@ -8,22 +8,14 @@ import { ActionCreators } from '../../../../redux/actions/index';
 
 let icons = require('glyphicons');
 
-let uniqueNameProperty;
 
 class BanOperation extends React.Component {
     constructor(props) {
         super(props);
-
-        if(this.props.collectionType === 'tournaments'){
-            uniqueNameProperty = 'name'
-        }
-        else if(this.props.collectionType === 'users'){
-            uniqueNameProperty = 'username'
-        }
     }
 
     getSuccessMessage(elementsToBan){
-        return "Elements "+elementsToBan.map(function(element){return element[uniqueNameProperty]}).join(", ")+" are banned";
+        return "Elements "+elementsToBan.map(function(element){return element.name}).join(", ")+" are banned";
     }
 
     benElements(){
@@ -39,7 +31,7 @@ class BanOperation extends React.Component {
 
         if(elementsToBan.length>0) {
             let uniqueElementsToBanNames = elementsToBan.map(function(item) {
-                return item[uniqueNameProperty];
+                return item.name;
             });
             let getPageAndModifyDataObjectsWrapper = {
                 namesOfObjectsToModify: uniqueElementsToBanNames,

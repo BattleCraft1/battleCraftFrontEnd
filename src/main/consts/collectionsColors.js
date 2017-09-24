@@ -19,17 +19,27 @@ export const colors = {
         "normal":{
             "NEW": 'rgb(230, 197, 158)',
             "ACCEPTED": 'rgb(116, 152, 88)',
-            "PLAYER": 'rgb(142, 108, 63)',
             "ORGANIZER": 'rgb(96, 146, 162)',
-            "ADMIN": 'rgb(156, 99, 87)',
+            "ADMIN": 'rgb(142, 108, 63)',
             "BANNED": 'rgb(156, 99, 87)',
         },
         "active":{
             "NEW": 'rgb(226, 203, 175)',
             "ACCEPTED": 'rgb(157, 186, 134)',
-            "PLAYER": 'rgb(140, 115, 82)',
             "ORGANIZER": 'rgb(120, 170, 186)',
-            "ADMIN": 'rgb(156, 99, 87)',
+            "ADMIN": 'rgb(140, 115, 82)',
+            "BANNED": 'rgb(200, 143, 131)'
+        }
+    },
+    "games": {
+        "normal":{
+            "NEW": 'rgb(230, 197, 158)',
+            "ACCEPTED": 'rgb(116, 152, 88)',
+            "BANNED": 'rgb(156, 99, 87)',
+        },
+        "active":{
+            "NEW": 'rgb(226, 203, 175)',
+            "ACCEPTED": 'rgb(157, 186, 134)',
             "BANNED": 'rgb(200, 143, 131)'
         }
     }
