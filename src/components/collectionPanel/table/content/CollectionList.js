@@ -33,7 +33,7 @@ class CollectionList extends React.Component{
     }
 
     isColumnActive(columnName){
-        return this.props.pageRequest.pageRequest.property.indexOf(columnName) !== -1;
+        return this.props.pageRequest.pageRequest.property === columnName;
     }
 
     getArrowGlyph(columnName){

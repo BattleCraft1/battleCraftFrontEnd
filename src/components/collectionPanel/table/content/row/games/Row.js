@@ -52,7 +52,7 @@ class Row extends React.Component{
                 let blob = new Blob([res.data],{type:headers['content-type']});
                 let link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
-                link.download = "Filename";
+                link.download = gameName+".pdf";
                 link.click();
 
             })
