@@ -8,7 +8,7 @@ import {StyleSheet, css} from 'aphrodite';
 import Checkbox from '../../../commonComponents/checkBox/Checkbox'
 import MultiCheckbox from '../../../commonComponents/checkBox/MultiCheckbox'
 import TextOutput from '../../../commonComponents/textOutput/TextOutput'
-
+import {resp, styles} from '../tournaments/styles';
 import dateFormat from 'dateformat';
 
 var icons = require('glyphicons');
@@ -324,7 +324,7 @@ class CollectionList extends React.Component{
                 rows.push(
                     <tr key={"tr:"+key} className={css(resp.tableRow)}>
 
-                        <th key={"th:"+key} className = {css(resp.rowContent, resp.rowLabel)} className = {css(resp.rowContent, resp.smallCheckbox)} style = {Object.assign({}, styles.checkbox, styles.thead, {borderRadius: '0px'})}>
+                        <th key={"th:"+key} className = {css(resp.rowContent, resp.smallCheckbox)} style = {Object.assign({}, styles.checkbox, styles.thead, {borderRadius: '0px'})}>
                             <Checkbox style = { Object.assign({}, {margin:'0px'}) } name={tournament.name}/></th>
 
                         <th onClick={()=>{this.sortByColumnName("name")             ; this.handleTheadClick("name"             )}} key="name"
@@ -376,13 +376,13 @@ class CollectionList extends React.Component{
         return (
             <div>
                 <div>
-                <div className = {css(resp.legend)}>
+                <div style = {styles.legend}>
                   <th style={Object.assign({}, styles.thead, {boxSizing: 'border-box', position:'relative', display:'inline-block', width:'100%', textAlign:'center', padding:'3px 0 3px 0', boxShadow:'inset 0 2px 2px #9c7239'})} >Legend</th>
-                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(230, 197, 158)'})} className = {css(resp.legendOption)}>NEW        </span>
-                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(116, 152, 88)'})}  className = {css(resp.legendOption)}>ACCEPTED   </span>
-                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(142, 108, 63)'})}  className = {css(resp.legendOption)}>IN PROGRESS</span>
-                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(96, 146, 162)'})}  className = {css(resp.legendOption)}>FINISHED   </span>
-                  <span style={Object.assign({}, styles.rowContent, {background:'rgb(156, 99, 87)'})}   className = {css(resp.legendOption)}>BANNED     </span>
+                  <span style={Object.assign({}, styles.rowContent,styles.legendOption, {background:'rgb(230, 197, 158)'})} className = {css(resp.legendOption)}>NEW        </span>
+                  <span style={Object.assign({}, styles.rowContent,styles.legendOption, {background:'rgb(116, 152, 88)'})}  className = {css(resp.legendOption)}>ACCEPTED   </span>
+                  <span style={Object.assign({}, styles.rowContent,styles.legendOption, {background:'rgb(142, 108, 63)'})}  className = {css(resp.legendOption)}>IN PROGRESS</span>
+                  <span style={Object.assign({}, styles.rowContent,styles.legendOption, {background:'rgb(96, 146, 162)'})}  className = {css(resp.legendOption)}>FINISHED   </span>
+                  <span style={Object.assign({}, styles.rowContent,styles.legendOption, {background:'rgb(156, 99, 87)'})}   className = {css(resp.legendOption)}>BANNED     </span>
                 </div>
                     <table className="" style={styles.table}>
                         <thead>
@@ -407,18 +407,18 @@ class CollectionList extends React.Component{
                         {rows}
                         </tbody>
                     </table>
-                    <div className={css(resp.buttonGroup)}>
-                        <button type="button" onClick={() => {this.addNewElement();}}                   className={css(resp.theadElement) +" "+ css(resp.button)}>
+                    <div style={styles.buttonGroup}>
+                        <button type="button" onClick={() => {this.addNewElement();}}                   className={css(resp.theadElement)} style = {styles.button}>
                         Add {icons.plus}</button>
-                        <button type="button" onClick={() => {this.banCheckedElements();}}              className={css(resp.theadElement) +" "+ css(resp.button)}>
+                        <button type="button" onClick={() => {this.banCheckedElements();}}              className={css(resp.theadElement)} style = {styles.button}>
                         Ban {icons.skullAndBones}</button>
-                        <button type="button" onClick={() => {this.unlockCheckedElements();}}           className={css(resp.theadElement) +" "+ css(resp.button)}>
+                        <button type="button" onClick={() => {this.unlockCheckedElements();}}           className={css(resp.theadElement)} style = {styles.button}>
                         Unlock {icons.lockOpen}</button>
-                        <button type="button" onClick={() => {this.deleteCheckedElements();}}           className={css(resp.theadElement) +" "+ css(resp.button)}>
+                        <button type="button" onClick={() => {this.deleteCheckedElements();}}           className={css(resp.theadElement)} style = {styles.button}>
                         Delete {icons.warning}</button>
-                        <button type="button" onClick={() => {this.acceptCheckedElements();}}           className={css(resp.theadElement) +" "+ css(resp.button)}>
+                        <button type="button" onClick={() => {this.acceptCheckedElements();}}           className={css(resp.theadElement)} style = {styles.button}>
                         Accept {icons.checkHeavyWhite}</button>
-                        <button type="button" onClick={() => {this.cancelAcceptCheckedElements();}}     className={css(resp.theadElement) +" "+ css(resp.button)}>
+                        <button type="button" onClick={() => {this.cancelAcceptCheckedElements();}}     className={css(resp.theadElement)} style = {styles.button}>
                         Cancel {icons.noEntry}</button>
                     </div>
                 </div>
@@ -439,240 +439,4 @@ function mapStateToProps( state ) {
         message: state.message,
     };
 }
-
 export default connect( mapStateToProps, mapDispatchToProps )( CollectionList );
-
-const styles = {
-
-    rowContent:{
-        borderRadius:'0',
-        background:'#c6a57d',
-        border:'1px solid',
-        textAlign: 'center',
-        backgroundImage: '',
-        WebkitBorderImage: '',
-        color:'black',
-        borderTopColor:'#dfd19e',
-        borderBottomColor:'#886e4b',
-        borderLeftColor:'#dfd19e',
-        borderRightColor:'#886e4b',
-        textShadow:' ',
-        boxSizing: 'border-box',
-    },
-    rowContentActive:{
-        background:'#906a3d'
-    },
-    thead:{
-        borderCollapse: 'separate',
-        borderRadius: '4px 4px 0 0',
-        border:'1px solid',
-        color:'white',
-        //
-        borderTopColor: '#E0BA51',
-        borderBottomColor: '#E0BA51',
-        borderRightColor: '#805D2C',
-        borderLeftColor: '#e3ca86',
-        //borderColor:'#4e3e28',
-        background:'#735630',
-
-        // backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#b48443), to(#654a25))',
-        // WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px',
-        backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
-    },
-    theadActive:{
-        borderCollapse: 'separate',
-        borderRadius: '4px 4px 0 0',
-        border:'1px solid',
-
-        color:'lightGrey',
-        borderTopColor: 'rgb(204, 126, 69)',
-        borderBottomColor: 'rgb(249, 249, 249)',
-        background:'#735630',
-
-        backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#473419), to(#735327))',
-    },
-    table:{
-        borderSpacing:'0px',
-        position:'relative',
-        background:'black',
-        width: '90%',
-        marginLeft:'5%',
-        marginBottom:'4px',
-        borderCollapse:'separate',
-    },
-    checkbox:{
-        margin: '0',
-        height:'10%',
-        borderRight: '0px',
-        textAlign: 'center',
-    },
-    name:{
-      width:'90%',
-    }
-
-
-}
-
-const resp = StyleSheet.create({
-    theadElement:{
-      boxShadow:'inset 0 2px 2px #9c7239',
-      fontFamily:'arial, helvetica, sans-serif',
-      textShadow:'-1px -1px 0 rgba(0,0,0,0.3)',
-      padding: '8px',
-      paddingLeft:'4px',
-      paddingRight:'4px',
-      textAlign: 'center',
-
-      '@media (max-width: 600px)': {
-        display:'none',
-      },
-
-      ':hover':{
-          borderTopColor: 'rgb(249, 249, 249)',
-          borderBottomColor: 'rgb(204, 126, 69)',
-      },
-      ':focus':{
-          borderTopColor: 'rgb(249, 249, 249)',
-          borderBottomColor: 'rgb(204, 161, 130)',
-        },
-      ':active':{
-          color:'lightGrey',
-          borderTopColor: 'rgb(204, 126, 69)',
-          borderBottomColor: 'rgb(249, 249, 249)',
-        },
-
-    },
-
-    button:{
-      textAlign:'center',
-      dislay:'inline-block',
-      position:'relative',
-      width:'16%',
-      padding: '4px',
-      margin:'0',
-      borderTopColor: '#E0BA51',
-      borderBottomColor: '#E0BA51',
-      borderRightColor: '#805D2C',
-      borderLeftColor: '#e3ca86',
-      backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#7d150e), to(#8c3731))',
-      backgroundImage: 'linear-gradient(#f66060, #7d150e, #5b0f0a)',
-      boxShadow:'inset 0 0 7px #9c7239',
-      color:'white',
-      outline:'0',
-      borderRadius:'2px',
-      ':active':{
-          borderTopColor: 'rgb(204, 126, 69)',
-          borderBottomColor: 'rgb(249, 249, 249)',
-          color:'lightGrey',
-          backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#473419), to(#735327))',
-          backgroundImage: 'linear-gradient( #4b110d, #6f1913, #dd5353 )',
-        },
-
-        '@media (max-width: 600px)': {
-          display:'inline-block',
-          width:'30%',
-        },
-    },
-
-    tableRow:{
-      '@media (max-width: 600px)': {
-        display:'block',
-        position:'relative',
-      },
-    },
-
-    buttonGroup:{
-      boxSizing:'border-box',
-      width:'90%',
-      marginLeft:'5%',
-      textAlign:'center',
-      paddingTop:'4px',
-      paddingBottom:'4px',
-      background:'#45341d',
-      boxShadow:'inset 0 0 4px #9c7239',
-      borderCollapse: 'separate',
-
-      border:'1px solid',
-      color:'rgb(204, 126, 69)',
-      borderTopColor: '#E0BA51',
-      borderBottomColor: '#614722',
-      borderRightColor: '#805D2C',
-      borderLeftColor: '#e3ca86',
-    },
-
-    rowContent:{
-      boxSizing:'border-box',
-      position:'relative',
-      textAlign:'center',
-      margin:'0',
-      paddingTop:'8px',
-      paddingBottom:'8px',
-      '@media (max-width: 599px)': {
-        width:'70%',
-        paddingTop: '2%',
-        paddingBottom: '2%',
-        display: 'inline-block',
-        borderRadius:'0'
-      }
-    },
-    rowLabel:{
-      boxSizing:'border-box',
-       width:'30%',
-       paddingTop: '2%',
-       paddingBottom: '2%',
-      '@media (min-width: 600px)': {
-        display:'none',
-      }
-    },
-    rowContainer:{
-      position:'static',
-      padding:'10px',
-      background:'white',
-      '@media (max-width: 600px)': {
-        marginBottom:'10px',
-      }
-    },
-    nameLabel:{
-      height:'30%',
-      width:'20%',
-      margin:'0',
-      paddingTop: '2%',
-      paddingBottom: '2%',
-      boxSizing:'border-box',
-      '@media (min-width: 600px)': {
-        display:'none',
-      },
-    },
-    legend:{
-      position:'relative',
-      width:'90%',
-      marginLeft:'5%',
-      marginBottom:'10px',
-      padding:'0',
-    },
-
-    legendOption:{
-      display:'inline-block',
-      position:'relative',
-      width:'20%',
-      paddingTop:'3px',
-      paddingBottom:'3px',
-      '@media (max-width: 600px)': {
-        display:'inline-block',
-        width:'100%',
-        margin:'0',
-
-      },
-    },
-
-    smallCheckbox:{
-      boxSizing:'border-box',
-      textAlign:'center',
-      '@media (max-width: 599px)': {
-        width:'10%',
-        margin:'0',
-        paddingTop: '2.5%',
-        paddingBottom: '1.5%',
-      }
-    },
-})

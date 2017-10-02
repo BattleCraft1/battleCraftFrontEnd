@@ -9,15 +9,17 @@ import {serverName} from '../../../../main/consts/server';
 
 import {StyleSheet, css} from 'aphrodite';
 
+import {resp, styles} from '../tournaments/styles';
 
 import axios from 'axios';
+
 
 class SearchPanel extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             provincesNames:[],
-            tournamentsGames:[]
+            tournamentsGames:[],
         };
     }
 
@@ -177,69 +179,84 @@ class SearchPanel extends React.Component{
         this.prepareTournamentGamesOptions(tournamentGamesOptions);
 
         return (
-            <div className={css(resp.popupContent)}>
+          <div style={styles.background}>
+            <div style={Object.assign(styles.goldAndBrownTheme, styles.popupContent)} className={css(resp.popupContent)}>
                 <form>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>Name:</span>
-                        <input ref={(control) => this.name = control} id="name" type="text" className={css(resp.optionInput)} name="name"
+                    <div style={styles.optionContainer}>
+                        <span style={styles.optionLabel} >Name:</span>
+                        <input ref={(control) => this.name = control} id="name" type="text" style = {styles.optionInput} name="name"
                                placeholder="Tournament2017"/>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>City:</span>
-                        <input ref={(control) => this.city = control} id="city" type="text" className={css(resp.optionInput)} name="city"
+                    <div style={styles.optionContainer}>
+                        <span style={styles.optionLabel} >City:</span>
+                        <input ref={(control) => this.city = control} id="city" type="text" style = {styles.optionInput} name="city"
                                placeholder="Lublin"/>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>Province:</span>
-                        <select ref={(control) => this.province = control} className={css(resp.optionInput)} id="province">
+                    <div style={styles.optionContainer}>
+                        <span style={styles.optionLabel} >Province:</span>
+                        <select ref={(control) => this.province = control} style = {styles.optionInput} id="province">
                             {provincesOptions}
                         </select>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>Game:</span>
-                        <select ref={(control) => this.game = control} className={css(resp.optionInput)} id="class">
+                    <div style={styles.optionContainer}>
+                        <span style={styles.optionLabel} >Game:</span>
+                        <select ref={(control) => this.game = control} style = {styles.optionInput} id="class">
                             {tournamentGamesOptions}
                         </select>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>From:</span>
-                        <input ref={(control) => this.dateFrom = control} type="date" className={css(resp.optionInput)} id="dateFrom"/>
+                    <div style={styles.optionContainer}>
+                        <span style={styles.optionLabel} >From:</span>
+                        <input ref={(control) => this.dateFrom = control} type="date" style = {styles.optionInput} id="dateFrom"/>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className={css(resp.optionLabel)}>To:</span>
-                        <input ref={(control) => this.dateTo = control}  type="date" className={css(resp.optionInput)} id="dateTo"/>
+                    <div style={styles.optionContainer}>
+                        <span style={styles.optionLabel} >To:</span>
+                        <input ref={(control) => this.dateTo = control}  type="date" style = {styles.optionInput} id="dateTo"/>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className="input-group-addon">Max players:</span>
-                        <input ref={(control) => this.maxPlayers = control} id="maxPlayers" type="number" className="form-control" name="maxPlayers"/>
-                        <span className="input-group-addon">Players number:</span>
-                        <input ref={(control) => this.playersNumber = control} id="playersNumber" type="number" className="form-control" name="playersNumber"/>
-                        <span className="input-group-addon">Free slots:</span>
-                        <input ref={(control) => this.freeSlots = control} id="freeSlots" type="number" className="form-control" name="freeSlots"/>
+                    <div style={styles.optionContainer}>
+                      <div className = {css(resp.thirdSize)}>
+                        <span style={styles.optionLabel} >Max players:</span>
+                        <input ref={(control) => this.maxPlayers = control} id="maxPlayers" type="number" style = {styles.optionInput} name="maxPlayers"/>
+                      </div>
+                      <div className = {css(resp.thirdSize)} style = {styles.middleOption}>
+                        <span style={styles.optionLabel} >Players number:</span>
+                        <input ref={(control) => this.playersNumber = control} id="playersNumber" type="number" style = {styles.optionInput} name="playersNumber"/>
+                      </div>
+                      <div className = {css(resp.thirdSize)}>
+                        <span style={styles.optionLabel} >Free slots:</span>
+                        <input ref={(control) => this.freeSlots = control} id="freeSlots" type="number" style = {styles.optionInput} name="freeSlots"/>
+                      </div>
                     </div>
-                    <div className={css(resp.optionContainer)}>
-                        <span className="input-group-addon">Banned:</span>
-                        <select ref={(control) => this.banned = control} className="form-control" id="banned">
+                    <div style={styles.optionContainer}>
+                      <div className={css(resp.thirdSize)}>
+                        <span style={styles.optionLabel} >Banned:</span>
+                        <select ref={(control) => this.banned = control} style = {styles.optionInput} id="banned">
                             <option key="nevermind" value=""/>
                             <option key="yes" value={true}>yes</option>
                             <option key="no" value={false}>no</option>
                         </select>
-                        <span className="input-group-addon">Active:</span>
-                        <select ref={(control) => this.active = control} className="form-control" id="active">
+                      </div>
+                      <div className={css(resp.thirdSize)} style = {styles.middleOption}>
+                        <span style={styles.optionLabel} >Active:</span>
+                        <select ref={(control) => this.active = control} style = {styles.optionInput} id="active">
                             <option key="nevermind" value=""/>
                             <option key="yes" value={true}>yes</option>
                             <option key="no" value={false}>no</option>
                         </select>
-                        <span className="input-group-addon">Accepted:</span>
-                        <select ref={(control) => this.accepted = control} className="form-control" id="active">
+                      </div>
+                      <div className={css(resp.thirdSize)}>
+                        <span style={styles.optionLabel} >Accepted:</span>
+                        <select ref={(control) => this.accepted = control} style = {styles.optionInput} id="active">
                             <option key="nevermind" value=""/>
                             <option key="yes" value={true}>yes</option>
                             <option key="no" value={false}>no</option>
                         </select>
+                      </div>
                     </div>
-                    <button onClick={()=>this.searchTournaments()} type="button" className={css(resp.searchButton)}>Search</button>
+                    <button type="button" className={css(resp.button)} style = {styles.button}>Cancel</button>
+                    <button onClick={()=>this.searchTournaments()} type="button" style = {styles.button} className={css(resp.button)}>Search</button>
                 </form>
             </div>
+          </div>
         );
     }
 };
@@ -256,45 +273,3 @@ function mapStateToProps( state ) {
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( SearchPanel );
-
-const resp = StyleSheet.create({
-  popupContent:{
-    position:'fixed',
-    width:'80%',
-    padding:'2%',
-    zIndex:'100',
-    background:'red',
-    display:'none',
-  },
-
-  optionContainer:{
-    position:'relative',
-    display:'inline-block',
-    width:'48%',
-    background:'green',
-    float:'left',
-    marginLeft:'1%',
-    marginRight:'1%',
-  },
-
-  optionLabel:{
-  position:'relative',
-  display:'inline-block',
-  width:'100%',
-  textAlign:'center',
-  },
-
-  optionInput:{
-  position:'relative',
-  display:'inline-block',
-  width:'100%',
-  },
-
-  searchButton:{
-    width:'20%',
-    float:'right',
-    marginTop:'1%',
-    marginRight:'1%',
-  },
-
-})
