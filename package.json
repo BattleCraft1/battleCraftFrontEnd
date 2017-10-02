@@ -20,7 +20,7 @@
     "react-responsive": "^1.3.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "react-scripts": "1.0.9",
+    "react-scripts": "^1.0.9",
     "react-scrollbar": "^0.5.1",
     "react-scrollbar-js": "^1.0.1",
     "react-scrollbars": "0.0.5",

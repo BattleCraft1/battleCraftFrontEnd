@@ -212,15 +212,7 @@ const resp = StyleSheet.create({
         borderBottomColor: 'rgb(249, 249, 249)',
       },
   },
-  // navigatorButtonRight:{
-  //   width:'8%',
-  //   minHeight:'26px',
-  //   position:'relative',
-  //   float:'right',
-  //   background:'#473419',
-  //   color:'rgb(189, 185, 189)',
-  //   border:'1px solid rgb(64, 62, 63)',
-  // },
+
   navigatorInput:{
   boxSizing:'border-box',
   position:'relative',
