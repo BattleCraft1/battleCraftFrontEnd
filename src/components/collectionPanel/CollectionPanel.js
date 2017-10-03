@@ -103,10 +103,16 @@ export default connect( mapStateToProps, mapDispatchToProps )( CollectionPanel )
 
 
 const resp = StyleSheet.create({
-    container:{
-        display:'block',
-        position:'relative',
-        width:'100%',
-        zIndex:'1',
+  container:{
+    display:'block',
+    position:'relative',
+    width:'90%',
+    marginLeft:'5%',
+    zIndex:'1',
+    '@media (max-width: 600px)': {
+      width:'100%',
+      margin:'0',
     },
+  },
+
 });

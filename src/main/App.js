@@ -25,16 +25,10 @@ class App extends Component {
                 <ConfirmDialog/>
                 <div className="container">
                     <div className="row">
-                        <div className="col-sm-1 col-md-1 col-lg-1">
-                        </div>
-                        <div className="col-sm-10 col-md-10 col-lg-10">
-                            <Message/>
+                        <Message/>
                             <Switch>
                                 <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
                             </Switch>
-                        </div>
-                        <div className="col-sm-1 col-md-1 col-lg-1">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -64,9 +58,9 @@ const resp = StyleSheet.create({
 
     backgroundConent:{
       position:'fixed',
-      width:'74%',
+      width:'80%',
       minHeight:'100%',
-      marginLeft:'13%',
+      marginLeft:'10%',
       marginBottom:'10px',
       background:'rgba(0,0,0,0.9)',
       background: 'linear-gradient(to right, rgba(0, 0, 0, 0.90), rgba(0, 0, 0, 1),rgba(0, 0, 0, 0.90) )',
