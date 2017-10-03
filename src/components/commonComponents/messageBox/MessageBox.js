@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { ActionCreators } from '../../../redux/actions/index';
+import {resp, styles} from '../../commonComponents/styles'
 
 class MessageBox extends React.Component {
     constructor(props) {
         super(props);
-
         this.setMessageRef = this.setMessageRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
@@ -49,11 +49,13 @@ class MessageBox extends React.Component {
         this.messageRef = node;
     }
 
+//this.props.message.messageType
+
     render(){
         return (
-            <div className="row">
+            <div style = {styles.messageContainer}>
                 {this.props.message.isShown &&
-                <div ref={this.setMessageRef} className={"alert "+this.props.message.messageType} role="alert">{this.props.message.messageText}</div>}
+                <div ref={this.setMessageRef} style = {styles.messageBox} role="alert">{this.props.message.messageText}</div>}
             </div>
         )
     }
