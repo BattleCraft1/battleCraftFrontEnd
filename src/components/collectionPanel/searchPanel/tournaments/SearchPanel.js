@@ -20,6 +20,7 @@ class SearchPanel extends React.Component{
         this.state = {
             provincesNames:[],
             tournamentsGames:[],
+            isPanelVisible:true,
         };
     }
 
@@ -46,6 +47,11 @@ class SearchPanel extends React.Component{
             .catch(error => {
                 this.props.showNetworkErrorMessageBox(error);
             });
+    }
+
+    hideSearchDialog(){
+        this.state.isPanelVisible = !this.state.isPanelVisible
+        this.forceUpdate();
     }
 
     searchTournaments(){
@@ -179,7 +185,7 @@ class SearchPanel extends React.Component{
         this.prepareTournamentGamesOptions(tournamentGamesOptions);
 
         return (
-          <div style={styles.background}>
+          <div style={Object.assign({}, styles.background, (this.state.isPanelVisible) ? {} : {display:'none'})}>
             <div style={Object.assign(styles.goldAndBrownTheme, styles.popupContent)} className={css(resp.popupContent)}>
                 <form>
                     <div style={styles.optionContainer}>
@@ -252,7 +258,7 @@ class SearchPanel extends React.Component{
                         </select>
                       </div>
                     </div>
-                    <button type="button" className={css(resp.button)} style = {styles.button}>Cancel</button>
+                    <button type="button" onClick= {()=>this.hideSearchDialog()} className={css(resp.button)} style = {styles.button}>Cancel</button>
                     <button onClick={()=>this.searchTournaments()} type="button" style = {styles.button} className={css(resp.button)}>Search</button>
                 </form>
             </div>

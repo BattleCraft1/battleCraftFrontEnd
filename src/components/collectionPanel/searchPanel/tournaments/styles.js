@@ -9,7 +9,7 @@
       top:'0',
       left:'0',
       backgroundColor:'rgba(5, 5, 5, 0.55)',
-      display:'none',//DELETE!!
+      //display:'none',//DELETE!!
     },
     popupContent:{
       fontFamily:'arial, helvetica, sans-serif',

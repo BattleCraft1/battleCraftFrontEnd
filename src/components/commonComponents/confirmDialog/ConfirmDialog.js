@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { ActionCreators } from '../../../redux/actions/index';
+import {resp, styles} from '../../commonComponents/styles';
+import {StyleSheet, css} from 'aphrodite';
+
 
 class ConfirmDialog extends React.Component {
     constructor(props) {
@@ -41,24 +44,19 @@ class ConfirmDialog extends React.Component {
         return (
             <div>
                 {this.props.confirmation.isShown &&
-                <div style={{position:'fixed',zIndex: 6666,left: 0, top: 0, width: '100%', height: '100%',
-                    backgroundColor: 'rgb(0,0,0)', backgroundColor: 'rgba(0,0,0,0.4)'}}>
-                    <div className="modal-dialog" style={{margin: '15% auto', padding: '20px'}} ref={this.setWrapperRef}>
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <button type="button" className="close" data-dismiss="modal"
-                                        onClick={()=>this.hideConfirmationDialog()}
-                                        aria-label="Close"><span aria-hidden="true">&times;
-                            </span></button>
-                                <h4 className="modal-title">{this.props.confirmation.header}</h4>
+                <div style={styles.background}>
+                    <div style={Object.assign({}, styles.modalDialog)} ref={this.setWrapperRef}>
+                        <div style = {Object.assign({}, styles.goldAndBrownTheme, styles.modalContent)}>
+                            <div style = {styles.modalHeader}>
+                                <h4 style = {styles.optionLabel}>{this.props.confirmation.header}</h4>
                             </div>
-                            <div className="modal-body">
+                            <div style = {styles.modalBody}>
                                 <p>{this.props.confirmation.message}</p>
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-primary" data-dismiss="modal"
+                            <div style = {styles.modalFooter}>
+                                <button type="button" style = {styles.button} className={css(resp.button)} data-dismiss="modal"
                                         onClick={()=>this.hideConfirmationDialog()}>Close</button>
-                                <button type="button" className="btn btn-danger"
+                                <button type="button" style = {styles.button}className={css(resp.button)}
                                         onClick={()=>{this.props.confirmation.onConfirmFunction();
                                             this.hideConfirmationDialog();
                                         }}>OK</button>
