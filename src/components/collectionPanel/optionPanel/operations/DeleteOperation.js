@@ -26,8 +26,8 @@ class DeleteOperation extends React.Component {
 
     deleteElements(){
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        let elementsToDelete = checkedElements.filter(element => element.banned===true);
-        let elementsWhichCannotBeDeleted = checkedElements.filter(element => !element.banned);
+        let elementsToDelete = checkedElements.filter(element => element.banned===true || (element.hasOwnProperty('firstname') && element.status ==="NEW"));
+        let elementsWhichCannotBeDeleted = checkedElements.filter(element => !element.banned && (!element.hasOwnProperty('firstname') || element.status !=="NEW"));
         this.props.checkAllElements(false);
 
         let showSuccessMessage = this.props.showSuccessMessage;

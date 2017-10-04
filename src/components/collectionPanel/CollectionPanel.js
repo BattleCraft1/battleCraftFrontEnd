@@ -47,6 +47,12 @@ class CollectionPanel extends React.Component{
     }
 
     async getPageRequest(collectionType){
+        if(collectionType==='ranking'){
+            let pageRequest = this.props.pageRequest;
+            pageRequest.pageRequest.direction = "DESC";
+            pageRequest.pageRequest.property = "points";
+            this.props.setPageRequest(pageRequest);
+        }
         console.log(this.props.pageRequest);
         await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
             .then(res => {

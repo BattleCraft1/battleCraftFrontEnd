@@ -65,7 +65,7 @@ export default class Navigator extends React.Component{
              <div style ={(this.state.width < 600 && this.state.isToggleOn) ? {display:'none'}:{display:'block'}}>
                 <Option link="/collectionsPanel/tournaments">Tournaments</Option>
                 <Option link="/collectionsPanel/games">Games</Option>
-                <Option link="/collectionsPanel/rankings">Rankings</Option>
+                <Option link="/collectionsPanel/ranking">Ranking</Option>
                 <Option link="/collectionsPanel/users">Users</Option>
                 <AccountDropdown toggleAccountList = {this.handleAccountList.bind(this)}>Account <span className={css(resp.arrow)}>{accountSimbol}</span></AccountDropdown>
 

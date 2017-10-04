@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UsersFormInputs from './users/FormInputs'
 import TournamentsFormInputs from './tournaments/FormInputs'
+import RankingFormInputs from './ranking/FormInputs'
 import GamesFormInputs from './games/FormInputs'
 import isNotEmpty from './../../../main/functions/checkIfObjectIsNotEmpty'
 
@@ -82,6 +83,16 @@ class SearchPanel extends React.Component{
         else if(this.props.collectionType==="games"){
             searchForInputs = React.createElement(
                 GamesFormInputs,
+                {
+                    enums:this.state.enums,
+                    search:this.search.bind(this)
+                },
+                null
+            );
+        }
+        else if(this.props.collectionType==="ranking"){
+            searchForInputs = React.createElement(
+                RankingFormInputs,
                 {
                     enums:this.state.enums,
                     search:this.search.bind(this)
