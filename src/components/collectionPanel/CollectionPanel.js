@@ -19,7 +19,7 @@ class CollectionPanel extends React.Component{
         super(props);
 
         this.state = {
-            collectionType:""
+            collectionType:"tournaments"
         }
     }
 

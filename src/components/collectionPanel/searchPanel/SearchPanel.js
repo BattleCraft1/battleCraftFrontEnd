@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UsersFormInputs from './users/FormInputs'
@@ -10,6 +9,8 @@ import isNotEmpty from './../../../main/functions/checkIfObjectIsNotEmpty'
 import { ActionCreators } from '../../../redux/actions/index';
 
 import {serverName} from '../../../main/consts/server';
+import {resp, styles} from './styles'
+import {StyleSheet, css} from 'aphrodite';
 
 import axios from 'axios';
 
@@ -32,13 +33,17 @@ class SearchPanel extends React.Component{
     }
 
     async getEnums(collectionType){
-        await axios.get(serverName+`get/`+collectionType+`/enums`)
-            .then(res => {
-                this.setState({enums:res.data});
-            })
+        /*await axios.get(serverName+`get/`+collectionType+`/enums`)
+            .then(res => {*/
+                this.setState({enums:{
+                  provincesNames:["a","b","c"],
+                  gamesNames:["a","b","c"],
+                  tournamentStatus:["a","b","c"]
+                }});
+        /*    })
             .catch(error => {
                 this.props.showNetworkErrorMessage(error);
-            });
+            });*/
     }
 
     search(inputs){
@@ -91,11 +96,13 @@ class SearchPanel extends React.Component{
         }
 
         return(
-            <div className="row">
+          <div style = {styles.background}>
+            <div style = {Object.assign({},styles.goldAndBrownTheme ,styles.popupContent)} className={css(resp.popupContent)}>
                 <form>
                     {searchForInputs}
                 </form>
             </div>
+          </div>
         )
     }
 }

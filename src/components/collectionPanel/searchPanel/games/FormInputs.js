@@ -3,6 +3,8 @@ import TextInput from './../inputs/TextInput'
 import NumberInput from './../inputs/NumberInput'
 import StatusInput from './../inputs/StatusInput'
 import DateInput from './../inputs/DateInput'
+import {resp, styles} from '../styles'
+
 
 export default class FormInputs extends React.Component{
     constructor(props) {

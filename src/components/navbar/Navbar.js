@@ -90,10 +90,9 @@ const resp = StyleSheet.create({
       '@media (min-width: 599px)': {
           position:'absolute',
           width:'20%',
-          marginLeft:'60%',
+          marginLeft:'80%',
         }
     },
-
     navbar:{
       position:'relative',
       marginBottom:'20px',
@@ -101,13 +100,11 @@ const resp = StyleSheet.create({
       marginLeft:'15%',
       background:'none',
     },
-
     hamburger:{
       float:'right',
       margin:'0',
       marginRight:'5%',
     },
-
     arrow:{
       position:'absolute',
       fontSize:'70%',
@@ -116,5 +113,4 @@ const resp = StyleSheet.create({
       marginLeft:'0.5em',
       marginTop:'3px',
     },
-
 });
