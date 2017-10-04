@@ -37,11 +37,11 @@ export default class FormInputs extends React.Component{
 
     prepareProvinceOptions(){
         let provincesOptions = [];
-        provincesOptions.push(<option key="nullOption"/>);
+        provincesOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.provincesNames!==undefined){
             this.state.provincesNames.map(
                 provincesName => {
-                    provincesOptions.push(<option key={provincesName}>{provincesName}</option>);
+                    provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
                 }
             );
         }
@@ -50,15 +50,15 @@ export default class FormInputs extends React.Component{
 
     prepareUserTypeOptions(){
         let userTypeOptions = [];
-        userTypeOptions.push(<option key="nullOption"/>);
+        userTypeOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.status!==undefined){
             this.state.status.map(
                 statusName => {
-                    userTypeOptions.push(<option key={statusName}>{statusName}</option>);
+                    userTypeOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
                 }
             );
         }
-        userTypeOptions.push(<option key="BANNED">BANNED</option>);
+        userTypeOptions.push(<option value="BANNED" key="BANNED">BANNED</option>);
         return userTypeOptions;
     }
 

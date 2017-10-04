@@ -37,11 +37,11 @@ export default class FormInputs extends React.Component{
 
     prepareProvinceOptions(){
         let provincesOptions = [];
-        provincesOptions.push(<option key="nullOption"/>);
+        provincesOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.provincesNames!==undefined){
             this.state.provincesNames.map(
                 provincesName => {
-                    provincesOptions.push(<option key={provincesName}>{provincesName}</option>);
+                    provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
                 }
             );
         }
@@ -50,11 +50,11 @@ export default class FormInputs extends React.Component{
 
     prepareTournamentGamesOptions(){
         let tournamentGamesOptions = [];
-        tournamentGamesOptions.push(<option key="nullOption"/>);
+        tournamentGamesOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.tournamentsGames!==undefined) {
             this.state.tournamentsGames.map(
                 tournamentGame => {
-                    tournamentGamesOptions.push(<option key={tournamentGame}>{tournamentGame}</option>);
+                    tournamentGamesOptions.push(<option value={tournamentGame} key={tournamentGame}>{tournamentGame}</option>);
                 }
             );
         }
@@ -134,7 +134,7 @@ export default class FormInputs extends React.Component{
                             changeSearchForm = {this.changeSearchForm.bind(this)}
                         />
                     </div>
-                    <div className={css(resp.halfSize)}>
+                    <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
                         <DateInput
                             name = "Date to"
                             keys = {["tour","tournament","dateOfEnd"]}
@@ -145,11 +145,14 @@ export default class FormInputs extends React.Component{
                     </div>
                 </div>
                 <button onClick={()=>this.props.search(this.state.searchFormField)}
+                        style={styles.button}
+                        className={css(resp.button)}
                         type="button"
-                        className="btn btn-default">Search</button>
+                >Search</button>
                 <button onClick={()=>this.props.hide()}
-                        type="button"
-                        className="btn btn-default">Cancel</button>
+                        style={styles.button}
+                        className={css(resp.button)}
+                        type="button">Cancel</button>
             </div>
         );
     }

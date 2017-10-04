@@ -11,7 +11,6 @@ const styles = {
   legendOption:{
     display:'inline-block',
     position:'relative',
-    width:'20%',
     paddingTop:'3px',
     paddingBottom:'3px',
   },

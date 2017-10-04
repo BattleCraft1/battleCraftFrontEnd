@@ -34,14 +34,14 @@ export default class FormInputs extends React.Component{
 
     prepareGamesStatusOptions(){
         let gamesStatusOptions = [];
-        gamesStatusOptions.push(<option key="nullOption"/>);
+        gamesStatusOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.status!==undefined) {
             this.state.status.map(
                 statusName => {
-                    gamesStatusOptions.push(<option key={statusName}>{statusName}</option>);
+                    gamesStatusOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
                 }
             );
-            gamesStatusOptions.push(<option key="BANNED">BANNED</option>);
+            gamesStatusOptions.push(<option value="BANNED" key="BANNED">BANNED</option>);
         }
         return gamesStatusOptions;
     }

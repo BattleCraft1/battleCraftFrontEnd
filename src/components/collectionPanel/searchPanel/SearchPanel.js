@@ -18,13 +18,27 @@ import axios from 'axios';
 class SearchPanel extends React.Component{
     constructor(props) {
         super(props);
+        this.setSearchPanelRef = this.setSearchPanelRef.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
         this.state = {
             enums:{}
         };
+
     }
 
     async componentDidMount(){
         await this.getEnums(this.props.collectionType);
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    handleClickOutside(event) {
+        if (this.searchPanelRef && !this.searchPanelRef.contains(event.target)) {
+            this.hideSearchPanel();
+        }
     }
 
     async componentWillReceiveProps(nextProps) {
@@ -55,10 +69,15 @@ class SearchPanel extends React.Component{
         pageRequest.pageRequest.size = 10;
         this.props.setPageRequest(pageRequest);
         this.props.getPageRequest(this.props.collectionType);
+        this.hideSearchPanel();
     }
 
     hideSearchPanel(){
         this.props.showSearchPanel(false);
+    }
+
+    setSearchPanelRef(node) {
+        this.searchPanelRef = node;
     }
 
     render(){
@@ -108,8 +127,8 @@ class SearchPanel extends React.Component{
                     null
                 );
             }
-        let searchPanel = <div style = {Object.assign({}, styles.background, {display: 'block'})} onClick={() => this.hideSearchPanel()}>
-            <div style = {Object.assign({},styles.goldAndBrownTheme ,styles.popupContent, {display:this.state.display})} className={css(resp.popupContent)}>
+        let searchPanel = <div style = {Object.assign({}, styles.background, {display: 'block'})}>
+            <div ref={this.setSearchPanelRef} style = {Object.assign({},styles.goldAndBrownTheme ,styles.popupContent, {display:this.state.display})} className={css(resp.popupContent)}>
                 <form>
                     {searchForInputs}
                 </form>
