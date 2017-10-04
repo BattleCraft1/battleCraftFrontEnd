@@ -45,11 +45,11 @@ export default class FormInputs extends React.Component{
 
     prepareProvinceOptions(){
         let provincesOptions = [];
-        provincesOptions.push(<option key="nullOption"/>);
+        provincesOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.provincesNames!==undefined) {
             this.state.provincesNames.map(
                 provincesName => {
-                    provincesOptions.push(<option key={provincesName}>{provincesName}</option>);
+                    provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
                 }
             );
         }
@@ -58,11 +58,11 @@ export default class FormInputs extends React.Component{
 
     prepareTournamentGamesOptions(){
         let tournamentGamesOptions = [];
-        tournamentGamesOptions.push(<option key="nullOption"/>);
+        tournamentGamesOptions.push(<option value={""}  key="nullOption"/>);
         if(this.state.tournamentsGames!==undefined) {
             this.state.tournamentsGames.map(
                 tournamentGame => {
-                    tournamentGamesOptions.push(<option key={tournamentGame}>{tournamentGame}</option>);
+                    tournamentGamesOptions.push(<option value={tournamentGame} key={tournamentGame}>{tournamentGame}</option>);
                 }
             );
         }
@@ -71,15 +71,15 @@ export default class FormInputs extends React.Component{
 
     prepareTournamentStatusOptions(){
         let tournamentStatusOptions = [];
-        tournamentStatusOptions.push(<option key="nullOption"/>);
+        tournamentStatusOptions.push(<option value={""}  key="nullOption"/>);
         if(this.state.status!==undefined) {
             this.state.status.map(
                 status => {
-                    tournamentStatusOptions.push(<option key={status}>{status}</option>);
+                    tournamentStatusOptions.push(<option value={status} key={status}>{status.replace("_"," ")}</option>);
                 }
             );
         }
-        tournamentStatusOptions.push(<option key="BANNED">BANNED</option>);
+        tournamentStatusOptions.push(<option value="BANNED"  key="BANNED">BANNED</option>);
         return tournamentStatusOptions;
     }
 
@@ -200,6 +200,10 @@ export default class FormInputs extends React.Component{
                         className={css(resp.button)}
                         type="button"
                         >Search</button>
+                <button onClick={()=>this.props.hide()}
+                        style={styles.button}
+                        className={css(resp.button)}
+                        type="button">Cancel</button>
             </div>
         )
     }

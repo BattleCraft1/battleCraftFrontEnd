@@ -9,6 +9,8 @@ import {StyleSheet, css} from 'aphrodite';
 import OptionPanel from '../../optionPanel/OptionPanel'
 import LegendPanel from '../../legendPanel/LegendPanel'
 import TournamentRow from './row/tournaments/Row'
+import RankingRowHeader from './headRow/ranking/RowHeader'
+import RankingRow from './row/ranking/Row'
 import UserRow from './row/users/Row'
 import TournamentRowHeader from './headRow/tournaments/RowHeader'
 import UserRowHeader from './headRow/users/RowHeader'
@@ -29,7 +31,6 @@ class CollectionList extends React.Component{
         pageRequest.pageRequest.direction=pageRequest.pageRequest.direction==='ASC'?'DESC':'ASC';
         this.props.setPageRequest(pageRequest);
         this.props.getPageRequest(this.props.collectionType);
-
     }
 
     isColumnActive(columnName){
@@ -55,6 +56,8 @@ class CollectionList extends React.Component{
             rowType = TournamentRow;
         else if(this.props.collectionType==="games")
             rowType = GameRow;
+        else if(this.props.collectionType==="ranking")
+            rowType = RankingRow;
         else
             rowType = UserRow;
 
@@ -94,6 +97,10 @@ class CollectionList extends React.Component{
         else if(this.props.collectionType==="games")
         {
             rowHeader = GameRowHeader;
+        }
+        else if(this.props.collectionType==="ranking")
+        {
+            rowHeader = RankingRowHeader;
         }
         else
             rowHeader = UserRowHeader;

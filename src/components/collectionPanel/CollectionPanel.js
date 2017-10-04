@@ -24,6 +24,12 @@ class CollectionPanel extends React.Component{
     }
 
     async componentDidMount() {
+        if(this.props.match.params.collectionType==='ranking'){
+            let pageRequest = this.props.pageRequest;
+            pageRequest.pageRequest.direction = "DESC";
+            pageRequest.pageRequest.property = "points";
+            this.props.setPageRequest(pageRequest);
+        }
         this.setState({collectionType: this.props.match.params.collectionType});
         await this.getPageRequest(this.props.match.params.collectionType);
     }
@@ -37,8 +43,14 @@ class CollectionPanel extends React.Component{
             let pageRequest = this.props.pageRequest;
             pageRequest.pageRequest.page = 0;
             pageRequest.pageRequest.size = 10;
-            pageRequest.pageRequest.direction = "ASC";
-            pageRequest.pageRequest.property = "name";
+            if(nextProps.match.params.collectionType==='ranking'){
+                pageRequest.pageRequest.direction = "DESC";
+                pageRequest.pageRequest.property = "points";
+            }
+            else{
+                pageRequest.pageRequest.direction = "ASC";
+                pageRequest.pageRequest.property = "name";
+            }
             pageRequest.searchCriteria = [];
             this.props.setPageRequest(pageRequest);
             await this.getPageRequest(nextProps.match.params.collectionType);
@@ -103,10 +115,16 @@ export default connect( mapStateToProps, mapDispatchToProps )( CollectionPanel )
 
 
 const resp = StyleSheet.create({
-    container:{
-        display:'block',
-        position:'relative',
-        width:'100%',
-        zIndex:'1',
+  container:{
+    display:'block',
+    position:'relative',
+    width:'90%',
+    marginLeft:'5%',
+    zIndex:'1',
+    '@media (max-width: 600px)': {
+      width:'100%',
+      margin:'0',
     },
+  },
+
 });

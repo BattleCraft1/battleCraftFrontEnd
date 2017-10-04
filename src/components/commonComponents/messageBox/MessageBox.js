@@ -7,29 +7,18 @@ import { ActionCreators } from '../../../redux/actions/index';
 import {resp, styles} from '../../commonComponents/styles'
 import {StyleSheet, css} from 'aphrodite';
 
-const ALERT_COLOR = "rgb(140, 48, 48)"
-const ALERT_BORDER_COLOR = "rgb(199, 125, 113)"
-const SUCCESS_COLOR = "rgb(51, 110, 135)"
-const SUCCESS_BORDER_COLOR = "rgb(123, 174, 196)"
-const WARNING_COLOR = "rgb(126, 109, 48)"
-const WARNING_BORDER_COLOR = "rgb(187, 171, 117)"
+const ALERT_COLOR = "rgb(140, 48, 48)";
+const ALERT_BORDER_COLOR = "rgb(199, 125, 113)";
+const SUCCESS_COLOR = "rgb(51, 110, 135)";
+const SUCCESS_BORDER_COLOR = "rgb(123, 174, 196)";
+const WARNING_COLOR = "rgb(126, 109, 48)";
+const WARNING_BORDER_COLOR = "rgb(187, 171, 117)";
 
 class MessageBox extends React.Component {
     constructor(props) {
         super(props);
         this.setMessageRef = this.setMessageRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.message.isShown!==undefined && nextProps.message.isShown !== this.props.message.isShown) {
-            if(nextProps.message.isShown){
-                window.scrollTo(0,0);
-                setTimeout(function(){
-                    this.hideMessageBox();
-                }.bind(this), 10000);
-            }
-        }
     }
 
     componentDidMount() {
@@ -60,22 +49,23 @@ class MessageBox extends React.Component {
     }
 
     getMessageColor(){//add Type of message parameter
-        console.log("MessagType: ")
-        console.log(this.props.message.messageType)
+        console.log("MessagType: ");
+        console.log(this.props.message.messageType);
+        let colorsObject = {};
         if(this.props.message.messageType === "alert-danger"){
-          var colorsObject = {
+          colorsObject = {
             backgroundColor:ALERT_COLOR,
             borderColor:ALERT_BORDER_COLOR
           }
         }
         else if(this.props.message.messageType === "alert-success"){
-          var colorsObject = {
+          colorsObject = {
             backgroundColor:SUCCESS_COLOR,
             borderColor:SUCCESS_BORDER_COLOR
           }
         }
         else{
-          var colorsObject = {
+          colorsObject = {
             backgroundColor:WARNING_COLOR,
             borderColor:WARNING_BORDER_COLOR
           }
@@ -89,10 +79,10 @@ class MessageBox extends React.Component {
             <div style = {styles.messageContainer}>
                 {this.props.message.isShown &&
                 <div ref={this.setMessageRef}
-                                              className={css(resp.messageBox)}
-                                              style = {Object.assign({},styles.messageBox,
-                                              {backgroundColor:this.getMessageColor().backgroundColor, borderColor:this.getMessageColor().borderColor})}
-                                              role="alert">{this.props.message.messageText}</div>}
+                     className={css(resp.messageBox)}
+                     style = {Object.assign({},styles.messageBox,
+                         {backgroundColor:this.getMessageColor().backgroundColor, borderColor:this.getMessageColor().borderColor})}
+                     role="alert">{this.props.message.messageText}</div>}
             </div>
         )
     }

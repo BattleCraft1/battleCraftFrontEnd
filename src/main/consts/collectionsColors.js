@@ -42,5 +42,13 @@ export const colors = {
             "ACCEPTED": 'rgb(157, 186, 134)',
             "BANNED": 'rgb(200, 143, 131)'
         }
+    },
+    "ranking":{
+        "normal":{
+            "NORMAL":'rgb(230, 197, 158)',
+        },
+        "active":{
+            "NORMAL":'rgb(230, 197, 158)',
+        }
     }
 };

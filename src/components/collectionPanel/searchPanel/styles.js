@@ -8,8 +8,7 @@ const styles = {
     width:'100%',
     top:'0',
     left:'0',
-    backgroundColor:'rgba(5, 5, 5, 0.55)',
-    display:'none',//DELETE!!
+    backgroundColor:'rgba(5, 5, 5, 0.55)'
   },
   popupContent:{
     fontFamily:'arial, helvetica, sans-serif',

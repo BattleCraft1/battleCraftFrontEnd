@@ -10,6 +10,7 @@ import EditOperation from './operations/EditOperation'
 import UnclokOperation from './operations/UnlockOperation'
 import AdvanceOperation from './operations/AdvanceOperation'
 import DegradeOperation from './operations/DegradeOperation'
+import SearchOperation from './operations/SearchOperation'
 import {styles} from '../optionPanel/styles'
 
 export default class OptionPanel extends React.Component {
@@ -19,7 +20,6 @@ export default class OptionPanel extends React.Component {
 
     render() {
         const mapOfOperations = {
-            "Add":AddOperation,
             "Ban":BanOperation,
             "Cancel":CancelAcceptOperation,
             "Delete":DeleteOperation,
@@ -27,7 +27,8 @@ export default class OptionPanel extends React.Component {
             "Unlock":UnclokOperation,
             "Accept":AcceptOperation,
             "Advance":AdvanceOperation,
-            "Degrade":DegradeOperation
+            "Degrade":DegradeOperation,
+            "Search":SearchOperation,
         };
 
         let operations = [];

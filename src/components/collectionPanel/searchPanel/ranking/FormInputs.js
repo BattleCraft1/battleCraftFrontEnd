@@ -1,7 +1,8 @@
 import React from 'react';
 import TextInput from './../inputs/TextInput'
 import SelectInput from './../inputs/SelectInput'
-import StatusInput from './../inputs/StatusInput'
+import NumberInput from './../inputs/NumberInput'
+import DateInput from './../inputs/DateInput'
 import {resp, styles} from '../styles'
 import {StyleSheet, css} from 'aphrodite';
 
@@ -10,15 +11,14 @@ export default class FormInputs extends React.Component{
         super(props);
         this.state={
             provincesNames:[],
-            status:[],
+            tournamentsGames:[],
             searchFormField: {
                 "name":{},
-                "firstname":{},
-                "lastname":{},
-                "email":{},
                 "province":{},
                 "city":{},
-                "userType":{}
+                "numberOfBattles":{},
+                "numberOfTournaments":{},
+                "points":{}
             }
         }
     }
@@ -26,13 +26,13 @@ export default class FormInputs extends React.Component{
     async componentWillReceiveProps(nextProps) {
         if (nextProps.enums!==undefined && nextProps.enums !== this.props.enums) {
             this.setState({provincesNames:nextProps.enums.provincesNames});
-            this.setState({status:nextProps.enums.usersTypes});
+            this.setState({tournamentsGames:nextProps.enums.gamesNames});
         }
     }
 
     componentDidMount(){
         this.setState({provincesNames:this.props.enums.provincesNames});
-        this.setState({status:this.props.enums.usersTypes});
+        this.setState({tournamentsGames:this.props.enums.gamesNames});
     }
 
     prepareProvinceOptions(){
@@ -48,18 +48,17 @@ export default class FormInputs extends React.Component{
         return provincesOptions;
     }
 
-    prepareUserTypeOptions(){
-        let userTypeOptions = [];
-        userTypeOptions.push(<option value={""} key="nullOption"/>);
-        if(this.state.status!==undefined){
-            this.state.status.map(
-                statusName => {
-                    userTypeOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
+    prepareTournamentGamesOptions(){
+        let tournamentGamesOptions = [];
+        tournamentGamesOptions.push(<option value={""} key="nullOption"/>);
+        if(this.state.tournamentsGames!==undefined) {
+            this.state.tournamentsGames.map(
+                tournamentGame => {
+                    tournamentGamesOptions.push(<option value={tournamentGame} key={tournamentGame}>{tournamentGame}</option>);
                 }
             );
         }
-        userTypeOptions.push(<option value="BANNED" key="BANNED">BANNED</option>);
-        return userTypeOptions;
+        return tournamentGamesOptions;
     }
 
     changeSearchForm(index,value){
@@ -69,16 +68,16 @@ export default class FormInputs extends React.Component{
     }
 
     render(){
-        let userTypeOptions = this.prepareUserTypeOptions();
         let provincesOptions = this.prepareProvinceOptions();
+        let tournamentGamesOptions = this.prepareTournamentGamesOptions();
 
-        return (
+        return(
             <div>
                 <div className={css(resp.optionContent)}>
                     <TextInput
                         name = "Name"
                         placeholder = "Jarek123"
-                        keys = {["name"]}
+                        keys = {["player","name"]}
                         operation = ":"
                         indexOfSearchFields = "Name"
                         changeSearchForm = {this.changeSearchForm.bind(this)}
@@ -87,40 +86,9 @@ export default class FormInputs extends React.Component{
                 <div className={css(resp.optionContent)}>
                     <div className={css(resp.halfSize)}>
                         <TextInput
-                            name = "First name"
-                            placeholder = "Jarek"
-                            keys = {["firstname"]}
-                            operation = ":"
-                            indexOfSearchFields = "firstname"
-                            changeSearchForm = {this.changeSearchForm.bind(this)}
-                        />
-                    </div>
-                    <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
-                        <TextInput
-                            name = "Last name"
-                            placeholder = "Kowalski"
-                            keys = {["lastname"]}
-                            operation = ":"
-                            indexOfSearchFields = "lastname"
-                            changeSearchForm = {this.changeSearchForm.bind(this)}/>
-                    </div>
-                </div>
-                <div className={css(resp.optionContent)}>
-                    <TextInput
-                        name = "E-mail"
-                        placeholder = "Jarek@gmail.com"
-                        keys = {["email"]}
-                        operation = ":"
-                        indexOfSearchFields = "email"
-                        changeSearchForm = {this.changeSearchForm.bind(this)}
-                    />
-                </div>
-                <div className={css(resp.optionContent)}>
-                    <div className={css(resp.halfSize)}>
-                        <TextInput
                             name = "City"
                             placeholder = "Lublin"
-                            keys = {["address", "city"]}
+                            keys = {["tour","tournament","address", "city"]}
                             operation = ":"
                             indexOfSearchFields = "city"
                             changeSearchForm = {this.changeSearchForm.bind(this)}
@@ -129,7 +97,7 @@ export default class FormInputs extends React.Component{
                     <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
                         <SelectInput
                             name = "Province"
-                            keys = {["address", "province","location"]}
+                            keys = {["player","address", "province","location"]}
                             operation = ":"
                             indexOfSearchFields = "province"
                             options = {provincesOptions}
@@ -138,20 +106,54 @@ export default class FormInputs extends React.Component{
                     </div>
                 </div>
                 <div className={css(resp.optionContent)}>
-                    <StatusInput
-                        options = {userTypeOptions}
+                    <SelectInput
+                        name = "Game"
+                        keys = {["tour","tournament","game","name"]}
+                        operation = ":"
+                        indexOfSearchFields = "game"
+                        options = {tournamentGamesOptions}
                         changeSearchForm = {this.changeSearchForm.bind(this)}
                     />
+                </div>
+                <div className={css(resp.optionContent)}>
+                    <NumberInput
+                        name = "Points"
+                        keys = {["players","points"]}
+                        operation = "<"
+                        indexOfSearchFields = "points"
+                        changeSearchForm = {this.changeSearchForm.bind(this)}
+                    />
+                </div>
+                <div className={css(resp.optionContent)}>
+                    <div className={css(resp.halfSize)}>
+                        <DateInput
+                            name = "Date from"
+                            keys = {["tour","tournament","dateOfStart"]}
+                            operation = ">"
+                            indexOfSearchFields = "dateOfStart"
+                            changeSearchForm = {this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                    <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
+                        <DateInput
+                            name = "Date to"
+                            keys = {["tour","tournament","dateOfEnd"]}
+                            operation = "<"
+                            indexOfSearchFields = "dateOfEnd"
+                            changeSearchForm = {this.changeSearchForm.bind(this)}
+                        />
+                    </div>
                 </div>
                 <button onClick={()=>this.props.search(this.state.searchFormField)}
                         style={styles.button}
                         className={css(resp.button)}
-                        type="button">Search</button>
+                        type="button"
+                >Search</button>
                 <button onClick={()=>this.props.hide()}
                         style={styles.button}
                         className={css(resp.button)}
                         type="button">Cancel</button>
             </div>
-        )
+        );
     }
 }
