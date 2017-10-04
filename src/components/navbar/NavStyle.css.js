@@ -5,13 +5,11 @@ export default {
       borderRightColor: '#805D2C',
       borderBottomColor: '#E0BA51',
       borderLeftColor: '#e3ca86',
-
       borderWidth:' 4px 3px 4px 3px',
       borderStyle: 'solid',
       WebkitBorderRadius: '1px',
       MozBorderRadius: '1px',
       borderRadius: '1px',
-
       fontSize:'100%',
       boxSizing: 'border-box',
       padding: '4px 0px',
