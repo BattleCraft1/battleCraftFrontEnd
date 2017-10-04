@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import UsersFormInputs from './users/FormInputs'
@@ -11,6 +10,8 @@ import isNotEmpty from './../../../main/functions/checkIfObjectIsNotEmpty'
 import { ActionCreators } from '../../../redux/actions/index';
 
 import {serverName} from '../../../main/consts/server';
+import {resp, styles} from './styles'
+import {StyleSheet, css} from 'aphrodite';
 
 import axios from 'axios';
 
@@ -56,56 +57,67 @@ class SearchPanel extends React.Component{
         this.props.getPageRequest(this.props.collectionType);
     }
 
+    hideSearchPanel(){
+        this.props.showSearchPanel(false);
+    }
 
     render(){
         let searchForInputs = "loading...";
         if(isNotEmpty(this.state.enums))
-        if(this.props.collectionType==="tournaments"){
-            searchForInputs = React.createElement(
-                TournamentsFormInputs,
-                {
-                    enums:this.state.enums,
-                    search:this.search.bind(this)
-                },
-                null
-            );
-        }
-        else if(this.props.collectionType==="users"){
-            searchForInputs = React.createElement(
-                UsersFormInputs,
-                {
-                    enums:this.state.enums,
-                    search:this.search.bind(this)
-                },
-                null
-            );
-        }
-        else if(this.props.collectionType==="games"){
-            searchForInputs = React.createElement(
-                GamesFormInputs,
-                {
-                    enums:this.state.enums,
-                    search:this.search.bind(this)
-                },
-                null
-            );
-        }
-        else if(this.props.collectionType==="ranking"){
-            searchForInputs = React.createElement(
-                RankingFormInputs,
-                {
-                    enums:this.state.enums,
-                    search:this.search.bind(this)
-                },
-                null
-            );
-        }
-
-        return(
-            <div className="row">
+            if(this.props.collectionType==="tournaments"){
+                searchForInputs = React.createElement(
+                    TournamentsFormInputs,
+                    {
+                        enums:this.state.enums,
+                        search:this.search.bind(this),
+                        hide:this.hideSearchPanel.bind(this)
+                    },
+                    null
+                );
+            }
+            else if(this.props.collectionType==="users"){
+                searchForInputs = React.createElement(
+                    UsersFormInputs,
+                    {
+                        enums:this.state.enums,
+                        search:this.search.bind(this),
+                        hide:this.hideSearchPanel.bind(this)
+                    },
+                    null
+                );
+            }
+            else if(this.props.collectionType==="games"){
+                searchForInputs = React.createElement(
+                    GamesFormInputs,
+                    {
+                        enums:this.state.enums,
+                        search:this.search.bind(this),
+                        hide:this.hideSearchPanel.bind(this)
+                    },
+                    null
+                );
+            }
+            else if(this.props.collectionType==="ranking"){
+                searchForInputs = React.createElement(
+                    RankingFormInputs,
+                    {
+                        enums:this.state.enums,
+                        search:this.search.bind(this),
+                        hide:this.hideSearchPanel.bind(this)
+                    },
+                    null
+                );
+            }
+        let searchPanel = <div style = {Object.assign({}, styles.background, {display: 'block'})} onClick={() => this.hideSearchPanel()}>
+            <div style = {Object.assign({},styles.goldAndBrownTheme ,styles.popupContent, {display:this.state.display})} className={css(resp.popupContent)}>
                 <form>
                     {searchForInputs}
                 </form>
+            </div>
+        </div>;
+        return(
+            <div>
+                {this.props.search && searchPanel}
             </div>
         )
     }
@@ -118,7 +130,8 @@ function mapDispatchToProps( dispatch ) {
 function mapStateToProps( state ) {
     return {
         page: state.page,
-        pageRequest: state.pageRequest
+        pageRequest: state.pageRequest,
+        search: state.search
     };
 }
 

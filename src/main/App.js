@@ -40,10 +40,14 @@ class App extends Component {
 const resp = StyleSheet.create({
     base:{
         position:'absolute',
-        width: '100%',
+        width: '90%',
         padding: '20px 0 0 0',
-        margin: '0 0 0 0',
+        margin: '0 0 0 5%',
         marginBottom:'20px',
+        '@media (max-width: 700px)': {
+          width:'100%',
+          margin:'0',
+        },
     },
     backgroundImage:{
       background: "url("+Background+") no-repeat center center fixed",

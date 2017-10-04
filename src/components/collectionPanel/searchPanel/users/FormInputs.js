@@ -2,6 +2,8 @@ import React from 'react';
 import TextInput from './../inputs/TextInput'
 import SelectInput from './../inputs/SelectInput'
 import StatusInput from './../inputs/StatusInput'
+import {resp, styles} from '../styles'
+import {StyleSheet, css} from 'aphrodite';
 
 export default class FormInputs extends React.Component{
     constructor(props) {
@@ -72,61 +74,83 @@ export default class FormInputs extends React.Component{
 
         return (
             <div>
-                <TextInput
-                    name = "Name"
-                    placeholder = "Jarek123"
-                    keys = {["name"]}
-                    operation = ":"
-                    indexOfSearchFields = "Name"
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <TextInput
-                    name = "First name"
-                    placeholder = "Jarek"
-                    keys = {["firstname"]}
-                    operation = ":"
-                    indexOfSearchFields = "firstname"
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <TextInput
-                    name = "Last name"
-                    placeholder = "Kowalski"
-                    keys = {["lastname"]}
-                    operation = ":"
-                    indexOfSearchFields = "lastname"
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <TextInput
-                    name = "E-mail"
-                    placeholder = "Jarek@gmail.com"
-                    keys = {["email"]}
-                    operation = ":"
-                    indexOfSearchFields = "email"
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <TextInput
-                    name = "City"
-                    placeholder = "Lublin"
-                    keys = {["address", "city"]}
-                    operation = ":"
-                    indexOfSearchFields = "city"
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <SelectInput
-                    name = "Province"
-                    keys = {["address", "province","location"]}
-                    operation = ":"
-                    indexOfSearchFields = "province"
-                    options = {provincesOptions}
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <StatusInput
-                    options = {userTypeOptions}
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
+                <div className={css(resp.optionContent)}>
+                    <TextInput
+                        name = "Name"
+                        placeholder = "Jarek123"
+                        keys = {["name"]}
+                        operation = ":"
+                        indexOfSearchFields = "Name"
+                        changeSearchForm = {this.changeSearchForm.bind(this)}
+                    />
+                </div>
+                <div className={css(resp.optionContent)}>
+                    <div className={css(resp.halfSize)}>
+                        <TextInput
+                            name = "First name"
+                            placeholder = "Jarek"
+                            keys = {["firstname"]}
+                            operation = ":"
+                            indexOfSearchFields = "firstname"
+                            changeSearchForm = {this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                    <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
+                        <TextInput
+                            name = "Last name"
+                            placeholder = "Kowalski"
+                            keys = {["lastname"]}
+                            operation = ":"
+                            indexOfSearchFields = "lastname"
+                            changeSearchForm = {this.changeSearchForm.bind(this)}/>
+                    </div>
+                </div>
+                <div className={css(resp.optionContent)}>
+                    <TextInput
+                        name = "E-mail"
+                        placeholder = "Jarek@gmail.com"
+                        keys = {["email"]}
+                        operation = ":"
+                        indexOfSearchFields = "email"
+                        changeSearchForm = {this.changeSearchForm.bind(this)}
+                    />
+                </div>
+                <div className={css(resp.optionContent)}>
+                    <div className={css(resp.halfSize)}>
+                        <TextInput
+                            name = "City"
+                            placeholder = "Lublin"
+                            keys = {["address", "city"]}
+                            operation = ":"
+                            indexOfSearchFields = "city"
+                            changeSearchForm = {this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                    <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
+                        <SelectInput
+                            name = "Province"
+                            keys = {["address", "province","location"]}
+                            operation = ":"
+                            indexOfSearchFields = "province"
+                            options = {provincesOptions}
+                            changeSearchForm = {this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                </div>
+                <div className={css(resp.optionContent)}>
+                    <StatusInput
+                        options = {userTypeOptions}
+                        changeSearchForm = {this.changeSearchForm.bind(this)}
+                    />
+                </div>
                 <button onClick={()=>this.props.search(this.state.searchFormField)}
-                        type="button"
-                        className="btn btn-default">Search</button>
+                        style={styles.button}
+                        className={css(resp.button)}
+                        type="button">Search</button>
+                <button onClick={()=>this.props.hide()}
+                        style={styles.button}
+                        className={css(resp.button)}
+                        type="button">Cancel</button>
             </div>
         )
     }

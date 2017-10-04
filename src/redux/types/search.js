@@ -1,0 +1,1 @@
+export const SHOW_SEARCH_PANEL = 'SHOW_SEARCH_PANEL';

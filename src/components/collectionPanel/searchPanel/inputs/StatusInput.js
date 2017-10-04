@@ -1,4 +1,5 @@
 import React from 'react';
+import {resp, styles} from '../styles'
 
 export default class TournamentStatus extends React.Component{
     constructor(props) {
@@ -30,15 +31,15 @@ export default class TournamentStatus extends React.Component{
 
     render(){
         return(
-            <div className="input-group">
-                <span className="input-group-addon">Status:</span>
+            <div>
+                <span style = {styles.optionLabel}>Status:</span>
                 <select
-                    className="form-control"
+                    style={styles.optionInput}
                     id="status"
                     ref={(control) => this.status = control}
                     onKeyDown={this.changeInput.bind(this)}
                     onChange={this.changeInput.bind(this)}
-                >
+                    >
                     {this.props.options}
                 </select>
             </div>

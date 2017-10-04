@@ -1,5 +1,6 @@
 export const possibleOperations = {
-    "tournaments":["Add","Edit","Accept","Cancel","Ban","Unlock","Delete"],
-    "users":["Add","Edit","Accept","Cancel","Ban","Unlock","Advance","Degrade","Delete"],
-    "games":["Add","Edit","Accept","Cancel","Ban","Unlock","Delete"],
+    "tournaments":["Edit","Accept","Cancel","Ban","Unlock","Delete","Search"],
+    "users":["Edit","Accept","Cancel","Ban","Unlock","Advance","Degrade","Delete","Search"],
+    "games":["Edit","Accept","Cancel","Ban","Unlock","Delete","Search"],
+    "ranking":["Search"]
 };

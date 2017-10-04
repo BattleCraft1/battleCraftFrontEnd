@@ -1,4 +1,6 @@
 import React from 'react';
+import {resp, styles} from '../styles'
+
 
 export default class TextInput extends React.Component{
     constructor(props) {
@@ -14,16 +16,16 @@ export default class TextInput extends React.Component{
                     "operation":this.props.operation,
                     "value":this.text.value
                 }
-            )
-    }
+             )
+          }
 
     render(){
         return(
-            <div className="input-group">
-                <span className="input-group-addon">{this.props.name}:</span>
+            <div>
+                <span style = {styles.optionLabel}>{this.props.name}:</span>
                 <input id={this.props.indexOfSearchFields}
                        type="text"
-                       className="form-control"
+                       style = {styles.optionInput}
                        ref={(control) => this.text = control}
                        name={this.props.indexOfSearchFields}
                        placeholder={this.props.placeholder}

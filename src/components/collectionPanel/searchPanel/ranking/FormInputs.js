@@ -3,6 +3,8 @@ import TextInput from './../inputs/TextInput'
 import SelectInput from './../inputs/SelectInput'
 import NumberInput from './../inputs/NumberInput'
 import DateInput from './../inputs/DateInput'
+import {resp, styles} from '../styles'
+import {StyleSheet, css} from 'aphrodite';
 
 export default class FormInputs extends React.Component{
     constructor(props) {
@@ -71,62 +73,83 @@ export default class FormInputs extends React.Component{
 
         return(
             <div>
-                <TextInput
-                    name = "Name"
-                    placeholder = "Jarek123"
-                    keys = {["player","name"]}
-                    operation = ":"
-                    indexOfSearchFields = "Name"
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <TextInput
-                    name = "City"
-                    placeholder = "Lublin"
-                    keys = {["tour","tournament","address", "city"]}
-                    operation = ":"
-                    indexOfSearchFields = "city"
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <SelectInput
-                    name = "Province"
-                    keys = {["player","address", "province","location"]}
-                    operation = ":"
-                    indexOfSearchFields = "province"
-                    options = {provincesOptions}
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <SelectInput
-                    name = "Game"
-                    keys = {["tour","tournament","game","name"]}
-                    operation = ":"
-                    indexOfSearchFields = "game"
-                    options = {tournamentGamesOptions}
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <NumberInput
-                    name = "Points"
-                    keys = {["players","points"]}
-                    operation = "<"
-                    indexOfSearchFields = "points"
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <DateInput
-                    name = "Date from"
-                    keys = {["tour","tournament","dateOfStart"]}
-                    operation = ">"
-                    indexOfSearchFields = "dateOfStart"
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
-                <DateInput
-                    name = "Date to"
-                    keys = {["tour","tournament","dateOfEnd"]}
-                    operation = "<"
-                    indexOfSearchFields = "dateOfEnd"
-                    changeSearchForm = {this.changeSearchForm.bind(this)}
-                />
+                <div className={css(resp.optionContent)}>
+                    <TextInput
+                        name = "Name"
+                        placeholder = "Jarek123"
+                        keys = {["player","name"]}
+                        operation = ":"
+                        indexOfSearchFields = "Name"
+                        changeSearchForm = {this.changeSearchForm.bind(this)}
+                    />
+                </div>
+                <div className={css(resp.optionContent)}>
+                    <div className={css(resp.halfSize)}>
+                        <TextInput
+                            name = "City"
+                            placeholder = "Lublin"
+                            keys = {["tour","tournament","address", "city"]}
+                            operation = ":"
+                            indexOfSearchFields = "city"
+                            changeSearchForm = {this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                    <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
+                        <SelectInput
+                            name = "Province"
+                            keys = {["player","address", "province","location"]}
+                            operation = ":"
+                            indexOfSearchFields = "province"
+                            options = {provincesOptions}
+                            changeSearchForm = {this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                </div>
+                <div className={css(resp.optionContent)}>
+                    <SelectInput
+                        name = "Game"
+                        keys = {["tour","tournament","game","name"]}
+                        operation = ":"
+                        indexOfSearchFields = "game"
+                        options = {tournamentGamesOptions}
+                        changeSearchForm = {this.changeSearchForm.bind(this)}
+                    />
+                </div>
+                <div className={css(resp.optionContent)}>
+                    <NumberInput
+                        name = "Points"
+                        keys = {["players","points"]}
+                        operation = "<"
+                        indexOfSearchFields = "points"
+                        changeSearchForm = {this.changeSearchForm.bind(this)}
+                    />
+                </div>
+                <div className={css(resp.optionContent)}>
+                    <div className={css(resp.halfSize)}>
+                        <DateInput
+                            name = "Date from"
+                            keys = {["tour","tournament","dateOfStart"]}
+                            operation = ">"
+                            indexOfSearchFields = "dateOfStart"
+                            changeSearchForm = {this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                    <div className={css(resp.halfSize)}>
+                        <DateInput
+                            name = "Date to"
+                            keys = {["tour","tournament","dateOfEnd"]}
+                            operation = "<"
+                            indexOfSearchFields = "dateOfEnd"
+                            changeSearchForm = {this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                </div>
                 <button onClick={()=>this.props.search(this.state.searchFormField)}
                         type="button"
                         className="btn btn-default">Search</button>
+                <button onClick={()=>this.props.hide()}
+                        type="button"
+                        className="btn btn-default">Cancel</button>
             </div>
         );
     }

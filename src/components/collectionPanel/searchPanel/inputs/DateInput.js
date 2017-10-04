@@ -1,4 +1,5 @@
 import React from 'react';
+import {resp, styles} from '../styles'
 
 export default class DateInput extends React.Component{
     constructor(props) {
@@ -19,11 +20,11 @@ export default class DateInput extends React.Component{
 
     render(){
         return(
-            <div className="input-group">
-                <span className="input-group-addon">{this.props.name}:</span>
+            <div>
+                <span style={styles.optionLabel}>{this.props.name}:</span>
                 <input id={this.props.indexOfSearchFields}
                        type="date"
-                       className="form-control"
+                       style={styles.optionInput}
                        ref={(control) => this.date = control}
                        name={this.props.indexOfSearchFields}
                        onKeyDown={this.changeInput.bind(this)}

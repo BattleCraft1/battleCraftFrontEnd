@@ -10,6 +10,8 @@ import EditOperation from './operations/EditOperation'
 import UnclokOperation from './operations/UnlockOperation'
 import AdvanceOperation from './operations/AdvanceOperation'
 import DegradeOperation from './operations/DegradeOperation'
+import SearchOperation from './operations/SearchOperation'
+import {styles} from '../optionPanel/styles'
 
 export default class OptionPanel extends React.Component {
     constructor(props) {
@@ -18,7 +20,6 @@ export default class OptionPanel extends React.Component {
 
     render() {
         const mapOfOperations = {
-            "Add":AddOperation,
             "Ban":BanOperation,
             "Cancel":CancelAcceptOperation,
             "Delete":DeleteOperation,
@@ -26,7 +27,8 @@ export default class OptionPanel extends React.Component {
             "Unlock":UnclokOperation,
             "Accept":AcceptOperation,
             "Advance":AdvanceOperation,
-            "Degrade":DegradeOperation
+            "Degrade":DegradeOperation,
+            "Search":SearchOperation,
         };
 
         let operations = [];
@@ -43,31 +45,11 @@ export default class OptionPanel extends React.Component {
         }
 
         return (
-            <div className={css(resp.buttonGroup)}>
-                <div className={css(resp.buttonGroup)}>
+            <div style = {styles.buttonGroup}>
+                <div style = {Object.assign({}, styles.buttonGroup, styles.buttonGroupInside)}>
                     {operations}
                 </div>
             </div>
         );
     }
 }
-
-const resp = StyleSheet.create({
-    buttonGroup:{
-        width:'90%',
-        marginLeft:'5%',
-        textAlign:'center',
-        paddingTop:'4px',
-        paddingBottom:'4px',
-        background:'#45341d',
-        boxShadow:'inset 0 0 4px #9c7239',
-        borderCollapse: 'separate',
-
-        border:'1px solid',
-        color:'rgb(204, 126, 69)',
-        borderTopColor: '#E0BA51',
-        borderBottomColor: '#614722',
-        borderRightColor: '#805D2C',
-        borderLeftColor: '#e3ca86',
-    },
-});

@@ -19,6 +19,7 @@ function configureStore( initialState ) {
 }
 
 const store = configureStore( {
+    search:false,
     confirmation: {
         header:"",
         message:"",
