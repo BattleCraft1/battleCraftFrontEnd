@@ -5,13 +5,14 @@ import { bindActionCreators } from 'redux';
 
 import { ActionCreators } from '../../../redux/actions/index';
 import {resp, styles} from '../../commonComponents/styles'
+import {StyleSheet, css} from 'aphrodite';
 
-const ALERT_COLOR = "rgb(222, 169, 162)"
-const ALERT_BORDER_COLOR = "rgb(247, 215, 210)"
-const SUCCESS_COLOR = "rgb(162, 204, 222)"
-const SUCCESS_BORDER_COLOR = "rgb(195, 229, 244)"
-const WARNING_COLOR = "rgb(233, 219, 170)"
-const WARNING_BORDER_COLOR = "rgb(249, 240, 211)"
+const ALERT_COLOR = "rgb(140, 48, 48)"
+const ALERT_BORDER_COLOR = "rgb(199, 125, 113)"
+const SUCCESS_COLOR = "rgb(51, 110, 135)"
+const SUCCESS_BORDER_COLOR = "rgb(123, 174, 196)"
+const WARNING_COLOR = "rgb(126, 109, 48)"
+const WARNING_BORDER_COLOR = "rgb(187, 171, 117)"
 
 class MessageBox extends React.Component {
     constructor(props) {
@@ -87,9 +88,11 @@ class MessageBox extends React.Component {
         return (
             <div style = {styles.messageContainer}>
                 {this.props.message.isShown &&
-                <div ref={this.setMessageRef} style = {Object.assign({},styles.messageBox,
-                                                      {backgroundColor:this.getMessageColor().backgroundColor, borderColor:this.getMessageColor().borderColor})}
-                                                      role="alert">{this.props.message.messageText}</div>}
+                <div ref={this.setMessageRef}
+                                              className={css(resp.messageBox)}
+                                              style = {Object.assign({},styles.messageBox,
+                                              {backgroundColor:this.getMessageColor().backgroundColor, borderColor:this.getMessageColor().borderColor})}
+                                              role="alert">{this.props.message.messageText}</div>}
             </div>
         )
     }

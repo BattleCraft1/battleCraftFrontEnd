@@ -117,6 +117,13 @@ const resp = StyleSheet.create({
         backgroundImage: 'linear-gradient( #4b110d, #6f1913, #dd5353 )',
       },
     },
+  messageBox:{
+    '@media (max-width: 720px)': {
+      marginTop:'2%',
+      width:'80%',
+      marginLeft:'10%',
+    },
+  }
 })
 
 export {resp, styles}
