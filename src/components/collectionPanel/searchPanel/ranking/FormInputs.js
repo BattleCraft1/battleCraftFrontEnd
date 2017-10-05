@@ -97,7 +97,7 @@ export default class FormInputs extends React.Component{
                     <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
                         <SelectInput
                             name = "Province"
-                            keys = {["player","address", "province","location"]}
+                            keys = {["tour","tournament","address", "province","location"]}
                             operation = ":"
                             indexOfSearchFields = "province"
                             options = {provincesOptions}
