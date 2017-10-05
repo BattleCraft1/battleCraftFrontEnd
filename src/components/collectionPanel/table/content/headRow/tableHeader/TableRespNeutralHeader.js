@@ -33,6 +33,7 @@ const styles = {
 
 const resp = StyleSheet.create({
     rowContent:{
+      boxSizing:'border-box',
         position:'relative',
         textAlign:'center',
         '@media (max-width: 599px)': {
@@ -45,7 +46,8 @@ const resp = StyleSheet.create({
         paddingTop:'8px',
         paddingBottom:'8px',
         width:'30%',
-        '@media (min-width: 600px)': {
+        display:'none',
+        '@media (max-width: 600px)': {
             display:'none',
         },
     },

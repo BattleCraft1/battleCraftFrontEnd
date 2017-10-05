@@ -8,7 +8,7 @@ export default class NavElement extends React.Component{
 
     render(){
         return (
-            <Link to={this.props.link} style = {styles.button} className={css(resp.button)}>{this.props.children}</Link>
+            <Link to={this.props.link} onMouseEnter={() => this.props.onMouseEnter()} onMouseLeave={()=>this.props.onMouseLeave()} style = {styles.button} className={css(resp.button)}>{this.props.children}</Link>
         );
     }
 };

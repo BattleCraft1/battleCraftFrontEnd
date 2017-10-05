@@ -5,7 +5,7 @@ import {StyleSheet, css} from 'aphrodite';
 export default class RowChecbox extends React.Component {
     render() {
         return(
-        <th className = {css(resp.rowContent, resp.smallCheckbox)}
+        <th className = {css(resp.rowContent)+" "+(resp.smallCheckbox)}
             style = {Object.assign({}, styles.checkbox, styles.thead, {borderRadius: '0px'})}>
             <Checkbox value={this.props.value}/>
         </th>
@@ -55,9 +55,12 @@ const resp = StyleSheet.create({
         position:'relative',
         textAlign:'center',
         '@media (max-width: 599px)': {
-            width:'100%',
-            display: 'block',
-            borderRadius:'0'
-        }
-    }
+            width:'10%',
+            bottom:'0px',
+            display: 'inline-block',
+            borderRadius:'0',
+            position:'relative',
+            bottom:'-48px',
+        },
+    },
 });

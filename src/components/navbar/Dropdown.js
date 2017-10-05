@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './NavStyle.css.js'
 import { StyleSheet, css } from 'aphrodite';
 
-export default class AccountDropdown extends React.Component{
+export default class Dropdown extends React.Component{
 
     render(){
         return (

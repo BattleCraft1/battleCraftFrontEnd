@@ -2,7 +2,7 @@ import {StyleSheet, css} from 'aphrodite';
 
 const styles = {
   background:{
-    zIndex:'99',
+    zIndex:'2',
     position:'fixed',
     height:'100%',
     width:'100%',

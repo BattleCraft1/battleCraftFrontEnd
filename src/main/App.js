@@ -23,14 +23,10 @@ class App extends Component {
             <div className = {css(resp.base)}>
                 <Navigator/>
                 <ConfirmDialog/>
-                <div className="container">
-                    <div className="row">
-                        <Message/>
-                            <Switch>
-                                <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
-                            </Switch>
-                    </div>
-                </div>
+                  <Message/>
+                      <Switch>
+                          <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
+                      </Switch>
             </div>
           </div>
         );

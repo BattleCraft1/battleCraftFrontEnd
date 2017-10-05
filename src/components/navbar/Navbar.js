@@ -2,8 +2,10 @@ import React from 'react';
 import Option from './NavElement';
 import {StyleSheet, css} from 'aphrodite';
 import Menu from './Menu';
-import AccountDropdown from './AccountDropdown'
+import Dropdown from './Dropdown'
 import AccountOption from './AccountOption'
+import DropdownOption from './DropdownOption'
+
 
 var icons = require('glyphicons');
 
@@ -14,6 +16,7 @@ export default class Navigator extends React.Component{
       this.state = {
         isToggleOn: true,
         accountListVisible: true,
+        tournamentListDisplay: 'none',
         width: window.innerWidth,
         height: window.innerHeight,
       };
@@ -49,9 +52,16 @@ export default class Navigator extends React.Component{
       }));
     }
 
+    onMouseHover() {
+        console.log("Enter")
+        this.setState({tournamentListDisplay:'block'})
+    }
+    onMouseLeave(){
+      console.log("Leave")
+      this.setState({tournamentListDisplay:'none'})
+    }
 
     render(){
-
       var accountSimbol
       if(this.state.accountListVisible){
           accountSimbol = icons.arrowTriD
@@ -63,16 +73,21 @@ export default class Navigator extends React.Component{
             <div className={css(resp.navbar)}>
              <Menu toggleList = {this.handleClick.bind(this)}>Menu <span className={css(resp.hamburger)}>{icons.menu}</span></Menu>
              <div style ={(this.state.width < 600 && this.state.isToggleOn) ? {display:'none'}:{display:'block'}}>
-                <Option link="/collectionsPanel/tournaments">Tournaments</Option>
-                <Option link="/collectionsPanel/games">Games</Option>
-                <Option link="/collectionsPanel/ranking">Ranking</Option>
-                <Option link="/collectionsPanel/users">Users</Option>
-                <AccountDropdown toggleAccountList = {this.handleAccountList.bind(this)}>Account <span className={css(resp.arrow)}>{accountSimbol}</span></AccountDropdown>
+                <Option onMouseEnter={() => this.onMouseHover()} onMouseLeave={() => this.onMouseLeave()} ref='hoverElement' link="/collectionsPanel/tournaments">Tournaments</Option>
+                <Option onMouseEnter={()=>{}} onMouseLeave={()=>{}} link="/collectionsPanel/games">Games</Option>
+                <Option onMouseEnter={()=>{}} onMouseLeave={()=>{}} link="/collectionsPanel/rankings">Rankings</Option>
+                <Option onMouseEnter={()=>{}} onMouseLeave={()=>{}} link="/collectionsPanel/users">Users</Option>
+                <Dropdown toggleAccountList = {this.handleAccountList.bind(this)}>Account <span className={css(resp.arrow)}>{accountSimbol}</span></Dropdown>
 
                   <div style ={this.state.accountListVisible ? {display:'none'}:{display:'block'}} className={css(resp.account)}>
                   <div style = {{position:'relative', display:'inline-block', width:'100%'}}>
                   <AccountOption link="#">Link1</AccountOption>
                   <AccountOption link="#">Link2</AccountOption>
+                  </div>
+                  </div>
+                  <div style ={{display:this.state.tournamentListDisplay}} className={css(resp.tournaments)}>
+                  <div style = {{position:'relative', display:'inline-block', width:'100%'}}>
+                  <DropdownOption onMouseEnter={() => this.onMouseHover()} onMouseLeave={() => this.onMouseLeave()} link="#">Link1</DropdownOption>
                   </div>
                   </div>
               </div>
@@ -91,6 +106,15 @@ const resp = StyleSheet.create({
           position:'absolute',
           width:'20%',
           marginLeft:'80%',
+        }
+    },
+    tournaments:{
+      width:'100%',
+      position:'relative',
+      '@media (min-width: 599px)': {
+          position:'absolute',
+          width:'20%',
+          marginLeft:'0%',
         }
     },
     navbar:{

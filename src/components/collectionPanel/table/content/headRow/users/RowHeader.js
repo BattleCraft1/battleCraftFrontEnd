@@ -3,6 +3,8 @@ import React from 'react';
 import TableHeader from './../../headRow/tableHeader/TableHeader'
 import HeaderCheckbox from './../../headRow/headerCheckbox/HeaderCheckbox'
 import TableNeutralHeader from "../tableHeader/TableNeutralHeader";
+import {StyleSheet, css} from 'aphrodite';
+
 
 export default class RowHeader extends React.Component{
     constructor(props) {
@@ -11,7 +13,7 @@ export default class RowHeader extends React.Component{
 
     render(){
         return (
-            <tr>
+            <tr className={css(resp.rowContent)}>
                 <HeaderCheckbox/>
                 <TableNeutralHeader
                     content="avatar"
@@ -69,3 +71,20 @@ export default class RowHeader extends React.Component{
         );
     }
 }
+
+const resp = StyleSheet.create({
+  rowContent:{
+      position:'relative',
+      textAlign:'center',
+      '@media (max-width: 599px)': {
+          width:'70%',
+          display: 'inline-block',
+          borderRadius:'0'
+      },
+      '@media (max-width: 1024px)': {
+          fontSize:'0.8em',
+          paddingLeft:'2px',
+          paddingRight:'2px',
+      },
+  },
+});

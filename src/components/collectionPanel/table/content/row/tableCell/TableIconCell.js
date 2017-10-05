@@ -50,12 +50,20 @@ const styles = {
 
 const resp = StyleSheet.create({
     rowContent:{
+      overflow:'hidden',
+      textOverflow:'elipsis',
         position:'relative',
         textAlign:'center',
+        boxSizing:'border-box',
         '@media (max-width: 599px)': {
             width:'70%',
             display: 'inline-block',
             borderRadius:'0'
-        }
+        },
+        '@media (max-width: 1024px)': {
+            fontSize:'0.8em',
+            paddingLeft:'2px',
+            paddingRight:'2px',
+        },
     },
 });

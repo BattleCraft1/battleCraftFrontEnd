@@ -107,9 +107,9 @@ class CollectionList extends React.Component{
 
         return (
             <div>
-                <div className="row">
+                <div>
                     <LegendPanel collectionType = {this.props.collectionType}/>
-                    <table className="" style={styles.table}>
+                    <table style={styles.table}>
                         <thead>
                         {
                             React.createElement(
@@ -148,10 +148,12 @@ export default connect( mapStateToProps, mapDispatchToProps )( CollectionList );
 
 const styles = {
     table: {
+      boxSizing:'border-box',
         position: 'relative',
         width: '90%',
         marginLeft: '5%',
         marginBottom: '4px',
         borderCollapse: 'separate',
+        borderSpacing: '0px',
     }
 };

@@ -40,11 +40,11 @@ export default class Row extends React.Component{
 
     render(){
         return (
-            <tr className={css(resp.tableRow)}>
-                <RowChecbox
-                    value = {this.props.element.name}
-                />
-
+          <tr className={css(resp.tableRow)}>
+              <RowChecbox
+                  value = {this.props.element.name}
+              />
+              
                 <TableRespNeutralHeader
                     headerName = "avatar"
                 />
@@ -164,6 +164,9 @@ const resp = StyleSheet.create({
             position:'relative',
             marginBottom:'4px',
         },
+        '@media (max-width: 900px)': {
+            fontSize:'0.85em',
+        },
     },
-});
 
+});
