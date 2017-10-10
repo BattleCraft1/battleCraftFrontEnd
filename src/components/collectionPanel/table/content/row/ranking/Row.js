@@ -2,6 +2,7 @@ import React from 'react';
 
 import TableCell from './../../row/tableCell/TableCell'
 import TableResponsiveHeader from './../../headRow/tableHeader/TableResponsiveHeader'
+import TableRespNeutralHeader from './../../headRow/tableHeader/TableRespNeutralHeader'
 
 import {StyleSheet, css} from 'aphrodite';
 import {colors} from './../../../../../../main/consts/collectionsColors'
@@ -23,6 +24,16 @@ export default class Row extends React.Component{
     render(){
         return (
             <tr className={css(resp.tableRow)}>
+                <TableRespNeutralHeader
+                    headerName = "No."
+                />
+                <TableCell
+                    columnName = "no"
+                    color = {this.getColor("no")}
+                    onClick = {undefined}
+                    content = {this.props.number}
+                />
+
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("name")}
                     sortBy = "name"

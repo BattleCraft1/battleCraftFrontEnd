@@ -68,6 +68,7 @@ class CollectionList extends React.Component{
                     React.createElement(
                         rowType,
                         {key : key,
+                        number : key,
                         element : element,
                         isColumnActive : this.isColumnActive.bind(this),
                         sortByColumnName : this.sortByColumnName.bind(this),

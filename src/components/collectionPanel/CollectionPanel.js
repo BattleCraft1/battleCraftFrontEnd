@@ -54,7 +54,6 @@ class CollectionPanel extends React.Component{
             pageRequest.searchCriteria = [];
             this.props.setPageRequest(pageRequest);
             await this.getPageRequest(nextProps.match.params.collectionType);
-
         }
     }
 

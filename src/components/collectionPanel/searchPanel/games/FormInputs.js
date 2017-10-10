@@ -11,7 +11,6 @@ export default class FormInputs extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            provincesNames:[],
             status:[],
             searchFormField: {
                 "name":{},

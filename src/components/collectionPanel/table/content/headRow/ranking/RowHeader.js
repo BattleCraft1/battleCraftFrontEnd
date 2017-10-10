@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TableHeader from './../../headRow/tableHeader/TableHeader'
+import TableNeutralHeader from "../tableHeader/TableNeutralHeader";
 
 export default class RowHeader extends React.Component{
     constructor(props) {
@@ -10,6 +11,9 @@ export default class RowHeader extends React.Component{
     render(){
         return (
             <tr>
+                <TableNeutralHeader
+                    content="no"
+                />
                 <TableHeader
                     sortBy = "name"
                     sort = {this.props.sortByColumnName.bind(this)}

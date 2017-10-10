@@ -18,7 +18,9 @@ export default class FormInputs extends React.Component{
                 "city":{},
                 "numberOfBattles":{},
                 "numberOfTournaments":{},
-                "points":{}
+                "points":{},
+                "dateOfStart":{},
+                "dateOfEnd":{},
             }
         }
     }
