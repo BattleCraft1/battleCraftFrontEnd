@@ -8,14 +8,21 @@ export default class NavElement extends React.Component{
 
     render(){
         return (
-            <Link to={this.props.link} onMouseEnter={() => this.props.onMouseEnter()} onMouseLeave={()=>this.props.onMouseLeave()} style = {styles.button} className={css(resp.button)}>{this.props.children}</Link>
+          <div className={css(resp.container)}>
+            <Link to={this.props.link} onClick={()=> this.props.onClick()} onMouseLeave={()=>{}} style = {styles.button} className={css(resp.button)}>
+              {this.props.children}
+            </Link>
+            <div style = {{marginLeft:this.props.offset}} className={css(resp.optionList)}>
+              {this.props.list}
+            </div>
+          </div>
         );
     }
 };
 
 const resp = StyleSheet.create({
     button:{
-        width:"20%",
+        width:"100%",
         position:'static',
         borderWidth:' 3px 2px 3px 2px',
         padding: '8px 0px',
@@ -41,5 +48,25 @@ const resp = StyleSheet.create({
             padding: '4px 0px',
 
         }
+    },
+    container:{
+      display:'inline-block',
+      width:'20%',
+      '@media (max-width: 600px)': {
+          width:'100%',
+      }
+    },
+    optionList:{
+      left:'0px',
+      boxSizing:'border-box',
+      position:'absolute',
+      display:'block',
+      width:'20%',
+      '@media (max-width: 600px)': {
+          position:'relative',
+          display:'block',
+          width:'100%',
+          marginLeft:'0',
+      }
     },
 });

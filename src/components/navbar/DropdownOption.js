@@ -8,7 +8,7 @@ export default class NavElementSmall extends React.Component{
 
     render(){
         return (
-            <Link to={"#"} style = {styles.button} onMouseEnter={() => this.props.onMouseEnter()} onMouseLeave={()=>this.props.onMouseLeave()} className={css(resp.option)}>{this.props.children}</Link>
+            <Link to={this.props.link} style = {styles.button} className={css(resp.option)}>{this.props.children}</Link>
         );
     }
 };
@@ -17,7 +17,6 @@ const resp = StyleSheet.create({
     option: {
       marginBottom:'1px',
       borderWidth:'1px',
-      height:'25px',
       fontSize:'85%',
       display:'inline-block',
       position:'relative',
@@ -43,7 +42,6 @@ const resp = StyleSheet.create({
         },
         '@media (min-width: 600px)': {
             width:'100%',
-
         }
     },
 });
