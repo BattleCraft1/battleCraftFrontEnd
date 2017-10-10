@@ -50,7 +50,7 @@ export default class Row extends React.Component{
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("province")}
-                    sortBy = "province.location"
+                    sortBy = "playerProvince.location"
                     sort = {this.props.sortByColumnName.bind(this)}
                     arrow = {this.props.getArrowGlyph("province")}
                     headerName = "province"
@@ -64,7 +64,7 @@ export default class Row extends React.Component{
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("city")}
-                    sortBy = "address.city"
+                    sortBy = "playerAddress.city"
                     sort = {this.props.sortByColumnName.bind(this)}
                     arrow = {this.props.getArrowGlyph("city")}
                     headerName = "city"

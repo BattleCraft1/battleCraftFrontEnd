@@ -8,6 +8,7 @@ import {StyleSheet, css} from 'aphrodite';
 
 import OptionPanel from '../../optionPanel/OptionPanel'
 import LegendPanel from '../../legendPanel/LegendPanel'
+import RankingGameHeader from '../../legendPanel/RankingGameHeader'
 import TournamentRow from './row/tournaments/Row'
 import RankingRowHeader from './headRow/ranking/RowHeader'
 import RankingRow from './row/ranking/Row'
@@ -16,6 +17,8 @@ import TournamentRowHeader from './headRow/tournaments/RowHeader'
 import UserRowHeader from './headRow/users/RowHeader'
 import GameRow from './row/games/Row'
 import GameRowHeader from './headRow/games/RowHeader'
+
+import findGameName from '../../../../main/functions/findGameName'
 
 let icons = require('glyphicons');
 
@@ -85,6 +88,7 @@ class CollectionList extends React.Component{
         let rows = [];
         let key = 0;
         let rowHeader;
+        let legend = <LegendPanel collectionType = {this.props.collectionType}/>;
 
         if(this.props.page.content!==undefined)
         {
@@ -102,6 +106,7 @@ class CollectionList extends React.Component{
         else if(this.props.collectionType==="ranking")
         {
             rowHeader = RankingRowHeader;
+            legend = <RankingGameHeader gameName = {findGameName(this.props.pageRequest.searchCriteria)} />
         }
         else
             rowHeader = UserRowHeader;
@@ -109,7 +114,7 @@ class CollectionList extends React.Component{
         return (
             <div>
                 <div className="row">
-                    <LegendPanel collectionType = {this.props.collectionType}/>
+                    {legend}
                     <table className="" style={styles.table}>
                         <thead>
                         {
