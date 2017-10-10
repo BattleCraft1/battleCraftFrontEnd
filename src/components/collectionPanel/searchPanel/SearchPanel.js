@@ -81,10 +81,10 @@ class SearchPanel extends React.Component{
     }
 
     render(){
-        let searchForInputs = "loading...";
+        let searchFormInputs = "loading...";
         if(isNotEmpty(this.state.enums))
             if(this.props.collectionType==="tournaments"){
-                searchForInputs = React.createElement(
+                searchFormInputs = React.createElement(
                     TournamentsFormInputs,
                     {
                         enums:this.state.enums,
@@ -95,7 +95,7 @@ class SearchPanel extends React.Component{
                 );
             }
             else if(this.props.collectionType==="users"){
-                searchForInputs = React.createElement(
+                searchFormInputs = React.createElement(
                     UsersFormInputs,
                     {
                         enums:this.state.enums,
@@ -106,7 +106,7 @@ class SearchPanel extends React.Component{
                 );
             }
             else if(this.props.collectionType==="games"){
-                searchForInputs = React.createElement(
+                searchFormInputs = React.createElement(
                     GamesFormInputs,
                     {
                         enums:this.state.enums,
@@ -117,7 +117,7 @@ class SearchPanel extends React.Component{
                 );
             }
             else if(this.props.collectionType==="ranking"){
-                searchForInputs = React.createElement(
+                searchFormInputs = React.createElement(
                     RankingFormInputs,
                     {
                         enums:this.state.enums,
@@ -130,7 +130,7 @@ class SearchPanel extends React.Component{
         let searchPanel = <div style = {Object.assign({}, styles.background, {display: 'block'})}>
             <div ref={this.setSearchPanelRef} style = {Object.assign({},styles.goldAndBrownTheme ,styles.popupContent, {display:this.state.display})} className={css(resp.popupContent)}>
                 <form>
-                    {searchForInputs}
+                    {searchFormInputs}
                 </form>
             </div>
         </div>;

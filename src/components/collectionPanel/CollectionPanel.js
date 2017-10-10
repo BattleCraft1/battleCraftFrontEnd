@@ -26,8 +26,7 @@ class CollectionPanel extends React.Component{
     async componentDidMount() {
         if(this.props.match.params.collectionType==='ranking'){
             let pageRequest = this.props.pageRequest;
-            pageRequest.pageRequest.direction = "DESC";
-            pageRequest.pageRequest.property = "points";
+            this.getRankingRequest(pageRequest);
             this.props.setPageRequest(pageRequest);
         }
         this.setState({collectionType: this.props.match.params.collectionType});
@@ -43,19 +42,30 @@ class CollectionPanel extends React.Component{
             let pageRequest = this.props.pageRequest;
             pageRequest.pageRequest.page = 0;
             pageRequest.pageRequest.size = 10;
+            pageRequest.searchCriteria = [];
             if(nextProps.match.params.collectionType==='ranking'){
-                pageRequest.pageRequest.direction = "DESC";
-                pageRequest.pageRequest.property = "points";
+                this.getRankingRequest(pageRequest);
             }
             else{
                 pageRequest.pageRequest.direction = "ASC";
                 pageRequest.pageRequest.property = "name";
             }
-            pageRequest.searchCriteria = [];
             this.props.setPageRequest(pageRequest);
             await this.getPageRequest(nextProps.match.params.collectionType);
-
         }
+    }
+
+    getRankingRequest(pageRequest){
+        pageRequest.pageRequest.direction = "DESC";
+        pageRequest.pageRequest.property = "points";
+        pageRequest.searchCriteria = [];
+        pageRequest.searchCriteria.push(
+            {
+                "keys": ["tour", "tournament", "game","name"],
+                "operation":":",
+                "value":"Warhammer"
+            }
+        );
     }
 
     async getPageRequest(collectionType){

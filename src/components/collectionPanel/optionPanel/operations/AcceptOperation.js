@@ -28,7 +28,6 @@ class AcceptOperation extends React.Component {
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
         let elementsToAccept = checkedElements.filter(element =>
             element.status==="NEW" && (element.banned===false || element.banned===null));
-        console.log(elementsToAccept);
         let elementsWhichCannotBeAccept =
             checkedElements.filter(element => element.status!=="NEW");
 

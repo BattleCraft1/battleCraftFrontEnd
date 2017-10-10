@@ -3,22 +3,31 @@ import TextInput from './../inputs/TextInput'
 import SelectInput from './../inputs/SelectInput'
 import NumberInput from './../inputs/NumberInput'
 import DateInput from './../inputs/DateInput'
+import GameInputForRanking from './../inputs/GameInputForRanking'
 import {resp, styles} from '../styles'
 import {StyleSheet, css} from 'aphrodite';
+import findGameName from '../../../../main/functions/findGameName'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../../../redux/actions';
 
-export default class FormInputs extends React.Component{
+class FormInputs extends React.Component{
     constructor(props) {
         super(props);
         this.state={
+            gameName:findGameName(this.props.pageRequest.searchCriteria),
             provincesNames:[],
             tournamentsGames:[],
             searchFormField: {
                 "name":{},
                 "province":{},
                 "city":{},
+                "game":{},
                 "numberOfBattles":{},
                 "numberOfTournaments":{},
-                "points":{}
+                "points":{},
+                "dateOfStart":{},
+                "dateOfEnd":{},
             }
         }
     }
@@ -27,12 +36,25 @@ export default class FormInputs extends React.Component{
         if (nextProps.enums!==undefined && nextProps.enums !== this.props.enums) {
             this.setState({provincesNames:nextProps.enums.provincesNames});
             this.setState({tournamentsGames:nextProps.enums.gamesNames});
+            this.setDefaultGameSearchCriteria();
         }
     }
 
     componentDidMount(){
         this.setState({provincesNames:this.props.enums.provincesNames});
         this.setState({tournamentsGames:this.props.enums.gamesNames});
+        this.setDefaultGameSearchCriteria();
+    }
+
+    setDefaultGameSearchCriteria(){
+        this.changeSearchForm(
+            "game",
+            {
+                "keys":["tour","tournament","game","name"],
+                "operation":":",
+                "value":this.state.gameName
+            }
+        );
     }
 
     prepareProvinceOptions(){
@@ -50,7 +72,6 @@ export default class FormInputs extends React.Component{
 
     prepareTournamentGamesOptions(){
         let tournamentGamesOptions = [];
-        tournamentGamesOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.tournamentsGames!==undefined) {
             this.state.tournamentsGames.map(
                 tournamentGame => {
@@ -106,7 +127,8 @@ export default class FormInputs extends React.Component{
                     </div>
                 </div>
                 <div className={css(resp.optionContent)}>
-                    <SelectInput
+                    <GameInputForRanking
+                        value = {this.state.gameName}
                         name = "Game"
                         keys = {["tour","tournament","game","name"]}
                         operation = ":"
@@ -157,3 +179,15 @@ export default class FormInputs extends React.Component{
         );
     }
 }
+
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
+
+function mapStateToProps( state ) {
+    return {
+        pageRequest: state.pageRequest
+    };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( FormInputs );
