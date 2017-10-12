@@ -16,6 +16,8 @@ import TournamentRowHeader from './headRow/tournaments/RowHeader'
 import UserRowHeader from './headRow/users/RowHeader'
 import GameRow from './row/games/Row'
 import GameRowHeader from './headRow/games/RowHeader'
+import AddTournamentPanel from './panels/AddTournamentPanel'
+
 
 let icons = require('glyphicons');
 
@@ -107,6 +109,7 @@ class CollectionList extends React.Component{
 
         return (
             <div>
+              <AddTournamentPanel/>
                 <div>
                     <LegendPanel collectionType = {this.props.collectionType}/>
                     <table style={styles.table}>

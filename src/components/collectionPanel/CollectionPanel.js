@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 
 import {serverName} from '../../main/consts/server'
 import {noServerContext} from '../../main/consts/noServerContext'
+import {AddTournamentPanel} from './table/content/panels/AddTournamentPanel'
 
 import axios from 'axios';
 
