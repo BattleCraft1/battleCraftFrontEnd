@@ -32,9 +32,10 @@ const styles = {
         backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
     },
     rowContent: {
+      textAlign:'center',
         borderRadius: '0',
         background: '#c6a57d',
-        border: '1px solid',
+        border: '2px solid',
         padding: '8px',
         paddingLeft: '8px',
         textAlign: 'none',
@@ -71,24 +72,31 @@ const resp = StyleSheet.create({
     avatar:{
     },
     defaultAvatar:{
-      height:'20px',
-      width:'20px',
+      width:'60px',
+      height:'60px',
+      position:'relative',
       borderRadius:'0',
       background: "url("+Background+") center center",
       backgroundSize:'cover',
+      display:'block',
       '@media (max-width: 599px)': {
         borderRadius:'50%',
         height:'80px',
         width: '80px',
+        marginLeft:'40%',
       },
     },
     avatarContainer:{
-      float:'right',
+      width:'100%',
+      height:'60px',
+      position:'relative',
       textAlign:'center',
       '@media (max-width: 599px)': {
           width:'80%',
           display: 'inline-block',
-          borderRadius:'0'
+          borderRadius:'0',
+          position:'relative',
+
       },
     }
 });
