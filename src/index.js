@@ -7,8 +7,8 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import reducer from './redux/reducers/index'
-import {entityPanelModes} from '/main/consts/entityPanelModes'
-import {entityPanelTypes} from '/main/consts/entityPanelTypes'
+import {entityPanelModes} from './main/consts/entityPanelModes'
+import {entityPanelTypes} from './main/consts/entityPanelTypes'
 
 function configureStore( initialState ) {
     const enhancer = compose(

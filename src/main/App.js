@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite';
-import Navigator from '../components/navbar/Navbar'
+import Navbar from '../components/navbar/Navbar'
 import CollectionPanel from '../components/collectionPanel/CollectionPanel'
 import {Switch, Route} from 'react-router-dom';
 import ConfirmDialog from '../components/commonComponents/confirmDialog/ConfirmDialog';
@@ -17,7 +17,7 @@ class App extends Component {
           <div className={css(resp.backgroundImage)}></div>
           <div className={css(resp.backgroundConent)}></div>
             <div className = {css(resp.base)}>
-                <Navigator/>
+                <Navbar/>
                 <ConfirmDialog/>
                 <EntityPanel/>
                 <Message/>

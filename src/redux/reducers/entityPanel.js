@@ -3,7 +3,7 @@ import * as types from '../types/entityPanel'
 import {entityPanelModes} from '../../main/consts/entityPanelModes'
 import {entityPanelTypes} from '../../main/consts/entityPanelTypes'
 
-export const editPanel = createReducer( {}, {
+export const entityPanel = createReducer( {}, {
     [types.ADD_ENTITY]( state, action ) {
         return {
             mode:entityPanelModes.add,

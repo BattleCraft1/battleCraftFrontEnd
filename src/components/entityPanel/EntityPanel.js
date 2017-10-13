@@ -1,13 +1,14 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite';
-import TournamentPanel from './Tournament/Panel';
 import {resp, styles} from './styles'
+
+import TournamentPanel from './Tournament/Panel';
 
 import { ActionCreators } from '../../redux/actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-export default class EntityPanel extends React.Component{
+class EntityPanel extends React.Component{
     constructor(props) {
         super(props);
     }
@@ -17,16 +18,16 @@ export default class EntityPanel extends React.Component{
         if(this.props.entityPanel.entityType==='tournament')
             panelType = TournamentPanel;
 
-        return React.createElement(
+        return panelType ? React.createElement(
             panelType,
             {
                 mode:this.props.entityPanel.mode
             },
-            null)
+            null) : <div/>
     }
 
     render(){
-      let panel = <div/>;
+      let panel;
       panel = this.createPanel();
         return(
             this.props.entityPanel.mode!=='disabled' &&
