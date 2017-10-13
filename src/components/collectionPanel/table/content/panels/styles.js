@@ -104,7 +104,6 @@ const styles = {
     paddingTop:'6px',
     paddingBottom:'6px',
     border:'1px solid black',
-    borderTop:'0px',
     backgroundImage: 'linear-gradient(#d55151, #55130f, #4b1310)',
     boxShadow:'inset 0 0 7px #9c7239',
     color:'rgb(227, 228, 205)',
@@ -146,7 +145,7 @@ const styles = {
     borderTopLeftRadius:'5px',
     fontWeight:'600',
     textShadow:'rgba(0, 0, 0, 0.6) 2px 2px 3px',
-    color:'rgb(228, 226, 223)'
+    color:'rgb(228, 226, 223)',
   },
   tabActive:{
     boxShadow:'none',
@@ -169,7 +168,6 @@ const styles = {
       marginBottom: '4px',
       borderCollapse: 'separate',
       borderSpacing: '0px',
-      boxShadow: '-12px 0 15px -4px rgb(99, 89, 66), 12px 0 15px -4px rgb(99, 89, 66)',
       marginBottom:'0px',
   },
   tableHeaderCell:{
@@ -181,10 +179,16 @@ const styles = {
   tableCell:{
     backgroundImage: 'linear-gradient(rgb(255, 255, 255), rgb(220, 220, 220), rgb(200, 200, 200))',
     border:'1px black solid',
-    borderTop:'0px',
+//    borderTop:'0px',
     paddingTop:'6px',
     paddingBottom:'6px',
     paddingLeft:'4px',
+  },
+  scrollPanel:{
+    boxSizing:'border-box',
+    	overflowY:'scroll',
+      maxHeight:'200px',
+      width:'100%',
   },
 }
 
