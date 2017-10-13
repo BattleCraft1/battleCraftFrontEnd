@@ -6,6 +6,7 @@ import NumberInput from "../inputs/NumberInput";
 import StatusInput from "../inputs/StatusInput";
 import {resp, styles} from '../styles'
 import {StyleSheet, css} from 'aphrodite';
+import {provinces} from "../../../../main/consts/provinces";
 
 export default class FormInputs extends React.Component{
     constructor(props) {
@@ -31,14 +32,13 @@ export default class FormInputs extends React.Component{
 
     async componentWillReceiveProps(nextProps) {
         if (nextProps.enums!==undefined && nextProps.enums !== this.props.enums) {
-            this.setState({provincesNames:nextProps.enums.provincesNames});
             this.setState({tournamentsGames:nextProps.enums.gamesNames});
             this.setState({status:nextProps.enums.tournamentStatus});
         }
     }
 
     componentDidMount(){
-        this.setState({provincesNames:this.props.enums.provincesNames});
+        this.setState({provincesNames:provinces});
         this.setState({tournamentsGames:this.props.enums.gamesNames});
         this.setState({status:this.props.enums.tournamentStatus});
     }
@@ -167,7 +167,7 @@ export default class FormInputs extends React.Component{
                 <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
                   <SelectInput
                       name = "Province"
-                      keys = {["address", "province","location"]}
+                      keys = {["address", "province"]}
                       operation = ":"
                       indexOfSearchFields = "province"
                       options = {provincesOptions}

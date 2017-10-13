@@ -4,6 +4,7 @@ import SelectInput from './../inputs/SelectInput'
 import StatusInput from './../inputs/StatusInput'
 import {resp, styles} from '../styles'
 import {StyleSheet, css} from 'aphrodite';
+import {provinces} from "../../../../main/consts/provinces";
 
 export default class FormInputs extends React.Component{
     constructor(props) {
@@ -25,13 +26,12 @@ export default class FormInputs extends React.Component{
 
     async componentWillReceiveProps(nextProps) {
         if (nextProps.enums!==undefined && nextProps.enums !== this.props.enums) {
-            this.setState({provincesNames:nextProps.enums.provincesNames});
             this.setState({status:nextProps.enums.usersTypes});
         }
     }
 
     componentDidMount(){
-        this.setState({provincesNames:this.props.enums.provincesNames});
+        this.setState({provincesNames:provinces});
         this.setState({status:this.props.enums.usersTypes});
     }
 
@@ -129,7 +129,7 @@ export default class FormInputs extends React.Component{
                     <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
                         <SelectInput
                             name = "Province"
-                            keys = {["address", "province","location"]}
+                            keys = {["address", "province"]}
                             operation = ":"
                             indexOfSearchFields = "province"
                             options = {provincesOptions}
