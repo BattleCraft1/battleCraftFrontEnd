@@ -148,6 +148,8 @@ export default class Row extends React.Component{
 
 const resp = StyleSheet.create({
     tableRow:{
+      overflow:'hidden',
+      textOverflow:'elipsis',
         '@media (max-width: 600px)': {
             display:'block',
             position:'relative',

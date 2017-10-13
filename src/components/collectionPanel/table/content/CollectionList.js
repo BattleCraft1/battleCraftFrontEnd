@@ -18,6 +18,7 @@ import UserRowHeader from './headRow/users/RowHeader'
 import GameRow from './row/games/Row'
 import GameRowHeader from './headRow/games/RowHeader'
 
+
 import findGameName from '../../../../main/functions/findGameName'
 
 let icons = require('glyphicons');
@@ -115,7 +116,7 @@ class CollectionList extends React.Component{
             <div>
                 <div className="row">
                     {legend}
-                    <table className="" style={styles.table}>
+                    <table style={styles.table}>
                         <thead>
                         {
                             React.createElement(
@@ -154,10 +155,12 @@ export default connect( mapStateToProps, mapDispatchToProps )( CollectionList );
 
 const styles = {
     table: {
+      boxSizing:'border-box',
         position: 'relative',
         width: '90%',
         marginLeft: '5%',
         marginBottom: '4px',
         borderCollapse: 'separate',
+        borderSpacing: '0px',
     }
 };

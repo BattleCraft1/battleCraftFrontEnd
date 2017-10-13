@@ -2,7 +2,7 @@ import React from 'react';
 
 import TableCell from './../../row/tableCell/TableCell'
 import TableAvatarCell from './../../row/tableCell/TableAvatarCell'
-import RowChecbox from './../../row/rowCheckbox/RowChecbox'
+import RowUserChecbox from './../../row/rowUserCheckbox/RowUserChecbox'
 import TableResponsiveHeader from './../../headRow/tableHeader/TableResponsiveHeader'
 import TableRespNeutralHeader from './../../headRow/tableHeader/TableRespNeutralHeader'
 
@@ -40,9 +40,10 @@ export default class Row extends React.Component{
 
     render(){
         return (
-            <tr className={css(resp.tableRow)}>
-                <RowChecbox
-                    value = {this.props.element.name}
+          <tr className={css(resp.tableRow)}>
+
+                <RowUserChecbox
+                value = {this.props.element.name}
                 />
 
                 <TableRespNeutralHeader
@@ -164,6 +165,9 @@ const resp = StyleSheet.create({
             position:'relative',
             marginBottom:'4px',
         },
+        '@media (max-width: 900px)': {
+            fontSize:'0.80em',
+        },
     },
-});
 
+});

@@ -2,7 +2,7 @@ import React from 'react';
 import Checkbox from '../../../../../commonComponents/checkBox/Checkbox'
 import {StyleSheet, css} from 'aphrodite';
 
-export default class RowChecbox extends React.Component {
+export default class RowUserChecbox extends React.Component {
     render() {
         return(
         <th className = {css(resp.rowContent)+" "+(resp.smallCheckbox)}
@@ -57,10 +57,10 @@ const resp = StyleSheet.create({
         clear:'both',
         '@media (max-width: 599px)': {
             float:'left',
-            //top:'48px',
+            top:'48px',
             left:'0px',
             width:'10%',
-            marginRight:'90%',
+            marginRight:'0%',
             display: 'block',
             borderRadius:'0',
             position:'relative',

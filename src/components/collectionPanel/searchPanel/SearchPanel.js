@@ -6,10 +6,9 @@ import TournamentsFormInputs from './tournaments/FormInputs'
 import RankingFormInputs from './ranking/FormInputs'
 import GamesFormInputs from './games/FormInputs'
 import isNotEmpty from './../../../main/functions/checkIfObjectIsNotEmpty'
-
 import { ActionCreators } from '../../../redux/actions/index';
-
 import {serverName} from '../../../main/consts/server';
+import {mockEnums} from '../../../main/consts/noServerContext';
 import {resp, styles} from './styles'
 import {StyleSheet, css} from 'aphrodite';
 
@@ -21,6 +20,7 @@ class SearchPanel extends React.Component{
         this.setSearchPanelRef = this.setSearchPanelRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.state = {
+            display:'block',
             enums:{}
         };
 
@@ -48,13 +48,9 @@ class SearchPanel extends React.Component{
     }
 
     async getEnums(collectionType){
-        await axios.get(serverName+`get/`+collectionType+`/enums`)
-            .then(res => {
-                this.setState({enums:res.data});
-            })
-            .catch(error => {
-                this.props.showNetworkErrorMessage(error);
-            });
+
+                this.setState({enums:mockEnums});
+
     }
 
     search(inputs){

@@ -24,6 +24,17 @@ const styles = {
     paddingBottom:'15px',
     paddingTop:'15px',
     },
+  panelContainer:{
+    boxSizing:'border-box',
+    display:'block',
+    position:'fixed',
+    width:'60%',
+    top:'5%',
+    left:'20%',
+    zIndex:'100',
+    padding:'1%',
+    background:'#45341d',
+  },
   optionContainer:{
     width:'48%',
     float:'left',
@@ -48,15 +59,24 @@ const styles = {
   },
   optionInput:{
     boxSizing:'border-box',
-    paddingTop:'2%',
-    paddingBottom:'2%',
+    //paddingTop:'2%',
+    //paddingBottom:'2%',
     width:'100%',
     minHeight:'30px',
     borderRadius:'0 0 2px 2px',
     border:'0px',
     background:'#e0d9d0',
-    padding:'5px',
+    //padding:'5px',
     outline:'0',
+    //marginBottom:'5px',
+    textAlign:'center'
+  },
+  textArea:{
+    maxWidth:'100%',
+    minWidth:'100%',
+    minHeight:'40px',
+    maxHeight:'40px',
+    marginBottom:'-6px',
   },
   button:{
     width:'20%',
@@ -95,8 +115,29 @@ const styles = {
     width:'0.5%',
     display:'inline-block',
   },
+  tabButton:{
+    boxSizing:'border-box',
+    display:'inline-block',
+    position:'relative',
+    width:'25%',
+    textAlign:'center',
+    paddingTop:'4px',
+    paddingBottom:'4px',
+  },
+  tabActive:{
+    boxShadow:'none',
+    borderBottom:'1px rgb(164, 129, 91) solid',
+    background:'rgb(164, 129, 91)',
+  },
+  tabNotActive:{
+    boxShadow:'inset 0 -2px 8px rgb(88, 72, 55)',
+    background:'rgb(125, 100, 73)',
+  },
+  inputBlock:{
+    boxShadow: '-12px 0 15px -4px rgb(99, 89, 66), 12px 0 15px -4px rgb(99, 89, 66)',
+    marginBottom:'5px',
+  }
 }
-
 
 const resp = StyleSheet.create({
   popupContent:{
@@ -129,9 +170,27 @@ const resp = StyleSheet.create({
     width:'98%',
     marginLeft:'1%',
     marginRight:'1%',
-    marginBottom:'2px',
+    //marginBottom:'2px',
     display:'inline-block',
   },
+/////////////
+  content:{
+    boxSizing:'border-box',
+    paddingLeft:'8%',
+    paddingRight:'8%',
+    marginTop:'3%',
+    marginBottom:'5%',
+    height:'100%',
+  },
+  panel:{
+    display:'block',
+    background:'rgb(164, 129, 91)',
+    position:'relative',
+    width:'100%',
+
+    boxSizing:'border-box',
+  }
+////////////
 })
 
 
