@@ -68,7 +68,7 @@ class Navbar extends React.Component{
             >{this.createUsersOptionList()}</Dropdown>
             <NavElement
                 name="Ranking"
-                link="/collectionsPanel/rankings"
+                link="/collectionsPanel/ranking"
             />
             <Dropdown
                 name="Account"
@@ -94,7 +94,7 @@ class Navbar extends React.Component{
                 function = {() => {}}
             />,
             <NavigatingDropdownOption
-                name = "All tournaments"
+                name = "All games"
                 link = "/collectionsPanel/games"
             />]
     }

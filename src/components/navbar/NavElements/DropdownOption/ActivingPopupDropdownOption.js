@@ -14,6 +14,7 @@ export default class NavElementSmall extends React.Component{
 
 const resp = StyleSheet.create({
     option: {
+        cursor:'pointer',
         marginBottom:'1px',
         borderWidth:'1px',
         fontSize:'85%',
