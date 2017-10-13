@@ -7,7 +7,8 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import reducer from './redux/reducers/index'
-
+import {entityPanelModes} from '/main/consts/entityPanelModes'
+import {entityPanelTypes} from '/main/consts/entityPanelTypes'
 
 function configureStore( initialState ) {
     const enhancer = compose(
@@ -20,6 +21,11 @@ function configureStore( initialState ) {
 
 const store = configureStore( {
     search:false,
+    entityPanel: {
+        mode:entityPanelModes.disabled,
+        entityType:entityPanelTypes.none,
+        entityName:""
+    },
     confirmation: {
         header:"",
         message:"",

@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 
 import {serverName} from '../../main/consts/server'
 import {noServerContext} from '../../main/consts/noServerContext'
-import {AddTournamentPanel} from '../editEntitiesPanels/tournament/AddTournamentPanel'
+import {AddTournamentPanel} from '../entityPanel/EntityPanel'
 
 import axios from 'axios';
 

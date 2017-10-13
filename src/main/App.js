@@ -6,7 +6,7 @@ import {Switch, Route} from 'react-router-dom';
 import ConfirmDialog from '../components/commonComponents/confirmDialog/ConfirmDialog';
 import Message from '../components/commonComponents/messageBox/MessageBox';
 import Background from '../resources/splashBig2.jpg';
-import AddTournamentPanel from '../components/editEntitiesPanels/tournament/AddTournamentPanel'
+import EntityPanel from '../components/entityPanel/EntityPanel'
 
 class App extends Component {
 
@@ -19,8 +19,8 @@ class App extends Component {
             <div className = {css(resp.base)}>
                 <Navigator/>
                 <ConfirmDialog/>
-                <AddTournamentPanel/>
-                  <Message/>
+                <EntityPanel/>
+                <Message/>
                       <Switch>
                           <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
                       </Switch>
