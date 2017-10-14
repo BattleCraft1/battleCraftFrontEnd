@@ -2,6 +2,7 @@ import React from 'react';
 
 import TableCell from './../../row/tableCell/TableCell'
 import TableResponsiveHeader from './../../headRow/tableHeader/TableResponsiveHeader'
+import TableRespNeutralHeader from './../../headRow/tableHeader/TableRespNeutralHeader'
 
 import {StyleSheet, css} from 'aphrodite';
 import {colors} from './../../../../../../main/consts/collectionsColors'
@@ -23,6 +24,16 @@ export default class Row extends React.Component{
     render(){
         return (
             <tr className={css(resp.tableRow)}>
+                <TableRespNeutralHeader
+                    headerName = "No."
+                />
+                <TableCell
+                    columnName = "no"
+                    color = {this.getColor("no")}
+                    onClick = {undefined}
+                    content = {this.props.number}
+                />
+
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("name")}
                     sortBy = "name"
@@ -39,7 +50,7 @@ export default class Row extends React.Component{
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("province")}
-                    sortBy = "province.location"
+                    sortBy = "playerProvince.location"
                     sort = {this.props.sortByColumnName.bind(this)}
                     arrow = {this.props.getArrowGlyph("province")}
                     headerName = "province"
@@ -53,7 +64,7 @@ export default class Row extends React.Component{
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("city")}
-                    sortBy = "address.city"
+                    sortBy = "playerAddress.city"
                     sort = {this.props.sortByColumnName.bind(this)}
                     arrow = {this.props.getArrowGlyph("city")}
                     headerName = "city"

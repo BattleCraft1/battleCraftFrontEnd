@@ -8,6 +8,7 @@ import {StyleSheet, css} from 'aphrodite';
 
 import OptionPanel from '../../optionPanel/OptionPanel'
 import LegendPanel from '../../legendPanel/LegendPanel'
+import RankingGameHeader from '../../legendPanel/RankingGameHeader'
 import TournamentRow from './row/tournaments/Row'
 import RankingRowHeader from './headRow/ranking/RowHeader'
 import RankingRow from './row/ranking/Row'
@@ -18,6 +19,9 @@ import GameRow from './row/games/Row'
 import GameRowHeader from './headRow/games/RowHeader'
 import AddTournamentPanel from './panels/AddTournamentPanel'
 
+
+
+import findGameName from '../../../../main/functions/findGameName'
 
 let icons = require('glyphicons');
 
@@ -70,6 +74,7 @@ class CollectionList extends React.Component{
                     React.createElement(
                         rowType,
                         {key : key,
+                        number : key,
                         element : element,
                         isColumnActive : this.isColumnActive.bind(this),
                         sortByColumnName : this.sortByColumnName.bind(this),
@@ -86,6 +91,7 @@ class CollectionList extends React.Component{
         let rows = [];
         let key = 0;
         let rowHeader;
+        let legend = <LegendPanel collectionType = {this.props.collectionType}/>;
 
         if(this.props.page.content!==undefined)
         {
@@ -103,15 +109,15 @@ class CollectionList extends React.Component{
         else if(this.props.collectionType==="ranking")
         {
             rowHeader = RankingRowHeader;
+            legend = <RankingGameHeader gameName = {findGameName(this.props.pageRequest.searchCriteria)} />
         }
         else
             rowHeader = UserRowHeader;
 
         return (
             <div>
-              <AddTournamentPanel/>
-                <div>
-                    <LegendPanel collectionType = {this.props.collectionType}/>
+                <div className="row">
+                    {legend}
                     <table style={styles.table}>
                         <thead>
                         {

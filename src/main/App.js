@@ -6,11 +6,7 @@ import {Switch, Route} from 'react-router-dom';
 import ConfirmDialog from '../components/commonComponents/confirmDialog/ConfirmDialog';
 import Message from '../components/commonComponents/messageBox/MessageBox';
 import Background from '../resources/splashBig2.jpg';
-
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import { ActionCreators } from '../redux/actions/index';
+import EntityPanel from '../components/entityPanel/EntityPanel'
 
 class App extends Component {
 
@@ -23,7 +19,8 @@ class App extends Component {
             <div className = {css(resp.base)}>
                 <Navigator/>
                 <ConfirmDialog/>
-                  <Message/>
+                <EntityPanel/>
+                <Message/>
                       <Switch>
                           <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
                       </Switch>

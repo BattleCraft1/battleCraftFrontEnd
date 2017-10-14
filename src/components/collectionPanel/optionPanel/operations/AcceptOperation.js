@@ -28,7 +28,8 @@ class AcceptOperation extends React.Component {
         let checkedElements = this.props.page.content.filter(element => element.checked===true);
         let elementsToAccept = checkedElements.filter(element =>
             element.status==="NEW" && (element.banned===false || element.banned===null));
-        let elementsWhichCannotBeAccept = checkedElements.filter(element => element.status!=="NEW");
+        let elementsWhichCannotBeAccept =
+            checkedElements.filter(element => element.status!=="NEW");
 
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
@@ -61,7 +62,7 @@ class AcceptOperation extends React.Component {
                         else
                             showSuccessMessage(
                                 {
-                                    messageText: getSuccessMessage(elementsWhichCannotBeAccept)
+                                    messageText: getSuccessMessage(elementsToAccept)
                                 }
                             );
                     })

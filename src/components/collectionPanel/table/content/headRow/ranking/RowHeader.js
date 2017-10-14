@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TableHeader from './../../headRow/tableHeader/TableHeader'
+import TableNeutralHeader from "../tableHeader/TableNeutralHeader";
 
 export default class RowHeader extends React.Component{
     constructor(props) {
@@ -10,6 +11,9 @@ export default class RowHeader extends React.Component{
     render(){
         return (
             <tr>
+                <TableNeutralHeader
+                    content="no"
+                />
                 <TableHeader
                     sortBy = "name"
                     sort = {this.props.sortByColumnName.bind(this)}
@@ -18,14 +22,14 @@ export default class RowHeader extends React.Component{
                     content="name"
                 />
                 <TableHeader
-                    sortBy = "province.location"
+                    sortBy = "playerProvince.location"
                     sort = {this.props.sortByColumnName.bind(this)}
                     isActive = {this.props.isColumnActive("province.location")}
                     arrow = {this.props.getArrowGlyph("province.location")}
                     content="province"
                 />
                 <TableHeader
-                    sortBy = "address.city"
+                    sortBy = "playerAddress.city"
                     sort = {this.props.sortByColumnName.bind(this)}
                     isActive = {this.props.isColumnActive("address.city")}
                     arrow = {this.props.getArrowGlyph("address.city")}

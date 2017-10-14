@@ -13,24 +13,24 @@ import DegradeOperation from './operations/DegradeOperation'
 import SearchOperation from './operations/SearchOperation'
 import {styles} from '../optionPanel/styles'
 
+const mapOfOperations = {
+    "Ban":BanOperation,
+    "Cancel":CancelAcceptOperation,
+    "Delete":DeleteOperation,
+    "Edit":EditOperation,
+    "Unlock":UnclokOperation,
+    "Accept":AcceptOperation,
+    "Advance":AdvanceOperation,
+    "Degrade":DegradeOperation,
+    "Search":SearchOperation,
+};
+
 export default class OptionPanel extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
-        const mapOfOperations = {
-            "Ban":BanOperation,
-            "Cancel":CancelAcceptOperation,
-            "Delete":DeleteOperation,
-            "Edit":EditOperation,
-            "Unlock":UnclokOperation,
-            "Accept":AcceptOperation,
-            "Advance":AdvanceOperation,
-            "Degrade":DegradeOperation,
-            "Search":SearchOperation,
-        };
-
         let operations = [];
         for(let possibleOperation in possibleOperations[this.props.collectionType])
         {
