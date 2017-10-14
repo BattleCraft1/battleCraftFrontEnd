@@ -11,8 +11,8 @@ const styles = {
   legendOption:{
     display:'inline-block',
     position:'relative',
-    paddingTop:'3px',
-    paddingBottom:'3px',
+    paddingTop:'1px',
+    paddingBottom:'1px',
   },
   thead:{
     boxSizing:'border-box',

@@ -9,7 +9,11 @@ import setDate from './../../../../../../main/functions/setDateFunction'
 import {StyleSheet, css} from 'aphrodite';
 import {colors} from './../../../../../../main/consts/collectionsColors'
 
-export default class Row extends React.Component{
+import { ActionCreators } from '../../../../../../redux/actions/index';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+class Row extends React.Component{
     constructor(props) {
         super(props);
     }
@@ -29,12 +33,9 @@ export default class Row extends React.Component{
         }
     }
 
-    addNewElement(){
-        console.log("TO DO ADD");
-    }
-
-    editCheckedElements(){
-        console.log("TO DO EDIT");
+    editEntity(name){
+        console.log(name);
+        this.props.editEntity("tournament",name);
     }
 
     render(){
@@ -54,7 +55,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "name"
                     color = {this.getColor("name", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element.name)}
                     content = {this.props.element.name}
                 />
 
@@ -68,7 +69,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "province"
                     color = {this.getColor("province", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element.name)}
                     content = {this.props.element.province}
                 />
 
@@ -82,7 +83,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "city"
                     color = {this.getColor("city", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element.name)}
                     content = {this.props.element.city}
                 />
 
@@ -96,7 +97,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "game"
                     color = {this.getColor("game", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element.name)}
                     content = {this.props.element.game}
                 />
 
@@ -110,7 +111,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "players"
                     color = {this.getColor("freeSlots", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element.name)}
                     content = {this.props.element.playersNumber+"/"+this.props.element.maxPlayers}
                 />
 
@@ -124,7 +125,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "dateOfStart"
                     color = {this.getColor("dateOfStart", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element.name)}
                     content = {setDate(this.props.element.dateOfStart)}
                 />
 
@@ -138,7 +139,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "dateOfEnd"
                     color = {this.getColor("dateOfEnd", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element.name)}
                     content = {setDate(this.props.element.dateOfEnd)}
                 />
             </tr>
@@ -146,8 +147,22 @@ export default class Row extends React.Component{
     }
 }
 
+
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
+
+function mapStateToProps( state ) {
+    return {
+        entityPanel:state.entityPanel
+    };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( Row );
+
 const resp = StyleSheet.create({
     tableRow:{
+        cursor:'pointer',
       overflow:'hidden',
       textOverflow:'elipsis',
         '@media (max-width: 600px)': {

@@ -10,8 +10,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {serverName} from '../../main/consts/server'
-import {noServerContext} from '../../main/consts/noServerContext'
-import {AddTournamentPanel} from '../entityPanel/EntityPanel'
 
 import axios from 'axios';
 
@@ -70,15 +68,19 @@ class CollectionPanel extends React.Component{
     }
 
     async getPageRequest(collectionType){
-
-
-              this.props.setPage(noServerContext[collectionType]);
+        console.log(this.props.pageRequest);
+        await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
+            .then(res => {
+                this.props.setPage(res.data);
 
                 let pageRequest = this.props.pageRequest;
                 pageRequest.pageRequest.page=this.props.page.number;
                 pageRequest.pageRequest.size=this.props.page.numberOfElements;
                 this.props.setPageRequest(pageRequest);
-
+            })
+            .catch(error => {
+                this.props.showNetworkErrorMessage(error);
+            });
     }
 
     render(){

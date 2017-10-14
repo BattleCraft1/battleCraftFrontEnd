@@ -7,6 +7,13 @@ import BasicDataTab from './Tabs/BasicDataTab';
 import OrganizersTab from './Tabs/OrganizersTab';
 import ParticipantsTab from './Tabs/ParticipantsTab';
 
+<<<<<<< HEAD
+=======
+import { ActionCreators } from '../../../redux/actions/index';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+>>>>>>> master
 import Navigation from './Navigation/Navigation'
 
 import {resp, styles} from '../styles'
@@ -18,7 +25,11 @@ const tabsMap = {
     "participants":ParticipantsTab
 };
 
+<<<<<<< HEAD
 export default class Panel extends React.Component{
+=======
+class Panel extends React.Component{
+>>>>>>> master
     constructor(props) {
         super(props);
         this.state = {
@@ -38,11 +49,19 @@ export default class Panel extends React.Component{
         return React.createElement(
             tabsMap[this.state.activeTab],
             {
+<<<<<<< HEAD
                 mode:this.props.entityPanel.mode
+=======
+                mode:this.props.mode
+>>>>>>> master
             },
             null)
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     render(){
         let content = this.createContent();
 
@@ -54,9 +73,29 @@ export default class Panel extends React.Component{
                 <div className={css(resp.content)}>
                     {content}
                 </div>
+<<<<<<< HEAD
                 <Button text={"Cancel"}/>
                 <Button text={"Save"}/>
+=======
+                <Button text={"Cancel"} action={() => this.props.hideEntityPanel()}/>
+                <Button text={"Save"} action={() => {}}/>
+>>>>>>> master
             </div>
         )
     }
 }
+<<<<<<< HEAD
+=======
+
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
+
+function mapStateToProps( state ) {
+    return {
+        entityPanel:state.entityPanel
+    };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( Panel );
+>>>>>>> master

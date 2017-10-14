@@ -72,7 +72,6 @@ class MessageBox extends React.Component {
         }
         return(colorsObject)
     }
-//this.props.message.messageType
 
     render(){
         return (

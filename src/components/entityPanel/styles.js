@@ -45,6 +45,7 @@ const styles = {
     marginTop:'5px',
   },
   optionLabel:{
+    boxSizing:'border-box',
     fontWeight:'700',
     textShadow:'rgba(0, 0, 0, 0.3) -2px -2px 0px',
     paddingTop:'5px',
@@ -55,20 +56,21 @@ const styles = {
     borderRadius:'2px 2px 0 0',
     border:'0px',
     backgroundImage: 'linear-gradient(#a48c6d, #65462a, #463716)',
-    color:'rgb(223, 214, 197)'
+    color:'rgb(223, 214, 197)',
+    border:'1px black solid',
+    borderTopRightRadius:'5px',
+    borderTopLeftRadius:'5px',
   },
   optionInput:{
     boxSizing:'border-box',
-    //paddingTop:'2%',
-    //paddingBottom:'2%',
     width:'100%',
     minHeight:'30px',
     borderRadius:'0 0 2px 2px',
     border:'0px',
+    border:'1px black solid',
+    borderTop:'0px',
     background:'#e0d9d0',
-    //padding:'5px',
     outline:'0',
-    //marginBottom:'5px',
     textAlign:'center'
   },
   textArea:{
@@ -80,11 +82,11 @@ const styles = {
   },
   button:{
     width:'20%',
-    float:'right',
     marginTop:'1%',
     marginRight:'1%',
     paddingTop:'8px',
     paddingBottom:'8px',
+    float:'right',
     border:'1px solid',
     borderTopColor: '#E0BA51',
     borderBottomColor: '#E0BA51',
@@ -95,6 +97,22 @@ const styles = {
     color:'white',
     outline:'0',
     borderRadius:'2px',
+  },
+  tableButton:{
+    boxSizing:'border-box',
+    width:'100%',
+    paddingTop:'6px',
+    paddingBottom:'6px',
+    border:'1px solid black',
+    backgroundImage: 'linear-gradient(#d55151, #55130f, #4b1310)',
+    boxShadow:'inset 0 0 7px #9c7239',
+    color:'rgb(227, 228, 205)',
+    outline:'0',
+    borderBottomRightRadius:'4px',
+    borderTopRightRadius:'4px',
+    backgroundImage: 'linear-gradient( #dda553, #4b2f0d, #6f4d13 )',
+    textAlign:'center',
+    fontWeight:'600',
   },
   goldAndBrownTheme:{
     border:'2px solid',
@@ -123,6 +141,11 @@ const styles = {
     textAlign:'center',
     paddingTop:'4px',
     paddingBottom:'4px',
+    borderTopRightRadius:'5px',
+    borderTopLeftRadius:'5px',
+    fontWeight:'600',
+    textShadow:'rgba(0, 0, 0, 0.6) 2px 2px 3px',
+    color:'rgb(228, 226, 223)',
   },
   tabActive:{
     boxShadow:'none',
@@ -132,11 +155,41 @@ const styles = {
   tabNotActive:{
     boxShadow:'inset 0 -2px 8px rgb(88, 72, 55)',
     background:'rgb(125, 100, 73)',
+    borderTop:'2px solid #b8a678'
   },
   inputBlock:{
     boxShadow: '-12px 0 15px -4px rgb(99, 89, 66), 12px 0 15px -4px rgb(99, 89, 66)',
     marginBottom:'5px',
-  }
+  },
+  table:{
+    boxSizing:'border-box',
+      position: 'relative',
+      width: '100%',
+      marginBottom: '4px',
+      borderCollapse: 'separate',
+      borderSpacing: '0px',
+      marginBottom:'0px',
+  },
+  tableHeaderCell:{
+    display:'',
+    border:'1px black solid',
+    borderTopRightRadius:'5px',
+    borderTopLeftRadius:'5px',
+  },
+  tableCell:{
+    backgroundImage: 'linear-gradient(rgb(255, 255, 255), rgb(220, 220, 220), rgb(200, 200, 200))',
+    border:'1px black solid',
+//    borderTop:'0px',
+    paddingTop:'6px',
+    paddingBottom:'6px',
+    paddingLeft:'4px',
+  },
+  scrollPanel:{
+    boxSizing:'border-box',
+    	overflowY:'scroll',
+      maxHeight:'200px',
+      width:'100%',
+  },
 }
 
 const resp = StyleSheet.create({
@@ -158,6 +211,12 @@ const resp = StyleSheet.create({
         backgroundImage: 'linear-gradient( #4b110d, #6f1913, #dd5353 )',
       },
   },
+  tableButton:{
+    ':active':{
+        color:'lightGrey',
+        backgroundImage: 'linear-gradient( #4b2f0d, #6f4d13, #dda553 )',
+      },
+  },
   halfSize:{
     width:'49.75%',
     display:'inline-block',
@@ -170,10 +229,8 @@ const resp = StyleSheet.create({
     width:'98%',
     marginLeft:'1%',
     marginRight:'1%',
-    //marginBottom:'2px',
     display:'inline-block',
   },
-/////////////
   content:{
     boxSizing:'border-box',
     paddingLeft:'8%',
@@ -187,10 +244,11 @@ const resp = StyleSheet.create({
     background:'rgb(164, 129, 91)',
     position:'relative',
     width:'100%',
-
     boxSizing:'border-box',
-  }
-////////////
+    borderTopLeftRadius:'9px',
+    borderTopRightRadius:'9px',
+    borderTop:'0px',
+  },
 })
 
 

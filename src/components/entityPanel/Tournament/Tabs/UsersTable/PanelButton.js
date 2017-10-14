@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite';
-import {resp, styles} from '../styles'
+import {resp, styles} from '../../../styles'
 
 export default class PanelButton extends React.Component{
     constructor(props) {

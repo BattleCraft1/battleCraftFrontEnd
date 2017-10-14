@@ -4,7 +4,7 @@ import {StyleSheet, css} from 'aphrodite';
 export default class TableNeutralHeader extends React.Component{
     render(){
         return(
-            <th style={Object.assign({}, styles.thead)}
+            <th style={Object.assign({}, styles.thead,{width:this.props.size>0?this.props.size:60})}
                 className = {css(resp.theadElement)}>
                 {this.props.content}</th>
         )
@@ -37,9 +37,7 @@ const resp = StyleSheet.create({
         boxShadow:'inset 0 2px 2px #9c7239',
         fontFamily:'arial, helvetica, sans-serif',
         textShadow:'-1px -1px 0 rgba(0,0,0,0.3)',
-        padingLeft:'0',
-        paddingRight:'0',
-        width:'60px',
+        pading:'0',
         textAlign: 'center',
         '@media (max-width: 600px)': {
             display:'none',

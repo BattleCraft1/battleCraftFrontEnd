@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite';
-import {resp, styles} from '../styles'
-import TableRow from './tableRow'
-import '../scrollbar.css'
+import {resp, styles} from '../../../styles'
+import TableRow from './UsersTableRow'
+import './scrollbar.css'
 
 export default class Table extends React.Component{
     constructor(props) {

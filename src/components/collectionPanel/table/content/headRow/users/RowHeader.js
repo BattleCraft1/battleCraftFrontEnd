@@ -16,7 +16,8 @@ export default class RowHeader extends React.Component{
             <tr className={css(resp.rowContent)}>
                 <HeaderCheckbox/>
                 <TableNeutralHeader
-                    content="avatar"
+                    content=""
+                    size={40}
                 />
                 <TableHeader
                     sortBy = "name"

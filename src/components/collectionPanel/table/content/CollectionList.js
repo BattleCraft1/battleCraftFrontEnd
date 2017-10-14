@@ -17,8 +17,8 @@ import TournamentRowHeader from './headRow/tournaments/RowHeader'
 import UserRowHeader from './headRow/users/RowHeader'
 import GameRow from './row/games/Row'
 import GameRowHeader from './headRow/games/RowHeader'
-import AddTournamentPanel from './panels/AddTournamentPanel'
 
+import findGameName from '../../../../main/functions/findGameName'
 
 
 import findGameName from '../../../../main/functions/findGameName'

@@ -8,10 +8,13 @@ export default class TableAvatarCell extends React.Component{
     render(){
         return(
           <div className={css(resp.avatarContainer)}>
-            <td className = {css(resp.rowContent)+" "+css(resp.defaultAvatar)}
+            <td className = {css(resp.rowContent)}
                 style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.props.color})}
                 onClick={() => {this.props.onClick()}}>
-                <img src={serverName+`/get/user/`+this.props.name+`/avatar`} alt="" className={css(resp.avatar)}/>
+                <img className={css(resp.avatar)}
+                    src={serverName+`/get/user/`+this.props.name+`/avatar`}
+                     onerror='this.onerror = null; this.src="../../../../../../resources/defaultAvatar.jpg"'
+                     alt="avatar"/>
             </td>
           </div>
         )
@@ -36,8 +39,6 @@ const styles = {
         borderRadius: '0',
         background: '#c6a57d',
         border: '2px solid',
-        padding: '8px',
-        paddingLeft: '8px',
         textAlign: 'none',
         backgroundImage: '',
         WebkitBorderImage: '',
@@ -46,8 +47,6 @@ const styles = {
         borderBottomColor: '#886e4b',
         borderLeftColor: '#dfd19e',
         borderRightColor: '#886e4b',
-        paddingTop:'10px',
-        paddingBottom:'10px',
     },
 };
 
@@ -64,19 +63,14 @@ const resp = StyleSheet.create({
             borderRadius:'0'
         },
         '@media (max-width: 1024px)': {
-            fontSize:'0.8em',
-            paddingLeft:'2px',
-            paddingRight:'2px',
+            fontSize:'1em'
         },
     },
     avatar:{
-    },
-    defaultAvatar:{
-      width:'60px',
-      height:'60px',
+      width:'40px',
+      height:'40px',
       position:'relative',
       borderRadius:'0',
-      background: "url("+Background+") center center",
       backgroundSize:'cover',
       display:'block',
       '@media (max-width: 599px)': {
@@ -88,7 +82,6 @@ const resp = StyleSheet.create({
     },
     avatarContainer:{
       width:'100%',
-      height:'60px',
       position:'relative',
       textAlign:'center',
       '@media (max-width: 599px)': {
