@@ -78,7 +78,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "name"
                     color = {this.getColor("name", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     content = {this.props.element.name}
                 />
 
@@ -92,7 +92,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "tournamentsNumber"
                     color = {this.getColor("tournamentsNumber", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     content = {this.props.element.tournamentsNumber}
                 />
 
@@ -106,7 +106,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "creatorName"
                     color = {this.getColor("creatorName", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     content = {this.props.element.creatorName}
                 />
 
@@ -120,7 +120,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "dateOfCreation"
                     color = {this.getColor("dateOfCreation", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     content = {setDate(this.props.element.dateOfCreation)}
                 />
 
@@ -130,7 +130,7 @@ class Row extends React.Component{
                 <TableIconCell
                     columnName = "rules"
                     color = {this.getColor("rules", this.props.element)}
-                    onClick = {() => this.downloadGameRules(this.props.element.name)}
+                    edit = {() => this.downloadGameRules(this.props.element.name)}
                     icon = {icons.attachment}
                 />
             </tr>
