@@ -23,8 +23,8 @@ export default class LegendPanel extends React.Component{
         }
         return (
             <div style = {styles.legend}>
-                <th style={Object.assign({}, styles.thead, {display:'block', width:'100%', textAlign:'center', padding:'3px', boxShadow:'inset 0 2px 2px #9c7239'})} >
-                    Legend</th>
+                <div style={Object.assign({}, styles.thead, {display:'block', width:'100%', textAlign:'center', padding:'3px', boxShadow:'inset 0 2px 2px #9c7239'})} >
+                    Legend</div>
                 {legendFields}
             </div>
         );

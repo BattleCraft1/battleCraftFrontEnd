@@ -79,10 +79,12 @@ class Navbar extends React.Component{
 
     createTournamentOptionList(){
         return [<ActivingPopupDropdownOption
+                key="1"
                 name = "Add tournament"
                 function = {() => {this.props.addEntity(entityPanelTypes.tournament)}}
             />,
             <NavigatingDropdownOption
+                key="2"
                 name = "All tournaments"
                 link = "/collectionsPanel/tournaments"
             />]
@@ -90,10 +92,12 @@ class Navbar extends React.Component{
 
     createGamesOptionList(){
         return [<ActivingPopupDropdownOption
+                key="1"
                 name = "Add game"
                 function = {() => {}}
             />,
             <NavigatingDropdownOption
+                key="2"
                 name = "All games"
                 link = "/collectionsPanel/games"
             />]
