@@ -10,6 +10,7 @@ import findGameName from '../../../../main/functions/findGameName'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../../../redux/actions';
+import {provinces} from "../../../../main/consts/provinces";
 
 class FormInputs extends React.Component{
     constructor(props) {
@@ -34,14 +35,13 @@ class FormInputs extends React.Component{
 
     async componentWillReceiveProps(nextProps) {
         if (nextProps.enums!==undefined && nextProps.enums !== this.props.enums) {
-            this.setState({provincesNames:nextProps.enums.provincesNames});
             this.setState({tournamentsGames:nextProps.enums.gamesNames});
             this.setDefaultGameSearchCriteria();
         }
     }
 
     componentDidMount(){
-        this.setState({provincesNames:this.props.enums.provincesNames});
+        this.setState({provincesNames:provinces});
         this.setState({tournamentsGames:this.props.enums.gamesNames});
         this.setDefaultGameSearchCriteria();
     }
@@ -118,7 +118,7 @@ class FormInputs extends React.Component{
                     <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
                         <SelectInput
                             name = "Province"
-                            keys = {["tour","tournament","address", "province","location"]}
+                            keys = {["tour","tournament","address", "province"]}
                             operation = ":"
                             indexOfSearchFields = "province"
                             options = {provincesOptions}

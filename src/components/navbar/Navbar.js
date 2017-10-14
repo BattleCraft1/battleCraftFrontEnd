@@ -1,116 +1,155 @@
 import React from 'react';
-import Option from './NavElement';
 import {StyleSheet, css} from 'aphrodite';
-import Menu from './Menu';
-import AccountDropdown from './AccountDropdown'
-import AccountOption from './AccountOption'
+import NavElement from './NavElements/NavElement';
+import Dropdown from './NavElements/Dropdown';
+import ActivingPopupDropdownOption from './NavElements/DropdownOption/ActivingPopupDropdownOption';
+import NavigatingDropdownOption from './NavElements/DropdownOption/NavigatingDropdownOption';
+import ResponsiveMenuButton from './ResponsiveMenuButton'
 
-var icons = require('glyphicons');
+import { ActionCreators } from '../../redux/actions/index';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-export default class Navigator extends React.Component{
+import {entityPanelTypes} from '../../main/consts/entityPanelTypes'
 
-  constructor(props) {
-      super(props);
-      this.state = {
-        isToggleOn: true,
-        accountListVisible: true,
-        width: window.innerWidth,
-        height: window.innerHeight,
-      };
+class Navbar extends React.Component{
+    constructor(props) {
+        super(props);
 
-      // This binding is necessary to make `this` work in the callback
-      this.handleClick = this.handleClick.bind(this);
-      this.handleAccountList = this.handleAccountList.bind(this);
-      this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    }
-
-    updateWindowDimensions(){
-      this.setState({width: window.innerWidth, height: window.innerHeight});
+        this.state = {
+            responsive:false,
+            isMenuToggle:true
+        }
     }
 
     componentDidMount(){
-      this.updateWindowDimensions();
-      window.addEventListener('resize', this.updateWindowDimensions);
+        this.checkViewDimensions();
+        window.addEventListener('resize', this.checkViewDimensions.bind(this));
     }
 
     componentWillUnmount(){
-      this.updateWindowDimensions();
-      window.addEventListener('resize', this.updateWindowDimensions);
+        window.removeEventListener('resize', this.checkViewDimensions.bind(this));
     }
 
-    handleClick(event) {
-      this.setState(prevState => ({
-        isToggleOn: !prevState.isToggleOn
-      }));
-    }
-    handleAccountList(event) {
-      this.setState(prevState => ({
-        accountListVisible: !prevState.accountListVisible
-      }));
+    checkViewDimensions(){
+        if(window.innerWidth < 800){
+            this.setState({responsive:true});
+            this.setState({isMenuToggle:false});
+        }
+        else{
+            this.setState({responsive:false});
+            this.setState({isMenuToggle:true});
+        }
     }
 
+    createResponsiveMenuButton(){
+        if(this.state.responsive)
+            return <ResponsiveMenuButton toggleResponsiveList = {this.toggleResponsiveList.bind(this)}/>;
+        else
+            return <div/>
+    }
+
+    toggleResponsiveList(){
+        let responsiveMenuIsToggle = this.state.isMenuToggle;
+        this.setState({isMenuToggle:!responsiveMenuIsToggle});
+    }
+
+    createOptions(){
+        return <div>
+            <Dropdown
+                name="Tournaments"
+            >{this.createTournamentOptionList()}</Dropdown>
+            <Dropdown
+                name="Games"
+            >{this.createGamesOptionList()}</Dropdown>
+            <Dropdown
+                name="Users"
+                list={this.createUsersOptionList()}
+            >{this.createUsersOptionList()}</Dropdown>
+            <NavElement
+                name="Ranking"
+                link="/collectionsPanel/ranking"
+            />
+            <Dropdown
+                name="Account"
+                list={this.createAccountOptionList()}
+            >{this.createAccountOptionList()}</Dropdown>
+        </div>
+    }
+
+    createTournamentOptionList(){
+        return [<ActivingPopupDropdownOption
+                key="1"
+                name = "Add tournament"
+                function = {() => {this.props.addEntity(entityPanelTypes.tournament)}}
+            />,
+            <NavigatingDropdownOption
+                key="2"
+                name = "All tournaments"
+                link = "/collectionsPanel/tournaments"
+            />]
+    }
+
+    createGamesOptionList(){
+        return [<ActivingPopupDropdownOption
+                key="1"
+                name = "Add game"
+                function = {() => {}}
+            />,
+            <NavigatingDropdownOption
+                key="2"
+                name = "All games"
+                link = "/collectionsPanel/games"
+            />]
+    }
+
+    createUsersOptionList(){
+        return <NavigatingDropdownOption
+                name = "All users"
+                link = "/collectionsPanel/users"
+            />
+    }
+
+    createAccountOptionList(){
+        return <NavigatingDropdownOption
+                name = "Mock"
+                link = "mock"
+            />
+    }
 
     render(){
-
-      var accountSimbol
-      if(this.state.accountListVisible){
-          accountSimbol = icons.arrowTriD
-      }
-      else{
-        accountSimbol = icons.arrowTriU
-      }
-        return (
+        let responsiveMenuButton = this.createResponsiveMenuButton();
+        let options = this.createOptions();
+        return(
             <div className={css(resp.navbar)}>
-             <Menu toggleList = {this.handleClick.bind(this)}>Menu <span className={css(resp.hamburger)}>{icons.menu}</span></Menu>
-             <div style ={(this.state.width < 600 && this.state.isToggleOn) ? {display:'none'}:{display:'block'}}>
-                <Option link="/collectionsPanel/tournaments">Tournaments</Option>
-                <Option link="/collectionsPanel/games">Games</Option>
-                <Option link="/collectionsPanel/ranking">Ranking</Option>
-                <Option link="/collectionsPanel/users">Users</Option>
-                <AccountDropdown toggleAccountList = {this.handleAccountList.bind(this)}>Account <span className={css(resp.arrow)}>{accountSimbol}</span></AccountDropdown>
-
-                  <div style ={this.state.accountListVisible ? {display:'none'}:{display:'block'}} className={css(resp.account)}>
-                  <div style = {{position:'relative', display:'inline-block', width:'100%'}}>
-                  <AccountOption link="#">Link1</AccountOption>
-                  <AccountOption link="#">Link2</AccountOption>
-                  </div>
-                  </div>
-              </div>
-          </div>
-
-        );
+                {responsiveMenuButton}
+                <div >
+                    {this.state.isMenuToggle && options}
+                </div>
+            </div>
+        )
     }
-};
+}
+
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
+
+function mapStateToProps( state ) {
+    return {
+        entityPanel:state.entityPanel
+    };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( Navbar );
+
 
 const resp = StyleSheet.create({
-
-    account:{
-      width:'100%',
-      position:'relative',
-      '@media (min-width: 599px)': {
-          position:'absolute',
-          width:'20%',
-          marginLeft:'80%',
-        }
-    },
     navbar:{
-      position:'relative',
-      marginBottom:'20px',
-      width:'70%',
-      marginLeft:'15%',
-      background:'none',
-    },
-    hamburger:{
-      float:'right',
-      margin:'0',
-      marginRight:'5%',
-    },
-    arrow:{
-      position:'absolute',
-      fontSize:'70%',
-      float:'right',
-      margin:'0',
-      marginLeft:'0.5em',
-      marginTop:'3px',
-    },
+        position:'relative',
+        marginBottom:'20px',
+        width:'70%',
+        marginLeft:'15%',
+        background:'none',
+    }
 });

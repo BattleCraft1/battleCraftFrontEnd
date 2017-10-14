@@ -5,9 +5,8 @@ import {StyleSheet, css} from 'aphrodite';
 export default class TableCell extends React.Component{
     render(){
         return(
-            <td className = {css(resp.rowContent)}
-                style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.props.color})}
-                onClick={() => {this.props.onClick()}}>
+            <td className = {css(resp.rowContent)} onClick={this.props.edit.bind(this)}
+                style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.props.color})}>
                 <TextOutput text={this.props.content} limit={17}/></td>
         )
     }
@@ -19,7 +18,6 @@ const styles = {
         borderRadius: '4px 4px 0 0',
         border: '1px solid',
         color: 'white',
-        //
         borderTopColor: '#E0BA51',
         borderBottomColor: '#E0BA51',
         borderRightColor: '#805D2C',
@@ -45,17 +43,27 @@ const styles = {
         borderBottomColor: '#886e4b',
         borderLeftColor: '#dfd19e',
         borderRightColor: '#886e4b',
+        paddingTop:'10px',
+        paddingBottom:'10px',
     },
 };
 
 const resp = StyleSheet.create({
     rowContent:{
+      overflow:'hidden',
+      textOverflow:'elipsis',
         position:'relative',
         textAlign:'center',
+        boxSizing:'border-box',
         '@media (max-width: 599px)': {
             width:'70%',
             display: 'inline-block',
             borderRadius:'0'
-        }
+        },
+        '@media (max-width: 1024px)': {
+            fontSize:'0.8em',
+            paddingLeft:'2px',
+            paddingRight:'2px',
+        },
     },
 });

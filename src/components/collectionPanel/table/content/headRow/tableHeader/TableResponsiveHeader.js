@@ -46,6 +46,7 @@ const styles = {
 
 const resp = StyleSheet.create({
     rowContent:{
+      boxSizing:'border-box',
         position:'relative',
         textAlign:'center',
         '@media (max-width: 599px)': {

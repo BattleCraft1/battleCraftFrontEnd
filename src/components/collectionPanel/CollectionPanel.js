@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {serverName} from '../../main/consts/server'
-import {noServerContext} from '../../main/consts/noServerContext'
 
 import axios from 'axios';
 

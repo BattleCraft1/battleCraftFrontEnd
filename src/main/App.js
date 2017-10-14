@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite';
-import Navigator from '../components/navbar/Navbar'
+import Navbar from '../components/navbar/Navbar'
 import CollectionPanel from '../components/collectionPanel/CollectionPanel'
 import {Switch, Route} from 'react-router-dom';
 import ConfirmDialog from '../components/commonComponents/confirmDialog/ConfirmDialog';
 import Message from '../components/commonComponents/messageBox/MessageBox';
 import Background from '../resources/splashBig2.jpg';
-
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import { ActionCreators } from '../redux/actions/index';
+import EntityPanel from '../components/entityPanel/EntityPanel'
 
 class App extends Component {
 
@@ -21,16 +17,13 @@ class App extends Component {
           <div className={css(resp.backgroundImage)}></div>
           <div className={css(resp.backgroundConent)}></div>
             <div className = {css(resp.base)}>
-                <Navigator/>
+                <Navbar/>
                 <ConfirmDialog/>
-                <div className="container">
-                    <div className="row">
-                        <Message/>
-                            <Switch>
-                                <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
-                            </Switch>
-                    </div>
-                </div>
+                <EntityPanel/>
+                <Message/>
+                      <Switch>
+                          <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
+                      </Switch>
             </div>
           </div>
         );

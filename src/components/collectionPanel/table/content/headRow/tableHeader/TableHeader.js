@@ -46,6 +46,7 @@ const styles = {
 
 const resp = StyleSheet.create({
     theadElement:{
+        boxSizing:'border-box',
         boxShadow:'inset 0 2px 2px #9c7239',
         fontFamily:'arial, helvetica, sans-serif',
         textShadow:'-1px -1px 0 rgba(0,0,0,0.3)',

@@ -4,7 +4,7 @@ import {StyleSheet, css} from 'aphrodite';
 export default class TableNeutralHeader extends React.Component{
     render(){
         return(
-            <th style={Object.assign({}, styles.thead)}
+            <th style={Object.assign({}, styles.thead,{width:this.props.size>0?this.props.size:60})}
                 className = {css(resp.theadElement)}>
                 {this.props.content}</th>
         )
@@ -13,6 +13,7 @@ export default class TableNeutralHeader extends React.Component{
 
 const styles = {
     thead: {
+      boxSizing:'border-box',
         borderCollapse: 'separate',
         borderRadius: '4px 4px 0 0',
         border: '1px solid',
@@ -36,28 +37,10 @@ const resp = StyleSheet.create({
         boxShadow:'inset 0 2px 2px #9c7239',
         fontFamily:'arial, helvetica, sans-serif',
         textShadow:'-1px -1px 0 rgba(0,0,0,0.3)',
-        padding: '8px',
-        paddingLeft:'4px',
-        paddingRight:'4px',
+        pading:'0',
         textAlign: 'center',
-
         '@media (max-width: 600px)': {
             display:'none',
         },
-
-        ':hover':{
-            borderTopColor: 'rgb(249, 249, 249)',
-            borderBottomColor: 'rgb(204, 126, 69)',
-        },
-        ':focus':{
-            borderTopColor: 'rgb(249, 249, 249)',
-            borderBottomColor: 'rgb(204, 161, 130)',
-        },
-        ':active':{
-            color:'lightGrey',
-            borderTopColor: 'rgb(204, 126, 69)',
-            borderBottomColor: 'rgb(249, 249, 249)',
-        },
-
     },
 });
