@@ -52,7 +52,7 @@ export default class Row extends React.Component{
                 <TableAvatarCell
                     columnName = "avatar"
                     color = {this.getColor("avatar", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     name = {this.props.element.name}
                 />
 
@@ -66,7 +66,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "name"
                     color = {this.getColor("name", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     content = {this.props.element.name}
                 />
 
@@ -80,7 +80,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "firstname"
                     color = {this.getColor("firstname", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     content = {this.props.element.firstname}
                 />
 
@@ -94,7 +94,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "lastname"
                     color = {this.getColor("lastname", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     content = {this.props.element.lastname}
                 />
 
@@ -108,7 +108,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "email"
                     color = {this.getColor("email", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     content = {this.props.element.email}
                 />
 
@@ -122,7 +122,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "province"
                     color = {this.getColor("province", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     content = {this.props.element.province}
                 />
 
@@ -136,7 +136,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "city"
                     color = {this.getColor("city", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     content = {this.props.element.city}
                 />
 
@@ -150,7 +150,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "phoneNumber"
                     color = {this.getColor("phoneNumber", this.props.element)}
-                    onClick = {this.editCheckedElements.bind(this)}
+                    edit = {this.editCheckedElements.bind(this)}
                     content = {this.props.element.phoneNumber}
                 />
             </tr>

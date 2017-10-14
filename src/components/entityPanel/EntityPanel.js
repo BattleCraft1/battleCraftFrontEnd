@@ -11,6 +11,27 @@ import { connect } from 'react-redux';
 class EntityPanel extends React.Component{
     constructor(props) {
         super(props);
+
+        this.setEntityPanelRef = this.setEntityPanelRef.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    handleClickOutside(event) {
+        if (this.entityPanelRef && !this.entityPanelRef.contains(event.target)) {
+            this.props.hideEntityPanel();
+        }
+    }
+
+    setEntityPanelRef(node) {
+        this.entityPanelRef = node;
     }
 
     createPanel(){
@@ -32,7 +53,7 @@ class EntityPanel extends React.Component{
         return(
             this.props.entityPanel.mode!=='disabled' &&
             <div style = {Object.assign({}, styles.background, {display: 'block'})}>
-                <div style = {Object.assign({}, styles.goldAndBrownTheme, styles.panelContainer)}
+                <div ref={this.setEntityPanelRef} style = {Object.assign({}, styles.goldAndBrownTheme, styles.panelContainer)}
                      className = {css(resp.popupContent)}>
                     {panel}
                 </div>

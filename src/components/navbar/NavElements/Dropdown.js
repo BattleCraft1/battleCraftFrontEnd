@@ -5,12 +5,34 @@ import styles from '../NavStyle.css.js'
 let icons = require('glyphicons');
 
 
-export default class NavElement extends React.Component{
+export default class Dropdown extends React.Component{
     constructor(props) {
         super(props);
+
         this.state = {
             listIsShow:false
         };
+
+        this.setDropdownRef = this.setDropdownRef.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    handleClickOutside(event) {
+        if (this.dropdownRef && !this.dropdownRef.contains(event.target)) {
+            this.setState({listIsShow:false});
+        }
+    }
+
+    setDropdownRef(node) {
+        this.dropdownRef = node;
     }
 
     toggleList(){
@@ -33,7 +55,7 @@ export default class NavElement extends React.Component{
         </div>;
 
         return (
-            <div className={css(resp.container)}>
+            <div ref={this.setDropdownRef} className={css(resp.container)}>
                 <div onClick={this.toggleList.bind(this)} style = {styles.button} className={css(resp.button)}>
                     {this.props.name}{this.state.listIsShow?icons.arrowTriD:icons.arrowTriU}
                 </div>

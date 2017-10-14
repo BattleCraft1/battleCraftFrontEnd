@@ -57,20 +57,25 @@ class Navbar extends React.Component{
     createOptions(){
         return <div>
             <Dropdown
+                key="Tournaments"
                 name="Tournaments"
             >{this.createTournamentOptionList()}</Dropdown>
             <Dropdown
+                key="Games"
                 name="Games"
             >{this.createGamesOptionList()}</Dropdown>
             <Dropdown
+                key="Users"
                 name="Users"
                 list={this.createUsersOptionList()}
             >{this.createUsersOptionList()}</Dropdown>
             <NavElement
+                key="Ranking"
                 name="Ranking"
                 link="/collectionsPanel/ranking"
             />
             <Dropdown
+                key="Account"
                 name="Account"
                 list={this.createAccountOptionList()}
             >{this.createAccountOptionList()}</Dropdown>

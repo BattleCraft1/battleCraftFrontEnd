@@ -44,7 +44,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "name"
                     color = {this.getColor("name")}
-                    onClick = {undefined}
+                    edit = {undefined}
                     content = {this.props.element.name}
                 />
 
@@ -58,7 +58,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "province"
                     color = {this.getColor("province")}
-                    onClick = {undefined}
+                    edit = {undefined}
                     content = {this.props.element.province}
                 />
 
@@ -72,7 +72,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "city"
                     color = {this.getColor("city")}
-                    onClick = {undefined}
+                    edit = {undefined}
                     content = {this.props.element.city}
                 />
 
@@ -86,7 +86,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "numberOfTournaments"
                     color = {this.getColor("numberOfTournaments")}
-                    onClick = {undefined}
+                    edit = {undefined}
                     content = {this.props.element.numberOfTournaments}
                 />
 
@@ -100,7 +100,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "numberOfBattles"
                     color = {this.getColor("numberOfBattles")}
-                    onClick = {undefined}
+                    edit = {undefined}
                     content = {this.props.element.numberOfBattles}
                 />
 
@@ -114,7 +114,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "points"
                     color = {this.getColor("points")}
-                    onClick = {undefined}
+                    edit = {undefined}
                     content = {this.props.element.points}
                 />
             </tr>
