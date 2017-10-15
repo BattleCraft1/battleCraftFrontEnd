@@ -43,7 +43,8 @@ export default class Row extends React.Component{
           <tr className={css(resp.tableRow)}>
 
                 <RowUserChecbox
-                value = {this.props.element.name}
+                    elementName = {this.props.element.name}
+                    checked = {this.props.element.checked}
                 />
 
                 <TableRespNeutralHeader
@@ -114,7 +115,7 @@ export default class Row extends React.Component{
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("province")}
-                    sortBy = "province.location"
+                    sortBy = "province"
                     sort = {this.props.sortByColumnName.bind(this)}
                     arrow = {() => this.props.getArrowGlyph("province")}
                     headerName = "province"

@@ -1,15 +1,18 @@
-import { ActionCreators } from '../../redux/actions';
-
 import React from 'react';
+
 import {StyleSheet, css} from 'aphrodite';
+
 import CollectionList from './table/content/CollectionList';
 import PagePanel from './pagePanel/PagePanel';
 import SearchPanel from './searchPanel/SearchPanel';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../redux/actions';
 
 import {serverName} from '../../main/consts/server'
+
+import {possibleOperationsForCollections} from "../../main/consts/possibleOperationsForCollections";
 
 import axios from 'axios';
 
@@ -29,6 +32,7 @@ class CollectionPanel extends React.Component{
             this.props.setPageRequest(pageRequest);
         }
         this.setState({collectionType: this.props.match.params.collectionType});
+        this.setPossibleOperations(this.props.match.params.collectionType);
         await this.getPageRequest(this.props.match.params.collectionType);
     }
 
@@ -50,6 +54,7 @@ class CollectionPanel extends React.Component{
                 pageRequest.pageRequest.property = "name";
             }
             this.props.setPageRequest(pageRequest);
+            this.setPossibleOperations(nextProps.match.params.collectionType);
             await this.getPageRequest(nextProps.match.params.collectionType);
         }
     }
@@ -67,11 +72,16 @@ class CollectionPanel extends React.Component{
         );
     }
 
+    setPossibleOperations(collectionType){
+        if(this.props.entityPanel.mode==='disabled')
+        this.props.setOperations(possibleOperationsForCollections[collectionType])
+    }
+
     async getPageRequest(collectionType){
         console.log(this.props.pageRequest);
         await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
             .then(res => {
-                this.props.setPage(res.data);
+                this.props.checkPreviouslyCheckedElements(res.data);
 
                 let pageRequest = this.props.pageRequest;
                 pageRequest.pageRequest.page=this.props.page.number;
@@ -106,7 +116,7 @@ class CollectionPanel extends React.Component{
             </div>
         );
     }
-};
+}
 
 function mapDispatchToProps( dispatch ) {
     return bindActionCreators( ActionCreators, dispatch );
@@ -116,7 +126,9 @@ function mapStateToProps( state ) {
     return {
         page: state.page,
         pageRequest: state.pageRequest,
-        message: state.message
+        message: state.message,
+        possibleOperations: state.possibleOperations,
+        entityPanel: state.entityPanel
     };
 }
 

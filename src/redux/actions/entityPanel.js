@@ -23,8 +23,8 @@ export function showEntity(entityType,entityName) {
     }
 }
 
-export function hideEntityPanel() {
+export function disableEntityPanel() {
     return {
-        type: types.HIDE_ENTITY_PANEL
+        type: types.DISABLE_ENTITY_PANEL
     }
 }

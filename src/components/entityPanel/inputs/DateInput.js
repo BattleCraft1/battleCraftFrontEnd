@@ -1,6 +1,7 @@
 import React from 'react';
 import {resp, styles} from '../styles'
 import Label from './Label'
+import setDateFunction from '../../../main/functions/setDateFunctionForInput'
 
 export default class DateInput extends React.Component{
 
@@ -8,11 +9,11 @@ export default class DateInput extends React.Component{
         return(
             <div style={styles.inputBlock}>
                 <Label name={this.props.name}/>
-                <input id={this.props.indexOfSearchFields}
+                <input
                        style={styles.optionInput}
-                       type="date"
-                       ref={(control) => this.date = control}
-                       name={this.props.indexOfSearchFields}
+                       type="datetime-local"
+                       value = {setDateFunction(this.props.value)}
+                       onChange={(event)=>this.props.changeEntity(this.props.fieldName,event.target.value)}
                        />
             </div>
         )

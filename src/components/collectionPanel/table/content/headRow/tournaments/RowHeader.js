@@ -22,10 +22,10 @@ export default class RowHeader extends React.Component{
                     content="name"
                 />
                 <TableHeader
-                    sortBy = "province.location"
+                    sortBy = "province"
                     sort = {this.props.sortByColumnName.bind(this)}
-                    isActive = {this.props.isColumnActive("province.location")}
-                    arrow = {this.props.getArrowGlyph("province.location")}
+                    isActive = {this.props.isColumnActive("province")}
+                    arrow = {this.props.getArrowGlyph("province")}
                     content="province"
                 />
                 <TableHeader

@@ -33,16 +33,21 @@ class Row extends React.Component{
         }
     }
 
-    editEntity(name){
-        console.log(name);
-        this.props.editEntity("tournament",name);
+    editEntity(element){
+        if(element.status!=='NEW' && element.status!=='ACCEPTED')
+        {
+            this.props.showFailureMessage("You can edit only new or accepted tournaments");
+            return;
+        }
+        this.props.editEntity("tournament",element.name);
     }
 
     render(){
         return (
             <tr className={css(resp.tableRow)}>
                 <RowChecbox
-                    value = {this.props.element.name}
+                    elementName = {this.props.element.name}
+                    checked = {this.props.element.checked}
                 />
 
                 <TableResponsiveHeader
@@ -55,13 +60,13 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "name"
                     color = {this.getColor("name", this.props.element)}
-                    edit={() => this.editEntity(this.props.element.name)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.name}
                 />
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("province")}
-                    sortBy = "province.location"
+                    sortBy = "province"
                     sort = {this.props.sortByColumnName.bind(this)}
                     arrow = {this.props.getArrowGlyph("province")}
                     headerName = "province"
@@ -69,7 +74,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "province"
                     color = {this.getColor("province", this.props.element)}
-                    edit={() => this.editEntity(this.props.element.name)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.province}
                 />
 
@@ -83,7 +88,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "city"
                     color = {this.getColor("city", this.props.element)}
-                    edit={() => this.editEntity(this.props.element.name)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.city}
                 />
 
@@ -97,7 +102,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "game"
                     color = {this.getColor("game", this.props.element)}
-                    edit={() => this.editEntity(this.props.element.name)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.game}
                 />
 
@@ -111,7 +116,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "players"
                     color = {this.getColor("freeSlots", this.props.element)}
-                    edit={() => this.editEntity(this.props.element.name)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.playersNumber+"/"+this.props.element.maxPlayers}
                 />
 
@@ -125,7 +130,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "dateOfStart"
                     color = {this.getColor("dateOfStart", this.props.element)}
-                    edit={() => this.editEntity(this.props.element.name)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {setDate(this.props.element.dateOfStart)}
                 />
 
@@ -139,7 +144,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "dateOfEnd"
                     color = {this.getColor("dateOfEnd", this.props.element)}
-                    edit={() => this.editEntity(this.props.element.name)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {setDate(this.props.element.dateOfEnd)}
                 />
             </tr>
@@ -154,7 +159,8 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
-        entityPanel:state.entityPanel
+        entityPanel: state.entityPanel,
+        message: state.message
     };
 }
 

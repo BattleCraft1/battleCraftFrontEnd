@@ -1,18 +1,23 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../../redux/actions/index';
+
+import isNotEmpty from './../../../main/functions/checkIfObjectIsNotEmpty'
+
 import UsersFormInputs from './users/FormInputs'
 import TournamentsFormInputs from './tournaments/FormInputs'
 import RankingFormInputs from './ranking/FormInputs'
 import GamesFormInputs from './games/FormInputs'
-import isNotEmpty from './../../../main/functions/checkIfObjectIsNotEmpty'
-import { ActionCreators } from '../../../redux/actions/index';
+
 import {serverName} from '../../../main/consts/server';
 import {mockEnums} from '../../../main/consts/noServerContext';
+import axios from 'axios';
+
 import {resp, styles} from './styles'
 import {StyleSheet, css} from 'aphrodite';
 
-import axios from 'axios';
 
 class SearchPanel extends React.Component{
     constructor(props) {
@@ -48,9 +53,13 @@ class SearchPanel extends React.Component{
     }
 
     async getEnums(collectionType){
-
-                this.setState({enums:mockEnums});
-
+        await axios.get(serverName+`get/`+collectionType+`/enums`)
+            .then(res => {
+                this.setState({enums:res.data});
+            })
+            .catch(error => {
+                this.props.showNetworkErrorMessage(error);
+            });
     }
 
     search(inputs){
@@ -146,7 +155,8 @@ function mapStateToProps( state ) {
     return {
         page: state.page,
         pageRequest: state.pageRequest,
-        search: state.search
+        search: state.search,
+        message: state.message
     };
 }
 

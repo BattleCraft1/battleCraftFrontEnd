@@ -99,6 +99,7 @@ const styles = {
     borderRadius:'2px',
   },
   tableButton:{
+    cursor: 'pointer',
     boxSizing:'border-box',
     width:'100%',
     paddingTop:'6px',

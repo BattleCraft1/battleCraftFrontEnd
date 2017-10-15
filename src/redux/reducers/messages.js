@@ -3,17 +3,22 @@ import * as types from '../types/messages'
 
 export const message = createReducer( {}, {
     [types.SHOW_FAILURE_MESSAGE_BOX]( state, action ) {
-        action.message.isShown=true;
-        action.message.messageType="alert-danger";
-        return action.message;
+        return {
+            isShown:true,
+            messageType:"alert-danger",
+            messageText:action.message
+        };
     },
     [types.SHOW_SUCCESS_MESSAGE_BOX]( state, action ) {
-        action.message.isShown=true;
-        action.message.messageType="alert-success";
-        return action.message;
+        return {
+            isShown:true,
+            messageType:"alert-success",
+            messageText:action.message
+        };
     },
     [types.SHOW_NETWORK_ERROR_MESSAGE_BOX]( state, action ) {
         let message;
+        console.log(action.error);
         try {
             if(action.error===undefined || action.error.message==='Network Error'){
                 message={
@@ -23,7 +28,7 @@ export const message = createReducer( {}, {
                 };
             }
             else if(action.error.response.status !== 200){
-                if((typeof action.error.response.data)!=="string")
+                if((typeof action.error.response.data)!=="string" || action.error.response.data==="")
                     throw "error is not a string value";
                 message={
                     isShown: true,

@@ -4,6 +4,7 @@ import * as ConfirmationActions from './confirmation'
 import * as MessagesActions from './messages'
 import * as SearchPanelActions from './search'
 import * as EntityPanelActions from './entityPanel'
+import * as PossibleOperationsActions from './possibleOperations'
 
 export const ActionCreators = Object.assign( {},
     PageActions,
@@ -11,5 +12,6 @@ export const ActionCreators = Object.assign( {},
     ConfirmationActions,
     MessagesActions,
     SearchPanelActions,
-    EntityPanelActions
+    EntityPanelActions,
+    PossibleOperationsActions
 );

@@ -11,9 +11,8 @@ export default class TextInput extends React.Component{
         return(
             <div style={styles.inputBlock}>
                 <Label name={this.props.name}/>
-                    <input
-                       style={styles.optionInput}
-                       type="text"
+                <input style={styles.optionInput}
+                       type="number"
                        value = {this.props.value}
                        onChange={(event)=>this.props.changeEntity(this.props.fieldName,event.target.value)}
                 />

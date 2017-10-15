@@ -14,40 +14,30 @@ class UnlockOperation extends React.Component {
         super(props);
     }
 
-    getSuccessMessage(elementsToUnlock){
-        return "Elements "+elementsToUnlock.map(function(element){return element.name}).join(", ")+" are unlock";
+    getSuccessMessage(unlockedElementsNames){
+        return "Elements "+unlockedElementsNames.join(", ")+" are unlock";
     }
 
     unlockElements(){
-        let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        let elementsToUnlock = checkedElements.filter(element => element.banned===true);
-
+        let checkedElementsNames = this.props.page.checkedElementsNames;
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
-        let setPage = this.props.setPage;
+        let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
-        if(elementsToUnlock.length>0) {
-            let uniqueElementsToBanNames = elementsToUnlock.map(function(item) {
-                return item.name;
-            });
-            let getPageAndModifyDataObjectsWrapper = {
-                namesOfObjectsToModify: uniqueElementsToBanNames,
-                getPageObjectsWrapper: this.props.pageRequest
+        if(checkedElementsNames.length>0) {
+            let GetPageAndModifyDataDTO = {
+                namesOfObjectsToModify: checkedElementsNames,
+                GetPageDTO: this.props.pageRequest
             };
 
             let operationFunction = function(){
-                axios.post(serverName+`unlock/`+collectionType,
-                    getPageAndModifyDataObjectsWrapper)
+                axios.post(serverName+`unlock/`+collectionType, GetPageAndModifyDataDTO)
                     .then(res => {
-                        setPage(res.data);
-                        showSuccessMessage(
-                            {
-                                messageText: getSuccessMessage(elementsToUnlock)
-                            }
-                        );
+                        checkPreviouslyCheckedElements(res.data);
+                        showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
                     .catch(error => {
                         showNetworkErrorMessage(error);
@@ -62,11 +52,7 @@ class UnlockOperation extends React.Component {
             )
         }
         else{
-            showFailureMessage(
-                {
-                    messageText: "Nothing to unlock. Only banned elements can be unlock."
-                }
-            )
+            showFailureMessage("Nothing to unlock.")
         }
     }
 

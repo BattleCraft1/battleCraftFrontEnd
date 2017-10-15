@@ -15,6 +15,9 @@ import Navigation from './Navigation/Navigation'
 
 import {resp, styles} from '../styles'
 
+import {serverName} from '../../../main/consts/server';
+import axios from 'axios';
+
 const tabsMap = {
     "basicData":BasicDataTab,
     "address":AddressTab,
@@ -26,8 +29,37 @@ class Panel extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            activeTab : "basicData"
+            activeTab : "basicData",
+            entity:{
+                "name": "",
+                "nameChange": "",
+                "tablesCount": 0,
+                "maxPlayers": 0,
+                "game": "",
+                "dateOfStart": 0,
+                "dateOfEnd": 0,
+                "province": "",
+                "city": "",
+                "street": "",
+                "zipCode": "",
+                "description": "",
+                "organizers": [],
+                "participants": []
+            }
         };
+    }
+
+    async componentDidMount() {
+        if(this.props.entityPanel.mode==='edit' || this.props.entityPanel.mode==='get')
+        {
+            await axios.get(serverName+`get/`+this.props.entityPanel.entityType+`?name=`+this.props.entityPanel.entityName)
+                .then(res => {
+                    this.setState({entity:res.data});
+                })
+                .catch(error => {
+                    this.props.showNetworkErrorMessage(error);
+                });
+        }
     }
 
     setActiveTab(activeTabName){
@@ -35,18 +67,57 @@ class Panel extends React.Component{
     }
 
     isTabActive(activeTabName){
-        return this.state.activeTab == activeTabName;
+        return this.state.activeTab === activeTabName;
     }
 
     createContent(){
         return React.createElement(
             tabsMap[this.state.activeTab],
             {
-                mode:this.props.mode
+                mode:this.props.mode,
+                entity:this.state.entity,
+                changeEntity: this.changeEntity.bind(this)
             },
             null)
     }
 
+    changeEntity(fieldName,value){
+        let entity = this.state.entity;
+        entity[fieldName] = value;
+        this.setState({entity:entity});
+    }
+
+    sendEntity(){
+        if(this.props.entityPanel.mode==='add')
+        {
+            let entity = this.state.entity;
+            entity.name = entity.nameChange;
+            this.setState({entity:entity})
+        }
+        let validationErrors = this.validate(this.state.entity);
+        if(validationErrors.length === 0){
+            axios.post(serverName+this.props.entityPanel.mode`/`+this.props.entityPanel.entityType,
+                this.state.entity)
+                .then(res => {
+                    this.setState({entity:res.data});
+                    this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.entityPanel.mode+"ed")
+                })
+                .catch(error => {
+                    this.setValidationErrors(error);
+                });
+        }
+        else{
+            this.setValidationErrors(validationErrors);
+        }
+    }
+
+    validate(entity){
+
+    }
+
+    setValidationErrors(errors){
+        console.log(errors)
+    }
 
     render(){
         let content = this.createContent();
@@ -59,8 +130,8 @@ class Panel extends React.Component{
                 <div className={css(resp.content)}>
                     {content}
                 </div>
-                <Button text={"Cancel"} action={() => this.props.hideEntityPanel()}/>
-                <Button text={"Save"} action={() => {}}/>
+                <Button text={"Cancel"} action={() => this.props.disableEntityPanel()}/>
+                <Button text={"Save"} action={() => {this.sendEntity()}}/>
             </div>
         )
     }
@@ -72,7 +143,8 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
-        entityPanel:state.entityPanel
+        entityPanel:state.entityPanel,
+        message:state.message
     };
 }
 

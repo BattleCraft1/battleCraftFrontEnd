@@ -24,7 +24,7 @@ export const entityPanel = createReducer( {}, {
             entityName:action.entityName
         };
     },
-    [types.HIDE_ENTITY_PANEL]( state, action ) {
+    [types.DISABLE_ENTITY_PANEL]( state, action ) {
         return {
             mode:entityPanelModes.disabled,
             entityType:entityPanelTypes.none,

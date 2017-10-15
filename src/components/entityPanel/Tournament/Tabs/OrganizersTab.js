@@ -1,13 +1,18 @@
 import React from 'react';
 import UserTable from './UsersTable/UsersTable'
-import PanelButton from './UsersTable/PanelButton'
+import InviteButton from './UsersTable/InviteButton'
 
 export default class OrganisatorsTab extends React.Component{
+
     render(){
         return(
             <div>
-                <UserTable name={"Organisators"} />
-                <PanelButton text={"Add"}/>
+                <UserTable
+                    value={this.props.entity["organizers"]}
+                    fieldName="organizers"
+                    changeEntity={this.props.changeEntity.bind(this)}
+                    name="Organisators" />
+                <InviteButton text="Invite"/>
             </div>
         )
     }

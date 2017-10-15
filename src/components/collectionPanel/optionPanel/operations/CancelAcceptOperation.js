@@ -14,56 +14,37 @@ class CancelAcceptOperation extends React.Component {
         super(props);
     }
 
-    getSuccessMessage(elementsToCancelAccept){
-        return "Acceptations for "+elementsToCancelAccept.map(function(element){return element.name}).join(", ")+" are canceled";
+    getSuccessMessage(rejectedElementsNames){
+        return "Acceptations for "+rejectedElementsNames.join(", ").join(", ")+" are canceled";
     }
 
-    getFailureMessage(elementsWithFailedCancellation){
-        return "Elements "+elementsWithFailedCancellation
-                .map(function(element){return element.name}).join(", ")+" are still accepted " +
+    getFailureMessage(rejectedElementsNames){
+        return "Elements "+rejectedElementsNames.join(", ")+" are still accepted " +
             "because you can cancel acceptation only for accepted and not banned elements"
     }
 
     cancelAcceptElements(){
-        let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        let elementsToCancelAccept = checkedElements.filter(element =>
-            element.status==='ACCEPTED'  && element.banned===false);
-        let elementsWithFailedCancellation = checkedElements.filter(element => element.status!=='ACCEPTED');
+        let checkedElementsNames = this.props.page.checkedElementsNames;
 
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
-        let setPage = this.props.setPage;
+        let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
         let getFailureMessage = this.getFailureMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
-        if(elementsToCancelAccept.length>0) {
-            let uniqueElementsToBanNames = elementsToCancelAccept.map(function(item) {
-                return item.name;
-            });
-            let getPageAndModifyDataObjectsWrapper = {
-                namesOfObjectsToModify: uniqueElementsToBanNames,
-                getPageObjectsWrapper: this.props.pageRequest
+        if(checkedElementsNames.length>0) {
+            let GetPageAndModifyDataDTO = {
+                namesOfObjectsToModify: checkedElementsNames,
+                GetPageDTO: this.props.pageRequest
             };
 
             let operationFunction = function(){
-                axios.post(serverName+`cancel/accept/`+collectionType,
-                    getPageAndModifyDataObjectsWrapper)
+                axios.post(serverName+`cancel/accept/`+collectionType, GetPageAndModifyDataDTO)
                     .then(res => {
-                        setPage(res.data);
-                        if(elementsWithFailedCancellation.length>0)
-                            showFailureMessage(
-                                {
-                                    messageText: getFailureMessage(elementsWithFailedCancellation)
-                                }
-                            );
-                        else
-                            showSuccessMessage(
-                                {
-                                    messageText: getSuccessMessage(elementsToCancelAccept)
-                                }
-                            );
+                        checkPreviouslyCheckedElements(res.data);
+                        showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
                     .catch(error => {
                         showNetworkErrorMessage(error);
@@ -79,11 +60,7 @@ class CancelAcceptOperation extends React.Component {
             )
         }
         else{
-            showFailureMessage(
-                {
-                    messageText: "Nothing to cancel acceptation. You can cancel acceptation only for accepted and not banned elements."
-                }
-            )
+            showFailureMessage("Nothing to reject.")
         }
     }
 

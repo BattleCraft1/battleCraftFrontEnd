@@ -14,40 +14,30 @@ class BanOperation extends React.Component {
         super(props);
     }
 
-    getSuccessMessage(elementsToBan){
-        return "Elements "+elementsToBan.map(function(element){return element.name}).join(", ")+" are banned";
+    getSuccessMessage(BannedElementsNames){
+        return "Elements "+BannedElementsNames.join(", ")+" are banned";
     }
 
     benElements(){
-        let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        let elementsToBan = checkedElements.filter(element => element.banned===false);
-
+        let checkedElementsNames = this.props.page.checkedElementsNames;
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
-        let setPage = this.props.setPage;
+        let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
-        if(elementsToBan.length>0) {
-            let uniqueElementsToBanNames = elementsToBan.map(function(item) {
-                return item.name;
-            });
-            let getPageAndModifyDataObjectsWrapper = {
-                namesOfObjectsToModify: uniqueElementsToBanNames,
-                getPageObjectsWrapper: this.props.pageRequest
+        if(checkedElementsNames.length>0) {
+            let GetPageAndModifyDataDTO = {
+                namesOfObjectsToModify: checkedElementsNames,
+                GetPageDTO: this.props.pageRequest
             };
 
             let operationFunction = function(){
-                axios.post(serverName+'ban/'+collectionType,
-                    getPageAndModifyDataObjectsWrapper)
+                axios.post(serverName+'ban/'+collectionType, GetPageAndModifyDataDTO)
                     .then(res => {
-                        setPage(res.data);
-                        showSuccessMessage(
-                            {
-                                messageText: getSuccessMessage(elementsToBan)
-                            }
-                        );
+                        checkPreviouslyCheckedElements(res.data);
+                        showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
                     .catch(error => {
                         showNetworkErrorMessage(error);
@@ -63,11 +53,7 @@ class BanOperation extends React.Component {
             )
         }
         else{
-            showFailureMessage(
-                {
-                    messageText: "Nothing to ban. You can ban only not banned elements."
-                }
-            )
+            showFailureMessage("Nothing to ban.")
         }
     }
 

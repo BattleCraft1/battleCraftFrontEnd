@@ -19,48 +19,30 @@ class DegradeOperation extends React.Component {
             "because if you want degrade user to Accepted he must by a Organizer"
     }
 
-    getSuccessMessage(elementsToDegrade){
-        return "Users "+elementsToDegrade.map(function(element){return element.name}).join(", ")+" are degrade to Accepted"
+    getSuccessMessage(degradedElementsNames){
+        return "Users "+degradedElementsNames.join(", ")+" are degrade to Accepted"
     }
 
     degradeElements(){
-        let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        let elementsToDegrade = checkedElements.filter(element => element.status==='ORGANIZER');
-        let elementsWhichCannotBeDegrade = checkedElements.filter(element => element.status!=='ORGANIZER');
-
+        let checkedElementsNames = this.props.page.checkedElementsNames;
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
-        let setPage = this.props.setPage;
+        let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
         let getFailureMessage = this.getFailureMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
-        if(elementsToDegrade.length>0) {
-            let uniqueElementsToDegradeNames = elementsToDegrade.map(function(item) {
-                return item.name;
-            });
-            let getPageAndModifyDataObjectsWrapper = {
-                namesOfObjectsToModify: uniqueElementsToDegradeNames,
-                getPageObjectsWrapper: this.props.pageRequest
+        if(checkedElementsNames.length>0) {
+            let GetPageAndModifyDataDTO = {
+                namesOfObjectsToModify: checkedElementsNames,
+                GetPageDTO: this.props.pageRequest
             };
 
             let operationFunction = function(){
-                axios.post(serverName+`degrade/organizers`,
-                    getPageAndModifyDataObjectsWrapper)
+                axios.post(serverName+`degrade/organizers`, GetPageAndModifyDataDTO)
                     .then(res => {
-                        setPage(res.data);
-                        if(elementsWhichCannotBeDegrade.length>0)
-                            showFailureMessage(
-                                {
-                                    messageText: getFailureMessage(elementsWhichCannotBeDegrade)
-                                }
-                            );
-                        else
-                            showSuccessMessage(
-                                {
-                                    messageText: getSuccessMessage(elementsToDegrade)
-                                }
-                            );
+                        checkPreviouslyCheckedElements(res.data);
+                        showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
                     .catch(error => {
                         showNetworkErrorMessage(error);
@@ -76,11 +58,7 @@ class DegradeOperation extends React.Component {
             )
         }
         else{
-            showFailureMessage(
-                {
-                    messageText: "Nothing to degrade. You can only degrade Organizers"
-                }
-            )
+            showFailureMessage("Nothing to degrade.")
         }
     }
 

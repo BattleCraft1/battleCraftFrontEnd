@@ -30,7 +30,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "no"
                     color = {this.getColor("no")}
-                    onClick = {undefined}
+                    edit = {() => {}}
                     content = {this.props.number}
                 />
 
@@ -44,13 +44,13 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "name"
                     color = {this.getColor("name")}
-                    edit = {undefined}
+                    edit = {() => {}}
                     content = {this.props.element.name}
                 />
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("province")}
-                    sortBy = "playerProvince.location"
+                    sortBy = "playerProvince"
                     sort = {this.props.sortByColumnName.bind(this)}
                     arrow = {this.props.getArrowGlyph("province")}
                     headerName = "province"
@@ -58,7 +58,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "province"
                     color = {this.getColor("province")}
-                    edit = {undefined}
+                    edit = {() => {}}
                     content = {this.props.element.province}
                 />
 
@@ -72,7 +72,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "city"
                     color = {this.getColor("city")}
-                    edit = {undefined}
+                    edit = {() => {}}
                     content = {this.props.element.city}
                 />
 
@@ -86,7 +86,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "numberOfTournaments"
                     color = {this.getColor("numberOfTournaments")}
-                    edit = {undefined}
+                    edit = {() => {}}
                     content = {this.props.element.numberOfTournaments}
                 />
 
@@ -100,7 +100,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "numberOfBattles"
                     color = {this.getColor("numberOfBattles")}
-                    edit = {undefined}
+                    edit = {() => {}}
                     content = {this.props.element.numberOfBattles}
                 />
 
@@ -114,7 +114,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "points"
                     color = {this.getColor("points")}
-                    edit = {undefined}
+                    edit = {() => {}}
                     content = {this.props.element.points}
                 />
             </tr>

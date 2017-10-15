@@ -26,7 +26,7 @@ class EntityPanel extends React.Component{
 
     handleClickOutside(event) {
         if (this.entityPanelRef && !this.entityPanelRef.contains(event.target)) {
-            this.props.hideEntityPanel();
+            this.props.disableEntityPanel();
         }
     }
 

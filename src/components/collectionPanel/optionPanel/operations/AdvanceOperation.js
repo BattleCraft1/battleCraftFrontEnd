@@ -19,48 +19,30 @@ class AdvanceOperation extends React.Component {
             "because if you want advance user to Organizer he must by a Accepted"
     }
 
-    getSuccessMessage(elementsToAdvance){
-        return "Users "+elementsToAdvance.map(function(element){return element.name}).join(", ")+" are advanced to Organizer"
+    getSuccessMessage(advancedElementsNames){
+        return "Users "+advancedElementsNames.join(", ")+" are advanced to Organizer"
     }
 
     advanceElements(){
-        let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        let elementsToAdvance = checkedElements.filter(element => element.status==='ACCEPTED');
-        let elementsWhichCannotBeAdvance = checkedElements.filter(element => element.status!=='ACCEPTED');
-
+        let checkedElementsNames = this.props.page.checkedElementsNames;
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
-        let setPage = this.props.setPage;
+        let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
         let getFailureMessage = this.getFailureMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
-        if(elementsToAdvance.length>0) {
-            let uniqueElementsToAdvanceNames = elementsToAdvance.map(function(item) {
-                return item.name;
-            });
-            let getPageAndModifyDataObjectsWrapper = {
-                namesOfObjectsToModify: uniqueElementsToAdvanceNames,
-                getPageObjectsWrapper: this.props.pageRequest
+        if(checkedElementsNames.length>0) {
+            let GetPageAndModifyDataDTO = {
+                namesOfObjectsToModify: checkedElementsNames,
+                GetPageDTO: this.props.pageRequest
             };
 
             let operationFunction = function(){
-                axios.post(serverName+`advance/players`,
-                    getPageAndModifyDataObjectsWrapper)
+                axios.post(serverName+`advance/players`, GetPageAndModifyDataDTO)
                     .then(res => {
-                        setPage(res.data);
-                        if(elementsWhichCannotBeAdvance.length>0)
-                            showFailureMessage(
-                                {
-                                    messageText: getFailureMessage(elementsWhichCannotBeAdvance)
-                                }
-                            );
-                        else
-                            showSuccessMessage(
-                                {
-                                    messageText: getSuccessMessage(elementsToAdvance)
-                                }
-                            );
+                        checkPreviouslyCheckedElements(res.data);
+                        showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
                     .catch(error => {
                         showNetworkErrorMessage(error);
@@ -76,11 +58,7 @@ class AdvanceOperation extends React.Component {
             )
         }
         else{
-            showFailureMessage(
-                {
-                    messageText: "Nothing to advance. Only Accepted users can be advanced."
-                }
-            )
+            showFailureMessage("Nothing to advance.")
         }
     }
 

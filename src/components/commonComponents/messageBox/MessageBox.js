@@ -48,9 +48,7 @@ class MessageBox extends React.Component {
         this.messageRef = node;
     }
 
-    getMessageColor(){//add Type of message parameter
-        console.log("MessagType: ");
-        console.log(this.props.message.messageType);
+    getMessageColor(){
         let colorsObject = {};
         if(this.props.message.messageType === "alert-danger"){
           colorsObject = {

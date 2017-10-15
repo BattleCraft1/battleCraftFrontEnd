@@ -65,7 +65,8 @@ class Row extends React.Component{
         return (
             <tr className={css(resp.tableRow)}>
                 <RowChecbox
-                    value = {this.props.element.name}
+                    elementName = {this.props.element.name}
+                    checked = {this.props.element.checked}
                 />
 
                 <TableResponsiveHeader

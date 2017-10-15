@@ -1,19 +1,41 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
+
 import styles from '../NavStyle.css.js'
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../../redux/actions';
 
-export default class NavElement extends React.Component{
+
+class NavElement extends React.Component{
+    clearCheckedElements(){
+        this.props.clearCheckedElements();
+    }
+
     render(){
         return (
             <div className={css(resp.container)}>
-                <Link to={this.props.link} style = {styles.button} className={css(resp.button)}>{this.props.name}</Link>
+                <Link to={this.props.link} onClick={()=>this.clearCheckedElements()}
+                      style = {styles.button} className={css(resp.button)}>{this.props.name}</Link>
             </div>
         );
     }
 };
 
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
+
+function mapStateToProps( state ) {
+    return {
+        page: state.page,
+        entityPanel: state.entityPanel
+    };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( NavElement );
 
 const resp = StyleSheet.create({
     button:{
