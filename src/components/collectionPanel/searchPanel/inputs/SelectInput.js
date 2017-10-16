@@ -13,7 +13,7 @@ export default class SelectInput extends React.Component{
                 {
                     "keys":this.props.keys,
                     "operation":this.props.operation,
-                    "value":this.select.value
+                    "value":[this.select.value]
                 }
             )
     }

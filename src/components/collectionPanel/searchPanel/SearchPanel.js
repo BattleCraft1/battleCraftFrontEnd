@@ -12,7 +12,6 @@ import RankingFormInputs from './ranking/FormInputs'
 import GamesFormInputs from './games/FormInputs'
 
 import {serverName} from '../../../main/consts/server';
-import {mockEnums} from '../../../main/consts/noServerContext';
 import axios from 'axios';
 
 import {resp, styles} from './styles'
@@ -71,6 +70,15 @@ class SearchPanel extends React.Component{
                     inputs[inputName]
                 )
         }
+        console.log(this.props.entityPanel);
+        if(this.props.entityPanel.mode !== 'disabled'){
+            pageRequest.searchCriteria.push({
+                "keys": ["status"],
+                "operation": ":",
+                "value": this.props.entityPanel.relatedEntity.relatedEntityType
+            });
+        }
+        pageRequest.pageRequest.page = 0;
         pageRequest.pageRequest.size = 10;
         this.props.setPageRequest(pageRequest);
         this.props.getPageRequest(this.props.collectionType);
@@ -103,6 +111,7 @@ class SearchPanel extends React.Component{
                 searchFormInputs = React.createElement(
                     UsersFormInputs,
                     {
+                        entityPanelDisabled: this.props.entityPanel.mode === 'disabled',
                         enums:this.state.enums,
                         search:this.search.bind(this),
                         hide:this.hideSearchPanel.bind(this)
@@ -156,7 +165,8 @@ function mapStateToProps( state ) {
         page: state.page,
         pageRequest: state.pageRequest,
         search: state.search,
-        message: state.message
+        message: state.message,
+        entityPanel: state.entityPanel
     };
 }
 

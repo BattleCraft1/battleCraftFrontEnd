@@ -29,6 +29,7 @@ class AcceptOperation extends React.Component {
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
+        let setPage = this.props.setPage;
         let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
         let getFailureMessage = this.getFailureMessage;
@@ -37,7 +38,7 @@ class AcceptOperation extends React.Component {
         if(checkedElementsNames.length>0) {
             let GetPageAndModifyDataDTO = {
                 namesOfObjectsToModify: checkedElementsNames,
-                GetPageDTO: this.props.pageRequest
+                getPageObjectsDTO: this.props.pageRequest
             };
 
             let operationFunction = function(){

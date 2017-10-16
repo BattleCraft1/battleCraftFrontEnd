@@ -38,14 +38,14 @@ class DeleteOperation extends React.Component {
         if(checkedElementsNames.length>0) {
             let GetPageAndModifyDataDTO = {
                 namesOfObjectsToModify: checkedElementsNames,
-                GetPageDTO: this.props.pageRequest
+                getPageObjectsDTO: this.props.pageRequest
             };
 
             let operationFunction = function(){
                 axios.post(serverName+`delete/`+collectionType, GetPageAndModifyDataDTO)
                     .then(res => {
-                        clearCheckedElements();
                         checkPreviouslyCheckedElements(res.data);
+                        clearCheckedElements();
                         showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
                     .catch(error => {

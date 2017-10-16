@@ -52,7 +52,7 @@ class FormInputs extends React.Component{
             {
                 "keys":["tour","tournament","game","name"],
                 "operation":":",
-                "value":this.state.gameName
+                "value":[this.state.gameName]
             }
         );
     }

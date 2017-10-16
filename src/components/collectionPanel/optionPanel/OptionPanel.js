@@ -9,6 +9,8 @@ import UnclokOperation from './operations/UnlockOperation'
 import AdvanceOperation from './operations/AdvanceOperation'
 import DegradeOperation from './operations/DegradeOperation'
 import SearchOperation from './operations/SearchOperation'
+import InviteOperation from './operations/InviteOperation'
+import CancelInviteOperation from './operations/CancelInviteOperation'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -24,7 +26,9 @@ const mapOfOperations = {
     "Accept":AcceptOperation,
     "Advance":AdvanceOperation,
     "Degrade":DegradeOperation,
-    "Search":SearchOperation
+    "Search":SearchOperation,
+    "Invite":InviteOperation,
+    "CancelInvite":CancelInviteOperation
 };
 
 class OptionPanel extends React.Component {

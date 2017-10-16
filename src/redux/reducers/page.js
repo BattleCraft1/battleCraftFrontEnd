@@ -38,7 +38,7 @@ export const page = createReducer( {}, {
     },
     [types.CLEAR_CHECKED_ELEMENTS]( state, action ){
         state.checkedElementsNames = [];
-        state.page.content.forEach((element) =>{
+        state.content.forEach((element) =>{
                 element.checked = false;
             }
         );

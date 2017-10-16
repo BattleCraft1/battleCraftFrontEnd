@@ -25,7 +25,12 @@ const store = configureStore( {
     entityPanel: {
         mode:entityPanelModes.disabled,
         entityType:entityPanelTypes.none,
-        entityName:""
+        entityName:"",
+        hidden:false,
+        relatedEntity:{
+            relatedEntityNames:[],
+            relatedEntityType:[]
+        }
     },
     confirmation: {
         header:"",

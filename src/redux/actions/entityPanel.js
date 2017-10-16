@@ -28,3 +28,18 @@ export function disableEntityPanel() {
         type: types.DISABLE_ENTITY_PANEL
     }
 }
+
+export function showEntityPanel(isShow) {
+    return {
+        type: types.SHOW_ENTITY_PANEL,
+        isShow: isShow
+    }
+}
+
+export function setRelatedEntity(relatedEntityNames,relatedEntityType){
+    return {
+        type: types.SET_RELATED_ENTITY,
+        relatedEntityNames: relatedEntityNames,
+        relatedEntityType: relatedEntityType
+    }
+}

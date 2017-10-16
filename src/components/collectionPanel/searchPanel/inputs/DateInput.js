@@ -13,7 +13,7 @@ export default class DateInput extends React.Component{
                 {
                     "keys":this.props.keys,
                     "operation":this.props.operation,
-                    "value":this.date.value
+                    "value":[this.date.value]
                 }
             )
     }

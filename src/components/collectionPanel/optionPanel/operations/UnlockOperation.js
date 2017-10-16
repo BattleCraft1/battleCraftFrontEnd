@@ -30,7 +30,7 @@ class UnlockOperation extends React.Component {
         if(checkedElementsNames.length>0) {
             let GetPageAndModifyDataDTO = {
                 namesOfObjectsToModify: checkedElementsNames,
-                GetPageDTO: this.props.pageRequest
+                getPageObjectsDTO: this.props.pageRequest
             };
 
             let operationFunction = function(){

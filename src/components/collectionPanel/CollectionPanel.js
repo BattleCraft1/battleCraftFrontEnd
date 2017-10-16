@@ -21,60 +21,77 @@ class CollectionPanel extends React.Component{
         super(props);
 
         this.state = {
-            collectionType:"tournaments"
+            collectionType:""
         }
     }
 
     async componentDidMount() {
-        if(this.props.match.params.collectionType==='ranking'){
-            let pageRequest = this.props.pageRequest;
-            this.getRankingRequest(pageRequest);
-            this.props.setPageRequest(pageRequest);
-        }
-        this.setState({collectionType: this.props.match.params.collectionType});
-        this.setPossibleOperations(this.props.match.params.collectionType);
-        await this.getPageRequest(this.props.match.params.collectionType);
+        await this.setState({collectionType: this.props.match.params.collectionType});
+        let pageRequest = this.createPageRequest(pageRequest);
+        this.props.setPageRequest(pageRequest);
+        this.setPossibleOperations(this.state.collectionType);
+        await this.getPageRequest(this.state.collectionType);
     }
 
     async componentWillReceiveProps(nextProps) {
-        if (nextProps.match.params.collectionType !== undefined &&
-            nextProps.match.params.collectionType !== this.props.match.params.collectionType) {
-
-            this.setState({collectionType: nextProps.match.params.collectionType});
-
-            let pageRequest = this.props.pageRequest;
-            pageRequest.pageRequest.page = 0;
-            pageRequest.pageRequest.size = 10;
-            pageRequest.searchCriteria = [];
-            if(nextProps.match.params.collectionType==='ranking'){
-                this.getRankingRequest(pageRequest);
-            }
-            else{
-                pageRequest.pageRequest.direction = "ASC";
-                pageRequest.pageRequest.property = "name";
-            }
+        if (nextProps.entityPanel.hidden === true &&
+            this.props.entityPanel.hidden === false) {
+            await this.setState({collectionType: nextProps.match.params.collectionType});
+            let pageRequest = this.createPageRequestForEntityPanel(nextProps.entityPanel.relatedEntity.relatedEntityType);
             this.props.setPageRequest(pageRequest);
-            this.setPossibleOperations(nextProps.match.params.collectionType);
-            await this.getPageRequest(nextProps.match.params.collectionType);
+            await this.getPageRequest(this.state.collectionType);
+            this.props.checkElements(nextProps.entityPanel.relatedEntity.relatedEntityNames,true)
+        }
+        else if (nextProps.match.params.collectionType !== this.state.collectionType ||
+                nextProps.entityPanel.mode === 'disabled' &&
+                this.props.entityPanel.mode !== 'disabled') {
+            await this.setState({collectionType: nextProps.match.params.collectionType});
+            let pageRequest = this.createPageRequest(pageRequest);
+            this.props.setPageRequest(pageRequest);
+            this.setPossibleOperations(this.state.collectionType);
+            await this.getPageRequest(this.state.collectionType);
         }
     }
 
-    getRankingRequest(pageRequest){
-        pageRequest.pageRequest.direction = "DESC";
-        pageRequest.pageRequest.property = "points";
-        pageRequest.searchCriteria = [];
-        pageRequest.searchCriteria.push(
-            {
-                "keys": ["tour", "tournament", "game","name"],
-                "operation":":",
-                "value":"Warhammer"
-            }
-        );
+    createPageRequestForEntityPanel(relatedEntityType){
+        let pageRequest = this.props.pageRequest;
+        pageRequest.searchCriteria = [{
+            "keys": ["status"],
+            "operation": ":",
+            "value": relatedEntityType
+        }];
+        pageRequest.pageRequest.direction = "ASC";
+        pageRequest.pageRequest.property = "name";
+        pageRequest.pageRequest.size = 10;
+        pageRequest.pageRequest.page = 0;
+        return pageRequest;
     }
 
-    setPossibleOperations(collectionType){
-        if(this.props.entityPanel.mode==='disabled')
-        this.props.setOperations(possibleOperationsForCollections[collectionType])
+    createPageRequest(){
+        let pageRequest = this.props.pageRequest;
+        if(this.state.collectionType==='ranking') {
+            pageRequest.searchCriteria = [
+                {
+                    "keys": ["tour", "tournament", "game","name"],
+                    "operation":":",
+                    "value":["Warhammer"]
+                }
+            ];
+            pageRequest.pageRequest.direction = "DESC";
+            pageRequest.pageRequest.property = "points";
+        }
+        else {
+            pageRequest.searchCriteria = [];
+            pageRequest.pageRequest.direction = "ASC";
+            pageRequest.pageRequest.property = "name";
+        }
+        pageRequest.pageRequest.size = 10;
+        pageRequest.pageRequest.page = 0;
+        return pageRequest;
+    }
+
+    setPossibleOperations(){
+        this.props.setOperations(possibleOperationsForCollections[this.state.collectionType])
     }
 
     async getPageRequest(collectionType){
@@ -127,8 +144,8 @@ function mapStateToProps( state ) {
         page: state.page,
         pageRequest: state.pageRequest,
         message: state.message,
-        possibleOperations: state.possibleOperations,
-        entityPanel: state.entityPanel
+        entityPanel: state.entityPanel,
+        possibleOperations: state.possibleOperations
     };
 }
 

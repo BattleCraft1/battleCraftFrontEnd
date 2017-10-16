@@ -19,17 +19,17 @@ export default class Table extends React.Component{
 
     createTableRows(){
         return this.props.value.map(
-            row => <TableRow key={row.invitatedUserName}
+            row => <TableRow key={row.invitedUserName}
                              deleteUser = {this.deleteUser.bind(this)}
                              accepted={row.accepted}
-                             playerName={row.invitatedUserName}/>
+                             playerName={row.invitedUserName}/>
         )
     }
 
     deleteUser(userName){
         let users = this.props.value;
         users = users.filter(user => {
-            return user.invitatedUserName!==userName
+            return user.invitedUserName!==userName
         });
         this.props.changeEntity(this.props.fieldName,users)
     }

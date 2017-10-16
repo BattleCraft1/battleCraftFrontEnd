@@ -7,6 +7,8 @@ import BasicDataTab from './Tabs/BasicDataTab';
 import OrganizersTab from './Tabs/OrganizersTab';
 import ParticipantsTab from './Tabs/ParticipantsTab';
 
+import compareArrays from '../../../main/functions/compareArrays';
+
 import { ActionCreators } from '../../../redux/actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -62,6 +64,45 @@ class Panel extends React.Component{
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.entityPanel.hidden === false &&
+            this.props.entityPanel.hidden === true &&
+            !compareArrays(nextProps.entityPanel.relatedEntity.relatedEntityNames,this.props.entityPanel.relatedEntity.relatedEntityNames)) {
+            let relatedEntityType = nextProps.entityPanel.relatedEntity.relatedEntityType;
+            let relatedEntityNames = nextProps.entityPanel.relatedEntity.relatedEntityNames;
+            if(compareArrays(relatedEntityType,["ORGANIZER"])){
+                this.actualizeRelatedEntityObjects("organizers",relatedEntityNames)
+            }
+            else if(compareArrays(relatedEntityType,["ORGANIZER","ACCEPTED"])){
+                this.actualizeRelatedEntityObjects("participants",relatedEntityNames)
+            }
+        }
+    }
+
+    actualizeRelatedEntityObjects(relatedEntityType,relatedEntityNames){
+        let entity = this.state.entity;
+        let organizersNames = entity[relatedEntityType].map(entity => entity.name);
+        relatedEntityNames.forEach(
+            elementName => {
+                if(organizersNames.indexOf(elementName)===-1){
+                    entity[relatedEntityType].push({
+                        invitedUserName:elementName,
+                        accepted:false
+                    })
+                }
+            }
+        );
+        organizersNames.forEach(
+            elementName => {
+                if(relatedEntityNames.indexOf(elementName)===-1){
+                    let organizerToDelete = entity[relatedEntityType].find(element => element.name===elementName);
+                    entity[relatedEntityType].splice(entity[relatedEntityType].indexOf(organizerToDelete),1);
+                }
+            }
+        );
+        this.setState({entity:entity});
+    }
+
     setActiveTab(activeTabName){
         this.setState({activeTab:activeTabName});
     }
@@ -94,10 +135,12 @@ class Panel extends React.Component{
             entity.name = entity.nameChange;
             this.setState({entity:entity})
         }
+        console.log(this.state.entity);
+        this.state.entity.organizers = this.state.entity.organizers.map(element => element.invitedUserName);
+        this.state.entity.participants = this.state.entity.participants.map(element => element.invitedUserName);
         let validationErrors = this.validate(this.state.entity);
         if(validationErrors.length === 0){
-            axios.post(serverName+this.props.entityPanel.mode`/`+this.props.entityPanel.entityType,
-                this.state.entity)
+            axios.post(serverName+this.props.entityPanel.mode+'/'+this.props.entityPanel.entityType, this.state.entity)
                 .then(res => {
                     this.setState({entity:res.data});
                     this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.entityPanel.mode+"ed")
@@ -112,11 +155,11 @@ class Panel extends React.Component{
     }
 
     validate(entity){
-
+        return [];
     }
 
     setValidationErrors(errors){
-        console.log(errors)
+        console.log(errors.response.data)
     }
 
     render(){

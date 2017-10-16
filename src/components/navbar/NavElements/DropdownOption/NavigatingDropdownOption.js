@@ -10,11 +10,13 @@ import { ActionCreators } from '../../../../redux/actions';
 class NavElementSmall extends React.Component{
     clearCheckedElements(){
         this.props.clearCheckedElements();
+        this.props.disableEntityPanel();
+        this.props.hideList();
     }
 
     render(){
         return (
-            <Link to={this.props.link} onClick={() => {this.props.hideList(); this.clearCheckedElements();}}
+            <Link to={this.props.link} onClick={this.clearCheckedElements.bind(this)}
                   style = {styles.button} className={css(resp.option)}>{this.props.name}</Link>
         );
     }

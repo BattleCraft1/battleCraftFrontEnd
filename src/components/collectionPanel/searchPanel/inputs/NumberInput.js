@@ -13,7 +13,7 @@ export default class NumberInput extends React.Component{
                 {
                     "keys":this.props.keys,
                     "operation":this.props.operation,
-                    "value":parseInt(this.number.value)
+                    "value":[parseInt(this.number.value)]
                 }
             )
     }

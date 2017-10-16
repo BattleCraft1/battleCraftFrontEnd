@@ -70,7 +70,9 @@ export default class FormInputs extends React.Component{
 
     render(){
         let userTypeOptions = this.prepareUserTypeOptions();
-        let provincesOptions = this.prepareProvinceOptions();
+        let provincesOptions = [];
+        if(this.props.entityPanelDisabled)
+            provincesOptions = this.prepareProvinceOptions();
 
         return (
             <div>
@@ -137,12 +139,15 @@ export default class FormInputs extends React.Component{
                         />
                     </div>
                 </div>
-                <div className={css(resp.optionContent)}>
-                    <StatusInput
-                        options = {userTypeOptions}
-                        changeSearchForm = {this.changeSearchForm.bind(this)}
-                    />
-                </div>
+                {
+                    this.props.entityPanelDisabled &&
+                    <div className={css(resp.optionContent)}>
+                        <StatusInput
+                            options={userTypeOptions}
+                            changeSearchForm={this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                }
                 <button onClick={()=>this.props.search(this.state.searchFormField)}
                         style={styles.button}
                         className={css(resp.button)}

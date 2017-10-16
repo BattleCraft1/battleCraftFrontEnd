@@ -14,7 +14,7 @@ export default class TextInput extends React.Component{
                 {
                     "keys":this.props.keys,
                     "operation":this.props.operation,
-                    "value":this.text.value
+                    "value":[this.text.value]
                 }
              )
           }
