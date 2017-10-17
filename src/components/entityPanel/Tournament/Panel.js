@@ -20,6 +20,12 @@ import {resp, styles} from '../styles'
 import {serverName} from '../../../main/consts/server';
 import axios from 'axios';
 
+import setDateFunction from '../../../main/functions/setDateFunction'
+
+import {provinces} from '../../../main/consts/provinces'
+
+import checkIfObjectIsNotEmpty from '../../../main/functions/checkIfObjectIsNotEmpty'
+
 const tabsMap = {
     "basicData":BasicDataTab,
     "address":AddressTab,
@@ -155,14 +161,15 @@ class Panel extends React.Component{
         this.state.entity.organizers = this.state.entity.organizers.map(element => element.invitedUserName);
         this.state.entity.participants = this.state.entity.participants.map(element => element.invitedUserName);
         let validationErrors = this.validate(this.state.entity);
-        if(validationErrors.length === 0){
+        console.log(validationErrors);
+        if(checkIfObjectIsNotEmpty(validationErrors)){
             axios.post(serverName+this.props.entityPanel.mode+'/'+this.props.entityPanel.entityType, this.state.entity)
                 .then(res => {
                     this.setState({entity:res.data});
                     this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.entityPanel.mode+"ed")
                 })
                 .catch(error => {
-                    this.setValidationErrors(error);
+                    this.setValidationErrors(error.response.data);
                 });
         }
         else{
@@ -171,11 +178,52 @@ class Panel extends React.Component{
     }
 
     validate(entity){
-        return [];
+        let validationErrors = {};
+        let fieldErrors = {};
+        if(!entity.name.match(new RegExp("^[A-Z][A-Za-zzżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9 ]{1,29}$")))
+            fieldErrors.dnameChange = "Tournament name must start with big letter and have between 2 to 30 chars";
+
+        if(entity.tablesCount<1 || entity.tablesCount>30)
+            fieldErrors.tablesCount = "Tournament name must start with big letter and have between 2 to 30 chars";
+
+        if(entity.maxPlayers>entity.tablesCount*2)
+            fieldErrors.maxPlayers = "You cannot create tournament with "+entity.maxPlayers+" players because if you have "+entity.tablesCount+" you can have only "+entity.tablesCount*2+" players";
+
+        if(entity.dateOfStart===undefined || this.getDatesDiffrenceInDays(new Date(),new Date(entity.dateOfStart))<0)
+            fieldErrors.dateOfStart = "You cannot start tournament at "+setDateFunction(entity.dateOfStart)+" because this date is outdated";
+
+        if(entity.dateOfEnd===undefined || this.getDatesDiffrenceInDays(new Date(entity.dateOfStart),new Date(entity.dateOfEnd))<0)
+            fieldErrors.dateOfEnd = "End date must be later than "+setDateFunction(entity.dateOfStart);
+
+        if(provinces.indexOf(entity.province))
+            fieldErrors.provinces = "Invalid province name";
+
+        if(!entity.city.match(new RegExp("^[A-Z][a-zzżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9]{1,39}$")))
+            fieldErrors.city = "City must start with big letter and have between 2 and 40 chars";
+
+        if(!entity.street.match(new RegExp("^[0-9a-zzżźćńółęąśŻŹĆĄŚĘŁÓŃA-Z. ]{1,39}$")))
+            fieldErrors.street = "Street and have between 2 and 40 chars";
+
+        if(!entity.zipCode.match(new RegExp("^\\d{2}-\\d{3}$")))
+            fieldErrors.zipCode = "Zip code have invalid format";
+
+        if(!entity.description.length>100)
+            fieldErrors.description = "Description can have only 100 chars";
+
+        if(checkIfObjectIsNotEmpty(fieldErrors)){
+            validationErrors.message = "Invalid tournament data";
+            validationErrors.fieldErrors = fieldErrors;
+        }
+
+        return validationErrors;
     }
 
-    setValidationErrors(errors){
-        let validationException = errors.response.data;
+    getDatesDiffrenceInDays(date1,date2){
+        let timeDiff = Math.abs(date2.getTime() - date1.getTime());
+        return Math.ceil(timeDiff / (1000 * 3600 * 24));
+    }
+
+    setValidationErrors(validationException){
         this.props.showFailureMessage(validationException.message);
         let validationErrors = validationException.fieldErrors;
         let validationErrorsState = this.state.validationErrors;
@@ -184,7 +232,6 @@ class Panel extends React.Component{
                 validationErrorsState[field] = validationErrors[field]
             }
         }
-        console.log(validationErrorsState);
         this.setState({validationErrors:validationErrorsState})
     }
 
