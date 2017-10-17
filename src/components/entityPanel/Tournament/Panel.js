@@ -47,6 +47,22 @@ class Panel extends React.Component{
                 "description": "",
                 "organizers": [],
                 "participants": []
+            },
+            validationErrors:{
+                "name": "",
+                "nameChange": "",
+                "tablesCount": "",
+                "maxPlayers": "",
+                "game": "",
+                "dateOfStart": "",
+                "dateOfEnd": "",
+                "province": "",
+                "city": "",
+                "street": "",
+                "zipCode": "",
+                "description": "",
+                "organizers": "",
+                "participants": ""
             }
         };
     }
@@ -117,7 +133,8 @@ class Panel extends React.Component{
             {
                 mode:this.props.mode,
                 entity:this.state.entity,
-                changeEntity: this.changeEntity.bind(this)
+                changeEntity: this.changeEntity.bind(this),
+                validationErrors: this.state.validationErrors
             },
             null)
     }
@@ -135,7 +152,6 @@ class Panel extends React.Component{
             entity.name = entity.nameChange;
             this.setState({entity:entity})
         }
-        console.log(this.state.entity);
         this.state.entity.organizers = this.state.entity.organizers.map(element => element.invitedUserName);
         this.state.entity.participants = this.state.entity.participants.map(element => element.invitedUserName);
         let validationErrors = this.validate(this.state.entity);
@@ -159,7 +175,17 @@ class Panel extends React.Component{
     }
 
     setValidationErrors(errors){
-        console.log(errors.response.data)
+        let validationException = errors.response.data;
+        this.props.showFailureMessage(validationException.message);
+        let validationErrors = validationException.fieldErrors;
+        let validationErrorsState = this.state.validationErrors;
+        for (let field in validationErrors) {
+            if (validationErrors.hasOwnProperty(field)) {
+                validationErrorsState[field] = validationErrors[field]
+            }
+        }
+        console.log(validationErrorsState);
+        this.setState({validationErrors:validationErrorsState})
     }
 
     render(){

@@ -1,6 +1,6 @@
 import React from 'react';
 import {resp, styles} from '../styles'
-import Label from './Label'
+import Label from '../outputs/Label'
 import setDateFunction from '../../../main/functions/setDateFunctionForInput'
 
 export default class DateInput extends React.Component{

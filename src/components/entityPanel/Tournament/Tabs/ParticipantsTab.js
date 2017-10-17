@@ -2,6 +2,8 @@ import React from 'react';
 import UserTable from './UsersTable/UsersTable'
 import InviteButton from './UsersTable/InviteButton'
 
+import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../../../redux/actions';
@@ -22,6 +24,8 @@ class ParticipantsTab extends React.Component{
                     fieldName="participants"
                     changeEntity={this.props.changeEntity.bind(this)}
                     name="Participants" />
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["participants"]}/>
                 <InviteButton operation={this.startInviteParticipants.bind(this)}  text="Invite"/>
             </div>
         )
