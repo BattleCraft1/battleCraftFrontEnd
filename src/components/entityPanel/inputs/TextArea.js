@@ -1,6 +1,8 @@
 import React from 'react';
 import {resp, styles} from '../styles'
 import Label from './Label'
+import {StyleSheet, css} from 'aphrodite';
+
 
 export default class TextArea extends React.Component{
     constructor(props) {

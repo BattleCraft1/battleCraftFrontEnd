@@ -48,10 +48,10 @@ class ConfirmDialog extends React.Component {
                     <div style={Object.assign({}, styles.modalDialog)} ref={this.setWrapperRef}>
                         <div style = {Object.assign({}, styles.goldAndBrownTheme, styles.modalContent)}>
                             <div style = {styles.modalHeader}>
-                                <h4 style = {styles.optionLabel}>{this.props.confirmation.header}</h4>
+                                <h4 style = {styles.panelTitle}>{this.props.confirmation.header}</h4>
                             </div>
-                            <div style = {styles.modalBody}>
-                                <p>{this.props.confirmation.message}</p>
+                            <div style = {Object.assign({}, styles.modalBody)}>
+                                <p >{this.props.confirmation.message}</p>
                             </div>
                             <div style = {styles.modalFooter}>
                                 <button type="button" style = {styles.button} className={css(resp.button)} data-dismiss="modal"

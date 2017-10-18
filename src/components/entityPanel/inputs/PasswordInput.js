@@ -4,7 +4,7 @@ import Label from './Label'
 import {StyleSheet, css} from 'aphrodite';
 
 
-export default class TextInput extends React.Component{
+export default class PasswordInput extends React.Component{
     constructor(props) {
         super(props);
     }
@@ -15,7 +15,7 @@ export default class TextInput extends React.Component{
                 <Label name={this.props.name}/>
                     <input id={this.props.indexOfSearchFields}
                        style={styles.optionInput}
-                       type="text"
+                       type="password"
                        ref={(control) => this.text = control}
                        name={this.props.indexOfSearchFields}
                        placeholder={this.props.placeholder}

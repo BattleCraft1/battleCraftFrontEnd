@@ -68,8 +68,13 @@ const styles = {
     width:'100%'
   },
   modalBody:{
-    color:'rgb(223, 214, 197)',
+    boxSizing:'border-box',
+    color:'rgb(74, 72, 69)',
     textAlign:'center',
+    background:'rgb(227, 202, 134)',
+    border:'1px solid rgb(236, 197, 166)',
+    borderRadius:'2px',
+    boxShadow:'inset 0 0 7px #9c7239',
   },
   optionLabel:{
     fontWeight:'700',
@@ -105,6 +110,23 @@ const styles = {
     borderRadius:'4px',
     border:'1px solid white',
     color:'rgb(230, 225, 227)',
+  },
+  panelTitle:{
+    textAlign:'center',
+    boxSizing:'border-box',
+    width:'100%',
+    backgroundImage: 'linear-gradient(rgb(142, 70, 61),rgb(119, 48, 39), rgb(87, 34, 27))',
+    border:'1px rgb(231, 180, 173) solid',
+    borderBottomColor:'rgb(75, 58, 35)',
+    borderRightColor:'rgb(75, 58, 35)',
+    borderRadius:'2px',
+    fontWeight:'700',
+    color:'lightGrey',
+    textShadow:'rgba(50, 50, 50, 0.8) 0px 0px 10px',
+    padding:'4px',
+    marginTop:'0',
+    marginBottom:'4px',
+
   },
 }
 

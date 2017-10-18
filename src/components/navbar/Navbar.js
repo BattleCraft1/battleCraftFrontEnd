@@ -99,7 +99,7 @@ class Navbar extends React.Component{
         return [<ActivingPopupDropdownOption
                 key="1"
                 name = "Add game"
-                function = {() => {}}
+                function = {() => {this.props.addEntity(entityPanelTypes.game)}}
             />,
             <NavigatingDropdownOption
                 key="2"
