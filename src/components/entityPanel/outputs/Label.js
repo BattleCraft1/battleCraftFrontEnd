@@ -1,11 +1,12 @@
 import React from 'react';
-import {styles} from '../styles'
+import {resp, styles} from '../styles'
+import {css} from 'aphrodite';
 
 export default class Label extends React.Component{
 
     render(){
         return(
-                <div style={styles.optionLabel}>{this.props.name}</div>
+                <div style={styles.optionLabel} className={css(resp.label)} >{this.props.name}</div>
         )
     }
 }

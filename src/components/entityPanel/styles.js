@@ -48,8 +48,8 @@ const styles = {
     boxSizing:'border-box',
     fontWeight:'700',
     textShadow:'rgba(0, 0, 0, 0.3) -2px -2px 0px',
-    paddingTop:'5px',
-    paddingBottom:'5px',
+    paddingTop:'3px',
+    paddingBottom:'3px',
     display:'inline-block',
     width:'100%',
     textAlign:'center',
@@ -106,11 +106,27 @@ const styles = {
     boxShadow:'inset 0 0 7px #9c7239',
     color:'rgb(227, 228, 205)',
     outline:'0',
-    borderBottomRightRadius:'4px',
-    borderTopRightRadius:'4px',
+    borderRadius:'4px',
     backgroundImage: 'linear-gradient( #dda553, #4b2f0d, #6f4d13 )',
     textAlign:'center',
     fontWeight:'600',
+  },
+  avatarButton:{
+    boxSizing:'border-box',
+    width:'170px',
+    height:'180px',
+    border:'1px solid black',
+    boxShadow:'inset 0 0 7px #9c7239',
+    color:'rgb(227, 228, 205)',
+    outline:'0',
+    borderRadius:'4px',
+    backgroundImage: 'linear-gradient( #dda553, #4b2f0d, #6f4d13 )',
+    textAlign:'center',
+    fontWeight:'600',
+    padding:'0',
+    position:'relative',
+    backgroundPosition:'center',
+    backgroundSize:'cover'
   },
   goldAndBrownTheme:{
     border:'2px solid',
@@ -144,6 +160,9 @@ const styles = {
     fontWeight:'600',
     textShadow:'rgba(0, 0, 0, 0.6) 2px 2px 3px',
     color:'rgb(228, 226, 223)',
+  },
+  thirdSize:{
+    width:'33.3%',
   },
   tabActive:{
     boxShadow:'none',
@@ -187,17 +206,57 @@ const styles = {
       maxHeight:'200px',
       width:'100%',
   },
+  panelTitle:{
+    textAlign:'center',
+    boxSizing:'border-box',
+    width:'100%',
+    backgroundImage: 'linear-gradient(rgb(142, 70, 61),rgb(119, 48, 39), rgb(87, 34, 27))',
+    border:'1px rgb(231, 180, 173) solid',
+    borderBottomColor:'rgb(75, 58, 35)',
+    borderRightColor:'rgb(75, 58, 35)',
+    borderRadius:'2px',
+    fontWeight:'700',
+    color:'lightGrey',
+    textShadow:'rgba(50, 50, 50, 0.8) 0px 0px 10px',
+    padding:'4px',
+  },
+  fileInput:{
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    width: '100%',
+    height:'100%',
+    opacity: '0',
+  },
 };
 
 const resp = StyleSheet.create({
   popupContent:{
     '@media (max-width: 720px)': {
-      marginTop:'2%',
+      top:'2%',
       width:'96%',
-      marginLeft:'2%',
-    },
-    '@media (max-width: 480px)': {
+      left:'2%',
+      margin:'0',
+      padding:'2px',
       fontSize:'80%',
+      paddingBottom:'8px',
+    },
+  },
+  inputBlock:{
+    '@media (max-width: 1100px)': {
+      width:'48%',
+      display:'inline-block',
+      marginLeft:'1%',
+      marginRight:'1%',
+      marginTop:'2px',
+      marginBottom:'2px',
+      boxShadow: '-2px 0 5px -4px rgb(99, 89, 66), 2px 0 5px -4px rgb(99, 89, 66)',
+    },
+  },
+  label:{
+    '@media (max-width: 720px)': {
+      paddingTop:'2px',
+      paddingBottom:'2px',
     },
   },
   button:{
@@ -207,11 +266,42 @@ const resp = StyleSheet.create({
         color:'lightGrey',
         backgroundImage: 'linear-gradient( #4b110d, #6f1913, #dd5353 )',
       },
+      '@media (max-width: 720px)': {
+        paddingTop:'2px',
+        paddingBottom:'2px',
+      },
   },
   tableButton:{
     ':active':{
         color:'lightGrey',
         backgroundImage: 'linear-gradient( #4b2f0d, #6f4d13, #dda553 )',
+      },
+  },
+  avatarButton:{
+    ':hover':{
+      backgroundBlendMode:'multiply',
+      /*
+color
+color-darken
+color-dodge
+darken
+difference
+exclusion
+hard-light
+soft-light
+hue
+luminosity
+multiply
+normal
+overlay
+saturation
+screen
+
+      */
+    },
+    ':active':{
+        color:'lightGrey',
+        backgroundBlendMode:'luminosity',
       },
   },
   halfSize:{
@@ -235,6 +325,11 @@ const resp = StyleSheet.create({
     marginTop:'3%',
     marginBottom:'5%',
     height:'100%',
+    '@media (max-width: 720px)': {
+        marginBottom:'2px',
+        marginTop:'2px',
+        position:'relative',
+    },
   },
   panel:{
     display:'block',
@@ -246,7 +341,19 @@ const resp = StyleSheet.create({
     borderTopRightRadius:'9px',
     borderTop:'0px',
   },
+  smallPanel:{
+    display:'block',
+    background:'rgb(164, 129, 91)',
+    position:'relative',
+    width:'100%',
+    boxSizing:'border-box',
+    borderRadius:'2px',
+    marginTop:'5px',
+    marginBottom:'5px',
+    paddingTop:'4px',
+    paddingBottom:'4px',
+    borderWidth:'1px',
+  },
 });
-
 
 export {resp, styles};

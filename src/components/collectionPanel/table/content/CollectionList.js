@@ -19,6 +19,7 @@ import GameRowHeader from './headRow/games/RowHeader'
 
 import findGameName from '../../../../main/functions/findGameName'
 
+
 let icons = require('glyphicons');
 
 
