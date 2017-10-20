@@ -21,9 +21,7 @@ import {serverName} from '../../../main/consts/server';
 import axios from 'axios';
 
 import checkIfObjectIsNotEmpty from '../../../main/functions/checkIfObjectIsNotEmpty'
-import setDateFunction from '../../../main/functions/setDateFunction'
-
-import {provinces} from '../../../main/consts/provinces'
+import validateTournament from '../validators/TournamentValidator'
 
 const tabsMap = {
     "basicData":BasicDataTab,
@@ -41,7 +39,7 @@ class Panel extends React.Component{
                 "name": "",
                 "nameChange": "",
                 "tablesCount": 0,
-                "maxPlayers": 0,
+                "playersOnTableCount": 0,
                 "game": "Warhammer",
                 "dateOfStart": new Date(),
                 "dateOfEnd": new Date(),
@@ -162,8 +160,7 @@ class Panel extends React.Component{
         let entity = JSON.parse(JSON.stringify(this.state.entity));
         entity.organizers = this.state.entity.organizers.map(element => element.invitedUserName);
         entity.participants = this.state.entity.participants.map(element => element.invitedUserName);
-        let validationErrors = this.validate(entity);
-        this.setState();
+        let validationErrors = validateTournament(entity);
         if(checkIfObjectIsNotEmpty(validationErrors)){
             console.log(entity);
             axios.post(serverName+this.props.entityPanel.mode+'/'+this.props.entityPanel.entityType, entity)
@@ -184,61 +181,6 @@ class Panel extends React.Component{
         else{
             this.setValidationErrors(validationErrors);
         }
-    }
-
-    validate(entity){
-        let validationErrors = {};
-        let fieldErrors = {};
-        if(!entity.name.match(new RegExp("^[A-Z][A-Za-zzżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9 ]{1,29}$")))
-            fieldErrors.dnameChange = "Tournament name must start with big letter and have between 2 to 30 chars";
-
-        if(entity.tablesCount<1 || entity.tablesCount>30)
-            fieldErrors.tablesCount = "Tournament name must start with big letter and have between 2 to 30 chars";
-
-        if(entity.maxPlayers>entity.tablesCount*2 || entity.maxPlayers<1)
-            fieldErrors.maxPlayers = "You cannot create tournament with "+entity.maxPlayers+" players because if you have "+entity.tablesCount+" you can not have more than "+entity.tablesCount*2+" players";
-
-        if(entity.dateOfStart===undefined || this.getDatesDiffrenceInDays(new Date(),new Date(entity.dateOfStart))<0)
-            fieldErrors.dateOfStart = "You cannot start tournament at "+setDateFunction(entity.dateOfStart)+" because this date is outdated";
-
-        if(entity.dateOfEnd===undefined || this.getDatesDiffrenceInDays(new Date(entity.dateOfStart),new Date(entity.dateOfEnd))<0)
-            fieldErrors.dateOfEnd = "End date must be later than "+setDateFunction(entity.dateOfStart);
-
-        if(this.getDatesDiffrenceInDays(new Date(entity.dateOfEnd),new Date(entity.dateOfStart))>3)
-            fieldErrors.dateOfEnd = "Duration of tournament cannnot be longer than 3 days";
-
-        if(provinces.indexOf(entity.province)===-1)
-            fieldErrors.provinces = "Invalid province name";
-
-        if(!new RegExp("^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]{1,39}$").test(entity.city))
-            fieldErrors.city = "City must start with big letter and have between 2 and 40 chars";
-
-        if(!new RegExp("^[0-9A-ZĄĆĘŁŃÓŚŹŻ]{1}[0-9a-ząćęłńóśźż. ]{1,39}$").test(entity.street))
-            fieldErrors.street = "Street and have between 2 and 40 chars";
-
-        if(!new RegExp("^\\d{2}-\\d{3}$").test(entity.zipCode))
-            fieldErrors.zipCode = "Zip code have invalid format";
-
-        if(entity.description.length>100)
-            fieldErrors.description = "Description can have only 100 chars";
-
-        if(entity.organizers.length>10)
-            fieldErrors.organizers = "Count of organizers must be less than 10";
-
-        if(entity.maxPlayers!==0 && entity.participants.length>entity.maxPlayers)
-            fieldErrors.participants = "Participants count must be less than "+entity.maxPlayers;
-
-        if(!checkIfObjectIsNotEmpty(fieldErrors)){
-            validationErrors.message = "Invalid tournament data";
-            validationErrors.fieldErrors = fieldErrors;
-        }
-
-        return validationErrors;
-    }
-
-    getDatesDiffrenceInDays(date1,date2){
-        let timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        return Math.ceil(timeDiff / (1000 * 3600 * 24));
     }
 
     setValidationErrors(validationException){

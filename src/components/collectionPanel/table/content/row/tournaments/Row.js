@@ -118,6 +118,20 @@ class Row extends React.Component{
                 />
 
                 <TableResponsiveHeader
+                    isActive = {this.props.isColumnActive("playersOnTableCount")}
+                    sortBy = "playersOnTableCount"
+                    sort = {this.props.sortByColumnName}
+                    arrow = {this.props.getArrowGlyph("playersOnTableCount")}
+                    headerName = "type"
+                />
+                <TableCell
+                    columnName = "playersOnTableCount"
+                    color = {this.getColor("playersOnTableCount", this.props.element)}
+                    edit={() => this.editEntity(this.props.element)}
+                    content = {this.props.element.playersOnTableCount===2?"Duel":"Group"}
+                />
+
+                <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("dateOfStart")}
                     sortBy = "dateOfStart"
                     sort = {this.props.sortByColumnName}

@@ -1,9 +1,13 @@
 import React from 'react';
 
 import SelectInput from '../../inputs/SelectInput'
+import SelectNumberInput from '../../inputs/SelectNumberInput'
 import NumberInput from '../../inputs/NumberInput'
 import TextInput from '../../inputs/TextInput'
 import DateInput from '../../inputs/DateInput'
+
+import NumberOutput from '../../outputs/NumberOutput'
+import TextOutput from '../../outputs/TextOutput'
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
 
@@ -37,7 +41,23 @@ class BasicDataTab extends React.Component{
             });
     }
 
+    calculateTournamentType(maxPlayers){
+        if(maxPlayers<=8){
+            return "Local";
+        }
+        else if(maxPlayers<=16){
+            return "Challenger";
+        }
+        else
+            return "Master";
+    }
+
     render(){
+        let tournamentTypeOptions = {
+            "Duel":2,
+            "Group":4
+        };
+        let maxPlayers = this.props.entity["tablesCount"]*this.props.entity["playersOnTableCount"];
         return(
             <div>
                 <TextInput
@@ -54,13 +74,20 @@ class BasicDataTab extends React.Component{
                     name="Tables count"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["tablesCount"]}/>
-                <NumberInput
-                    value={this.props.entity["maxPlayers"]}
-                    fieldName="maxPlayers"
+                <SelectNumberInput
+                    value={this.props.entity["playersOnTableCount"]}
+                    fieldName="playersOnTableCount"
                     changeEntity={this.props.changeEntity}
-                    name="Max players"/>
+                    options={tournamentTypeOptions}
+                    name="Type"/>
                 <ValidationErrorMessage
-                    validationErrorMessage={this.props.validationErrors["maxPlayers"]}/>
+                    validationErrorMessage={this.props.validationErrors["playersOnTableCount"]}/>
+                <NumberOutput
+                    value={maxPlayers}
+                    name="Max players"/>
+                <TextOutput
+                    value={this.calculateTournamentType(maxPlayers)}
+                    name="Tournament class"/>
                 <SelectInput
                     value={this.props.entity["game"]}
                     fieldName="game"

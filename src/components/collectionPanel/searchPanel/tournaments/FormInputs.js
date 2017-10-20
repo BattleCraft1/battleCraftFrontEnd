@@ -1,6 +1,7 @@
 import React from 'react';
 import TextInput from './../inputs/TextInput'
 import SelectInput from './../inputs/SelectInput'
+import SelectNumberInput from './../inputs/SelectNumberInput'
 import DateInput from "../inputs/DateInput";
 import NumberInput from "../inputs/NumberInput";
 import StatusInput from "../inputs/StatusInput";
@@ -25,7 +26,8 @@ export default class FormInputs extends React.Component{
                 "status":{},
                 "freeSlots":{},
                 "maxPlayers":{},
-                "playersNumber":{}
+                "playersNumber":{},
+                "playersOnTableCount":{}
             }
         }
     }
@@ -83,6 +85,14 @@ export default class FormInputs extends React.Component{
         return tournamentStatusOptions;
     }
 
+    prepareTournamentTypeOptions(){
+        let tournamentTypeOptions = [];
+        tournamentTypeOptions.push(<option value={""}  key="nullOption"/>);
+        tournamentTypeOptions.push(<option value={2} key={2}>Duel</option>);
+        tournamentTypeOptions.push(<option value={4} key={4}>Group</option>);
+        return tournamentTypeOptions;
+    }
+
     changeSearchForm(index,value){
         let searchFormFields = this.state.searchFormField;
         searchFormFields[index] = value;
@@ -93,6 +103,7 @@ export default class FormInputs extends React.Component{
         let provincesOptions = this.prepareProvinceOptions();
         let tournamentGamesOptions = this.prepareTournamentGamesOptions();
         let tournamentStatusOptions = this.prepareTournamentStatusOptions();
+        let tournamentTypeOptions = this.prepareTournamentTypeOptions();
 
         return (
             <div>
@@ -125,7 +136,7 @@ export default class FormInputs extends React.Component{
                 </div>
               </div>
               <div className={css(resp.optionContent)}>
-                <div className={css(resp.thirdSize)}>
+                  <div className={css(resp.halfSize)}>
                   <NumberInput
                       name = "Players number"
                       keys = {["playersNumber"]}
@@ -134,7 +145,7 @@ export default class FormInputs extends React.Component{
                       changeSearchForm = {this.changeSearchForm.bind(this)}
                   />
                 </div>
-                <div className={css(resp.thirdSize)} style={styles.middleOption}>
+                <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
                   <NumberInput
                       name = "Max players"
                       keys = {["maxPlayers"]}
@@ -143,16 +154,28 @@ export default class FormInputs extends React.Component{
                       changeSearchForm = {this.changeSearchForm.bind(this)}
                   />
                 </div>
-                <div className={css(resp.thirdSize)}>
-                  <NumberInput
-                      name = "Free slots"
-                      keys = {["freeSlots"]}
-                      operation = ">"
-                      indexOfSearchFields = "freeSlots"
-                      changeSearchForm = {this.changeSearchForm.bind(this)}
-                  />
-                </div>
               </div>
+                <div className={css(resp.optionContent)}>
+                    <div className={css(resp.halfSize)}>
+                        <NumberInput
+                            name = "Free slots"
+                            keys = {["freeSlots"]}
+                            operation = ">"
+                            indexOfSearchFields = "freeSlots"
+                            changeSearchForm = {this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                    <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
+                        <SelectNumberInput
+                            name = "Type"
+                            keys = {["playersOnTableCount"]}
+                            operation = ":"
+                            indexOfSearchFields = "playersOnTableCount"
+                            options = {tournamentTypeOptions}
+                            changeSearchForm = {this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                </div>
               <div className={css(resp.optionContent)}>
                 <div className={css(resp.halfSize)}>
                   <TextInput
