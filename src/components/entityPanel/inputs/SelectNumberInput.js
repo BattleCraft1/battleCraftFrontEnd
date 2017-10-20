@@ -2,11 +2,11 @@ import React from 'react';
 import {styles} from '../styles'
 import Label from '../outputs/Label'
 
-export default class SelectInput extends React.Component{
+export default class SelectNumberInput extends React.Component{
 
     createOptions(){
-        return this.props.options.map(
-            (option) => <option value={option} key={option}>{option}</option>
+        return Object.keys(this.props.options).map(
+            (key, index) => <option value={this.props.options[key]} key={key}>{key}</option>
         )
     }
 

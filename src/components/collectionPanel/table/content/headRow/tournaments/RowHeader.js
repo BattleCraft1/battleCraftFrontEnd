@@ -47,6 +47,13 @@ export default class RowHeader extends React.Component{
                     content="players"
                 />
                 <TableHeader
+                    sortBy = "playersOnTableCount"
+                    sort = {this.props.sortByColumnName}
+                    isActive = {this.props.isColumnActive("playersOnTableCount")}
+                    arrow = {this.props.getArrowGlyph("playersOnTableCount")}
+                    content="type"
+                />
+                <TableHeader
                     sortBy = "dateOfStart"
                     sort = {this.props.sortByColumnName}
                     isActive = {this.props.isColumnActive("dateOfStart")}
