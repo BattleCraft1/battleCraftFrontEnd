@@ -1,6 +1,7 @@
 export const entityPanelModes = {
   disabled:"disabled",
+  hidden:"hidden",
   edit:"edit",
-  show:"show",
+  get:"get",
   add:"add"
 };

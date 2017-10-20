@@ -7,9 +7,6 @@ import { ActionCreators } from '../../../../redux/actions/index';
 let icons = require('glyphicons');
 
 class SearchOperation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     searchElements(){
         this.props.showSearchPanel(true);

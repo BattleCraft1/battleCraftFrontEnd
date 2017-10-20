@@ -8,9 +8,6 @@ import {StyleSheet, css} from 'aphrodite';
 import {colors} from './../../../../../../main/consts/collectionsColors'
 
 export default class Row extends React.Component{
-    constructor(props) {
-        super(props);
-    }
 
     getColor(columnName, tournament){
         if(this.props.isColumnActive(columnName)){
@@ -30,91 +27,91 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "no"
                     color = {this.getColor("no")}
-                    onClick = {undefined}
+                    edit = {() => {}}
                     content = {this.props.number}
                 />
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("name")}
                     sortBy = "name"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("name")}
                     headerName = "name"
                 />
                 <TableCell
                     columnName = "name"
                     color = {this.getColor("name")}
-                    edit = {undefined}
+                    edit = {() => {}}
                     content = {this.props.element.name}
                 />
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("province")}
-                    sortBy = "playerProvince.location"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sortBy = "playerAddress.province"
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("province")}
                     headerName = "province"
                 />
                 <TableCell
                     columnName = "province"
                     color = {this.getColor("province")}
-                    edit = {undefined}
-                    content = {this.props.element.province}
+                    edit = {() => {}}
+                    content = {this.props.element.playerProvince}
                 />
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("city")}
                     sortBy = "playerAddress.city"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("city")}
                     headerName = "city"
                 />
                 <TableCell
                     columnName = "city"
                     color = {this.getColor("city")}
-                    edit = {undefined}
-                    content = {this.props.element.city}
+                    edit = {() => {}}
+                    content = {this.props.element.playerCity}
                 />
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("numberOfTournaments")}
                     sortBy = "numberOfTournaments"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("numberOfTournaments")}
                     headerName = "Tournaments number"
                 />
                 <TableCell
                     columnName = "numberOfTournaments"
                     color = {this.getColor("numberOfTournaments")}
-                    edit = {undefined}
+                    edit = {() => {}}
                     content = {this.props.element.numberOfTournaments}
                 />
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("numberOfBattles")}
                     sortBy = "numberOfBattles"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("numberOfBattles")}
                     headerName = "Battles number"
                 />
                 <TableCell
                     columnName = "numberOfBattles"
                     color = {this.getColor("numberOfBattles")}
-                    edit = {undefined}
+                    edit = {() => {}}
                     content = {this.props.element.numberOfBattles}
                 />
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("points")}
                     sortBy = "points"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("points")}
                     headerName = "points"
                 />
                 <TableCell
                     columnName = "points"
                     color = {this.getColor("points")}
-                    edit = {undefined}
+                    edit = {() => {}}
                     content = {this.props.element.points}
                 />
             </tr>

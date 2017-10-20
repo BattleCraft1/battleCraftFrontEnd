@@ -18,9 +18,6 @@ import setDate from './../../../../../../main/functions/setDateFunction'
 let icons = require('glyphicons');
 
 class Row extends React.Component{
-    constructor(props) {
-        super(props);
-    }
 
     getColor(columnName, game){
         if(this.props.isColumnActive(columnName)){
@@ -65,13 +62,14 @@ class Row extends React.Component{
         return (
             <tr className={css(resp.tableRow)}>
                 <RowChecbox
-                    value = {this.props.element.name}
+                    elementName = {this.props.element.name}
+                    checked = {this.props.element.checked}
                 />
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("name")}
                     sortBy = "name"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("name")}
                     headerName = "name"
                 />
@@ -85,7 +83,7 @@ class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("tournamentsNumber")}
                     sortBy = "tournamentsNumber"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("tournamentsNumber")}
                     headerName = "tournamentsNumber"
                 />
@@ -99,7 +97,7 @@ class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("creatorName")}
                     sortBy = "creator.name"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("creatorName")}
                     headerName = "creatorName"
                 />
@@ -113,7 +111,7 @@ class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("dateOfCreation")}
                     sortBy = "dateOfCreation"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("dateOfCreation")}
                     headerName = "creation date"
                 />

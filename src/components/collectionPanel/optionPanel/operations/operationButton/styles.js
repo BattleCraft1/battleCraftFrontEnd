@@ -1,4 +1,4 @@
-import {StyleSheet, css} from 'aphrodite';
+import {StyleSheet} from 'aphrodite';
 
 const styles = {
   button:{
@@ -12,14 +12,13 @@ const styles = {
       borderBottomColor: '#E0BA51',
       borderRightColor: '#805D2C',
       borderLeftColor: '#e3ca86',
-      backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#7d150e), to(#8c3731))',
       backgroundImage: 'linear-gradient(#f66060, #7d150e, #5b0f0a)',
       boxShadow:'inset 0 0 7px #9c7239',
       color:'white',
       outline:'0',
       borderRadius:'2px',
     }
-}
+};
 
 
 const resp = StyleSheet.create({
@@ -43,7 +42,6 @@ const resp = StyleSheet.create({
             borderTopColor: 'rgb(204, 126, 69)',
             borderBottomColor: 'rgb(249, 249, 249)',
             color:'lightGrey',
-            backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#473419), to(#735327))',
             backgroundImage: 'linear-gradient( #4b110d, #6f1913, #dd5353 )',
         },
         '@media (max-width: 600px)': {

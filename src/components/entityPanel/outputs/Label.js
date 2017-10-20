@@ -1,5 +1,5 @@
 import React from 'react';
-import {resp, styles} from '../styles'
+import {styles} from '../styles'
 
 export default class Label extends React.Component{
 

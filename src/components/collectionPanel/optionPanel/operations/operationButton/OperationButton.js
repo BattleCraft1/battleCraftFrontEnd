@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 import {resp, styles} from './styles'
 
 export default class OperationButton extends React.Component {

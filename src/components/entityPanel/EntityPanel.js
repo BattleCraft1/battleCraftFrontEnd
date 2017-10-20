@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 import {resp, styles} from './styles'
 
 import TournamentPanel from './Tournament/Panel';
@@ -26,7 +26,8 @@ class EntityPanel extends React.Component{
 
     handleClickOutside(event) {
         if (this.entityPanelRef && !this.entityPanelRef.contains(event.target)) {
-            this.props.hideEntityPanel();
+            if(!this.props.entityPanel.hidden)
+            this.props.disableEntityPanel();
         }
     }
 
@@ -52,7 +53,7 @@ class EntityPanel extends React.Component{
       panel = this.createPanel();
         return(
             this.props.entityPanel.mode!=='disabled' &&
-            <div style = {Object.assign({}, styles.background, {display: 'block'})}>
+            <div style = {Object.assign({}, styles.background, this.props.entityPanel.hidden?{display: 'none'}:{display: 'block'})}>
                 <div ref={this.setEntityPanelRef} style = {Object.assign({}, styles.goldAndBrownTheme, styles.panelContainer)}
                      className = {css(resp.popupContent)}>
                     {panel}

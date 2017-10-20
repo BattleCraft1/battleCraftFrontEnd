@@ -1,22 +1,18 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite';
 import {serverName} from '../../../../../../main/consts/server';
-import Background from '../../../../../../resources/defaultAvatar.jpg';
 
 
 export default class TableAvatarCell extends React.Component{
     render(){
         return(
-          <div className={css(resp.avatarContainer)}>
             <td className = {css(resp.rowContent)}
                 style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.props.color})}
                 onClick={() => {this.props.onClick()}}>
                 <img className={css(resp.avatar)}
                     src={serverName+`/get/user/`+this.props.name+`/avatar`}
-                     onerror='this.onerror = null; this.src="../../../../../../resources/defaultAvatar.jpg"'
                      alt="avatar"/>
             </td>
-          </div>
         )
     }
 }
@@ -35,11 +31,9 @@ const styles = {
         backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
     },
     rowContent: {
-      textAlign:'center',
         borderRadius: '0',
         background: '#c6a57d',
         border: '2px solid',
-        textAlign: 'none',
         backgroundImage: '',
         WebkitBorderImage: '',
         color: 'black',
@@ -47,6 +41,8 @@ const styles = {
         borderBottomColor: '#886e4b',
         borderLeftColor: '#dfd19e',
         borderRightColor: '#886e4b',
+        position:'relative',
+        textAlign:'center'
     },
 };
 
@@ -58,9 +54,10 @@ const resp = StyleSheet.create({
         textAlign:'center',
         boxSizing:'border-box',
         '@media (max-width: 599px)': {
-            width:'70%',
+            width:'80%',
             display: 'inline-block',
-            borderRadius:'0'
+            borderRadius:'0',
+            position:'relative',
         },
         '@media (max-width: 1024px)': {
             fontSize:'1em'
@@ -80,16 +77,4 @@ const resp = StyleSheet.create({
         marginLeft:'40%',
       },
     },
-    avatarContainer:{
-      width:'100%',
-      position:'relative',
-      textAlign:'center',
-      '@media (max-width: 599px)': {
-          width:'80%',
-          display: 'inline-block',
-          borderRadius:'0',
-          position:'relative',
-
-      },
-    }
 });

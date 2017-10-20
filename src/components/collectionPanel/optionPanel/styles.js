@@ -1,5 +1,3 @@
-import {StyleSheet, css} from 'aphrodite';
-
 const styles = {
   buttonGroup:{
     boxSizing:'border-box',
@@ -22,6 +20,6 @@ const styles = {
     width:'99%',
     marginLeft:'0.5%',
   }
-}
+};
 
 export {styles};

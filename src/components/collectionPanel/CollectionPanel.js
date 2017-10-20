@@ -1,15 +1,18 @@
-import { ActionCreators } from '../../redux/actions';
-
 import React from 'react';
+
 import {StyleSheet, css} from 'aphrodite';
+
 import CollectionList from './table/content/CollectionList';
 import PagePanel from './pagePanel/PagePanel';
 import SearchPanel from './searchPanel/SearchPanel';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../redux/actions';
 
 import {serverName} from '../../main/consts/server'
+
+import {possibleOperationsForCollections} from "../../main/consts/possibleOperationsForCollections";
 
 import axios from 'axios';
 
@@ -18,60 +21,84 @@ class CollectionPanel extends React.Component{
         super(props);
 
         this.state = {
-            collectionType:"tournaments"
+            collectionType:""
         }
     }
 
     async componentDidMount() {
-        if(this.props.match.params.collectionType==='ranking'){
-            let pageRequest = this.props.pageRequest;
-            this.getRankingRequest(pageRequest);
-            this.props.setPageRequest(pageRequest);
-        }
-        this.setState({collectionType: this.props.match.params.collectionType});
+        this.setPossibleOperations(this.props.match.params.collectionType);
         await this.getPageRequest(this.props.match.params.collectionType);
+        await this.setState({collectionType: this.props.match.params.collectionType});
+        let pageRequest = this.createPageRequest(this.state.collectionType);
+        this.props.setPageRequest(pageRequest);
     }
 
     async componentWillReceiveProps(nextProps) {
-        if (nextProps.match.params.collectionType !== undefined &&
-            nextProps.match.params.collectionType !== this.props.match.params.collectionType) {
-
-            this.setState({collectionType: nextProps.match.params.collectionType});
-
-            let pageRequest = this.props.pageRequest;
-            pageRequest.pageRequest.page = 0;
-            pageRequest.pageRequest.size = 10;
-            pageRequest.searchCriteria = [];
-            if(nextProps.match.params.collectionType==='ranking'){
-                this.getRankingRequest(pageRequest);
-            }
-            else{
-                pageRequest.pageRequest.direction = "ASC";
-                pageRequest.pageRequest.property = "name";
-            }
+        if (nextProps.entityPanel.hidden === true &&
+            this.props.entityPanel.hidden === false) {
+            await this.setState({collectionType: nextProps.match.params.collectionType});
+            let pageRequest = this.createPageRequestForEntityPanel(nextProps.entityPanel.relatedEntity.relatedEntityType);
             this.props.setPageRequest(pageRequest);
-            await this.getPageRequest(nextProps.match.params.collectionType);
+            await this.getPageRequest(this.state.collectionType);
+            this.props.checkElements(nextProps.entityPanel.relatedEntity.relatedEntityNames,true)
+        }
+        else if (nextProps.match.params.collectionType !== this.state.collectionType ||
+            (nextProps.entityPanel.mode === 'disabled' &&
+                this.props.entityPanel.mode !== 'disabled')) {
+            let pageRequest = this.createPageRequest(nextProps.match.params.collectionType);
+            this.setPossibleOperations(nextProps.match.params.collectionType);
+            await this.setState({collectionType: nextProps.match.params.collectionType});
+            this.props.setPageRequest(pageRequest);
+            await this.getPageRequest(this.state.collectionType);
         }
     }
 
-    getRankingRequest(pageRequest){
-        pageRequest.pageRequest.direction = "DESC";
-        pageRequest.pageRequest.property = "points";
-        pageRequest.searchCriteria = [];
-        pageRequest.searchCriteria.push(
-            {
-                "keys": ["tour", "tournament", "game","name"],
-                "operation":":",
-                "value":"Warhammer"
-            }
-        );
+    createPageRequestForEntityPanel(relatedEntityType){
+        let pageRequest = this.props.pageRequest;
+        pageRequest.searchCriteria = [{
+            "keys": ["status"],
+            "operation": ":",
+            "value": relatedEntityType
+        }];
+        pageRequest.pageRequest.direction = "ASC";
+        pageRequest.pageRequest.property = "name";
+        pageRequest.pageRequest.size = 10;
+        pageRequest.pageRequest.page = 0;
+        return pageRequest;
+    }
+
+    createPageRequest(collectionType){
+        let pageRequest = this.props.pageRequest;
+        if(collectionType==='ranking') {
+            pageRequest.searchCriteria = [
+                {
+                    "keys": ["tour", "tournament", "game","name"],
+                    "operation":":",
+                    "value":["Warhammer"]
+                }
+            ];
+            pageRequest.pageRequest.direction = "DESC";
+            pageRequest.pageRequest.property = "points";
+        }
+        else {
+            pageRequest.searchCriteria = [];
+            pageRequest.pageRequest.direction = "ASC";
+            pageRequest.pageRequest.property = "name";
+        }
+        pageRequest.pageRequest.size = 10;
+        pageRequest.pageRequest.page = 0;
+        return pageRequest;
+    }
+
+    setPossibleOperations(collectionType){
+        this.props.setOperations(possibleOperationsForCollections[collectionType])
     }
 
     async getPageRequest(collectionType){
         console.log(this.props.pageRequest);
         await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
             .then(res => {
-                this.props.setPage(res.data);
+                this.props.checkPreviouslyCheckedElements(res.data);
 
                 let pageRequest = this.props.pageRequest;
                 pageRequest.pageRequest.page=this.props.page.number;
@@ -106,7 +133,7 @@ class CollectionPanel extends React.Component{
             </div>
         );
     }
-};
+}
 
 function mapDispatchToProps( dispatch ) {
     return bindActionCreators( ActionCreators, dispatch );
@@ -116,7 +143,9 @@ function mapStateToProps( state ) {
     return {
         page: state.page,
         pageRequest: state.pageRequest,
-        message: state.message
+        message: state.message,
+        entityPanel: state.entityPanel,
+        possibleOperations: state.possibleOperations
     };
 }
 

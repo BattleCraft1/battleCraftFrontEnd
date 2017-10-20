@@ -8,4 +8,4 @@ export const provinces = [
     "opolskie",
     "łódzkie",
     "podlaskie"
-]
+];

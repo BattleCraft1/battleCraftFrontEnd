@@ -10,12 +10,9 @@ let icons = require('glyphicons');
 
 
 class DeleteOperation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
-    getSuccessMessage(elementsToDelete){
-        return "Elements "+elementsToDelete.map(function(element){return element.name}).join(", ")+" are deleted";
+    getSuccessMessage(deletedElementsNames){
+        return "Elements "+deletedElementsNames.join(", ")+" are deleted";
     }
 
     getFailureMessage(elementsWhichCannotBeDeleted){
@@ -25,45 +22,27 @@ class DeleteOperation extends React.Component {
     }
 
     deleteElements(){
-        let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        let elementsToDelete = checkedElements.filter(element => element.banned===true || (element.hasOwnProperty('firstname') && element.status ==="NEW"));
-        let elementsWhichCannotBeDeleted = checkedElements.filter(element => !element.banned && (!element.hasOwnProperty('firstname') || element.status !=="NEW"));
-        this.props.checkAllElements(false);
-
+        let checkedElementsNames = this.props.page.checkedElementsNames;
+        let clearCheckedElements = this.props.clearCheckedElements;
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
-        let setPage = this.props.setPage;
+        let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
-        let getFailureMessage = this.getFailureMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
-        if(elementsToDelete.length>0) {
-            let uniqueElementsToBanNames = elementsToDelete.map(function(item) {
-                return item.name;
-            });
-            let getPageAndModifyDataObjectsWrapper = {
-                namesOfObjectsToModify: uniqueElementsToBanNames,
-                getPageObjectsWrapper: this.props.pageRequest
+        if(checkedElementsNames.length>0) {
+            let GetPageAndModifyDataDTO = {
+                namesOfObjectsToModify: checkedElementsNames,
+                getPageObjectsDTO: this.props.pageRequest
             };
 
             let operationFunction = function(){
-                axios.post(serverName+`delete/`+collectionType,
-                    getPageAndModifyDataObjectsWrapper)
+                axios.post(serverName+`delete/`+collectionType, GetPageAndModifyDataDTO)
                     .then(res => {
-                        setPage(res.data);
-                        if(elementsWhichCannotBeDeleted.length>0)
-                            showFailureMessage(
-                                {
-                                    messageText: getFailureMessage(elementsWhichCannotBeDeleted)
-                                }
-                            );
-                        else
-                            showSuccessMessage(
-                                {
-                                    messageText: getSuccessMessage(elementsToDelete)
-                                }
-                            );
+                        checkPreviouslyCheckedElements(res.data);
+                        clearCheckedElements();
+                        showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
                     .catch(error => {
                         showNetworkErrorMessage(error);
@@ -79,11 +58,7 @@ class DeleteOperation extends React.Component {
             )
         }
         else{
-            showFailureMessage(
-                {
-                    messageText: "Nothing to delete. You can delete only banned elements."
-                }
-            )
+            showFailureMessage("Nothing to delete.")
         }
     }
 

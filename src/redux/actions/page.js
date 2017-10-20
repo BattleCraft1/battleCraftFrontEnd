@@ -1,8 +1,8 @@
 import * as types from '../types/page'
 
-export function setPage(page) {
+export function checkPreviouslyCheckedElements(page) {
     return {
-        type: types.SET_PAGE,
+        type: types.CHECK_PREVIOUSLY_CHECKED_ELEMENTS,
         page: page
     }
 }
@@ -12,10 +12,22 @@ export function checkAllElements(checked) {
         checked: checked
     }
 }
-export function checkElement(value,checked) {
+export function checkElements(elementsNames,checked) {
+    return {
+        type: types.CHECK_ELEMENTS,
+        checked: checked,
+        elementsNames: elementsNames
+    }
+}
+export function checkElement(elementName,checked) {
     return {
         type: types.CHECK_ELEMENT,
         checked: checked,
-        value: value
+        elementName: elementName
+    }
+}
+export function clearCheckedElements() {
+    return {
+        type: types.CLEAR_CHECKED_ELEMENTS
     }
 }

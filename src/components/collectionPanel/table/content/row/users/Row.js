@@ -11,9 +11,6 @@ import {colors} from './../../../../../../main/consts/collectionsColors'
 
 
 export default class Row extends React.Component{
-    constructor(props) {
-        super(props);
-    }
 
     getColor(columnName, user){
         if(this.props.isColumnActive(columnName)){
@@ -43,7 +40,8 @@ export default class Row extends React.Component{
           <tr className={css(resp.tableRow)}>
 
                 <RowUserChecbox
-                value = {this.props.element.name}
+                    elementName = {this.props.element.name}
+                    checked = {this.props.element.checked}
                 />
 
                 <TableRespNeutralHeader
@@ -59,7 +57,7 @@ export default class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("name")}
                     sortBy = "name"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("name")}
                     headerName = "name"
                 />
@@ -73,7 +71,7 @@ export default class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("firstname")}
                     sortBy = "firstname"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("firstname")}
                     headerName = "firstname"
                 />
@@ -87,7 +85,7 @@ export default class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("lastname")}
                     sortBy = "lastname"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("lastname")}
                     headerName = "lastname"
                 />
@@ -101,7 +99,7 @@ export default class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("email")}
                     sortBy = "email"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("email")}
                     headerName = "email"
                 />
@@ -114,8 +112,8 @@ export default class Row extends React.Component{
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("province")}
-                    sortBy = "province.location"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sortBy = "province"
+                    sort = {this.props.sortByColumnName}
                     arrow = {() => this.props.getArrowGlyph("province")}
                     headerName = "province"
                 />
@@ -129,7 +127,7 @@ export default class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("city")}
                     sortBy = "address.city"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("city")}
                     headerName = "city"
                 />
@@ -143,7 +141,7 @@ export default class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("phoneNumber")}
                     sortBy = "phoneNumber"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("phoneNumber")}
                     headerName = "phoneNumber"
                 />

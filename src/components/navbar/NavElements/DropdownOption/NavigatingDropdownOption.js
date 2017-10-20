@@ -3,15 +3,37 @@ import React from 'react';
 import styles from '../../NavStyle.css.js'
 import { StyleSheet, css } from 'aphrodite';
 
-export default class NavElementSmall extends React.Component{
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../../../redux/actions';
 
+class NavElementSmall extends React.Component{
+    clearCheckedElements(){
+        this.props.clearCheckedElements();
+        this.props.disableEntityPanel();
+        this.props.hideList();
+    }
 
     render(){
         return (
-            <Link to={this.props.link} onClick={this.props.hideList.bind(this)} style = {styles.button} className={css(resp.option)}>{this.props.name}</Link>
+            <Link to={this.props.link} onClick={this.clearCheckedElements.bind(this)}
+                  style = {styles.button} className={css(resp.option)}>{this.props.name}</Link>
         );
     }
 };
+
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
+
+function mapStateToProps( state ) {
+    return {
+        page: state.page,
+        entityPanel: state.entityPanel
+    };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( NavElementSmall );
 
 const resp = StyleSheet.create({
     option: {

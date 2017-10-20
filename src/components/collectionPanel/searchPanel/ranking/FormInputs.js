@@ -5,7 +5,7 @@ import NumberInput from './../inputs/NumberInput'
 import DateInput from './../inputs/DateInput'
 import GameInputForRanking from './../inputs/GameInputForRanking'
 import {resp, styles} from '../styles'
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 import findGameName from '../../../../main/functions/findGameName'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -21,12 +21,15 @@ class FormInputs extends React.Component{
             tournamentsGames:[],
             searchFormField: {
                 "name":{},
+                "playerCity":{},
+                "playerProvince":{},
                 "province":{},
                 "city":{},
                 "game":{},
                 "numberOfBattles":{},
                 "numberOfTournaments":{},
-                "points":{},
+                "pointsGe":{},
+                "pointsLe":{},
                 "dateOfStart":{},
                 "dateOfEnd":{},
             }
@@ -52,7 +55,7 @@ class FormInputs extends React.Component{
             {
                 "keys":["tour","tournament","game","name"],
                 "operation":":",
-                "value":this.state.gameName
+                "value":[this.state.gameName]
             }
         );
     }
@@ -61,7 +64,7 @@ class FormInputs extends React.Component{
         let provincesOptions = [];
         provincesOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.provincesNames!==undefined){
-            this.state.provincesNames.map(
+            this.state.provincesNames.forEach(
                 provincesName => {
                     provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
                 }
@@ -73,7 +76,7 @@ class FormInputs extends React.Component{
     prepareTournamentGamesOptions(){
         let tournamentGamesOptions = [];
         if(this.state.tournamentsGames!==undefined) {
-            this.state.tournamentsGames.map(
+            this.state.tournamentsGames.forEach(
                 tournamentGame => {
                     tournamentGamesOptions.push(<option value={tournamentGame} key={tournamentGame}>{tournamentGame}</option>);
                 }
@@ -98,7 +101,7 @@ class FormInputs extends React.Component{
                     <TextInput
                         name = "Name"
                         placeholder = "Jarek123"
-                        keys = {["player","name"]}
+                        keys = {["players","player","name"]}
                         operation = ":"
                         indexOfSearchFields = "Name"
                         changeSearchForm = {this.changeSearchForm.bind(this)}
@@ -107,7 +110,7 @@ class FormInputs extends React.Component{
                 <div className={css(resp.optionContent)}>
                     <div className={css(resp.halfSize)}>
                         <TextInput
-                            name = "City"
+                            name = "Tournaments city"
                             placeholder = "Lublin"
                             keys = {["tour","tournament","address", "city"]}
                             operation = ":"
@@ -117,7 +120,7 @@ class FormInputs extends React.Component{
                     </div>
                     <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
                         <SelectInput
-                            name = "Province"
+                            name = "Tournaments province"
                             keys = {["tour","tournament","address", "province"]}
                             operation = ":"
                             indexOfSearchFields = "province"
@@ -134,15 +137,6 @@ class FormInputs extends React.Component{
                         operation = ":"
                         indexOfSearchFields = "game"
                         options = {tournamentGamesOptions}
-                        changeSearchForm = {this.changeSearchForm.bind(this)}
-                    />
-                </div>
-                <div className={css(resp.optionContent)}>
-                    <NumberInput
-                        name = "Points"
-                        keys = {["players","points"]}
-                        operation = "<"
-                        indexOfSearchFields = "points"
                         changeSearchForm = {this.changeSearchForm.bind(this)}
                     />
                 </div>
@@ -169,8 +163,7 @@ class FormInputs extends React.Component{
                 <button onClick={()=>this.props.search(this.state.searchFormField)}
                         style={styles.button}
                         className={css(resp.button)}
-                        type="button"
-                >Search</button>
+                        type="button">Search</button>
                 <button onClick={()=>this.props.hide()}
                         style={styles.button}
                         className={css(resp.button)}

@@ -1,5 +1,4 @@
 import React from 'react';
-import TextOutput from '../../../../../commonComponents/textOutput/TextOutput'
 import {StyleSheet, css} from 'aphrodite';
 
 export default class TableCell extends React.Component{

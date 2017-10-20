@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { ActionCreators } from '../../../redux/actions/index';
 import {resp, styles} from '../../commonComponents/styles'
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 
 const ALERT_COLOR = "rgb(140, 48, 48)";
 const ALERT_BORDER_COLOR = "rgb(199, 125, 113)";
@@ -48,9 +48,7 @@ class MessageBox extends React.Component {
         this.messageRef = node;
     }
 
-    getMessageColor(){//add Type of message parameter
-        console.log("MessagType: ");
-        console.log(this.props.message.messageType);
+    getMessageColor(){
         let colorsObject = {};
         if(this.props.message.messageType === "alert-danger"){
           colorsObject = {

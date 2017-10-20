@@ -5,7 +5,7 @@ import {StyleSheet, css} from 'aphrodite';
 export default class TableCell extends React.Component{
     render(){
         return(
-            <td className = {css(resp.rowContent)} onClick={this.props.edit.bind(this)}
+            <td className = {css(resp.rowContent)} onClick={this.props.edit}
                 style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.props.color})}>
                 <TextOutput text={this.props.content} limit={17}/></td>
         )

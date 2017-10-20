@@ -1,10 +1,7 @@
 import React from 'react';
-import {resp, styles} from '../styles'
+import {styles} from '../styles'
 
-export default class TournamentStatus extends React.Component{
-    constructor(props) {
-        super(props);
-    }
+export default class StatusInput extends React.Component{
 
     changeInput(event){
         if(this.status.value!==""){
@@ -14,7 +11,7 @@ export default class TournamentStatus extends React.Component{
                     {
                         "keys":["banned"],
                         "operation":":",
-                        "value":true
+                        "value":[true]
                     }
                 );
             else
@@ -23,7 +20,7 @@ export default class TournamentStatus extends React.Component{
                     {
                         "keys":["status"],
                         "operation":":",
-                        "value":this.status.value
+                        "value":[this.status.value]
                     }
                 );
         }
@@ -38,8 +35,7 @@ export default class TournamentStatus extends React.Component{
                     id="status"
                     ref={(control) => this.status = control}
                     onKeyDown={this.changeInput.bind(this)}
-                    onChange={this.changeInput.bind(this)}
-                    >
+                    onChange={this.changeInput.bind(this)}>
                     {this.props.options}
                 </select>
             </div>

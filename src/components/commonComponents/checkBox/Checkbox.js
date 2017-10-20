@@ -14,15 +14,12 @@ class Checkbox extends React.Component {
     }
 
     componentDidMount(){
-        let element=this.props.page.content.filter(element => element.name===this.props.value);
-        this.setState({checked: element.checked});
+        this.setState({checked: this.props.checked});
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.page!==undefined && nextProps.page !== this.props.page) {
-            let element=nextProps.page.content.find(element => element.name===this.props.value);
-            if(element!==undefined)
-            this.setState({checked: element.checked});
+        if (nextProps.checked!==undefined && nextProps.checked !== this.props.checked) {
+            this.setState({checked: nextProps.checked});
         }
     }
 
@@ -34,7 +31,7 @@ class Checkbox extends React.Component {
                            let checked=this.state.checked;
                            checked=!checked;
                            this.setState({checked:checked});
-                           this.props.checkElement(this.props.value, checked);
+                           this.props.checkElement(this.props.elementName, checked);
                        }
                    }
                    checked={this.state.checked}/>

@@ -3,18 +3,15 @@ import ReactScrollbar from 'react-scrollbar-js';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../../redux/actions';
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 import './scrollbar.css';
 import {resp, styles} from '../pagePanel/styles';
 
 
-var icons = require('glyphicons');
+const icons = require('glyphicons');
 
 
 class PagePanel extends React.Component{
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount(){
         this.pageNumberInput.value=this.props.page.number+1;

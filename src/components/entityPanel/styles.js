@@ -1,4 +1,4 @@
-import {StyleSheet, css} from 'aphrodite';
+import {StyleSheet} from 'aphrodite';
 
 const styles = {
   background:{
@@ -54,7 +54,6 @@ const styles = {
     width:'100%',
     textAlign:'center',
     borderRadius:'2px 2px 0 0',
-    border:'0px',
     backgroundImage: 'linear-gradient(#a48c6d, #65462a, #463716)',
     color:'rgb(223, 214, 197)',
     border:'1px black solid',
@@ -66,7 +65,6 @@ const styles = {
     width:'100%',
     minHeight:'30px',
     borderRadius:'0 0 2px 2px',
-    border:'0px',
     border:'1px black solid',
     borderTop:'0px',
     background:'#e0d9d0',
@@ -99,12 +97,12 @@ const styles = {
     borderRadius:'2px',
   },
   tableButton:{
+    cursor: 'pointer',
     boxSizing:'border-box',
     width:'100%',
     paddingTop:'6px',
     paddingBottom:'6px',
     border:'1px solid black',
-    backgroundImage: 'linear-gradient(#d55151, #55130f, #4b1310)',
     boxShadow:'inset 0 0 7px #9c7239',
     color:'rgb(227, 228, 205)',
     outline:'0',
@@ -165,7 +163,6 @@ const styles = {
     boxSizing:'border-box',
       position: 'relative',
       width: '100%',
-      marginBottom: '4px',
       borderCollapse: 'separate',
       borderSpacing: '0px',
       marginBottom:'0px',
@@ -190,7 +187,7 @@ const styles = {
       maxHeight:'200px',
       width:'100%',
   },
-}
+};
 
 const resp = StyleSheet.create({
   popupContent:{
@@ -249,7 +246,7 @@ const resp = StyleSheet.create({
     borderTopRightRadius:'9px',
     borderTop:'0px',
   },
-})
+});
 
 
 export {resp, styles};

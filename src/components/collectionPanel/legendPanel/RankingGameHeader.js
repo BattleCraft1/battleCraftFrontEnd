@@ -1,7 +1,6 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite';
 import LegendField from './LegendField';
-import {resp, styles} from '../legendPanel/styles'
+import {styles} from '../legendPanel/styles'
 
 
 export default class RankingGameHeader extends React.Component{

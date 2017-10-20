@@ -1,4 +1,4 @@
-import {StyleSheet, css} from 'aphrodite';
+import {StyleSheet} from 'aphrodite';
 
 const styles = {
 
@@ -9,7 +9,6 @@ const styles = {
     top: '0',
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgb(0,0,0)',
     backgroundColor: 'rgba(0,0,0,0.4)',
   },
   modalDialog:{
@@ -18,7 +17,6 @@ const styles = {
   modalContent:{
     fontFamily:'arial, helvetica, sans-serif',
     boxSizing:'border-box',
-    background:'blue',
     marginLeft:'30%',
     width:'40%',
     padding:'1%',
@@ -87,7 +85,6 @@ const styles = {
   },
   messageContainer:{
     position:'fixed',
-    background:'red',
     zIndex:'1000',
     width:'90%',
     padding:'0',
@@ -106,7 +103,7 @@ const styles = {
     border:'1px solid white',
     color:'rgb(230, 225, 227)',
   },
-}
+};
 
 const resp = StyleSheet.create({
   button:{
@@ -124,6 +121,6 @@ const resp = StyleSheet.create({
       marginLeft:'10%',
     },
   }
-})
+});
 
 export {resp, styles}

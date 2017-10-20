@@ -10,61 +10,31 @@ let icons = require('glyphicons');
 
 
 class AcceptOperation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
-    getFailureMessage(elementsWhichCannotBeAccept){
-        return "Elements " +
-            elementsWhichCannotBeAccept.map(function(element){return element.name}).join(", ")+
-            " are not accepted because you can accept only new elements and not banned"
-    }
-
-    getSuccessMessage(elementsToAccept){
-        return "Elements "+elementsToAccept.map(function(element){return element.name}).join(", ")+" are accepted";
+    getSuccessMessage(acceptedElementsNames){
+        return "Elements "+acceptedElementsNames.join(", ")+" are accepted";
     }
 
     acceptElements(){
-        let checkedElements = this.props.page.content.filter(element => element.checked===true);
-        let elementsToAccept = checkedElements.filter(element =>
-            element.status==="NEW" && (element.banned===false || element.banned===null));
-        let elementsWhichCannotBeAccept =
-            checkedElements.filter(element => element.status!=="NEW");
-
+        let checkedElementsNames = this.props.page.checkedElementsNames;
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
-        let setPage = this.props.setPage;
+        let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
-        let getFailureMessage = this.getFailureMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
-        if(elementsToAccept.length>0) {
-            let uniqueElementsToBanNames = elementsToAccept.map(function(item) {
-                return item.name;
-            });
-            let getPageAndModifyDataObjectsWrapper = {
-                namesOfObjectsToModify: uniqueElementsToBanNames,
-                getPageObjectsWrapper: this.props.pageRequest
+        if(checkedElementsNames.length>0) {
+            let GetPageAndModifyDataDTO = {
+                namesOfObjectsToModify: checkedElementsNames,
+                getPageObjectsDTO: this.props.pageRequest
             };
 
             let operationFunction = function(){
-                axios.post(serverName+`accept/`+collectionType,
-                    getPageAndModifyDataObjectsWrapper)
+                axios.post(serverName+`accept/`+collectionType, GetPageAndModifyDataDTO)
                     .then(res => {
-                        setPage(res.data);
-                        if(elementsWhichCannotBeAccept.length>0)
-                            showFailureMessage(
-                                {
-                                    messageText: getFailureMessage(elementsWhichCannotBeAccept)
-                                }
-                            );
-                        else
-                            showSuccessMessage(
-                                {
-                                    messageText: getSuccessMessage(elementsToAccept)
-                                }
-                            );
+                        checkPreviouslyCheckedElements(res.data);
+                        showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
                     .catch(error => {
                         showNetworkErrorMessage(error);
@@ -80,11 +50,7 @@ class AcceptOperation extends React.Component {
             )
         }
         else{
-            showFailureMessage(
-                {
-                    messageText: "Nothing to accept. Only new elements can be accepted."
-                }
-            )
+            showFailureMessage("Nothing to accept.")
         }
     }
 

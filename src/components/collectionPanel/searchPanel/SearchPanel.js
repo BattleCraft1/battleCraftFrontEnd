@@ -1,18 +1,22 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../../redux/actions/index';
+
+import isNotEmpty from './../../../main/functions/checkIfObjectIsNotEmpty'
+
 import UsersFormInputs from './users/FormInputs'
 import TournamentsFormInputs from './tournaments/FormInputs'
 import RankingFormInputs from './ranking/FormInputs'
 import GamesFormInputs from './games/FormInputs'
-import isNotEmpty from './../../../main/functions/checkIfObjectIsNotEmpty'
-import { ActionCreators } from '../../../redux/actions/index';
-import {serverName} from '../../../main/consts/server';
-import {mockEnums} from '../../../main/consts/noServerContext';
-import {resp, styles} from './styles'
-import {StyleSheet, css} from 'aphrodite';
 
+import {serverName} from '../../../main/consts/server';
 import axios from 'axios';
+
+import {resp, styles} from './styles'
+import {css} from 'aphrodite';
+
 
 class SearchPanel extends React.Component{
     constructor(props) {
@@ -48,20 +52,32 @@ class SearchPanel extends React.Component{
     }
 
     async getEnums(collectionType){
-
-                this.setState({enums:mockEnums});
-
+        await axios.get(serverName+`get/`+collectionType+`/enums`)
+            .then(res => {
+                this.setState({enums:res.data});
+            })
+            .catch(error => {
+                this.props.showNetworkErrorMessage(error);
+            });
     }
 
     search(inputs){
         let pageRequest=this.props.pageRequest;
         pageRequest.searchCriteria=[];
         for(let inputName in inputs){
-            if(isNotEmpty(inputs[inputName]))
+            if(!isNotEmpty(inputs[inputName]))
                 pageRequest.searchCriteria.push(
                     inputs[inputName]
                 )
         }
+        if(this.props.entityPanel.mode !== 'disabled'){
+            pageRequest.searchCriteria.push({
+                "keys": ["status"],
+                "operation": ":",
+                "value": this.props.entityPanel.relatedEntity.relatedEntityType
+            });
+        }
+        pageRequest.pageRequest.page = 0;
         pageRequest.pageRequest.size = 10;
         this.props.setPageRequest(pageRequest);
         this.props.getPageRequest(this.props.collectionType);
@@ -78,7 +94,7 @@ class SearchPanel extends React.Component{
 
     render(){
         let searchFormInputs = "loading...";
-        if(isNotEmpty(this.state.enums))
+        if(!isNotEmpty(this.state.enums))
             if(this.props.collectionType==="tournaments"){
                 searchFormInputs = React.createElement(
                     TournamentsFormInputs,
@@ -94,6 +110,7 @@ class SearchPanel extends React.Component{
                 searchFormInputs = React.createElement(
                     UsersFormInputs,
                     {
+                        entityPanelDisabled: this.props.entityPanel.mode === 'disabled',
                         enums:this.state.enums,
                         search:this.search.bind(this),
                         hide:this.hideSearchPanel.bind(this)
@@ -146,7 +163,9 @@ function mapStateToProps( state ) {
     return {
         page: state.page,
         pageRequest: state.pageRequest,
-        search: state.search
+        search: state.search,
+        message: state.message,
+        entityPanel: state.entityPanel
     };
 }
 

@@ -3,7 +3,7 @@ import TextInput from './../inputs/TextInput'
 import SelectInput from './../inputs/SelectInput'
 import StatusInput from './../inputs/StatusInput'
 import {resp, styles} from '../styles'
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 import {provinces} from "../../../../main/consts/provinces";
 
 export default class FormInputs extends React.Component{
@@ -39,7 +39,7 @@ export default class FormInputs extends React.Component{
         let provincesOptions = [];
         provincesOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.provincesNames!==undefined){
-            this.state.provincesNames.map(
+            this.state.provincesNames.forEach(
                 provincesName => {
                     provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
                 }
@@ -52,7 +52,7 @@ export default class FormInputs extends React.Component{
         let userTypeOptions = [];
         userTypeOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.status!==undefined){
-            this.state.status.map(
+            this.state.status.forEach(
                 statusName => {
                     userTypeOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
                 }
@@ -70,7 +70,9 @@ export default class FormInputs extends React.Component{
 
     render(){
         let userTypeOptions = this.prepareUserTypeOptions();
-        let provincesOptions = this.prepareProvinceOptions();
+        let provincesOptions = [];
+        if(this.props.entityPanelDisabled)
+            provincesOptions = this.prepareProvinceOptions();
 
         return (
             <div>
@@ -137,12 +139,15 @@ export default class FormInputs extends React.Component{
                         />
                     </div>
                 </div>
-                <div className={css(resp.optionContent)}>
-                    <StatusInput
-                        options = {userTypeOptions}
-                        changeSearchForm = {this.changeSearchForm.bind(this)}
-                    />
-                </div>
+                {
+                    this.props.entityPanelDisabled &&
+                    <div className={css(resp.optionContent)}>
+                        <StatusInput
+                            options={userTypeOptions}
+                            changeSearchForm={this.changeSearchForm.bind(this)}
+                        />
+                    </div>
+                }
                 <button onClick={()=>this.props.search(this.state.searchFormField)}
                         style={styles.button}
                         className={css(resp.button)}

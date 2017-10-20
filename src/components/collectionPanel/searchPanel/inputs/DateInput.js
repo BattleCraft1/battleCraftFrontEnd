@@ -1,10 +1,7 @@
 import React from 'react';
-import {resp, styles} from '../styles'
+import {styles} from '../styles'
 
 export default class DateInput extends React.Component{
-    constructor(props) {
-        super(props);
-    }
 
     changeInput(event){
         if(this.date.value !=="")
@@ -13,7 +10,7 @@ export default class DateInput extends React.Component{
                 {
                     "keys":this.props.keys,
                     "operation":this.props.operation,
-                    "value":this.date.value
+                    "value":[this.date.value]
                 }
             )
     }

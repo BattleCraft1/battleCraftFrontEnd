@@ -4,7 +4,7 @@ import NumberInput from './../inputs/NumberInput'
 import StatusInput from './../inputs/StatusInput'
 import DateInput from './../inputs/DateInput'
 import {resp, styles} from '../styles'
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 
 
 export default class FormInputs extends React.Component{
@@ -35,7 +35,7 @@ export default class FormInputs extends React.Component{
         let gamesStatusOptions = [];
         gamesStatusOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.status!==undefined) {
-            this.state.status.map(
+            this.state.status.forEach(
                 statusName => {
                     gamesStatusOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
                 }

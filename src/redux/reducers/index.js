@@ -5,6 +5,7 @@ import * as confirmationReducer from './confirmation'
 import * as messagesReducer from './messages'
 import * as searchReducer from './search'
 import * as entityPanelReducer from './entityPanel'
+import * as possibleOperationsReducer from './possibleOperations'
 
 export default combineReducers( Object.assign(
     pageReducer,
@@ -12,5 +13,6 @@ export default combineReducers( Object.assign(
     confirmationReducer,
     messagesReducer,
     searchReducer,
-    entityPanelReducer
+    entityPanelReducer,
+    possibleOperationsReducer
 ) );

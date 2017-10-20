@@ -23,8 +23,23 @@ export function showEntity(entityType,entityName) {
     }
 }
 
-export function hideEntityPanel() {
+export function disableEntityPanel() {
     return {
-        type: types.HIDE_ENTITY_PANEL
+        type: types.DISABLE_ENTITY_PANEL
+    }
+}
+
+export function showEntityPanel(isShow) {
+    return {
+        type: types.SHOW_ENTITY_PANEL,
+        isShow: isShow
+    }
+}
+
+export function setRelatedEntity(relatedEntityNames,relatedEntityType){
+    return {
+        type: types.SET_RELATED_ENTITY,
+        relatedEntityNames: relatedEntityNames,
+        relatedEntityType: relatedEntityType
     }
 }

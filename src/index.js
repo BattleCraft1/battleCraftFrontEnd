@@ -21,10 +21,16 @@ function configureStore( initialState ) {
 
 const store = configureStore( {
     search:false,
+    possibleOperations:[],
     entityPanel: {
         mode:entityPanelModes.disabled,
         entityType:entityPanelTypes.none,
-        entityName:""
+        entityName:"",
+        hidden:false,
+        relatedEntity:{
+            relatedEntityNames:[],
+            relatedEntityType:[]
+        }
     },
     confirmation: {
         header:"",
@@ -39,7 +45,8 @@ const store = configureStore( {
         messageType: ""
     },
     page: {
-        content: []
+        content: [],
+        checkedElementsNames: []
     },
     pageRequest: {pageRequest:{
         size:10,
