@@ -6,6 +6,8 @@ import AddressTab from './Tabs/AddressTab';
 import BasicDataTab from './Tabs/BasicDataTab';
 import OrganizersTab from './Tabs/OrganizersTab';
 import ParticipantsTab from './Tabs/ParticipantsTab';
+import PanelTitle from '../inputs/PanelTitle';
+
 
 import compareArrays from '../../../main/functions/compareArrays';
 
@@ -216,6 +218,8 @@ class Panel extends React.Component{
         }
 
         return(
+          <div>
+          <PanelTitle name={"TOURNAMENT PANEL"} />
             <div style={styles.goldAndBrownTheme} className = {css(resp.panel)}>
                 <Navigation
                     setActiveTab={this.setActiveTab.bind(this)}
@@ -225,6 +229,7 @@ class Panel extends React.Component{
                 </div>
                 {buttons}
             </div>
+          </div>
         )
     }
 }

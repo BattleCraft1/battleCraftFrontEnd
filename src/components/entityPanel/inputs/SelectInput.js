@@ -12,7 +12,7 @@ export default class SelectInput extends React.Component{
 
     render(){
         return(
-            <div style={styles.inputBlock}>
+            <div style={styles.inputBlock} className={css(resp.inputBlock)}>
                 <Label name={this.props.name}/>
                 <select
                     value = {this.props.value}

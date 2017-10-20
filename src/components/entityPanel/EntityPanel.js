@@ -3,6 +3,9 @@ import {css} from 'aphrodite';
 import {resp, styles} from './styles'
 
 import TournamentPanel from './Tournament/Panel';
+import GamePanel from './Game/Panel';
+import UserPanel from './User/Panel';
+
 
 import { ActionCreators } from '../../redux/actions/index';
 import { bindActionCreators } from 'redux';
@@ -39,6 +42,10 @@ class EntityPanel extends React.Component{
         let panelType;
         if(this.props.entityPanel.entityType==='tournament')
             panelType = TournamentPanel;
+        else if(this.props.entityPanel.entityType==='game')
+            panelType = GamePanel;
+        else if(this.props.entityPanel.entityType==='user')
+            panelType = UserPanel;
 
         return panelType ? React.createElement(
             panelType,
@@ -55,6 +62,7 @@ class EntityPanel extends React.Component{
             this.props.entityPanel.mode!=='disabled' &&
             <div style = {Object.assign({}, styles.background, this.props.entityPanel.hidden?{display: 'none'}:{display: 'block'})}>
                 <div ref={this.setEntityPanelRef} style = {Object.assign({}, styles.goldAndBrownTheme, styles.panelContainer)}
+
                      className = {css(resp.popupContent)}>
                     {panel}
                 </div>

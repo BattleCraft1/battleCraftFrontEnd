@@ -1,0 +1,31 @@
+.input-file-container {
+  position: relative;
+  width: 225px;
+}
+.input-file-trigger {
+  display: block;
+  padding: 14px 45px;
+  background: #39D2B4;
+  color: #fff;
+  font-size: 1em;
+  transition: all .4s;
+  cursor: pointer;
+}
+
+
+.file-return {
+  margin: 0;
+}
+.file-return:not(:empty) {
+  margin: 1em 0;
+}
+.file-return {
+  font-style: italic;
+  font-size: .9em;
+  font-weight: bold;
+}
+.file-return:not(:empty):before {
+  content: "Selected file: ";
+  font-style: normal;
+  font-weight: normal;
+}
