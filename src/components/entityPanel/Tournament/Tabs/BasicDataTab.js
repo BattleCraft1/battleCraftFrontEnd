@@ -43,28 +43,28 @@ class BasicDataTab extends React.Component{
                 <TextInput
                     value={this.props.entity["nameChange"]}
                     fieldName="nameChange"
-                    changeEntity={this.props.changeEntity.bind(this)}
+                    changeEntity={this.props.changeEntity}
                     name="Name"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["nameChange"]}/>
                 <NumberInput
                     value={this.props.entity["tablesCount"]}
                     fieldName="tablesCount"
-                    changeEntity={this.props.changeEntity.bind(this)}
+                    changeEntity={this.props.changeEntity}
                     name="Tables count"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["tablesCount"]}/>
                 <NumberInput
                     value={this.props.entity["maxPlayers"]}
                     fieldName="maxPlayers"
-                    changeEntity={this.props.changeEntity.bind(this)}
+                    changeEntity={this.props.changeEntity}
                     name="Max players"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["maxPlayers"]}/>
                 <SelectInput
                     value={this.props.entity["game"]}
                     fieldName="game"
-                    changeEntity={this.props.changeEntity.bind(this)}
+                    changeEntity={this.props.changeEntity}
                     options={this.state.gameNames}
                     name="Game"/>
                 <ValidationErrorMessage
@@ -72,14 +72,14 @@ class BasicDataTab extends React.Component{
                 <DateInput
                     value={this.props.entity["dateOfStart"]}
                     fieldName="dateOfStart"
-                    changeEntity={this.props.changeEntity.bind(this)}
+                    changeEntity={this.props.changeEntity}
                     name="Start at"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["dateOfStart"]}/>
                 <DateInput
                     value={this.props.entity["dateOfEnd"]}
                     fieldName="dateOfEnd"
-                    changeEntity={this.props.changeEntity.bind(this)}
+                    changeEntity={this.props.changeEntity}
                     name="Ends at"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["dateOfEnd"]}/>

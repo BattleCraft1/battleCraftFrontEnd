@@ -10,9 +10,6 @@ let icons = require('glyphicons');
 
 
 class DeleteOperation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     getSuccessMessage(deletedElementsNames){
         return "Elements "+deletedElementsNames.join(", ")+" are deleted";
@@ -32,7 +29,6 @@ class DeleteOperation extends React.Component {
         let collectionType = this.props.collectionType;
         let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
-        let getFailureMessage = this.getFailureMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
         if(checkedElementsNames.length>0) {

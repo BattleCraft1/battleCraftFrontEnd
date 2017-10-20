@@ -7,9 +7,6 @@ import { ActionCreators } from '../../../../redux/actions/index';
 let icons = require('glyphicons');
 
 class CancelInviteOperation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     cancelInvite(){
         this.props.setRelatedEntity([],"");

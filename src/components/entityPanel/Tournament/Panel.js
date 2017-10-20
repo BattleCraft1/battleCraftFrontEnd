@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 import Button from '../inputs/Button';
 
 import AddressTab from './Tabs/AddressTab';
@@ -20,10 +20,6 @@ import {resp, styles} from '../styles'
 import {serverName} from '../../../main/consts/server';
 import axios from 'axios';
 
-import setDateFunction from '../../../main/functions/setDateFunction'
-
-import {provinces} from '../../../main/consts/provinces'
-
 import checkIfObjectIsNotEmpty from '../../../main/functions/checkIfObjectIsNotEmpty'
 
 const tabsMap = {
@@ -43,10 +39,10 @@ class Panel extends React.Component{
                 "nameChange": "",
                 "tablesCount": 0,
                 "maxPlayers": 0,
-                "game": "",
-                "dateOfStart": 0,
-                "dateOfEnd": 0,
-                "province": "",
+                "game": "Warhammer",
+                "dateOfStart": new Date(),
+                "dateOfEnd": new Date(),
+                "province": "lubelskie",
                 "city": "",
                 "street": "",
                 "zipCode": "",
@@ -79,6 +75,7 @@ class Panel extends React.Component{
             await axios.get(serverName+`get/`+this.props.entityPanel.entityType+`?name=`+this.props.entityPanel.entityName)
                 .then(res => {
                     this.setState({entity:res.data});
+                    console.log(res.data);
                 })
                 .catch(error => {
                     this.props.showNetworkErrorMessage(error);
@@ -158,28 +155,54 @@ class Panel extends React.Component{
             entity.name = entity.nameChange;
             this.setState({entity:entity})
         }
-        this.state.entity.organizers = this.state.entity.organizers.map(element => element.invitedUserName);
-        this.state.entity.participants = this.state.entity.participants.map(element => element.invitedUserName);
-        let validationErrors = this.validate(this.state.entity);
-        console.log(validationErrors);
+
+        let entity = JSON.parse(JSON.stringify(this.state.entity));
+        entity.organizers = this.state.entity.organizers.map(element => element.invitedUserName);
+        entity.participants = this.state.entity.participants.map(element => element.invitedUserName);
+        this.setState({validationErrors:{
+            "name": "",
+            "nameChange": "",
+            "tablesCount": "",
+            "maxPlayers": "",
+            "game": "",
+            "dateOfStart": "",
+            "dateOfEnd": "",
+            "province": "",
+            "city": "",
+            "street": "",
+            "zipCode": "",
+            "description": "",
+            "organizers": "",
+            "participants": ""
+        }});
+        console.log(this.state.validationErrors);
+        let validationErrors = this.validate(entity);
         if(checkIfObjectIsNotEmpty(validationErrors)){
-            axios.post(serverName+this.props.entityPanel.mode+'/'+this.props.entityPanel.entityType, this.state.entity)
+            console.log(entity);
+            axios.post(serverName+this.props.entityPanel.mode+'/'+this.props.entityPanel.entityType, entity)
                 .then(res => {
                     this.setState({entity:res.data});
-                    this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.entityPanel.mode+"ed")
+                    this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.entityPanel.mode+"ed");
+                    this.props.disableEntityPanel();
                 })
                 .catch(error => {
-                    this.setValidationErrors(error.response.data);
+                    if(error.response.data.fieldErrors===undefined){
+                        this.props.showNetworkErrorMessage(error);
+                    }
+                    else{
+                        this.setValidationErrors(error.response.data);
+                    }
                 });
         }
         else{
+            console.log("debug");
             this.setValidationErrors(validationErrors);
         }
     }
 
     validate(entity){
         let validationErrors = {};
-        let fieldErrors = {};
+        /*let fieldErrors = {};
         if(!entity.name.match(new RegExp("^[A-Z][A-Za-zzżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9 ]{1,29}$")))
             fieldErrors.dnameChange = "Tournament name must start with big letter and have between 2 to 30 chars";
 
@@ -213,7 +236,7 @@ class Panel extends React.Component{
         if(checkIfObjectIsNotEmpty(fieldErrors)){
             validationErrors.message = "Invalid tournament data";
             validationErrors.fieldErrors = fieldErrors;
-        }
+        }*/
 
         return validationErrors;
     }

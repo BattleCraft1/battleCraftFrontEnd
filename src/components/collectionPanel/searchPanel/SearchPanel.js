@@ -15,7 +15,7 @@ import {serverName} from '../../../main/consts/server';
 import axios from 'axios';
 
 import {resp, styles} from './styles'
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 
 
 class SearchPanel extends React.Component{
@@ -65,12 +65,11 @@ class SearchPanel extends React.Component{
         let pageRequest=this.props.pageRequest;
         pageRequest.searchCriteria=[];
         for(let inputName in inputs){
-            if(isNotEmpty(inputs[inputName]))
+            if(!isNotEmpty(inputs[inputName]))
                 pageRequest.searchCriteria.push(
                     inputs[inputName]
                 )
         }
-        console.log(this.props.entityPanel);
         if(this.props.entityPanel.mode !== 'disabled'){
             pageRequest.searchCriteria.push({
                 "keys": ["status"],
@@ -95,7 +94,7 @@ class SearchPanel extends React.Component{
 
     render(){
         let searchFormInputs = "loading...";
-        if(isNotEmpty(this.state.enums))
+        if(!isNotEmpty(this.state.enums))
             if(this.props.collectionType==="tournaments"){
                 searchFormInputs = React.createElement(
                     TournamentsFormInputs,

@@ -10,9 +10,6 @@ let icons = require('glyphicons');
 
 
 class UnlockOperation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     getSuccessMessage(unlockedElementsNames){
         return "Elements "+unlockedElementsNames.join(", ")+" are unlock";

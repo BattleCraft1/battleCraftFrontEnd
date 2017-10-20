@@ -7,9 +7,6 @@ import { ActionCreators } from '../../../../redux/actions/index';
 let icons = require('glyphicons');
 
 class InviteOperation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     inviteElements(){
         this.props.setRelatedEntity(this.props.page.checkedElementsNames,this.props.entityPanel.relatedEntity.relatedEntityType);

@@ -10,8 +10,6 @@ import { ActionCreators } from '../../redux/actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import {possibleOperationsForCollections} from "../../main/consts/possibleOperationsForCollections";
-
 import {entityPanelTypes} from '../../main/consts/entityPanelTypes'
 
 class Navbar extends React.Component{

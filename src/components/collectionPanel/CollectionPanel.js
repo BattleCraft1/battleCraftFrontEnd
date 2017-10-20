@@ -26,11 +26,11 @@ class CollectionPanel extends React.Component{
     }
 
     async componentDidMount() {
+        this.setPossibleOperations(this.props.match.params.collectionType);
+        await this.getPageRequest(this.props.match.params.collectionType);
         await this.setState({collectionType: this.props.match.params.collectionType});
-        let pageRequest = this.createPageRequest(pageRequest);
+        let pageRequest = this.createPageRequest(this.state.collectionType);
         this.props.setPageRequest(pageRequest);
-        this.setPossibleOperations(this.state.collectionType);
-        await this.getPageRequest(this.state.collectionType);
     }
 
     async componentWillReceiveProps(nextProps) {
@@ -43,12 +43,12 @@ class CollectionPanel extends React.Component{
             this.props.checkElements(nextProps.entityPanel.relatedEntity.relatedEntityNames,true)
         }
         else if (nextProps.match.params.collectionType !== this.state.collectionType ||
-                nextProps.entityPanel.mode === 'disabled' &&
-                this.props.entityPanel.mode !== 'disabled') {
+            (nextProps.entityPanel.mode === 'disabled' &&
+                this.props.entityPanel.mode !== 'disabled')) {
+            let pageRequest = this.createPageRequest(nextProps.match.params.collectionType);
+            this.setPossibleOperations(nextProps.match.params.collectionType);
             await this.setState({collectionType: nextProps.match.params.collectionType});
-            let pageRequest = this.createPageRequest(pageRequest);
             this.props.setPageRequest(pageRequest);
-            this.setPossibleOperations(this.state.collectionType);
             await this.getPageRequest(this.state.collectionType);
         }
     }
@@ -67,9 +67,9 @@ class CollectionPanel extends React.Component{
         return pageRequest;
     }
 
-    createPageRequest(){
+    createPageRequest(collectionType){
         let pageRequest = this.props.pageRequest;
-        if(this.state.collectionType==='ranking') {
+        if(collectionType==='ranking') {
             pageRequest.searchCriteria = [
                 {
                     "keys": ["tour", "tournament", "game","name"],
@@ -90,8 +90,8 @@ class CollectionPanel extends React.Component{
         return pageRequest;
     }
 
-    setPossibleOperations(){
-        this.props.setOperations(possibleOperationsForCollections[this.state.collectionType])
+    setPossibleOperations(collectionType){
+        this.props.setOperations(possibleOperationsForCollections[collectionType])
     }
 
     async getPageRequest(collectionType){

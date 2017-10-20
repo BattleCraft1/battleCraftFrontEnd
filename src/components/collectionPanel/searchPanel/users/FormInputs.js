@@ -3,7 +3,7 @@ import TextInput from './../inputs/TextInput'
 import SelectInput from './../inputs/SelectInput'
 import StatusInput from './../inputs/StatusInput'
 import {resp, styles} from '../styles'
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 import {provinces} from "../../../../main/consts/provinces";
 
 export default class FormInputs extends React.Component{
@@ -39,7 +39,7 @@ export default class FormInputs extends React.Component{
         let provincesOptions = [];
         provincesOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.provincesNames!==undefined){
-            this.state.provincesNames.map(
+            this.state.provincesNames.forEach(
                 provincesName => {
                     provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
                 }
@@ -52,7 +52,7 @@ export default class FormInputs extends React.Component{
         let userTypeOptions = [];
         userTypeOptions.push(<option value={""} key="nullOption"/>);
         if(this.state.status!==undefined){
-            this.state.status.map(
+            this.state.status.forEach(
                 statusName => {
                     userTypeOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
                 }

@@ -1,4 +1,4 @@
-import {StyleSheet, css} from 'aphrodite';
+import {StyleSheet} from 'aphrodite';
 
 const styles = {
   navigationBar:{
@@ -40,7 +40,6 @@ const styles = {
     boxSizing:'border-box',
     position:'relative',
     width:'8%',
-    height:'100%',
     height:'auto',
     paddingTop:"5px",
     paddingBottom:'5px',
@@ -57,7 +56,6 @@ const styles = {
     height:'100%',
     paddingTop:"3px",
     paddingBottom:'3px',
-    background:'white',
     display:'inline-block',
     marginLeft:'1%',
     border:'1px solid',
@@ -90,7 +88,6 @@ const styles = {
     boxSizing:'border-box',
     position:'relative',
     display:'inline-block',
-    background: '#EEE',
     minWidth: '10px',
     whiteSpace:'nowrap',
     paddingBottom:"6px",
@@ -99,7 +96,6 @@ const styles = {
   container:{
     boxSizing:'border-box',
     marginTop:'1px',
-    textAlign:'center',
     position:'relative',
     display:'inline-block',
     width:'100%',
@@ -114,7 +110,7 @@ const styles = {
     border:'1px solid rgb(64, 62, 63)',
     height:'24px',
   },
-}
+};
 
 const resp = StyleSheet.create({
 
@@ -140,7 +136,7 @@ const resp = StyleSheet.create({
         borderBottomColor: 'rgb(249, 249, 249)',
       },
   },
-})
+});
 
 
 export {resp, styles};

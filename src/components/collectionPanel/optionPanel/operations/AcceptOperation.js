@@ -10,15 +10,6 @@ let icons = require('glyphicons');
 
 
 class AcceptOperation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    getFailureMessage(elementsWhichCannotBeAccept){
-        return "Elements " +
-            elementsWhichCannotBeAccept.map(function(element){return element.name}).join(", ")+
-            " are not accepted because you can accept only new elements and not banned"
-    }
 
     getSuccessMessage(acceptedElementsNames){
         return "Elements "+acceptedElementsNames.join(", ")+" are accepted";
@@ -29,10 +20,8 @@ class AcceptOperation extends React.Component {
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
-        let setPage = this.props.setPage;
         let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
-        let getFailureMessage = this.getFailureMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
         if(checkedElementsNames.length>0) {

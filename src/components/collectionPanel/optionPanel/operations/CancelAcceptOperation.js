@@ -10,9 +10,6 @@ let icons = require('glyphicons');
 
 
 class CancelAcceptOperation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     getSuccessMessage(rejectedElementsNames){
         return "Acceptations for "+rejectedElementsNames.join(", ").join(", ")+" are canceled";
@@ -31,7 +28,6 @@ class CancelAcceptOperation extends React.Component {
         let collectionType = this.props.collectionType;
         let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
-        let getFailureMessage = this.getFailureMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
         if(checkedElementsNames.length>0) {

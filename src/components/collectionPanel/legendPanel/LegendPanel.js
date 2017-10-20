@@ -1,8 +1,7 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite';
 import {colors} from './../../../main/consts/collectionsColors';
 import LegendField from './LegendField';
-import {resp, styles} from '../legendPanel/styles'
+import {styles} from '../legendPanel/styles'
 
 
 export default class LegendPanel extends React.Component{

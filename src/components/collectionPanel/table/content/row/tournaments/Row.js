@@ -14,9 +14,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 class Row extends React.Component{
-    constructor(props) {
-        super(props);
-    }
 
     getColor(columnName, tournament){
         if(this.props.isColumnActive(columnName)){
@@ -53,7 +50,7 @@ class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("name")}
                     sortBy = "name"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("name")}
                     headerName = "name"
                 />
@@ -67,7 +64,7 @@ class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("province")}
                     sortBy = "province"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("province")}
                     headerName = "province"
                 />
@@ -81,7 +78,7 @@ class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("city")}
                     sortBy = "address.city"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("city")}
                     headerName = "city"
                 />
@@ -95,7 +92,7 @@ class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("game")}
                     sortBy = "game.name"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("game")}
                     headerName = "game"
                 />
@@ -109,7 +106,7 @@ class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("freeSlots")}
                     sortBy = "freeSlots"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("freeSlots")}
                     headerName = "players"
                 />
@@ -123,7 +120,7 @@ class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("dateOfStart")}
                     sortBy = "dateOfStart"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("dateOfStart")}
                     headerName = "start date"
                 />
@@ -137,7 +134,7 @@ class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("dateOfEnd")}
                     sortBy = "dateOfEnd"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("dateOfEnd")}
                     headerName = "end date"
                 />

@@ -59,7 +59,6 @@ const resp = StyleSheet.create({
       minHeight:'100%',
       marginLeft:'10%',
       marginBottom:'10px',
-      background:'rgba(0,0,0,0.9)',
       background: 'linear-gradient(to right, rgba(0, 0, 0, 0.90), rgba(0, 0, 0, 1),rgba(0, 0, 0, 0.90) )',
       zIndex: '0',
       boxShadow: '0px 0px 10px 20px rgba(0,0,0,0.90)',

@@ -1,6 +1,5 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite';
-import {resp, styles} from '../styles'
+import {styles} from '../styles'
 
 export default class NavElement extends React.Component{
     render(){

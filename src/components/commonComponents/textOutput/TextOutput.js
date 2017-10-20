@@ -1,10 +1,6 @@
 import React from 'react';
 
 class TextOutput extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         let text;
         if(this.props.text===null || this.props.text===undefined)

@@ -4,7 +4,6 @@ import { ActionCreators } from '../../../../redux/actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import {StyleSheet, css} from 'aphrodite';
 
 import OptionPanel from '../../optionPanel/OptionPanel'
 import LegendPanel from '../../legendPanel/LegendPanel'
@@ -24,9 +23,6 @@ let icons = require('glyphicons');
 
 
 class CollectionList extends React.Component{
-    constructor(props) {
-        super(props);
-    }
 
     sortByColumnName(columnName){
         let pageRequest=this.props.pageRequest;
@@ -64,7 +60,7 @@ class CollectionList extends React.Component{
         else
             rowType = UserRow;
 
-        this.props.page.content.map(
+        this.props.page.content.forEach(
             element =>{
                 key++;
                 rows.push(
@@ -76,8 +72,7 @@ class CollectionList extends React.Component{
                         isColumnActive : this.isColumnActive.bind(this),
                         sortByColumnName : this.sortByColumnName.bind(this),
                         getArrowGlyph : this.getArrowGlyph.bind(this)},
-                        null)
-                )
+                        null));
             }
         );
         return rows;

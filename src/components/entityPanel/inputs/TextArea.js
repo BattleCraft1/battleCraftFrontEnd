@@ -1,12 +1,8 @@
 import React from 'react';
-import {resp, styles} from '../styles'
+import {styles} from '../styles'
 import Label from '../outputs/Label'
 
 export default class TextArea extends React.Component{
-    constructor(props) {
-        super(props);
-    }
-
     render(){
         return(
             <div style={styles.inputBlock}>

@@ -10,10 +10,6 @@ let icons = require('glyphicons');
 
 
 class BanOperation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     getSuccessMessage(BannedElementsNames){
         return "Elements "+BannedElementsNames.join(", ")+" are banned";
     }

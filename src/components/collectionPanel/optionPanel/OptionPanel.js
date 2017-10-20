@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite';
 
 import AcceptOperation from './operations/AcceptOperation'
 import BanOperation from './operations/BanOperation'
@@ -32,9 +31,6 @@ const mapOfOperations = {
 };
 
 class OptionPanel extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         let operations = [];

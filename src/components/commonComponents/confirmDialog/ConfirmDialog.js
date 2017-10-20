@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { ActionCreators } from '../../../redux/actions/index';
 import {resp, styles} from '../../commonComponents/styles';
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 
 
 class ConfirmDialog extends React.Component {

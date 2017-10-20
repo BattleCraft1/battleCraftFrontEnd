@@ -8,9 +8,6 @@ import {StyleSheet, css} from 'aphrodite';
 import {colors} from './../../../../../../main/consts/collectionsColors'
 
 export default class Row extends React.Component{
-    constructor(props) {
-        super(props);
-    }
 
     getColor(columnName, tournament){
         if(this.props.isColumnActive(columnName)){
@@ -37,7 +34,7 @@ export default class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("name")}
                     sortBy = "name"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("name")}
                     headerName = "name"
                 />
@@ -50,8 +47,8 @@ export default class Row extends React.Component{
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("province")}
-                    sortBy = "playerProvince"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sortBy = "playerAddress.province"
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("province")}
                     headerName = "province"
                 />
@@ -59,13 +56,13 @@ export default class Row extends React.Component{
                     columnName = "province"
                     color = {this.getColor("province")}
                     edit = {() => {}}
-                    content = {this.props.element.province}
+                    content = {this.props.element.playerProvince}
                 />
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("city")}
                     sortBy = "playerAddress.city"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("city")}
                     headerName = "city"
                 />
@@ -73,13 +70,13 @@ export default class Row extends React.Component{
                     columnName = "city"
                     color = {this.getColor("city")}
                     edit = {() => {}}
-                    content = {this.props.element.city}
+                    content = {this.props.element.playerCity}
                 />
 
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("numberOfTournaments")}
                     sortBy = "numberOfTournaments"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("numberOfTournaments")}
                     headerName = "Tournaments number"
                 />
@@ -93,7 +90,7 @@ export default class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("numberOfBattles")}
                     sortBy = "numberOfBattles"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("numberOfBattles")}
                     headerName = "Battles number"
                 />
@@ -107,7 +104,7 @@ export default class Row extends React.Component{
                 <TableResponsiveHeader
                     isActive = {this.props.isColumnActive("points")}
                     sortBy = "points"
-                    sort = {this.props.sortByColumnName.bind(this)}
+                    sort = {this.props.sortByColumnName}
                     arrow = {this.props.getArrowGlyph("points")}
                     headerName = "points"
                 />

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { ActionCreators } from '../../../redux/actions/index';
 import {resp, styles} from '../../commonComponents/styles'
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 
 const ALERT_COLOR = "rgb(140, 48, 48)";
 const ALERT_BORDER_COLOR = "rgb(199, 125, 113)";

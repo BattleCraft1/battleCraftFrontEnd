@@ -9,9 +9,6 @@ import { ActionCreators } from '../../../../redux/actions/index';
 let icons = require('glyphicons');
 
 class DegradeOperation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     getFailureMessage(elementsWhichCannotBeDegrade){
         return "Users "+elementsWhichCannotBeDegrade
@@ -29,7 +26,6 @@ class DegradeOperation extends React.Component {
         let showFailureMessage = this.props.showFailureMessage;
         let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
-        let getFailureMessage = this.getFailureMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
         if(checkedElementsNames.length>0) {

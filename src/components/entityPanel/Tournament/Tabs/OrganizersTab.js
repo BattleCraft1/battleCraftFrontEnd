@@ -23,7 +23,7 @@ class OrganizersTab extends React.Component{
                 <UserTable
                     value={this.props.entity["organizers"]}
                     fieldName="organizers"
-                    changeEntity={this.props.changeEntity.bind(this)}
+                    changeEntity={this.props.changeEntity}
                     name="Organisators" />
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["organizers"]}/>

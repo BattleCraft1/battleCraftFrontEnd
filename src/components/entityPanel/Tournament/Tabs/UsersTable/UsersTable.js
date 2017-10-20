@@ -1,6 +1,5 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite';
-import {resp, styles} from '../../../styles'
+import {styles} from '../../../styles'
 import TableRow from './UsersTableRow'
 import './scrollbar.css'
 

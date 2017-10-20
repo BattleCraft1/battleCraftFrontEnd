@@ -1,12 +1,8 @@
 import React from 'react';
-import {resp, styles} from '../styles'
+import {styles} from '../styles'
 
 
 export default class TextInput extends React.Component{
-    constructor(props) {
-        super(props);
-    }
-
     changeInput(event){
         if(this.text.value !=="")
             this.props.changeSearchForm(
