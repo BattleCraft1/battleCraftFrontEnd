@@ -11,6 +11,7 @@ export default class TextArea extends React.Component{
                        style = {Object.assign({},styles.optionInput, styles.textArea)}
                        maxLength="100"
                        value = {this.props.value}
+                       disabled={this.props.disabled}
                        onChange={(event)=>this.props.changeEntity(this.props.fieldName,event.target.value)}
                 />
             </div>

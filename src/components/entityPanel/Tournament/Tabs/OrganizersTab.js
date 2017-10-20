@@ -18,6 +18,7 @@ class OrganizersTab extends React.Component{
     }
 
     render(){
+        let inputsDisabled = this.props.mode !== 'get';
         return(
             <div>
                 <UserTable
@@ -27,7 +28,7 @@ class OrganizersTab extends React.Component{
                     name="Organisators" />
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["organizers"]}/>
-                <InviteButton operation={this.startInviteOrganizers.bind(this)} text="Invite"/>
+                {inputsDisabled && <InviteButton operation={this.startInviteOrganizers.bind(this)} text="Invite"/>}
             </div>
         )
     }

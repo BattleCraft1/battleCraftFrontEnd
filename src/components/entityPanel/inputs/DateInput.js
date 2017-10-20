@@ -37,12 +37,14 @@ export default class DateInput extends React.Component{
                         style={styles.optionInput}
                         type="date"
                         onChange={event => this.onDateChange(event.target.value)}
+                        disabled={this.props.disabled}
                         ref = {control => this.date = control}
                     />
                     <input
                         style={styles.optionInput}
                         type="time"
                         onChange={event => this.onTimeChange(event.target.value)}
+                        disabled={this.props.disabled}
                         ref = {control => this.time = control}
                     />
                 </div>

@@ -12,6 +12,7 @@ export default class TextInput extends React.Component{
                        style={styles.optionInput}
                        type="text"
                        value = {this.props.value}
+                       disabled={this.props.disabled}
                        onChange={(event)=>this.props.changeEntity(this.props.fieldName,event.target.value)}
                 />
             </div>

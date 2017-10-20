@@ -58,19 +58,28 @@ class BasicDataTab extends React.Component{
             "Group":4
         };
         let maxPlayers = this.props.entity["tablesCount"]*this.props.entity["playersOnTableCount"];
+        let inputsDisabled = this.props.mode === 'get';
         return(
             <div>
+
                 <TextInput
                     value={this.props.entity["nameChange"]}
                     fieldName="nameChange"
                     changeEntity={this.props.changeEntity}
+                    disabled = {inputsDisabled}
                     name="Name"/>
+                {this.props.mode!=='add' &&
+                <TextOutput
+                    value={this.props.entity["status"]}
+                    name="Tournament status"/>
+                }
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["nameChange"]}/>
                 <NumberInput
                     value={this.props.entity["tablesCount"]}
                     fieldName="tablesCount"
                     changeEntity={this.props.changeEntity}
+                    disabled = {inputsDisabled}
                     name="Tables count"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["tablesCount"]}/>
@@ -79,6 +88,7 @@ class BasicDataTab extends React.Component{
                     fieldName="playersOnTableCount"
                     changeEntity={this.props.changeEntity}
                     options={tournamentTypeOptions}
+                    disabled = {inputsDisabled}
                     name="Type"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["playersOnTableCount"]}/>
@@ -93,6 +103,7 @@ class BasicDataTab extends React.Component{
                     fieldName="game"
                     changeEntity={this.props.changeEntity}
                     options={this.state.gameNames}
+                    disabled = {inputsDisabled}
                     name="Game"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["game"]}/>
@@ -100,6 +111,7 @@ class BasicDataTab extends React.Component{
                     value={this.props.entity["dateOfStart"]}
                     fieldName="dateOfStart"
                     changeEntity={this.props.changeEntity}
+                    disabled = {inputsDisabled}
                     name="Start at"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["dateOfStart"]}/>
@@ -107,6 +119,7 @@ class BasicDataTab extends React.Component{
                     value={this.props.entity["dateOfEnd"]}
                     fieldName="dateOfEnd"
                     changeEntity={this.props.changeEntity}
+                    disabled = {inputsDisabled}
                     name="Ends at"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["dateOfEnd"]}/>

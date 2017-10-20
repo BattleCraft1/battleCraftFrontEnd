@@ -32,11 +32,9 @@ class Row extends React.Component{
 
     editEntity(element){
         if(element.status!=='NEW' && element.status!=='ACCEPTED')
-        {
-            this.props.showFailureMessage("You can edit only new or accepted tournaments");
-            return;
-        }
-        this.props.editEntity("tournament",element.name);
+            this.props.showEntity("tournament",element.name);
+        else
+            this.props.editEntity("tournament",element.name);
     }
 
     render(){
