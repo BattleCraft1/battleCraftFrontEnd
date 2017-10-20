@@ -8,8 +8,7 @@ export default class Avatar extends React.Component{
         this.state = {
           imageIsPresent:false,
           file: '',
-          imagePreviewUrl: '',
-          imagePreview:'',
+          imagePreviewUrl:'',
         }
     }
 
@@ -17,13 +16,29 @@ export default class Avatar extends React.Component{
       e.preventDefault();
       let reader = new FileReader();
       let file = e.target.files[0];
+      let fileType = ""
+      let size = 0//can be used to validate size of file
+      if(file){
+        fileType = file.type.toString().split("/")[0]
+        size = file.size
+      }
       reader.onloadend = () => {
         this.setState({
           file: file,
           imagePreviewUrl: reader.result
         });
       }
-      reader.readAsDataURL(file)
+      if(file && (fileType === 'image')){
+        reader.readAsDataURL(file)
+        this.setState({
+          imageIsPresent:true,
+        });
+      }
+      else{
+        this.setState({
+          imageIsPresent:false,
+        });
+      }
     }
 
     updateInputValue(evt) {
@@ -55,24 +70,21 @@ export default class Avatar extends React.Component{
     }
 
     render(){
-      let {imagePreviewUrl} = this.state;
-      let imagePreview = null;
-      if (imagePreviewUrl) {
-        imagePreview = (<img style={{height:'inherit', width:'inherit', objectPosition:'center center', objectFit:'cover', borderRadius:'inherit', boxSizing:'border-box'}} src={imagePreviewUrl} />);
-      } else {
-        imagePreview = 'Click'
-      }
         return(
           <div>
           <form action="#">
-            <button style={Object.assign({}, styles.avatarButton, {backgroundImage:'url('+imagePreviewUrl+')' } :{})} className={css(resp.avatarButton)}>
+            <button
+            style={Object.assign({}, styles.avatarButton,  (this.state.imageIsPresent) ? {backgroundImage:'url('+this.state.imagePreviewUrl+'), linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1), rgba(109, 80, 152, 0.7)'} :{})}
+            className={css(resp.avatarButton)}
+            onMouseEnter={()=>{this.setState({hover:true})}}
+            onMouseLeave={()=>{this.setState({hover:false})}}>
               <input style={styles.fileInput}
                required
-               id="my-file" type="file"
+               type="file"
                onChange={(evt)=>this.handleImageChange(evt)}/>
-
+               {!this.state.imageIsPresent && <div>Click to load avatar</div>}
+               {(this.state.imageIsPresent && this.state.hover) && <span style={{position:'relative', top:'70px'}}>Click to change avatar</span>}
             </button>
-            <div>Change</div>
           </form>
           </div>
         )
@@ -81,7 +93,12 @@ export default class Avatar extends React.Component{
 
 
 
-
+// let imagePreview = null;
+// if (this.state.imagePreviewUrl) {
+  // imagePreview = (<img style={{height:'inherit', width:'inherit', objectPosition:'center center', objectFit:'cover', borderRadius:'inherit', boxSizing:'border-box'}} src={this.state.imagePreviewUrl} />);
+// } else {
+  // imagePreview = 'Click'
+// }
 
 //
 // <img className={css(resp.avatar)}

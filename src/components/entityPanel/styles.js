@@ -283,9 +283,30 @@ const resp = StyleSheet.create({
       },
   },
   avatarButton:{
+    ':hover':{
+      backgroundBlendMode:'multiply',
+      /*
+color
+color-darken
+color-dodge
+darken
+difference
+exclusion
+hard-light
+soft-light
+hue
+luminosity
+multiply
+normal
+overlay
+saturation
+screen
+
+      */
+    },
     ':active':{
         color:'lightGrey',
-        backgroundImage: 'linear-gradient( #4b2f0d, #6f4d13, #dda553 )',
+        backgroundBlendMode:'luminosity',
       },
   },
   halfSize:{
