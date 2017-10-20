@@ -49,7 +49,8 @@ class Panel extends React.Component{
                 "zipCode": "",
                 "description": "",
                 "organizers": [],
-                "participants": []
+                "participants": [],
+                "status":""
             },
             validationErrors:{
                 "name": "",
@@ -201,6 +202,19 @@ class Panel extends React.Component{
     render(){
         let content = this.createContent();
 
+        let buttons = [];
+        if(this.props.mode!=='get'){
+            buttons = [
+                <Button text={"Cancel"} action={() => this.props.disableEntityPanel()}/>,
+                <Button text={"Save"} action={() => {this.sendEntity()}}/>
+            ]
+        }
+        else{
+            buttons = [
+                <Button text={"Ok"} action={() => this.props.disableEntityPanel()}/>
+            ]
+        }
+
         return(
             <div style={styles.goldAndBrownTheme} className = {css(resp.panel)}>
                 <Navigation
@@ -209,8 +223,7 @@ class Panel extends React.Component{
                 <div className={css(resp.content)}>
                     {content}
                 </div>
-                <Button text={"Cancel"} action={() => this.props.disableEntityPanel()}/>
-                <Button text={"Save"} action={() => {this.sendEntity()}}/>
+                {buttons}
             </div>
         )
     }

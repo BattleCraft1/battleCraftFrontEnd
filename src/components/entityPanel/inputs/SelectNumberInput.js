@@ -17,6 +17,7 @@ export default class SelectNumberInput extends React.Component{
                 <select
                     value = {this.props.value}
                     onChange={(event)=>this.props.changeEntity(this.props.fieldName,event.target.value)}
+                    disabled={this.props.disabled}
                     style={styles.optionInput}>
                     {this.createOptions()}
                 </select>

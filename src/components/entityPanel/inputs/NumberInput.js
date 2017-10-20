@@ -10,6 +10,7 @@ export default class NumberInput extends React.Component{
                 <input style={styles.optionInput}
                        type="number"
                        value = {this.props.value}
+                       disabled={this.props.disabled}
                        onChange={(event)=>{this.props.changeEntity(this.props.fieldName,parseInt(event.target.value))}}
                 />
             </div>

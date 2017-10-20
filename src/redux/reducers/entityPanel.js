@@ -30,7 +30,7 @@ export const entityPanel = createReducer( {}, {
     },
     [types.SHOW_ENTITY]( state, action ) {
         return {
-            mode:entityPanelModes.show,
+            mode:entityPanelModes.get,
             entityType:action.entityType,
             entityName:action.entityName,
             hidden:false,

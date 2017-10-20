@@ -10,6 +10,7 @@ import {provinces} from '../../../../main/consts/provinces'
 
 export default class AddressTab extends React.Component{
     render(){
+        let inputsDisabled = this.props.mode === 'get';
         return(
             <div>
                 <SelectInput
@@ -17,6 +18,7 @@ export default class AddressTab extends React.Component{
                     fieldName="province"
                     changeEntity={this.props.changeEntity.bind(this)}
                     name="Province"
+                    disabled = {inputsDisabled}
                     options={provinces}/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["province"]}/>
@@ -24,6 +26,7 @@ export default class AddressTab extends React.Component{
                     value={this.props.entity["city"]}
                     fieldName="city"
                     changeEntity={this.props.changeEntity.bind(this)}
+                    disabled = {inputsDisabled}
                     name="City"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["city"]}/>
@@ -31,6 +34,7 @@ export default class AddressTab extends React.Component{
                     value={this.props.entity["street"]}
                     fieldName="street"
                     changeEntity={this.props.changeEntity.bind(this)}
+                    disabled = {inputsDisabled}
                     name="Street"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["street"]}/>
@@ -38,6 +42,7 @@ export default class AddressTab extends React.Component{
                     value={this.props.entity["zipCode"]}
                     fieldName="zipCode"
                     changeEntity={this.props.changeEntity.bind(this)}
+                    disabled = {inputsDisabled}
                     name="ZIP code"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["zipCode"]}/>
@@ -45,6 +50,7 @@ export default class AddressTab extends React.Component{
                     value={this.props.entity["description"]}
                     fieldName="description"
                     changeEntity={this.props.changeEntity.bind(this)}
+                    disabled = {inputsDisabled}
                     name="Description"/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["description"]}/>
