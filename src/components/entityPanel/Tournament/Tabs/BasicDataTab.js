@@ -80,6 +80,11 @@ class BasicDataTab extends React.Component{
                     changeEntity={this.props.changeEntity}
                     disabled = {inputsDisabled}
                     name="Name"/>
+                {this.props.mode!=='add' &&
+                <TextOutput
+                    value={this.props.entity["status"]}
+                    name="Tournament status"/>
+                }
                 <SelectInput
                     value={this.props.entity["game"]}
                     fieldName="game"
@@ -93,7 +98,6 @@ class BasicDataTab extends React.Component{
                         value={this.props.entity["status"]}
                         name="Tournament status"/>
                     }
-
                 <NumberInput
                     value={this.props.entity["tablesCount"]}
                     fieldName="tablesCount"
@@ -130,7 +134,6 @@ class BasicDataTab extends React.Component{
         )
     }
 }
-
 
 function mapDispatchToProps( dispatch ) {
     return bindActionCreators( ActionCreators, dispatch );

@@ -9,8 +9,11 @@ import TableRespNeutralHeader from './../../headRow/tableHeader/TableRespNeutral
 import {StyleSheet, css} from 'aphrodite';
 import {colors} from './../../../../../../main/consts/collectionsColors'
 
+import { ActionCreators } from '../../../../../../redux/actions/index';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-export default class Row extends React.Component{
+class Row extends React.Component{
 
     getColor(columnName, user){
         if(this.props.isColumnActive(columnName)){
@@ -27,12 +30,9 @@ export default class Row extends React.Component{
         }
     }
 
-    addNewElement(){
-        console.log("TO DO ADD");
-    }
-
-    editCheckedElements(){
-        console.log("TO DO EDIT");
+    editEntity(element){
+        //TO DO: if user is owner of accout -> edit else -> show
+        this.props.editEntity("user",element.name);
     }
 
     render(){
@@ -50,7 +50,7 @@ export default class Row extends React.Component{
                 <TableAvatarCell
                     columnName = "avatar"
                     color = {this.getColor("avatar", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     name = {this.props.element.name}
                 />
 
@@ -64,7 +64,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "name"
                     color = {this.getColor("name", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.name}
                 />
 
@@ -78,7 +78,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "firstname"
                     color = {this.getColor("firstname", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.firstname}
                 />
 
@@ -92,7 +92,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "lastname"
                     color = {this.getColor("lastname", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.lastname}
                 />
 
@@ -106,7 +106,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "email"
                     color = {this.getColor("email", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.email}
                 />
 
@@ -120,7 +120,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "province"
                     color = {this.getColor("province", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.province}
                 />
 
@@ -134,7 +134,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "city"
                     color = {this.getColor("city", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.city}
                 />
 
@@ -148,7 +148,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "phoneNumber"
                     color = {this.getColor("phoneNumber", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.phoneNumber}
                 />
             </tr>
@@ -156,8 +156,22 @@ export default class Row extends React.Component{
     }
 }
 
+
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
+
+function mapStateToProps( state ) {
+    return {
+        entityPanel: state.entityPanel
+    };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( Row );
+
 const resp = StyleSheet.create({
     tableRow:{
+        cursor:'pointer',
         '@media (max-width: 600px)': {
             display:'block',
             position:'relative',

@@ -1,6 +1,6 @@
 import React from 'react';
-import UserTable from './UsersTable/UsersTable'
-import InviteButton from './UsersTable/InviteButton'
+import UserTable from '../../inputs/Table/Table'
+import InviteButton from '../../inputs/Table/InviteButton'
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
 
@@ -13,7 +13,7 @@ class OrganizersTab extends React.Component{
 
     startInviteOrganizers(){
         this.props.setOperations(["Invite","CancelInvite","Search"]);
-        this.props.setRelatedEntity(this.props.entity["organizers"].map(entity => entity.invitedUserName),["ORGANIZER"]);
+        this.props.setRelatedEntity(this.props.entity["organizers"].map(entity => entity.name),["ORGANIZER"]);
         this.props.showEntityPanel(false);
     }
 
@@ -24,11 +24,13 @@ class OrganizersTab extends React.Component{
                 <UserTable
                     value={this.props.entity["organizers"]}
                     fieldName="organizers"
+                    inputsDisabled = {inputsDisabled}
                     changeEntity={this.props.changeEntity}
                     name="Organisators" />
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["organizers"]}/>
-                {inputsDisabled && <InviteButton operation={this.startInviteOrganizers.bind(this)} text="Invite"/>}
+                {inputsDisabled && <InviteButton to='/collectionsPanel/users'
+                                                 operation={this.startInviteOrganizers.bind(this)} text="Invite"/>}
             </div>
         )
     }

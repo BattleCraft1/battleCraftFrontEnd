@@ -8,14 +8,11 @@ import OrganizersTab from './Tabs/OrganizersTab';
 import ParticipantsTab from './Tabs/ParticipantsTab';
 import PanelTitle from '../inputs/PanelTitle';
 
-
-import compareArrays from '../../../main/functions/compareArrays';
-
 import { ActionCreators } from '../../../redux/actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import Navigation from './Navigation/Navigation'
+import Navigation from '../Navigation/Navigation'
 
 import {resp, styles} from '../styles'
 
@@ -24,12 +21,20 @@ import axios from 'axios';
 
 import checkIfObjectIsNotEmpty from '../../../main/functions/checkIfObjectIsNotEmpty'
 import validateTournament from '../validators/TournamentValidator'
+import compareArrays from '../../../main/functions/compareArrays';
 
 const tabsMap = {
     "basicData":BasicDataTab,
     "address":AddressTab,
     "organizers":OrganizersTab,
     "participants":ParticipantsTab
+};
+
+const tabsNamesMap = {
+    "basicData":"Basic data",
+    "address":"Address",
+    "organizers":"Organizers",
+    "participants":"Participants",
 };
 
 class Panel extends React.Component{
@@ -109,7 +114,7 @@ class Panel extends React.Component{
             elementName => {
                 if(organizersNames.indexOf(elementName)===-1){
                     entity[relatedEntityType].push({
-                        invitedUserName:elementName,
+                        name:elementName,
                         accepted:false
                     })
                 }
@@ -160,13 +165,14 @@ class Panel extends React.Component{
             this.setState({entity:entity})
         }
 
-        let entity = JSON.parse(JSON.stringify(this.state.entity));
-        entity.organizers = this.state.entity.organizers.map(element => element.invitedUserName);
-        entity.participants = this.state.entity.participants.map(element => element.invitedUserName);
-        let validationErrors = validateTournament(entity);
+        let entityToSend = JSON.parse(JSON.stringify(this.state.entity));
+        entityToSend.organizers = this.state.entity.organizers.map(element => element.name);
+        entityToSend.participants = this.state.entity.participants.map(element => element.name);
+        delete entityToSend["status"];
+        let validationErrors = validateTournament(entityToSend);
         if(checkIfObjectIsNotEmpty(validationErrors)){
-            console.log(entity);
-            axios.post(serverName+this.props.entityPanel.mode+'/'+this.props.entityPanel.entityType, entity)
+            console.log(entityToSend);
+            axios.post(serverName+this.props.entityPanel.mode+'/'+this.props.entityPanel.entityType, entityToSend)
                 .then(res => {
                     this.setState({entity:res.data});
                     this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.entityPanel.mode+"ed");
@@ -207,8 +213,8 @@ class Panel extends React.Component{
         let buttons = [];
         if(this.props.mode!=='get'){
             buttons = [
-                <Button text={"Cancel"} action={() => this.props.disableEntityPanel()}/>,
-                <Button text={"Save"} action={() => {this.sendEntity()}}/>
+                <Button key="cancel" text={"Cancel"} action={() => this.props.disableEntityPanel()}/>,
+                <Button key="save" text={"Save"} action={() => {this.sendEntity()}}/>
             ]
         }
         else{
@@ -222,6 +228,7 @@ class Panel extends React.Component{
           <PanelTitle name={"TOURNAMENT PANEL"} />
             <div style={styles.goldAndBrownTheme} className = {css(resp.panel)}>
                 <Navigation
+                    tabNames={tabsNamesMap}
                     setActiveTab={this.setActiveTab.bind(this)}
                     isTabActive={this.isTabActive.bind(this)}/>
                 <div className={css(resp.content)}>

@@ -1,6 +1,6 @@
 import React from 'react';
-import {styles} from '../../../styles'
-import TableRow from './UsersTableRow'
+import {styles} from '../../styles'
+import TableRow from './TableRow'
 import './scrollbar.css'
 
 export default class Table extends React.Component{
@@ -18,19 +18,20 @@ export default class Table extends React.Component{
 
     createTableRows(){
         return this.props.value.map(
-            row => <TableRow key={row.invitedUserName}
-                             deleteUser = {this.deleteUser.bind(this)}
+            row => <TableRow key={row.name}
+                             inputsDisabled = {this.props.inputsDisabled}
+                             delete = {this.deleteElement.bind(this)}
                              accepted={row.accepted}
-                             playerName={row.invitedUserName}/>
+                             name={row.name}/>
         )
     }
 
-    deleteUser(userName){
-        let users = this.props.value;
-        users = users.filter(user => {
-            return user.invitedUserName!==userName
+    deleteElement(name){
+        let elements = this.props.value;
+        elements = elements.filter(user => {
+            return user.name!==name
         });
-        this.props.changeEntity(this.props.fieldName,users)
+        this.props.changeEntity(this.props.fieldName,elements)
     }
 
     render(){

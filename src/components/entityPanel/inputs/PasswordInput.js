@@ -1,7 +1,7 @@
 import React from 'react';
 import {resp, styles} from '../styles'
 import Label from '../outputs/Label'
-import {StyleSheet, css} from 'aphrodite';
+import {css} from 'aphrodite';
 
 
 export default class PasswordInput extends React.Component{
