@@ -114,7 +114,7 @@ const styles = {
   avatarButton:{
     boxSizing:'border-box',
     width:'170px',
-    height:'180px',
+    height:'170px',
     border:'1px solid black',
     boxShadow:'inset 0 0 7px #9c7239',
     color:'rgb(227, 228, 205)',
@@ -148,6 +148,7 @@ const styles = {
     display:'inline-block',
   },
   tabButton:{
+    cursor:'pointer',
     boxSizing:'border-box',
     display:'inline-block',
     position:'relative',

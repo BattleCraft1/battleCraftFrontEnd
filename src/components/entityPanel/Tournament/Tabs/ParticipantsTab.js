@@ -1,6 +1,6 @@
 import React from 'react';
-import UserTable from './UsersTable/UsersTable'
-import InviteButton from './UsersTable/InviteButton'
+import UserTable from '../../inputs/Table/Table'
+import InviteButton from '../../inputs/Table/InviteButton'
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
 
@@ -12,7 +12,7 @@ class ParticipantsTab extends React.Component{
 
     startInviteParticipants(){
         this.props.setOperations(["Invite","CancelInvite","Search"]);
-        this.props.setRelatedEntity(this.props.entity["participants"].map(entity => entity.invitedUserName),["ORGANIZER","ACCEPTED"]);
+        this.props.setRelatedEntity(this.props.entity["participants"].map(entity => entity.name),["ORGANIZER","ACCEPTED"]);
         this.props.showEntityPanel(false);
     }
 
@@ -23,11 +23,13 @@ class ParticipantsTab extends React.Component{
                 <UserTable
                     value={this.props.entity["participants"]}
                     fieldName="participants"
+                    inputsDisabled = {inputsDisabled}
                     changeEntity={this.props.changeEntity.bind(this)}
                     name="Participants" />
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["participants"]}/>
-                {inputsDisabled && <InviteButton operation={this.startInviteParticipants.bind(this)}  text="Invite"/>}
+                {inputsDisabled && <InviteButton to='/collectionsPanel/users'
+                                                 operation={this.startInviteParticipants.bind(this)}  text="Invite"/>}
             </div>
         )
     }

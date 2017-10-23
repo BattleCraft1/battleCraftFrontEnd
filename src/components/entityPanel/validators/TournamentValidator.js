@@ -35,8 +35,14 @@ export default (entity) => {
     if(entity.organizers.length>10)
         fieldErrors.organizers = "Count of organizers must be less than 10";
 
+    if((new Set(entity.organizers)).size !== entity.organizers.length)
+        fieldErrors.organizers = "You can invite organizer only once";
+
     if(entity.tablesCount*entity.playersOnTableCount!==0 && entity.participants.length>entity.tablesCount*entity.playersOnTableCount)
         fieldErrors.participants = "Participants count must be less than "+entity.maxPlayers;
+
+    if((new Set(entity.participants)).size !== entity.participants.length)
+        fieldErrors.organizers = "You can invite player only once";
 
     if(!checkIfObjectIsNotEmpty(fieldErrors)){
         validationErrors.message = "Invalid tournament data";
