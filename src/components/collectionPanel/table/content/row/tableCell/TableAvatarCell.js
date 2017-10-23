@@ -8,10 +8,9 @@ export default class TableAvatarCell extends React.Component{
         return(
             <td className = {css(resp.rowContent)}
                 style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.props.color})}
-                onClick={() => {this.props.onClick()}}>
-                <img className={css(resp.avatar)}
-                    src={serverName+`/get/user/`+this.props.name+`/avatar`}
-                     alt="avatar"/>
+                onClick={this.props.edit}>
+                <div className={css(resp.avatar)}
+                    style={{background:'url('+serverName+`/get/user/`+this.props.name+`/avatar)`}}/>
             </td>
         )
     }
@@ -64,17 +63,19 @@ const resp = StyleSheet.create({
         },
     },
     avatar:{
-      width:'40px',
-      height:'40px',
-      position:'relative',
-      borderRadius:'0',
-      backgroundSize:'cover',
-      display:'block',
-      '@media (max-width: 599px)': {
-        borderRadius:'50%',
-        height:'80px',
-        width: '80px',
-        marginLeft:'40%',
-      },
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        width:'40px',
+        height:'40px',
+        position:'relative',
+        borderRadius:'0',
+        display:'block',
+        '@media (max-width: 599px)': {
+            borderRadius:'50%',
+            height:'80px',
+            width: '80px',
+            marginLeft:'40%',
+        },
     },
 });

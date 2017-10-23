@@ -112,8 +112,11 @@ const styles = {
     fontWeight:'600',
   },
   avatarButton:{
-    boxSizing:'border-box',
-    width:'170px',
+      boxSizing:'border-box',
+      backgroundSize: 'initial',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      width:'170px',
     height:'170px',
     border:'1px solid black',
     boxShadow:'inset 0 0 7px #9c7239',
@@ -125,8 +128,6 @@ const styles = {
     fontWeight:'600',
     padding:'0',
     position:'relative',
-    backgroundPosition:'center',
-    backgroundSize:'cover'
   },
   goldAndBrownTheme:{
     border:'2px solid',
