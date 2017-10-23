@@ -1,7 +1,8 @@
 import React from 'react';
-import {resp,styles} from '../styles'
+import {styles, resp} from '../styles'
 import Label from '../outputs/Label'
 import {css} from 'aphrodite';
+
 
 export default class SelectInput extends React.Component{
 

@@ -1,7 +1,9 @@
 import React from 'react';
-import {styles} from '../styles'
+import {styles, resp} from '../styles'
 import Label from '../outputs/Label'
 import dateFormat from 'dateformat';
+import {StyleSheet, css} from 'aphrodite';
+
 
 export default class DateInput extends React.Component{
 
@@ -30,8 +32,8 @@ export default class DateInput extends React.Component{
 
     render(){
         return(
-            <div>
-                <div style={styles.inputBlock}>
+            <div style={styles.inputBlock} className={css(resp.inputBlock)}>
+                <div>
                     <Label name={this.props.name}/>
                     <input
                         style={styles.optionInput}

@@ -1,12 +1,13 @@
 import React from 'react';
-import {styles} from '../styles'
+import {resp, styles} from '../styles'
+import {css} from 'aphrodite';
 import Label from '../outputs/Label'
 
 export default class TextOutput extends React.Component{
 
     render(){
         return(
-            <div style={styles.inputBlock}>
+            <div style={styles.inputBlock} className={css(resp.inputBlock)}>
                 <Label name={this.props.name}/>
                 <input
                     style={styles.optionInput}

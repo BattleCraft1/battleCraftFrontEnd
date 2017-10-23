@@ -42,16 +42,14 @@ export default class PanelButton extends React.Component{
 
     render(){
         return(
-          <div>
+          <div style={{position:'relative', width:'100%', height:'30px'}}>
           <form action="#">
             <button style={styles.tableButton} className={css(resp.tableButton)}>
               <input style={styles.fileInput}
-               required
                id="my-file" type="file"
                onChange={(evt)=>this.updateInputValue(evt)}/>
               <div>{this.getPath()}</div>
             </button>
-            <div></div>
           </form>
           </div>
         )
