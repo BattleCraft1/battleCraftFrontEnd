@@ -195,7 +195,6 @@ const styles = {
   tableCell:{
     backgroundImage: 'linear-gradient(rgb(255, 255, 255), rgb(220, 220, 220), rgb(200, 200, 200))',
     border:'1px black solid',
-//    borderTop:'0px',
     paddingTop:'6px',
     paddingBottom:'6px',
     paddingLeft:'4px',
@@ -227,6 +226,20 @@ const styles = {
     width: '100%',
     height:'100%',
     opacity: '0',
+    display:'block',
+  },
+  validationMessage:{
+    backgroundImage: 'linear-gradient(rgb(177, 71, 58),rgb(157, 48, 35), rgb(116, 35, 24))',
+    borderRadius:'2px',
+    textAlign:'center',
+    color:'rgb(215, 215, 211)',
+    width:'100%',
+    position:'relative',
+    display:'block',
+    marginBottom:'1px',
+    border:'1px solid rgb(208, 136, 121)',
+    padding:'2px',
+    fontSize:'80%',
   },
 };
 
@@ -280,24 +293,6 @@ const resp = StyleSheet.create({
   avatarButton:{
     ':hover':{
       backgroundBlendMode:'multiply',
-      /*
-color
-color-darken
-color-dodge
-darken
-difference
-exclusion
-hard-light
-soft-light
-hue
-luminosity
-multiply
-normal
-overlay
-saturation
-screen
-
-      */
     },
     ':active':{
         color:'lightGrey',
@@ -326,6 +321,15 @@ screen
     marginBottom:'5%',
     height:'100%',
     '@media (max-width: 720px)': {
+        maxHeight:'250px',
+        overflowY:'scroll',
+        marginBottom:'2px',
+        marginTop:'2px',
+        position:'relative',
+    },
+    '@media (max-width: 420px)': {
+        maxHeight:'180px',
+        overflowY:'scroll',
         marginBottom:'2px',
         marginTop:'2px',
         position:'relative',

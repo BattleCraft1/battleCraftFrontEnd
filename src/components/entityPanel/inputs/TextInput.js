@@ -1,6 +1,7 @@
 import React from 'react';
-import {styles} from '../styles'
+import {styles, resp} from '../styles'
 import Label from '../outputs/Label'
+import {StyleSheet, css} from 'aphrodite';
 
 export default class TextInput extends React.Component{
 

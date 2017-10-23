@@ -1,6 +1,6 @@
 import React from 'react';
 import {resp, styles} from '../styles'
-import Label from './Label'
+import Label from '../outputs/Label'
 import {StyleSheet, css} from 'aphrodite';
 
 
