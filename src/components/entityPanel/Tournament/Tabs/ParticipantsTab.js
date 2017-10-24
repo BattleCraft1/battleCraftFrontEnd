@@ -1,6 +1,6 @@
 import React from 'react';
-import UserTable from '../../inputs/Table/Table'
-import InviteButton from '../../inputs/Table/InviteButton'
+import UserTable from '../../Table/UsersTable'
+import InviteButton from '../../Table/InviteButton'
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
 
@@ -17,18 +17,17 @@ class ParticipantsTab extends React.Component{
     }
 
     render(){
-        let inputsDisabled = this.props.mode !== 'get';
         return(
-            <div>
+            <div style={Object.assign({},{marginLeft:'10%',marginRight:'10%'})}>
                 <UserTable
                     value={this.props.entity["participants"]}
                     fieldName="participants"
-                    inputsDisabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     changeEntity={this.props.changeEntity.bind(this)}
                     name="Participants" />
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["participants"]}/>
-                {inputsDisabled && <InviteButton to='/collectionsPanel/users'
+                {this.props.inputsDisabled && <InviteButton to='/collectionsPanel/users'
                                                  operation={this.startInviteParticipants.bind(this)}  text="Invite"/>}
             </div>
         )

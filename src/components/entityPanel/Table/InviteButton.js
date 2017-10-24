@@ -1,6 +1,6 @@
 import React from 'react';
 import {css} from 'aphrodite';
-import {resp, styles} from '../../styles'
+import {resp, styles} from '../styles'
 import { Link } from 'react-router-dom';
 
 export default class UserTableButton extends React.Component{

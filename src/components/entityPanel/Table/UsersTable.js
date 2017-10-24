@@ -1,9 +1,10 @@
 import React from 'react';
-import {styles} from '../../styles'
-import TableRow from './TableRow'
+import {styles} from '../styles'
+import UserTableRow from './Row/UserTableRow'
+import EmptyTableRow from './Row/EmptyTableRow'
 import './scrollbar.css'
 
-export default class Table extends React.Component{
+export default class UserTable extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -17,13 +18,19 @@ export default class Table extends React.Component{
     }
 
     createTableRows(){
-        return this.props.value.map(
-            row => <TableRow key={row.name}
-                             inputsDisabled = {this.props.inputsDisabled}
-                             delete = {this.deleteElement.bind(this)}
-                             accepted={row.accepted}
-                             name={row.name}/>
-        )
+        console.log(this.props.value);
+        if(this.props.value.length===0){
+            return <EmptyTableRow/>
+        }
+        else{
+            return this.props.value.map(
+                row => <UserTableRow key={row.name}
+                                     disabled = {this.props.disabled}
+                                     delete = {this.deleteElement.bind(this)}
+                                     accepted={row.accepted}
+                                     name={row.name}/>
+            )
+        }
     }
 
     deleteElement(name){
@@ -38,7 +45,7 @@ export default class Table extends React.Component{
         let rows = this.createTableRows();
 
         return(
-            <div style={{ boxShadow: '-12px 0 15px -4px rgb(99, 89, 66), 12px 0 15px -4px rgb(99, 89, 66)',}}>
+            <div style={{marginTop:'5px',  boxShadow: '-12px 0 15px -4px rgb(99, 89, 66), 12px 0 15px -4px rgb(99, 89, 66)',}}>
 
                 <div style={Object.assign({}, styles.optionLabel, styles.tableHeaderCell)}>{this.props.name}</div>
                 <span style={{position:'relative',width:'20%'}}/>

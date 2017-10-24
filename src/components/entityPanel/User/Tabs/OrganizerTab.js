@@ -1,8 +1,8 @@
 import React from 'react';
-import TournamentsTable from '../../inputs/Table/Table'
-import InviteButton from '../../inputs/Table/InviteButton'
+import TournamentsTable from '../../Table/TournamentsTable'
+import InviteButton from '../../Table/InviteButton'
 
-import TournamentsTableOutput from '../../outputs/Table/Table'
+import TournamentsTableOutput from '../../Table/TournamentsTableOutput'
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
 
@@ -25,6 +25,7 @@ class OrganizerTab extends React.Component{
                 <TournamentsTable
                     value={this.props.entity["organizedTournaments"]}
                     fieldName="organizedTournaments"
+                    disabled = {this.props.inputsDisabled}
                     changeEntity={this.props.changeEntity.bind(this)}
                     name="Organized tournaments" />
                 <ValidationErrorMessage
@@ -36,6 +37,7 @@ class OrganizerTab extends React.Component{
                     name="Finished tournaments"
                 />
                 <TournamentsTableOutput
+                    inputsDisabled={true}
                     value={this.props.entity["createdGames"]}
                     name="Created games"
                 />

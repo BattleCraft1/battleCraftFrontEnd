@@ -10,7 +10,6 @@ import {provinces} from '../../../../main/consts/provinces'
 
 export default class AddressTab extends React.Component{
     render(){
-        let inputsDisabled = this.props.mode === 'get';
         return(
             <div>
             <ValidationErrorMessage
@@ -29,31 +28,31 @@ export default class AddressTab extends React.Component{
                     fieldName="province"
                     changeEntity={this.props.changeEntity.bind(this)}
                     name="Province"
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     options={provinces}/>
                 <TextInput
                     value={this.props.entity["city"]}
                     fieldName="city"
                     changeEntity={this.props.changeEntity.bind(this)}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="City"/>
                 <TextInput
                     value={this.props.entity["street"]}
                     fieldName="street"
                     changeEntity={this.props.changeEntity.bind(this)}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="Street"/>
                 <TextInput
                     value={this.props.entity["zipCode"]}
                     fieldName="zipCode"
                     changeEntity={this.props.changeEntity.bind(this)}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="ZIP code"/>
                 <TextArea
                     value={this.props.entity["description"]}
                     fieldName="description"
                     changeEntity={this.props.changeEntity.bind(this)}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="Description"/>
             </div>
         )

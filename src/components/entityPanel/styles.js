@@ -113,7 +113,7 @@ const styles = {
   },
   avatarButton:{
       boxSizing:'border-box',
-      backgroundSize: 'initial',
+      backgroundSize: 'covered',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       width:'170px',
@@ -178,7 +178,8 @@ const styles = {
   },
   inputBlock:{
     boxShadow: '-12px 0 15px -4px rgb(99, 89, 66), 12px 0 15px -4px rgb(99, 89, 66)',
-    marginBottom:'5px',
+    marginBottom:'3px',
+      marginTop:'3px',
   },
   table:{
     boxSizing:'border-box',
@@ -194,11 +195,20 @@ const styles = {
     borderTopRightRadius:'5px',
     borderTopLeftRadius:'5px',
   },
+    tableAvatarCell:{
+        border:'1px black solid',
+        paddingTop:'10px',
+        paddingBottom:'10px',
+        paddingLeft:'35px',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+    },
   tableCell:{
     backgroundImage: 'linear-gradient(rgb(255, 255, 255), rgb(220, 220, 220), rgb(200, 200, 200))',
     border:'1px black solid',
-    paddingTop:'6px',
-    paddingBottom:'6px',
+    paddingTop:'10px',
+    paddingBottom:'10px',
     paddingLeft:'4px',
   },
   scrollPanel:{
