@@ -58,7 +58,7 @@ class BasicDataTab extends React.Component{
             "Group":4
         };
         let maxPlayers = this.props.entity["tablesCount"]*this.props.entity["playersOnTableCount"];
-        let inputsDisabled = this.props.mode === 'get';
+
         return(
             <div>
             <ValidationErrorMessage
@@ -78,7 +78,7 @@ class BasicDataTab extends React.Component{
                     value={this.props.entity["nameChange"]}
                     fieldName="nameChange"
                     changeEntity={this.props.changeEntity}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="Name"/>
                 {this.props.mode!=='add' &&
                 <TextOutput
@@ -90,7 +90,7 @@ class BasicDataTab extends React.Component{
                     fieldName="game"
                     changeEntity={this.props.changeEntity}
                     options={this.state.gameNames}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="Game"/>
 
                     {this.props.mode!=='add' &&
@@ -102,7 +102,7 @@ class BasicDataTab extends React.Component{
                     value={this.props.entity["tablesCount"]}
                     fieldName="tablesCount"
                     changeEntity={this.props.changeEntity}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="Tables count"/>
 
                 <SelectNumberInput
@@ -110,7 +110,7 @@ class BasicDataTab extends React.Component{
                     fieldName="playersOnTableCount"
                     changeEntity={this.props.changeEntity}
                     options={tournamentTypeOptions}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="Type"/>
                 <NumberOutput
                     value={maxPlayers}
@@ -122,13 +122,13 @@ class BasicDataTab extends React.Component{
                     value={this.props.entity["dateOfStart"]}
                     fieldName="dateOfStart"
                     changeEntity={this.props.changeEntity}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="Start at"/>
                 <DateInput
                     value={this.props.entity["dateOfEnd"]}
                     fieldName="dateOfEnd"
                     changeEntity={this.props.changeEntity}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="Ends at"/>
             </div>
         )

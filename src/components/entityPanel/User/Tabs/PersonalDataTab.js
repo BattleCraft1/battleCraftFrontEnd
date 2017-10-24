@@ -15,6 +15,7 @@ export default class PersonalDataTab extends React.Component{
                 <div style={{display:'inline-block', width:'100%'}}>
                     <div style={{position:'relative', display:'inline-block', float:'left', width:'20%',}}>
                         <AvatarInput
+                            disabled = {this.props.inputsDisabled}
                             username={this.props.entity["name"]}
                         />
                     </div>
@@ -23,7 +24,7 @@ export default class PersonalDataTab extends React.Component{
                             value={this.props.entity["nameChange"]}
                             fieldName="nameChange"
                             changeEntity={this.props.changeEntity}
-                            disabled = {inputsDisabled}
+                            disabled = {this.props.inputsDisabled}
                             name="Username"/>
                         <ValidationErrorMessage
                             validationErrorMessage={this.props.validationErrors["nameChange"]}/>
@@ -31,7 +32,7 @@ export default class PersonalDataTab extends React.Component{
                             value={this.props.entity["firstname"]}
                             fieldName="firstname"
                             changeEntity={this.props.changeEntity}
-                            disabled = {inputsDisabled}
+                            disabled = {this.props.inputsDisabled}
                             name="First name"/>
                         <ValidationErrorMessage
                             validationErrorMessage={this.props.validationErrors["firstname"]}/>
@@ -39,7 +40,7 @@ export default class PersonalDataTab extends React.Component{
                             value={this.props.entity["lastname"]}
                             fieldName="lastname"
                             changeEntity={this.props.changeEntity}
-                            disabled = {inputsDisabled}
+                            disabled = {this.props.inputsDisabled}
                             name="Surname"/>
                         <ValidationErrorMessage
                             validationErrorMessage={this.props.validationErrors["surname"]}/>

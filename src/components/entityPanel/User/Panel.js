@@ -52,8 +52,8 @@ class Panel extends React.Component{
                 "firstname": "",
                 "lastname": "",
                 "phoneNumber": "",
-                "participatedTournaments": [],
-                "organizedTournaments": []
+                "participatedTournaments": "",
+                "organizedTournaments": ""
             },
             tabsMap:{},
             tabsNamesMap:{}
@@ -116,8 +116,8 @@ class Panel extends React.Component{
         return React.createElement(
             this.state.tabsMap[this.state.activeTab],
             {
-                mode:this.props.mode,
                 entity:this.state.entity,
+                inputsDisabled: this.props.mode === 'get',
                 changeEntity: this.changeEntity.bind(this),
                 validationErrors: this.state.validationErrors
             },

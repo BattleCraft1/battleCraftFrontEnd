@@ -143,8 +143,8 @@ class Panel extends React.Component{
         return React.createElement(
             tabsMap[this.state.activeTab],
             {
-                mode:this.props.mode,
                 entity:this.state.entity,
+                inputsDisabled: this.props.mode === 'get',
                 changeEntity: this.changeEntity.bind(this),
                 validationErrors: this.state.validationErrors
             },

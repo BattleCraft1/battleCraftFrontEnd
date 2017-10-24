@@ -47,7 +47,7 @@ export default class Avatar extends React.Component{
           <div>
           <form action="#">
             <button
-            style={Object.assign({}, styles.avatarButton,  (this.state.imageIsPresent) ? {backgroundImage:'url('+serverName+'/get/user/'+this.props.username+'/big/avatar), linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1), rgba(109, 80, 152, 0.7)'} :{})}
+            style={Object.assign({}, styles.avatarButton,  (this.state.imageIsPresent) ? {backgroundImage:'url('+serverName+`/get/user/`+this.props.username+'/avatar), linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1), rgba(109, 80, 152, 0.7)'} :{})}
             className={css(resp.avatarButton)}
             onMouseEnter={()=>{this.setState({hover:true})}}
             onMouseLeave={()=>{this.setState({hover:false})}}>
