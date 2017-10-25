@@ -62,7 +62,7 @@ class Avatar extends React.Component{
                                                     required
                                                     type="file"
                                                     onChange={(evt)=>this.handleImageChange(evt)}/>}
-                    {this.state.hover && <span style={{position:'relative', top:'70px'}}>Click to change avatar</span>}
+                    <div className={css(element.hoverElement)}><span style={{position:'absolute', bottom:'10px', left:'0px', width:'100%'}}>Click to change avatar</span></div>
                 </button>
             </div>
         )
@@ -80,3 +80,17 @@ function mapStateToProps( state ) {
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Avatar );
+
+
+const element = StyleSheet.create({
+  hoverElement:{
+    position:'relative',
+    opacity:'0',
+    height:'100%',
+    width:'100%',
+    textAlign:'',
+    ':hover':{
+      opacity:'1',
+    },
+  }
+})
