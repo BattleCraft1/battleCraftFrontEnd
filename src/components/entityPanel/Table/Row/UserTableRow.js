@@ -10,7 +10,8 @@ export default class UserTableRow extends React.Component{
                 <td style={Object.assign({}, styles.tableAvatarCell,
                     {backgroundImage: 'url('+serverName+`/get/user/`+this.props.name+`/avatar)`})}/>
                 <td style={Object.assign({}, styles.tableCell, this.props.accepted ?
-                    {backgroundImage: 'linear-gradient(rgb(191, 226, 162), rgb(157, 186, 134), rgb(122, 147, 103))'}:{} , {width:'80%'} )}>
+                    {backgroundImage: 'linear-gradient(rgb(191, 226, 162), rgb(157, 186, 134), rgb(122, 147, 103))'}:{} ,
+                    !this.props.disabled?{width:'80%'}:{width:'100%'} )}>
                     {this.props.name}</td>
                 {!this.props.disabled && <td onClick={() => this.props.delete(this.props.name)}
                     style={Object.assign({}, styles.tableCell, styles.tableButton)} className={css(resp.tableButton)}>delete</td>}

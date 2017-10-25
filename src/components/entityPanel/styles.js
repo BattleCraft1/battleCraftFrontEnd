@@ -113,7 +113,7 @@ const styles = {
   },
   avatarButton:{
       boxSizing:'border-box',
-      backgroundSize: 'covered',
+      backgroundSize: 'contain',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       width:'170px',

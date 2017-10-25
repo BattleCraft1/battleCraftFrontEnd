@@ -11,6 +11,10 @@ export default class RowHeader extends React.Component{
                 <TableNeutralHeader
                     content="no"
                 />
+                <TableNeutralHeader
+                    content=""
+                    size={40}
+                />
                 <TableHeader
                     sortBy = "name"
                     sort = {this.props.sortByColumnName}
