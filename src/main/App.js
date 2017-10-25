@@ -7,6 +7,8 @@ import ConfirmDialog from '../components/commonComponents/confirmDialog/ConfirmD
 import Message from '../components/commonComponents/messageBox/MessageBox';
 import Background from '../resources/splashBig2.jpg';
 import EntityPanel from '../components/entityPanel/EntityPanel'
+import ManagementPanel from '../components/tournamentManagePanel/Panel'
+
 
 class App extends Component {
 
@@ -23,6 +25,7 @@ class App extends Component {
                 <Message/>
                       <Switch>
                           <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
+                          <Route exact path='/tournamentManagement' component={ManagementPanel}/>
                       </Switch>
             </div>
           </div>

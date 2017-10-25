@@ -92,6 +92,13 @@ class Navbar extends React.Component{
                 key="2"
                 name = "All tournaments"
                 link = "/collectionsPanel/tournaments"
+
+            />,
+            <NavigatingDropdownOption
+                key="3"
+                name = "Tournament management"
+                link = "/tournamentManagement"
+
             />]
     }
 
