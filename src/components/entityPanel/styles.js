@@ -331,15 +331,16 @@ const resp = StyleSheet.create({
     paddingRight:'8%',
     marginTop:'3%',
     marginBottom:'5%',
-    height:'100%',
-    '@media (max-width: 720px)': {
+    overflowY:'scroll',
+    maxHeight:'320px',
+    '@media (max-width: 1023px)': {
         maxHeight:'250px',
         overflowY:'scroll',
         marginBottom:'2px',
         marginTop:'2px',
         position:'relative',
     },
-    '@media (max-width: 420px)': {
+    '@media (max-width: 720px)': {
         maxHeight:'180px',
         overflowY:'scroll',
         marginBottom:'2px',
