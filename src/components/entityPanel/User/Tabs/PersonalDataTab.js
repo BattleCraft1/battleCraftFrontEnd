@@ -12,6 +12,16 @@ export default class PersonalDataTab extends React.Component{
         let inputsDisabled = this.props.mode === 'get';
         return(
             <div>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["nameChange"]}/>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["firstname"]}/>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["lastname"]}/>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["email"]}/>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["phoneNumber"]}/>
                 <div style={{display:'inline-block', width:'100%'}}>
                     <div style={{position:'relative', display:'inline-block', float:'left', width:'20%',}}>
                         <AvatarInput
@@ -26,24 +36,18 @@ export default class PersonalDataTab extends React.Component{
                             changeEntity={this.props.changeEntity}
                             disabled = {this.props.inputsDisabled}
                             name="Username"/>
-                        <ValidationErrorMessage
-                            validationErrorMessage={this.props.validationErrors["nameChange"]}/>
                         <TextInput
                             value={this.props.entity["firstname"]}
                             fieldName="firstname"
                             changeEntity={this.props.changeEntity}
                             disabled = {this.props.inputsDisabled}
                             name="First name"/>
-                        <ValidationErrorMessage
-                            validationErrorMessage={this.props.validationErrors["firstname"]}/>
                         <TextInput
                             value={this.props.entity["lastname"]}
                             fieldName="lastname"
                             changeEntity={this.props.changeEntity}
                             disabled = {this.props.inputsDisabled}
                             name="Surname"/>
-                        <ValidationErrorMessage
-                            validationErrorMessage={this.props.validationErrors["surname"]}/>
                     </div>
                 </div>
                 <TextInput
@@ -52,16 +56,12 @@ export default class PersonalDataTab extends React.Component{
                     changeEntity={this.props.changeEntity}
                     disabled = {inputsDisabled}
                     name="E-mail"/>
-                <ValidationErrorMessage
-                    validationErrorMessage={this.props.validationErrors["email"]}/>
                 <TextInput
                     value={this.props.entity["phoneNumber"]}
                     fieldName="phoneNumber"
                     changeEntity={this.props.changeEntity}
                     disabled = {inputsDisabled}
                     name="Phone number"/>
-                <ValidationErrorMessage
-                    validationErrorMessage={this.props.validationErrors["phoneNumber"]}/>
                 <TextOutput
                     value={this.props.entity["status"]}
                     name="User role"/>

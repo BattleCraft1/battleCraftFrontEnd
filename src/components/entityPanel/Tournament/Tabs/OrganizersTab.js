@@ -20,15 +20,15 @@ class OrganizersTab extends React.Component{
     render(){
         return(
             <div style={Object.assign({},{marginLeft:'10%',marginRight:'10%'})}>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["organizers"]}/>
                 <UserTable
                     value={this.props.entity["organizers"]}
                     fieldName="organizers"
                     disabled = {this.props.inputsDisabled}
                     changeEntity={this.props.changeEntity}
                     name="Organizers" />
-                <ValidationErrorMessage
-                    validationErrorMessage={this.props.validationErrors["organizers"]}/>
-                {this.props.inputsDisabled && <InviteButton to='/collectionsPanel/users'
+                {!this.props.inputsDisabled && <InviteButton to='/collectionsPanel/users'
                                                  operation={this.startInviteOrganizers.bind(this)} text="Invite"/>}
             </div>
         )

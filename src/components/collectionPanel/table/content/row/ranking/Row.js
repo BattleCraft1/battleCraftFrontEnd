@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TableCell from './../../row/tableCell/TableCell'
+import TableAvatarCell from './../../row/tableCell/TableAvatarCell'
 import TableResponsiveHeader from './../../headRow/tableHeader/TableResponsiveHeader'
 import TableRespNeutralHeader from './../../headRow/tableHeader/TableRespNeutralHeader'
 
@@ -29,6 +30,16 @@ export default class Row extends React.Component{
                     color = {this.getColor("no")}
                     edit = {() => {}}
                     content = {this.props.number}
+                />
+
+                <TableRespNeutralHeader
+                    headerName = "avatar"
+                />
+                <TableAvatarCell
+                    columnName = "avatar"
+                    color = {this.getColor("avatar")}
+                    edit={() => {}}
+                    name = {this.props.element.name}
                 />
 
                 <TableResponsiveHeader

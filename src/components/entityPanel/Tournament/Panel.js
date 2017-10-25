@@ -219,7 +219,7 @@ class Panel extends React.Component{
         }
         else{
             buttons = [
-                <Button text={"Ok"} action={() => this.props.disableEntityPanel()}/>
+                <Button key="ok" text={"Ok"} action={() => this.props.disableEntityPanel()}/>
             ]
         }
 
