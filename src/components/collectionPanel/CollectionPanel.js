@@ -29,65 +29,70 @@ class CollectionPanel extends React.Component{
         this.setPossibleOperations(this.props.match.params.collectionType);
         await this.getPageRequest(this.props.match.params.collectionType);
         await this.setState({collectionType: this.props.match.params.collectionType});
-        let pageRequest = this.createPageRequest(this.state.collectionType);
-        this.props.setPageRequest(pageRequest);
+        this.createPageRequest(this.state.collectionType);
     }
 
     async componentWillReceiveProps(nextProps) {
         if (nextProps.entityPanel.hidden === true &&
             this.props.entityPanel.hidden === false) {
             await this.setState({collectionType: nextProps.match.params.collectionType});
-            let pageRequest = this.createPageRequestForEntityPanel(nextProps.entityPanel.relatedEntity.relatedEntityType);
-            this.props.setPageRequest(pageRequest);
+            this.createPageRequestForEntityPanel(nextProps.entityPanel.relatedEntity.relatedEntityCriteria);
             await this.getPageRequest(this.state.collectionType);
             this.props.checkElements(nextProps.entityPanel.relatedEntity.relatedEntityNames,true)
         }
         else if (nextProps.match.params.collectionType !== this.state.collectionType ||
             (nextProps.entityPanel.mode === 'disabled' &&
                 this.props.entityPanel.mode !== 'disabled')) {
-            let pageRequest = this.createPageRequest(nextProps.match.params.collectionType);
+            this.createPageRequest(nextProps.match.params.collectionType);
             this.setPossibleOperations(nextProps.match.params.collectionType);
             await this.setState({collectionType: nextProps.match.params.collectionType});
-            this.props.setPageRequest(pageRequest);
             await this.getPageRequest(this.state.collectionType);
         }
     }
 
-    createPageRequestForEntityPanel(relatedEntityType){
-        let pageRequest = this.props.pageRequest;
-        pageRequest.searchCriteria = [{
-            "keys": ["status"],
-            "operation": ":",
-            "value": relatedEntityType
-        }];
-        pageRequest.pageRequest.direction = "ASC";
-        pageRequest.pageRequest.property = "name";
-        pageRequest.pageRequest.size = 10;
-        pageRequest.pageRequest.page = 0;
-        return pageRequest;
+    createPageRequestForEntityPanel(relatedEntityCriteria){
+        this.props.setPageRequest({
+            searchCriteria:[{
+                "keys": ["status"],
+                "operation": ":",
+                "value": relatedEntityCriteria
+            }],
+            pageRequest:{
+                direction : "ASC",
+                property : "name",
+                size : 10,
+                page : 0
+            }
+        });
     }
 
     createPageRequest(collectionType){
-        let pageRequest = this.props.pageRequest;
         if(collectionType==='ranking') {
-            pageRequest.searchCriteria = [
-                {
-                    "keys": ["tour", "tournament", "game","name"],
-                    "operation":":",
-                    "value":["Warhammer"]
+            this.props.setPageRequest({
+                searchCriteria:[{
+                        "keys": ["tour", "tournament", "game","name"],
+                        "operation":":",
+                        "value":["Warhammer"]
+                    }],
+                pageRequest:{
+                    direction : "DESC",
+                    property : "points",
+                    size : 10,
+                    page : 0
                 }
-            ];
-            pageRequest.pageRequest.direction = "DESC";
-            pageRequest.pageRequest.property = "points";
+            });
         }
         else {
-            pageRequest.searchCriteria = [];
-            pageRequest.pageRequest.direction = "ASC";
-            pageRequest.pageRequest.property = "name";
+            this.props.setPageRequest({
+                searchCriteria:[],
+                pageRequest:{
+                    direction : "ASC",
+                    property : "name",
+                    size : 10,
+                    page : 0
+                }
+            });
         }
-        pageRequest.pageRequest.size = 10;
-        pageRequest.pageRequest.page = 0;
-        return pageRequest;
     }
 
     setPossibleOperations(collectionType){
@@ -99,13 +104,27 @@ class CollectionPanel extends React.Component{
         await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
             .then(res => {
                 this.props.checkPreviouslyCheckedElements(res.data);
-
-                let pageRequest = this.props.pageRequest;
-                pageRequest.pageRequest.page=this.props.page.number;
-                pageRequest.pageRequest.size=this.props.page.numberOfElements;
-                this.props.setPageRequest(pageRequest);
+                this.props.setPageRequest({
+                    searchCriteria:this.props.pageRequest.searchCriteria,
+                    pageRequest:{
+                        direction : this.props.pageRequest.pageRequest.direction,
+                        property : this.props.pageRequest.pageRequest.property,
+                        size : this.props.page.numberOfElements,
+                        page : this.props.page.number
+                    }
+                });
             })
             .catch(error => {
+                this.props.setEmptyPage();
+                this.props.setPageRequest({
+                    searchCriteria:this.props.pageRequest.searchCriteria,
+                    pageRequest:{
+                        direction : this.props.pageRequest.pageRequest.direction,
+                        property : this.props.pageRequest.pageRequest.property,
+                        size : 0,
+                        page : 0
+                    }
+                });
                 this.props.showNetworkErrorMessage(error);
             });
     }

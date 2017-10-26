@@ -9,7 +9,9 @@ let icons = require('glyphicons');
 class InviteOperation extends React.Component {
 
     inviteElements(){
-        this.props.setRelatedEntity(this.props.page.checkedElementsNames,this.props.entityPanel.relatedEntity.relatedEntityType);
+        this.props.setRelatedEntity(this.props.page.checkedElementsNames,
+            this.props.entityPanel.relatedEntity.relatedEntityType,
+            this.props.entityPanel.relatedEntity.relatedEntityCriteria);
         this.props.clearCheckedElements();
         this.props.showEntityPanel(true);
     }

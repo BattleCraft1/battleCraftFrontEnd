@@ -29,8 +29,13 @@ const store = configureStore( {
         hidden:false,
         relatedEntity:{
             relatedEntityNames:[],
-            relatedEntityType:[]
+            relatedEntityType:"",
+            relatedEntityCriteria:[]
         }
+    },
+    additionalEntityPanel:{
+        additionalEntityType:entityPanelTypes.none,
+        additionalEntityName:""
     },
     confirmation: {
         header:"",

@@ -12,7 +12,8 @@ export const entityPanel = createReducer( {}, {
             hidden:false,
             relatedEntity: {
                 relatedEntityNames: [],
-                relatedEntityType: ""
+                relatedEntityType:"",
+                relatedEntityCriteria: ""
             }
         };
     },
@@ -24,11 +25,12 @@ export const entityPanel = createReducer( {}, {
             hidden:false,
             relatedEntity: {
                 relatedEntityNames: [],
-                relatedEntityType: ""
+                relatedEntityType:"",
+                relatedEntityCriteria: ""
             }
         };
     },
-    [types.SHOW_ENTITY]( state, action ) {
+    [types.GET_ENTITY]( state, action ) {
         return {
             mode:entityPanelModes.get,
             entityType:action.entityType,
@@ -36,11 +38,13 @@ export const entityPanel = createReducer( {}, {
             hidden:false,
             relatedEntity: {
                 relatedEntityNames: [],
-                relatedEntityType: ""
+                relatedEntityType:"",
+                relatedEntityCriteria: ""
             }
         };
     },
-    [types.DISABLE_ENTITY_PANEL]( state, action ) {
+    [types.CLOSE_ENTITY_PANEL]( state, action ) {
+        console.log("disabled");
         return {
             mode:entityPanelModes.disabled,
             entityType:entityPanelTypes.none,
@@ -48,7 +52,8 @@ export const entityPanel = createReducer( {}, {
             hidden:false,
             relatedEntity: {
                 relatedEntityNames: [],
-                relatedEntityType: ""
+                relatedEntityType:"",
+                relatedEntityCriteria: ""
             }
         };
     },
@@ -60,7 +65,8 @@ export const entityPanel = createReducer( {}, {
             hidden:!action.isShow,
             relatedEntity: {
                 relatedEntityNames: state.relatedEntity.relatedEntityNames,
-                relatedEntityType: state.relatedEntity.relatedEntityType
+                relatedEntityType:state.relatedEntity.relatedEntityType,
+                relatedEntityCriteria: state.relatedEntity.relatedEntityCriteria
             }
         };
     },
@@ -72,7 +78,8 @@ export const entityPanel = createReducer( {}, {
             hidden:state.hidden,
             relatedEntity:{
                 relatedEntityNames:action.relatedEntityNames,
-                relatedEntityType: action.relatedEntityType
+                relatedEntityType:action.relatedEntityType,
+                relatedEntityCriteria: action.relatedEntityCriteria
             }
         };
     }
