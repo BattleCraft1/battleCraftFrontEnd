@@ -38,44 +38,34 @@ class PagePanel extends React.Component{
     changePageSize(){
         if(this.pageSizeInput.value<=10 && this.pageSizeInput.value>=1)
         {
-            let pageRequest=this.props.pageRequest;
-            pageRequest.pageRequest.size=this.pageSizeInput.value;
-            pageRequest.pageRequest.page = 0;
+            this.props.setPageRequestSizeAndNumber(this.pageSizeInput.value,0);
             this.pageNumberInput.value = 1;
-            this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest(this.props.collectionType);
         }
         else{
             this.props.showFailureMessage({
                 messageText: "Page size must be between 1 and 10"
             });
-            this.pageSizeInput.value=this.props.pageRequest.pageRequest.size;
+            this.pageSizeInput.value=this.props.pageRequest.size;
         }
     }
 
     changePageByInput(){
         if(this.pageNumberInput.value-1<this.props.page.totalPages && this.pageNumberInput.value-1>=0)
         {
-            let pageRequest=this.props.pageRequest;
-            pageRequest.pageRequest.page=this.pageNumberInput.value-1;
-            this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest(this.props.collectionType);
+            this.props.setPageNumber(this.pageNumberInput.value-1);
         }
         else{
             this.props.showFailureMessage({
                 messageText: "Page "+this.pageNumberInput.value+" don't exist"
             });
-            this.pageNumberInput.value=this.props.pageRequest.pageRequest.page+1;
+            this.pageNumberInput.value=this.props.pageRequest.page+1;
         }
     }
 
     changePage(number){
         if(number<this.props.page.totalPages && number>=0) {
-            let pageRequest = this.props.pageRequest;
-            pageRequest.pageRequest.page = number;
             this.pageNumberInput.value = number+1;
-            this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest(this.props.collectionType);
+            this.props.setPageNumber(number);
         }
         else{
             this.props.showFailureMessage({
@@ -86,30 +76,26 @@ class PagePanel extends React.Component{
 
     nextPage(){
         let pageRequest=this.props.pageRequest;
-        if(pageRequest.pageRequest.page+1<this.props.page.totalPages){
-            pageRequest.pageRequest.page+=1;
-            this.pageNumberInput.value=pageRequest.pageRequest.page+1;
-            this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest(this.props.collectionType);
+        if(pageRequest.page+1<this.props.page.totalPages){
+            this.pageNumberInput.value=pageRequest.page+1;
+            this.props.setPageNumber(pageRequest.page+1);
         }
         else{
             this.props.showFailureMessage({
-                messageText: "Page "+(pageRequest.pageRequest.page+2)+" don't exist"
+                messageText: "Page "+(pageRequest.page+2)+" don't exist"
             });
         }
     }
 
     previousPage(){
         let pageRequest=this.props.pageRequest;
-        if(pageRequest.pageRequest.page-1>=0){
-            pageRequest.pageRequest.page-=1;
-            this.pageNumberInput.value=pageRequest.pageRequest.page+1;
-            this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest(this.props.collectionType);
+        if(pageRequest.page-1>=0){
+            this.pageNumberInput.value=pageRequest.page+1;
+            this.props.setPageNumber(pageRequest.page-1);
         }
         else{
             this.props.showFailureMessage({
-                messageText: "Page "+(pageRequest.pageRequest.page)+" don't exist"
+                messageText: "Page "+(pageRequest.page)+" don't exist"
             });
         }
     }

@@ -62,25 +62,15 @@ class SearchPanel extends React.Component{
     }
 
     search(inputs){
-        let pageRequest=this.props.pageRequest;
-        pageRequest.searchCriteria=[];
+        let searchCriteria=[];
         for(let inputName in inputs){
             if(!isNotEmpty(inputs[inputName]))
-                pageRequest.searchCriteria.push(
+                searchCriteria.push(
                     inputs[inputName]
                 )
         }
-        if(this.props.entityPanel.mode !== 'disabled'){
-            pageRequest.searchCriteria.push({
-                "keys": ["status"],
-                "operation": ":",
-                "value": this.props.entityPanel.relatedEntity.relatedEntityType
-            });
-        }
-        pageRequest.pageRequest.page = 0;
-        pageRequest.pageRequest.size = 10;
-        this.props.setPageRequest(pageRequest);
-        this.props.getPageRequest(this.props.collectionType);
+        this.props.setSearchCriteria(searchCriteria);
+        this.props.setPageRequestSizeAndNumber(10,0);
         this.hideSearchPanel();
     }
 

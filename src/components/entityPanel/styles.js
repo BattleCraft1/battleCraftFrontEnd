@@ -309,7 +309,7 @@ const resp = StyleSheet.create({
     ':active':{
         color:'lightGrey',
         backgroundBlendMode:'luminosity',
-      },
+      }
   },
   halfSize:{
     width:'49.75%',

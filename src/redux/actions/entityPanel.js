@@ -36,10 +36,9 @@ export function showEntityPanel(isShow) {
     }
 }
 
-export function setRelatedEntity(relatedEntityNames,relatedEntityType){
+export function setRelatedEntityType(relatedEntityType){
     return {
-        type: types.SET_RELATED_ENTITY,
-        relatedEntityNames: relatedEntityNames,
+        type: types.SET_RELATED_ENTITY_TYPE,
         relatedEntityType: relatedEntityType
     }
 }

@@ -10,10 +10,7 @@ export const entityPanel = createReducer( {}, {
             entityType:action.entityType,
             entityName:"",
             hidden:false,
-            relatedEntity: {
-                relatedEntityNames: [],
-                relatedEntityType: ""
-            }
+            relatedEntityType: ""
         };
     },
     [types.EDIT_ENTITY]( state, action ) {
@@ -22,10 +19,7 @@ export const entityPanel = createReducer( {}, {
             entityType:action.entityType,
             entityName:action.entityName,
             hidden:false,
-            relatedEntity: {
-                relatedEntityNames: [],
-                relatedEntityType: ""
-            }
+            relatedEntityType: ""
         };
     },
     [types.SHOW_ENTITY]( state, action ) {
@@ -34,10 +28,7 @@ export const entityPanel = createReducer( {}, {
             entityType:action.entityType,
             entityName:action.entityName,
             hidden:false,
-            relatedEntity: {
-                relatedEntityNames: [],
-                relatedEntityType: ""
-            }
+            relatedEntityType: ""
         };
     },
     [types.DISABLE_ENTITY_PANEL]( state, action ) {
@@ -46,10 +37,7 @@ export const entityPanel = createReducer( {}, {
             entityType:entityPanelTypes.none,
             entityName:"",
             hidden:false,
-            relatedEntity: {
-                relatedEntityNames: [],
-                relatedEntityType: ""
-            }
+            relatedEntityType: ""
         };
     },
     [types.SHOW_ENTITY_PANEL]( state, action ) {
@@ -58,22 +46,16 @@ export const entityPanel = createReducer( {}, {
             entityType:state.entityType,
             entityName:state.entityName,
             hidden:!action.isShow,
-            relatedEntity: {
-                relatedEntityNames: state.relatedEntity.relatedEntityNames,
-                relatedEntityType: state.relatedEntity.relatedEntityType
-            }
+            relatedEntityType: state.relatedEntityType
         };
     },
-    [types.SET_RELATED_ENTITY]( state, action ) {
+    [types.SET_RELATED_ENTITY_TYPE]( state, action ) {
         return {
             mode:state.mode,
             entityType:state.entityType,
             entityName:state.entityName,
             hidden:state.hidden,
-            relatedEntity:{
-                relatedEntityNames:action.relatedEntityNames,
-                relatedEntityType: action.relatedEntityType
-            }
+            relatedEntityType:action.relatedEntityType
         };
     }
 } );

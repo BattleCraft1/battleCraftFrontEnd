@@ -24,7 +24,9 @@ class DegradeOperation extends React.Component {
         let checkedElementsNames = this.props.page.checkedElementsNames;
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
-        let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
+        let setPageAndCheckPreviouslyCheckedElements = this.props.setPageAndCheckPreviouslyCheckedElements;
+        let setPageRequestSizeAndNumber = this.props.setPageRequestSizeAndNumber;
+        let setEmptyPage = this.props.setEmptyPage;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
@@ -37,10 +39,13 @@ class DegradeOperation extends React.Component {
             let operationFunction = function(){
                 axios.post(serverName+`degrade/organizers`, GetPageAndModifyDataDTO)
                     .then(res => {
-                        checkPreviouslyCheckedElements(res.data);
+                        setPageAndCheckPreviouslyCheckedElements(res.data);
+                        setPageRequestSizeAndNumber(res.data.numberOfElements,res.data.number);
                         showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
                     .catch(error => {
+                        setEmptyPage();
+                        setPageRequestSizeAndNumber(0,0);
                         showNetworkErrorMessage(error);
                     })
             };

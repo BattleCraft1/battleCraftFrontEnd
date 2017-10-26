@@ -13,7 +13,18 @@ class OrganizersTab extends React.Component{
 
     startInviteOrganizers(){
         this.props.setOperations(["Invite","CancelInvite","Search"]);
-        this.props.setRelatedEntity(this.props.entity["organizers"].map(entity => entity.name),["ORGANIZER"]);
+        this.props.setRelatedEntityType("organizers");
+        this.props.setSearchCriteria(
+            [
+                {
+                    "keys": ["status"],
+                    "operation": ":",
+                    "value": ["ORGANIZER"]
+                }
+            ]
+        );
+        this.props.setPageRequest(10,0, "ASC","name");
+        this.props.setElementsToCheck(this.props.entity["organizers"].map(entity => entity.name),true);
         this.props.showEntityPanel(false);
     }
 

@@ -26,20 +26,16 @@ let icons = require('glyphicons');
 class CollectionList extends React.Component{
 
     sortByColumnName(columnName){
-        let pageRequest=this.props.pageRequest;
-        pageRequest.pageRequest.property=columnName;
-        pageRequest.pageRequest.direction=pageRequest.pageRequest.direction==='ASC'?'DESC':'ASC';
-        this.props.setPageRequest(pageRequest);
-        this.props.getPageRequest(this.props.collectionType);
+        this.props.setPageRequestSortProperties(columnName,this.props.pageRequest.direction==="ASC"?"DESC":"ASC");
     }
 
     isColumnActive(columnName){
-        return this.props.pageRequest.pageRequest.property === columnName;
+        return this.props.pageRequest.property === columnName;
     }
 
     getArrowGlyph(columnName){
         if(this.isColumnActive(columnName)){
-            if(this.props.pageRequest.pageRequest.direction === 'ASC'){
+            if(this.props.pageRequest.direction === 'ASC'){
                 return icons.arrowTriD
             }
             else{

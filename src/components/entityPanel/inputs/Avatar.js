@@ -13,7 +13,7 @@ class Avatar extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-          hover:false
+            hover:false
         }
     }
 
@@ -34,10 +34,10 @@ class Avatar extends React.Component{
             axios.post(serverName+`upload/user/avatar?username=`+ this.props.username,
                 formData,
                 {
-                headers: {
-                    'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
-                }
-            })
+                    headers: {
+                        'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+                    }
+                })
                 .then(res => {
                     this.props.showSuccessMessage("Avatar successfully changed");
                 })
@@ -53,16 +53,14 @@ class Avatar extends React.Component{
     render(){
         return(
             <div>
-                <button
-                    style={Object.assign({}, styles.avatarButton, {backgroundImage:'url('+serverName+`/get/user/`+this.props.username+'/avatar), linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1), rgba(109, 80, 152, 0.7)'})}
-                    className={css(resp.avatarButton)}
-                    onMouseEnter={()=>{!this.props.disabled && this.setState({hover:true})}}
-                    onMouseLeave={()=>{!this.props.disabled && this.setState({hover:false})}}>
+                <button style={Object.assign({}, styles.avatarButton, {backgroundImage:'url('+serverName+`/get/user/`+this.props.username+'/avatar?'+ new Date().getTime()+'), linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1), rgba(109, 80, 152, 0.7)'})}
+                    className={css(resp.avatarButton)}>
                     {!this.props.disabled && <input style={styles.fileInput}
                                                     required
+                                                    className="avatarInput"
                                                     type="file"
                                                     onChange={(evt)=>this.handleImageChange(evt)}/>}
-                    {this.state.hover && <span style={{position:'relative', top:'70px'}}>Click to change avatar</span>}
+                    <span style={{position:'absolute',width:'100%',left:'0',bottom:'10px',backgroundColor:'rgba(125,125,125,0.8)'}}>Click to change avatar</span>
                 </button>
             </div>
         )

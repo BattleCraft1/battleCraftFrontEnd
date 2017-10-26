@@ -15,6 +15,7 @@ import {serverName} from '../../main/consts/server'
 import {possibleOperationsForCollections} from "../../main/consts/possibleOperationsForCollections";
 
 import axios from 'axios';
+import {pageRequest} from "../../redux/reducers/pageRequest";
 
 class CollectionPanel extends React.Component{
     constructor(props) {
@@ -27,85 +28,66 @@ class CollectionPanel extends React.Component{
 
     async componentDidMount() {
         this.setPossibleOperations(this.props.match.params.collectionType);
-        await this.getPageRequest(this.props.match.params.collectionType);
         await this.setState({collectionType: this.props.match.params.collectionType});
-        let pageRequest = this.createPageRequest(this.state.collectionType);
-        this.props.setPageRequest(pageRequest);
+        this.createPageRequest(this.state.collectionType);
+        await this.getPage(this.state.collectionType,this.props.pageRequest);
     }
 
     async componentWillReceiveProps(nextProps) {
         if (nextProps.entityPanel.hidden === true &&
             this.props.entityPanel.hidden === false) {
+            console.log("entity panel hidden");
             await this.setState({collectionType: nextProps.match.params.collectionType});
-            let pageRequest = this.createPageRequestForEntityPanel(nextProps.entityPanel.relatedEntity.relatedEntityType);
-            this.props.setPageRequest(pageRequest);
-            await this.getPageRequest(this.state.collectionType);
-            this.props.checkElements(nextProps.entityPanel.relatedEntity.relatedEntityNames,true)
+            await this.getPage(this.state.collectionType,nextProps.pageRequest);
         }
         else if (nextProps.match.params.collectionType !== this.state.collectionType ||
             (nextProps.entityPanel.mode === 'disabled' &&
                 this.props.entityPanel.mode !== 'disabled')) {
-            let pageRequest = this.createPageRequest(nextProps.match.params.collectionType);
+            console.log("change collection type or disable entity panel");
+            this.createPageRequest(nextProps.match.params.collectionType);
             this.setPossibleOperations(nextProps.match.params.collectionType);
             await this.setState({collectionType: nextProps.match.params.collectionType});
-            this.props.setPageRequest(pageRequest);
-            await this.getPageRequest(this.state.collectionType);
+            await this.getPage(this.state.collectionType,nextProps.pageRequest);
         }
-    }
-
-    createPageRequestForEntityPanel(relatedEntityType){
-        let pageRequest = this.props.pageRequest;
-        pageRequest.searchCriteria = [{
-            "keys": ["status"],
-            "operation": ":",
-            "value": relatedEntityType
-        }];
-        pageRequest.pageRequest.direction = "ASC";
-        pageRequest.pageRequest.property = "name";
-        pageRequest.pageRequest.size = 10;
-        pageRequest.pageRequest.page = 0;
-        return pageRequest;
+        else if(JSON.stringify(nextProps.pageRequest)!==JSON.stringify(this.props.pageRequest)){
+            console.log("change page request");
+            await this.getPage(this.state.collectionType,nextProps.pageRequest);
+        }
     }
 
     createPageRequest(collectionType){
-        let pageRequest = this.props.pageRequest;
         if(collectionType==='ranking') {
-            pageRequest.searchCriteria = [
-                {
-                    "keys": ["tour", "tournament", "game","name"],
-                    "operation":":",
-                    "value":["Warhammer"]
-                }
-            ];
-            pageRequest.pageRequest.direction = "DESC";
-            pageRequest.pageRequest.property = "points";
+            this.props.setSearchCriteria(
+                [
+                    {
+                        "keys": ["tour", "tournament", "game","name"],
+                        "operation":":",
+                        "value":["Warhammer"]
+                    }
+                ]
+            );
+            this.props.setPageRequest(10,0, "DESC","points");
         }
         else {
-            pageRequest.searchCriteria = [];
-            pageRequest.pageRequest.direction = "ASC";
-            pageRequest.pageRequest.property = "name";
+            this.props.setSearchCriteria([]);
+            this.props.setPageRequest(10,0, "ASC","name");
         }
-        pageRequest.pageRequest.size = 10;
-        pageRequest.pageRequest.page = 0;
-        return pageRequest;
     }
 
     setPossibleOperations(collectionType){
         this.props.setOperations(possibleOperationsForCollections[collectionType])
     }
 
-    async getPageRequest(collectionType){
-        console.log(this.props.pageRequest);
-        await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
+    async getPage(collectionType,pageRequest){
+        await axios.post(serverName+`page/`+collectionType,pageRequest)
             .then(res => {
-                this.props.checkPreviouslyCheckedElements(res.data);
-
-                let pageRequest = this.props.pageRequest;
-                pageRequest.pageRequest.page=this.props.page.number;
-                pageRequest.pageRequest.size=this.props.page.numberOfElements;
-                this.props.setPageRequest(pageRequest);
+                console.log(res.data);
+                this.props.setPageAndCheckPreviouslyCheckedElements(res.data);
+                this.props.setPageRequestSizeAndNumber(this.props.page.numberOfElements,this.props.page.number);
             })
             .catch(error => {
+                this.props.setEmptyPage();
+                this.props.setPageRequestSizeAndNumber(0,0);
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -116,8 +98,7 @@ class CollectionPanel extends React.Component{
             searchPanel = React.createElement(
                 SearchPanel,
                 {
-                    collectionType:this.state.collectionType,
-                    getPageRequest:this.getPageRequest.bind(this)
+                    collectionType:this.state.collectionType
                 },
                 null
             );
@@ -125,10 +106,8 @@ class CollectionPanel extends React.Component{
             <div className={css(resp.container)}>
                 <div className="row">
                     {searchPanel}
-                    <CollectionList getPageRequest={this.getPageRequest.bind(this)}
-                                    collectionType={this.state.collectionType}/>
-                    <PagePanel getPageRequest={this.getPageRequest.bind(this)}
-                               collectionType={this.state.collectionType}/>
+                    <CollectionList collectionType={this.state.collectionType}/>
+                    <PagePanel collectionType={this.state.collectionType}/>
                 </div>
             </div>
         );

@@ -27,10 +27,7 @@ const store = configureStore( {
         entityType:entityPanelTypes.none,
         entityName:"",
         hidden:false,
-        relatedEntity:{
-            relatedEntityNames:[],
-            relatedEntityType:[]
-        }
+        relatedEntityType:""
     },
     confirmation: {
         header:"",
@@ -48,14 +45,12 @@ const store = configureStore( {
         content: [],
         checkedElementsNames: []
     },
-    pageRequest: {pageRequest:{
+    pageRequest: {
         size:10,
         page:0,
         direction: "ASC",
-        property: "name"
-    },
-        searchCriteria:[
-        ]
+        property: "name",
+        searchCriteria:[]
     },
 } );
 

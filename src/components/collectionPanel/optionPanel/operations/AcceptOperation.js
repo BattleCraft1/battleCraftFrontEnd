@@ -20,7 +20,9 @@ class AcceptOperation extends React.Component {
         let showSuccessMessage = this.props.showSuccessMessage;
         let showFailureMessage = this.props.showFailureMessage;
         let collectionType = this.props.collectionType;
-        let checkPreviouslyCheckedElements = this.props.checkPreviouslyCheckedElements;
+        let setPageAndCheckPreviouslyCheckedElements = this.props.setPageAndCheckPreviouslyCheckedElements;
+        let setPageRequestSizeAndNumber = this.props.setPageRequestSizeAndNumber;
+        let setEmptyPage = this.props.setEmptyPage;
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
@@ -33,10 +35,13 @@ class AcceptOperation extends React.Component {
             let operationFunction = function(){
                 axios.post(serverName+`accept/`+collectionType, GetPageAndModifyDataDTO)
                     .then(res => {
-                        checkPreviouslyCheckedElements(res.data);
+                        setPageAndCheckPreviouslyCheckedElements(res.data);
+                        setPageRequestSizeAndNumber(res.data.numberOfElements,res.data.number);
                         showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
                     .catch(error => {
+                        setEmptyPage();
+                        setPageRequestSizeAndNumber(0,0);
                         showNetworkErrorMessage(error);
                     })
             };

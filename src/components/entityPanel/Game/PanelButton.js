@@ -5,7 +5,7 @@ import './style.css'
 
 export default class PanelButton extends React.Component{
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             inputValue:"",
             validFile:false,//This is validation flag
@@ -16,7 +16,7 @@ export default class PanelButton extends React.Component{
       let value = "No file loaded"
       if(evt.target.files.item(0)){
           let tmp = evt.target.value.toString().split('.')
-          if(tmp[tmp.length-1] == "pdf"){
+          if(tmp[tmp.length-1] === "pdf"){
             value = evt.target.files.item(0).name
             this.setState({
               validFile:true,

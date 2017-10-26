@@ -2,14 +2,23 @@ import createReducer from '../lib/createReducer'
 import * as types from '../types/page'
 
 export const page = createReducer( {}, {
-    [types.CHECK_PREVIOUSLY_CHECKED_ELEMENTS]( state, action ) {
+    [types.SET_PAGE_AND_CHECK_PREVIOUSLY_CHECKED_ELEMENTS]( state, action ) {
         action.page.checkedElementsNames = state.checkedElementsNames;
         action.page.content.forEach((element) =>{
                 element.checked = state.checkedElementsNames.indexOf(element.name) !== -1;
             }
         );
-        console.log(action.page);
         return action.page;
+    },
+    [types.SET_EMPTY_PAGE]( state, action ) {
+        return {
+            checkedElementsNames:[],
+            numberOfElements:0,
+            content:[],
+            totalElements:0,
+            size:0,
+            totalPages:0
+        };
     },
     [types.CHECK_ALL_ELEMENTS]( state, action ){
         let elementToCheckNames = state.content
@@ -42,6 +51,10 @@ export const page = createReducer( {}, {
                 element.checked = false;
             }
         );
+        return Object.create(state);
+    },
+    [types.SET_ELEMENTS_TO_CHECK]( state, action ){
+        state.checkedElementsNames = action.elementsToCheckNames;
         return Object.create(state);
     }
 } );
