@@ -6,6 +6,11 @@ export function checkPreviouslyCheckedElements(page) {
         page: page
     }
 }
+export function setEmptyPage() {
+    return {
+        type: types.SET_EMPTY_PAGE
+    }
+}
 export function checkAllElements(checked) {
     return {
         type: types.CHECK_ALL_ELEMENTS,

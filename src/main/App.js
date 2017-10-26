@@ -7,6 +7,7 @@ import ConfirmDialog from '../components/commonComponents/confirmDialog/ConfirmD
 import Message from '../components/commonComponents/messageBox/MessageBox';
 import Background from '../resources/splashBig2.jpg';
 import EntityPanel from '../components/entityPanel/EntityPanel'
+import AdditionalEntityPanel from '../components/entityPanel/AdditionalEntityPanel'
 
 class App extends Component {
 
@@ -20,6 +21,7 @@ class App extends Component {
                 <Navbar/>
                 <ConfirmDialog/>
                 <EntityPanel/>
+                <AdditionalEntityPanel/>
                 <Message/>
                       <Switch>
                           <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>

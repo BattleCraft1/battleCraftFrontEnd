@@ -32,7 +32,14 @@ class Row extends React.Component{
 
     editEntity(element){
         //TO DO: if user is owner of accout -> edit else -> show
-        this.props.editEntity("user",element.name);
+        if(this.props.entityPanel.mode!=='disabled'){
+            console.log("show additional entity panel");
+            this.props.showAdditionalEntityPanel("user",element.name);
+        }
+        else{
+            console.log("edit entity panel");
+            this.props.editEntity("user",element.name);
+        }
     }
 
     render(){
@@ -163,7 +170,8 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
-        entityPanel: state.entityPanel
+        entityPanel: state.entityPanel,
+        additionalEntityPanel: state.additionalEntityPanel
     };
 }
 

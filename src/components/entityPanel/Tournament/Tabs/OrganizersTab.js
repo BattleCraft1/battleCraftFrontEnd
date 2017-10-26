@@ -13,7 +13,10 @@ class OrganizersTab extends React.Component{
 
     startInviteOrganizers(){
         this.props.setOperations(["Invite","CancelInvite","Search"]);
-        this.props.setRelatedEntity(this.props.entity["organizers"].map(entity => entity.name),["ORGANIZER"]);
+        this.props.setRelatedEntity(
+            this.props.entity["organizers"].map(entity => entity.name),
+            "organizers",
+            ["ORGANIZER"]);
         this.props.showEntityPanel(false);
     }
 

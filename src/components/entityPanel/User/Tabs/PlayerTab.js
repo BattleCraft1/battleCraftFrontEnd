@@ -15,7 +15,10 @@ class PlayerTab extends React.Component{
 
     startAddTournaments(){
         this.props.setOperations(["Invite","CancelInvite","Search"]);
-        this.props.setRelatedEntity(this.props.entity["participatedTournaments"].map(entity => entity.name),["ACCEPTED"]);
+        this.props.setRelatedEntity(
+            this.props.entity["participatedTournaments"].map(entity => entity.name),
+            "participatedTournaments",
+            ["ACCEPTED"]);
         this.props.showEntityPanel(false);
     }
 

@@ -12,7 +12,10 @@ class ParticipantsTab extends React.Component{
 
     startInviteParticipants(){
         this.props.setOperations(["Invite","CancelInvite","Search"]);
-        this.props.setRelatedEntity(this.props.entity["participants"].map(entity => entity.name),["ORGANIZER","ACCEPTED"]);
+        this.props.setRelatedEntity(
+            this.props.entity["participants"].map(entity => entity.name),
+            "participants",
+            ["ORGANIZER","ACCEPTED"]);
         this.props.showEntityPanel(false);
     }
 

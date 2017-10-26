@@ -79,9 +79,9 @@ class Panel extends React.Component{
     }
 
     async componentDidMount() {
-        if(this.props.entityPanel.mode==='edit' || this.props.entityPanel.mode==='get')
+        if(this.props.mode==='edit' || this.props.mode==='get')
         {
-            await axios.get(serverName+`get/`+this.props.entityPanel.entityType+`?name=`+this.props.entityPanel.entityName)
+            await axios.get(serverName+`get/`+this.props.type+`?name=`+this.props.name)
                 .then(res => {
                     this.setState({entity:res.data});
                     console.log(res.data);
@@ -93,26 +93,21 @@ class Panel extends React.Component{
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.entityPanel.hidden === false &&
-            this.props.entityPanel.hidden === true &&
-            !compareArrays(nextProps.entityPanel.relatedEntity.relatedEntityNames,this.props.entityPanel.relatedEntity.relatedEntityNames)) {
-            let relatedEntityType = nextProps.entityPanel.relatedEntity.relatedEntityType;
-            let relatedEntityNames = nextProps.entityPanel.relatedEntity.relatedEntityNames;
-            if(compareArrays(relatedEntityType,["ORGANIZER"])){
-                this.actualizeRelatedEntityObjects("organizers",relatedEntityNames)
-            }
-            else if(compareArrays(relatedEntityType,["ORGANIZER","ACCEPTED"])){
-                this.actualizeRelatedEntityObjects("participants",relatedEntityNames)
-            }
+        if (nextProps.hidden === false &&
+            this.props.hidden === true &&
+            !compareArrays(nextProps.relatedEntity.relatedEntityNames,this.props.relatedEntity.relatedEntityNames)) {
+            this.actualizeRelatedEntityObjects(
+                nextProps.relatedEntity.relatedEntityType,
+                nextProps.relatedEntity.relatedEntityNames)
         }
     }
 
     actualizeRelatedEntityObjects(relatedEntityType,relatedEntityNames){
         let entity = this.state.entity;
-        let organizersNames = entity[relatedEntityType].map(entity => entity.name);
+        let relatedEntitiesNames = entity[relatedEntityType].map(entity => entity.name);
         relatedEntityNames.forEach(
             elementName => {
-                if(organizersNames.indexOf(elementName)===-1){
+                if(relatedEntitiesNames.indexOf(elementName)===-1){
                     entity[relatedEntityType].push({
                         name:elementName,
                         accepted:false
@@ -120,7 +115,7 @@ class Panel extends React.Component{
                 }
             }
         );
-        organizersNames.forEach(
+        relatedEntitiesNames.forEach(
             elementName => {
                 if(relatedEntityNames.indexOf(elementName)===-1){
                     let organizerToDelete = entity[relatedEntityType].find(element => element.name===elementName);
@@ -158,7 +153,7 @@ class Panel extends React.Component{
     }
 
     sendEntity(){
-        if(this.props.entityPanel.mode==='add')
+        if(this.props.mode==='add')
         {
             let entity = this.state.entity;
             entity.name = entity.nameChange;
@@ -172,11 +167,11 @@ class Panel extends React.Component{
         let validationErrors = validateTournament(entityToSend);
         if(checkIfObjectIsNotEmpty(validationErrors)){
             console.log(entityToSend);
-            axios.post(serverName+this.props.entityPanel.mode+'/'+this.props.entityPanel.entityType, entityToSend)
+            axios.post(serverName+this.props.mode+'/'+this.props.entityType, entityToSend)
                 .then(res => {
                     this.setState({entity:res.data});
-                    this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.entityPanel.mode+"ed");
-                    this.props.disableEntityPanel();
+                    this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.mode+"ed");
+                    this.props.disable();
                 })
                 .catch(error => {
                     if(error.response.data.fieldErrors===undefined){
@@ -213,13 +208,13 @@ class Panel extends React.Component{
         let buttons = [];
         if(this.props.mode!=='get'){
             buttons = [
-                <Button key="cancel" text={"Cancel"} action={() => this.props.disableEntityPanel()}/>,
+                <Button key="cancel" text={"Cancel"} action={() => this.props.disable()}/>,
                 <Button key="save" text={"Save"} action={() => {this.sendEntity()}}/>
             ]
         }
         else{
             buttons = [
-                <Button key="ok" text={"Ok"} action={() => this.props.disableEntityPanel()}/>
+                <Button key="ok" text={"Ok"} action={() => this.props.disable()}/>
             ]
         }
 
@@ -247,8 +242,8 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
-        entityPanel:state.entityPanel,
-        message:state.message
+        message:state.message,
+        entityPanel: state.entityPanel
     };
 }
 

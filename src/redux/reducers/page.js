@@ -8,8 +8,17 @@ export const page = createReducer( {}, {
                 element.checked = state.checkedElementsNames.indexOf(element.name) !== -1;
             }
         );
-        console.log(action.page);
         return action.page;
+    },
+    [types.SET_EMPTY_PAGE]( state, action ) {
+        return {
+            checkedElementsNames:[],
+            numberOfElements:0,
+            content:[],
+            totalElements:0,
+            size:0,
+            totalPages:0
+        };
     },
     [types.CHECK_ALL_ELEMENTS]( state, action ){
         let elementToCheckNames = state.content

@@ -31,8 +31,12 @@ class Row extends React.Component{
     }
 
     editEntity(element){
-        if(element.status!=='NEW' && element.status!=='ACCEPTED')
-            this.props.showEntity("tournament",element.name);
+        if(this.props.entityPanel.mode!=='disabled')
+            this.props.showAdditionalEntityPanel("tournament",element.name);
+        else if(element.status!=='NEW' && element.status!=='ACCEPTED'){
+            console.log("debug");
+            this.props.getEntity("tournament",element.name);
+        }
         else
             this.props.editEntity("tournament",element.name);
     }
@@ -168,7 +172,8 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
-        entityPanel: state.entityPanel
+        entityPanel: state.entityPanel,
+        additionalEntityPanel: state.additionalEntityPanel
     };
 }
 

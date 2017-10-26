@@ -74,7 +74,7 @@ class SearchPanel extends React.Component{
             pageRequest.searchCriteria.push({
                 "keys": ["status"],
                 "operation": ":",
-                "value": this.props.entityPanel.relatedEntity.relatedEntityType
+                "value": this.props.entityPanel.relatedEntity.relatedEntityCriteria
             });
         }
         pageRequest.pageRequest.page = 0;

@@ -18,7 +18,6 @@ export default class UserTable extends React.Component{
     }
 
     createTableRows(){
-        console.log(this.props.value);
         if(this.props.value.length===0){
             return <EmptyTableRow/>
         }

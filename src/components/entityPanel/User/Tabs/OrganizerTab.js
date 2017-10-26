@@ -14,7 +14,10 @@ class OrganizerTab extends React.Component{
 
     startAddTournaments(){
         this.props.setOperations(["Invite","CancelInvite","Search"]);
-        this.props.setRelatedEntity(this.props.entity["organizedTournaments"].map(entity => entity.name),["ACCEPTED"]);
+        this.props.setRelatedEntity(
+            this.props.entity["organizedTournaments"].map(entity => entity.name),
+            "organizedTournaments",
+            ["ACCEPTED"]);
         this.props.showEntityPanel(false);
     }
 

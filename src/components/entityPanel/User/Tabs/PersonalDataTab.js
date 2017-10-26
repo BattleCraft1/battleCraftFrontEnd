@@ -54,13 +54,13 @@ export default class PersonalDataTab extends React.Component{
                     value={this.props.entity["email"]}
                     fieldName="email"
                     changeEntity={this.props.changeEntity}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="E-mail"/>
                 <TextInput
                     value={this.props.entity["phoneNumber"]}
                     fieldName="phoneNumber"
                     changeEntity={this.props.changeEntity}
-                    disabled = {inputsDisabled}
+                    disabled = {this.props.inputsDisabled}
                     name="Phone number"/>
                 <TextOutput
                     value={this.props.entity["status"]}

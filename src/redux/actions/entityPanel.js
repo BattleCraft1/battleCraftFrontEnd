@@ -15,17 +15,17 @@ export function addEntity(entityType) {
     }
 }
 
-export function showEntity(entityType,entityName) {
+export function getEntity(entityType,entityName) {
     return {
-        type: types.SHOW_ENTITY,
+        type: types.GET_ENTITY,
         entityType: entityType,
         entityName: entityName
     }
 }
 
-export function disableEntityPanel() {
+export function closeEntityPanel() {
     return {
-        type: types.DISABLE_ENTITY_PANEL
+        type: types.CLOSE_ENTITY_PANEL
     }
 }
 
@@ -36,10 +36,11 @@ export function showEntityPanel(isShow) {
     }
 }
 
-export function setRelatedEntity(relatedEntityNames,relatedEntityType){
+export function setRelatedEntity(relatedEntityNames,relatedEntityType,relatedEntityCriteria){
     return {
         type: types.SET_RELATED_ENTITY,
         relatedEntityNames: relatedEntityNames,
-        relatedEntityType: relatedEntityType
+        relatedEntityType: relatedEntityType,
+        relatedEntityCriteria: relatedEntityCriteria
     }
 }

@@ -10,7 +10,7 @@ export default class TableAvatarCell extends React.Component{
                 style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.props.color})}
                 onClick={this.props.edit}>
                 <div className={css(resp.avatar)}
-                    style={{background:'url('+serverName+`/get/user/`+this.props.name+`/avatar)`}}/>
+                     style={{background:'url('+serverName+`/get/user/`+this.props.name+`/avatar?${new Date().getTime()})`}}/>
             </td>
         )
     }

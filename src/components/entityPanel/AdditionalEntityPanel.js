@@ -11,7 +11,7 @@ import { ActionCreators } from '../../redux/actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-class EntityPanel extends React.Component{
+class AdditionalEntityPanel extends React.Component{
     constructor(props) {
         super(props);
 
@@ -28,9 +28,8 @@ class EntityPanel extends React.Component{
     }
 
     handleClickOutside(event) {
-        if (this.entityPanelRef && !this.entityPanelRef.contains(event.target)
-            && !this.props.entityPanel.hidden) {
-            this.props.closeEntityPanel();
+        if (this.entityPanelRef && !this.entityPanelRef.contains(event.target)) {
+                this.props.disableAdditionalEntityPanel();
         }
     }
 
@@ -40,33 +39,33 @@ class EntityPanel extends React.Component{
 
     createPanel(){
         let panelType;
-        if(this.props.entityPanel.entityType==='tournament')
+        if(this.props.additionalEntityPanel.additionalEntityType==='tournament')
             panelType = TournamentPanel;
-        else if(this.props.entityPanel.entityType==='game')
+        else if(this.props.additionalEntityPanel.additionalEntityType==='game')
             panelType = GamePanel;
-        else if(this.props.entityPanel.entityType==='user')
+        else if(this.props.additionalEntityPanel.additionalEntityType==='user')
             panelType = UserPanel;
 
         return panelType ? React.createElement(
             panelType,
             {
-                mode:this.props.entityPanel.mode,
-                type:this.props.entityPanel.entityType,
-                name:this.props.entityPanel.entityName,
-                hidden:this.props.entityPanel.hidden,
-                relatedEntity:this.props.entityPanel.relatedEntity,
-                disable:this.props.closeEntityPanel.bind(this),
+                mode:'get',
+                type:this.props.additionalEntityPanel.additionalEntityType,
+                name:this.props.additionalEntityPanel.additionalEntityName,
+                hidden:false,
+                relatedEntity:{},
+                disable:this.props.disableAdditionalEntityPanel.bind(this),
             },
             null) : <div/>
     }
 
     render(){
-      let panel;
-      if(this.props.entityPanel.mode!=='disabled')
-      panel = this.createPanel();
+        let panel;
+        if(this.props.additionalEntityPanel.additionalEntityName!=="")
+            panel = this.createPanel();
         return(
-            this.props.entityPanel.mode!=='disabled' &&
-            <div style = {Object.assign({}, styles.background, this.props.entityPanel.hidden?{display: 'none'}:{display: 'block'})}>
+            this.props.additionalEntityPanel.additionalEntityName!=="" &&
+            <div style = {Object.assign({}, styles.background, {display: 'block'})}>
                 <div ref={this.setEntityPanelRef} style = {Object.assign({}, styles.goldAndBrownTheme, styles.panelContainer)}
                      className = {css(resp.popupContent)}>
                     {panel}
@@ -82,8 +81,8 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
-        entityPanel:state.entityPanel
+        additionalEntityPanel:state.additionalEntityPanel
     };
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( EntityPanel );
+export default connect( mapStateToProps, mapDispatchToProps )( AdditionalEntityPanel );
