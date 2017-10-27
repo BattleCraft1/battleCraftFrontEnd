@@ -46,9 +46,7 @@ class PagePanel extends React.Component{
             this.props.getPageRequest(this.props.collectionType);
         }
         else{
-            this.props.showFailureMessage({
-                messageText: "Page size must be between 1 and 10"
-            });
+            this.props.showFailureMessage("Page size must be between 1 and 10");
             this.pageSizeInput.value=this.props.pageRequest.pageRequest.size;
         }
     }
@@ -62,9 +60,7 @@ class PagePanel extends React.Component{
             this.props.getPageRequest(this.props.collectionType);
         }
         else{
-            this.props.showFailureMessage({
-                messageText: "Page "+this.pageNumberInput.value+" don't exist"
-            });
+            this.props.showFailureMessage("Page "+this.pageNumberInput.value+" don't exist");
             this.pageNumberInput.value=this.props.pageRequest.pageRequest.page+1;
         }
     }
@@ -78,9 +74,7 @@ class PagePanel extends React.Component{
             this.props.getPageRequest(this.props.collectionType);
         }
         else{
-            this.props.showFailureMessage({
-                messageText: "Page "+number+" don't exist"
-            });
+            this.props.showFailureMessage("Page "+number+" don't exist");
         }
     }
 
@@ -93,9 +87,7 @@ class PagePanel extends React.Component{
             this.props.getPageRequest(this.props.collectionType);
         }
         else{
-            this.props.showFailureMessage({
-                messageText: "Page "+(pageRequest.pageRequest.page+2)+" don't exist"
-            });
+            this.props.showFailureMessage("Page "+(pageRequest.pageRequest.page+2)+" don't exist");
         }
     }
 
@@ -108,9 +100,7 @@ class PagePanel extends React.Component{
             this.props.getPageRequest(this.props.collectionType);
         }
         else{
-            this.props.showFailureMessage({
-                messageText: "Page "+(pageRequest.pageRequest.page)+" don't exist"
-            });
+            this.props.showFailureMessage("Page "+(pageRequest.pageRequest.page)+" don't exist");
         }
     }
 

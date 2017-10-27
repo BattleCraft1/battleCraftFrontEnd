@@ -52,6 +52,11 @@ class Panel extends React.Component{
                 "firstname": "",
                 "lastname": "",
                 "phoneNumber": "",
+                "province": "",
+                "city": "",
+                "street": "",
+                "zipCode": "",
+                "description": "",
                 "participatedTournaments": "",
                 "organizedTournaments": ""
             },
@@ -67,6 +72,7 @@ class Panel extends React.Component{
                 .then(res => {
                     this.setAccessToTabsByStatus(res.data.status);
                     this.setState({entity:res.data});
+                    console.log("input entity: ");
                     console.log(res.data);
                 })
                 .catch(error => {
@@ -80,7 +86,6 @@ class Panel extends React.Component{
         if (nextProps.hidden === false &&
             this.props.hidden === true &&
             !compareArrays(nextProps.relatedEntity.relatedEntityNames,this.props.relatedEntity.relatedEntityNames)) {
-            console.log(nextProps.relatedEntity);
             this.actualizeRelatedEntityObjects(
                 nextProps.relatedEntity.relatedEntityType,
                 nextProps.relatedEntity.relatedEntityNames)
@@ -166,10 +171,13 @@ class Panel extends React.Component{
         delete entityToSend["numberOfBattles"];
         delete entityToSend["finishedParticipatedTournaments"];
         delete entityToSend["finishedOrganizedTournaments"];
+        delete entityToSend["finishedOrganizedTournaments"];
         delete entityToSend["createdGames"];
         delete entityToSend["banned"];
         let validationErrors = validateUser(entityToSend);
+        console.log(validationErrors);
         if(checkIfObjectIsNotEmpty(validationErrors)){
+            console.log("output entity:");
             console.log(entityToSend);
             axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend)
                 .then(res => {
@@ -196,6 +204,8 @@ class Panel extends React.Component{
     setValidationErrors(validationException){
         this.props.showFailureMessage(validationException.message);
         let validationErrors = validationException.fieldErrors;
+        console.log("validation errors:");
+        console.log(validationErrors);
         let validationErrorsState = this.state.validationErrors;
         for (let field in validationErrorsState) {
             if (validationErrors.hasOwnProperty(field)) {

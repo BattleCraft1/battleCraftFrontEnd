@@ -9,7 +9,7 @@ let icons = require('glyphicons');
 class CancelInviteOperation extends React.Component {
 
     cancelInvite(){
-        this.props.setRelatedEntity([],"");
+        this.props.setRelatedEntity([],this.props.entityPanel.relatedEntity.relatedEntityType,"");
         this.props.clearCheckedElements();
         this.props.showEntityPanel(true);
     }

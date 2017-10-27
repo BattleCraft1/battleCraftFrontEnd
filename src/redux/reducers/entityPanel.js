@@ -44,7 +44,6 @@ export const entityPanel = createReducer( {}, {
         };
     },
     [types.CLOSE_ENTITY_PANEL]( state, action ) {
-        console.log("disabled");
         return {
             mode:entityPanelModes.disabled,
             entityType:entityPanelTypes.none,
