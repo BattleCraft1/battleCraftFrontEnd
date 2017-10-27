@@ -8,7 +8,7 @@ export default class UserTableRow extends React.Component{
         return(
             <tr>
                 <td style={Object.assign({}, styles.tableAvatarCell,
-                    {backgroundImage: 'url('+serverName+`/get/user/`+this.props.name+`/avatar)`})}/>
+                    {backgroundImage: 'url('+serverName+`/get/user/`+this.props.name+`/avatar?${new Date().getTime()}`})}/>
                 <td style={Object.assign({}, styles.tableCell, this.props.accepted ?
                     {backgroundImage: 'linear-gradient(rgb(191, 226, 162), rgb(157, 186, 134), rgb(122, 147, 103))'}:{} ,
                     !this.props.disabled?{width:'80%'}:{width:'100%'} )}>

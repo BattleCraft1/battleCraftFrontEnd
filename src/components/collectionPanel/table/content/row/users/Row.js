@@ -33,11 +33,9 @@ class Row extends React.Component{
     editEntity(element){
         //TO DO: if user is owner of accout -> edit else -> show
         if(this.props.entityPanel.mode!=='disabled'){
-            console.log("show additional entity panel");
             this.props.showAdditionalEntityPanel("user",element.name);
         }
         else{
-            console.log("edit entity panel");
             this.props.editEntity("user",element.name);
         }
     }

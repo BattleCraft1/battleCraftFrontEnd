@@ -46,7 +46,7 @@ class Panel extends React.Component{
                 "name": "",
                 "nameChange": "",
                 "tablesCount": 0,
-                "playersOnTableCount": 0,
+                "playersOnTableCount": 2,
                 "game": "Warhammer",
                 "dateOfStart": new Date(),
                 "dateOfEnd": new Date(),
@@ -63,6 +63,7 @@ class Panel extends React.Component{
                 "name": "",
                 "nameChange": "",
                 "tablesCount": "",
+                "playersOnTableCount":"",
                 "maxPlayers": "",
                 "game": "",
                 "dateOfStart": "",
@@ -84,6 +85,7 @@ class Panel extends React.Component{
             await axios.get(serverName+`get/`+this.props.type+`?name=`+this.props.name)
                 .then(res => {
                     this.setState({entity:res.data});
+                    console.log("input entity: ");
                     console.log(res.data);
                 })
                 .catch(error => {
@@ -95,6 +97,7 @@ class Panel extends React.Component{
     componentWillReceiveProps(nextProps) {
         if (nextProps.hidden === false &&
             this.props.hidden === true &&
+            nextProps.relatedEntity.relatedEntityNames.length > 0 &&
             !compareArrays(nextProps.relatedEntity.relatedEntityNames,this.props.relatedEntity.relatedEntityNames)) {
             this.actualizeRelatedEntityObjects(
                 nextProps.relatedEntity.relatedEntityType,
@@ -104,6 +107,7 @@ class Panel extends React.Component{
 
     actualizeRelatedEntityObjects(relatedEntityType,relatedEntityNames){
         let entity = this.state.entity;
+        console.log(relatedEntityType);
         let relatedEntitiesNames = entity[relatedEntityType].map(entity => entity.name);
         relatedEntityNames.forEach(
             elementName => {
@@ -166,8 +170,9 @@ class Panel extends React.Component{
         delete entityToSend["status"];
         let validationErrors = validateTournament(entityToSend);
         if(checkIfObjectIsNotEmpty(validationErrors)){
+            console.log("output entity:");
             console.log(entityToSend);
-            axios.post(serverName+this.props.mode+'/'+this.props.entityType, entityToSend)
+            axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend)
                 .then(res => {
                     this.setState({entity:res.data});
                     this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.mode+"ed");
@@ -190,6 +195,8 @@ class Panel extends React.Component{
     setValidationErrors(validationException){
         this.props.showFailureMessage(validationException.message);
         let validationErrors = validationException.fieldErrors;
+        console.log("validation errors:");
+        console.log(validationErrors);
         let validationErrorsState = this.state.validationErrors;
         for (let field in validationErrorsState) {
             if (validationErrors.hasOwnProperty(field)) {

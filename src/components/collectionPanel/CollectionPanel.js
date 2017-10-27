@@ -115,16 +115,19 @@ class CollectionPanel extends React.Component{
                 });
             })
             .catch(error => {
-                this.props.setEmptyPage();
-                this.props.setPageRequest({
-                    searchCriteria:this.props.pageRequest.searchCriteria,
-                    pageRequest:{
-                        direction : this.props.pageRequest.pageRequest.direction,
-                        property : this.props.pageRequest.pageRequest.property,
-                        size : 0,
-                        page : 0
-                    }
-                });
+                if(this.props.entityPanel.mode !== 'disabled')
+                {
+                    this.props.setEmptyPage();
+                    this.props.setPageRequest({
+                        searchCriteria:this.props.pageRequest.searchCriteria,
+                        pageRequest:{
+                            direction : this.props.pageRequest.pageRequest.direction,
+                            property : this.props.pageRequest.pageRequest.property,
+                            size : 0,
+                            page : 0
+                        }
+                    });
+                }
                 this.props.showNetworkErrorMessage(error);
             });
     }
