@@ -46,7 +46,7 @@ class Avatar extends React.Component{
                 });
         }
         else{
-            this.props.showFailureMessage("Extension: "+fileType+" is not acceptable extension of user avatar. You should try with jpg, gif, bmp or png");
+            this.props.showFailureMessage("Extension: "+fileType+" is not acceptable extension as user avatar. You should try with jpg, gif, bmp or png");
         }
     }
 

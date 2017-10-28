@@ -34,12 +34,8 @@ class Row extends React.Component{
         }
     }
 
-    addNewElement(){
-        console.log("TO DO ADD");
-    }
-
-    editCheckedElements(){
-        console.log("TO DO EDIT");
+    editEntity(element){
+        this.props.editEntity("game",element.name);
     }
 
     downloadGameRules(gameName){
@@ -76,7 +72,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "name"
                     color = {this.getColor("name", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.name}
                 />
 
@@ -90,7 +86,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "tournamentsNumber"
                     color = {this.getColor("tournamentsNumber", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.tournamentsNumber}
                 />
 
@@ -104,7 +100,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "creatorName"
                     color = {this.getColor("creatorName", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.creatorName}
                 />
 
@@ -118,7 +114,7 @@ class Row extends React.Component{
                 <TableCell
                     columnName = "dateOfCreation"
                     color = {this.getColor("dateOfCreation", this.props.element)}
-                    edit = {this.editCheckedElements.bind(this)}
+                    edit={() => this.editEntity(this.props.element)}
                     content = {setDate(this.props.element.dateOfCreation)}
                 />
 
@@ -128,7 +124,7 @@ class Row extends React.Component{
                 <TableIconCell
                     columnName = "rules"
                     color = {this.getColor("rules", this.props.element)}
-                    edit = {() => this.downloadGameRules(this.props.element.name)}
+                    action = {() => this.downloadGameRules(this.props.element.name)}
                     icon = {icons.attachment}
                 />
             </tr>
@@ -143,6 +139,7 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
+        entityPanel: state.entityPanel,
         message: state.message
     };
 }
@@ -151,6 +148,7 @@ export default connect( mapStateToProps, mapDispatchToProps )( Row );
 
 const resp = StyleSheet.create({
     tableRow:{
+        cursor:'pointer',
         '@media (max-width: 600px)': {
             display:'block',
             position:'relative',

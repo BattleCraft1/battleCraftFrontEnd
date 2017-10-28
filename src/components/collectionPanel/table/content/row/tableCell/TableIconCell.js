@@ -6,7 +6,7 @@ export default class TableCell extends React.Component{
         return(
             <td className = {css(resp.rowContent)}
                 style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.props.color})}
-                onClick={() => {this.props.onClick()}}>
+                onClick={this.props.action.bind(this)}>
                 {this.props.icon}</td>
         )
     }

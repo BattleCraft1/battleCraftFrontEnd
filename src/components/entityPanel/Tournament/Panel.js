@@ -57,7 +57,7 @@ class Panel extends React.Component{
                 "description": "",
                 "organizers": [],
                 "participants": [],
-                "status":""
+                "status":"NEW"
             },
             validationErrors:{
                 "name": "",

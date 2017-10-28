@@ -41,8 +41,6 @@ class AdditionalEntityPanel extends React.Component{
         let panelType;
         if(this.props.additionalEntityPanel.additionalEntityType==='tournament')
             panelType = TournamentPanel;
-        else if(this.props.additionalEntityPanel.additionalEntityType==='game')
-            panelType = GamePanel;
         else if(this.props.additionalEntityPanel.additionalEntityType==='user')
             panelType = UserPanel;
 
