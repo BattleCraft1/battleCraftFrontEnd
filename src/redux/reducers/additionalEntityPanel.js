@@ -3,7 +3,6 @@ import * as types from '../types/additionalEntityPanel'
 
 export const additionalEntityPanel = createReducer( {}, {
     [types.SHOW_ADDITIONAL_ENTITY_PANEL]( state, action ) {
-        console.log(state);
         return {
             additionalEntityType:action.additionalEntityType,
             additionalEntityName:action.additionalEntityName

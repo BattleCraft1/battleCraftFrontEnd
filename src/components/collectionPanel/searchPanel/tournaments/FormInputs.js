@@ -1,21 +1,30 @@
 import React from 'react';
+
 import TextInput from './../inputs/TextInput'
 import SelectInput from './../inputs/SelectInput'
 import SelectNumberInput from './../inputs/SelectNumberInput'
 import DateInput from "../inputs/DateInput";
 import NumberInput from "../inputs/NumberInput";
 import StatusInput from "../inputs/StatusInput";
+
 import {resp, styles} from '../styles'
 import {css} from 'aphrodite';
-import {provinces} from "../../../../main/consts/provinces";
 
-export default class FormInputs extends React.Component{
+import {provinces} from "../../../../main/consts/provinces";
+import {tournamentStatus} from "../../../../main/consts/status";
+
+import {serverName} from "../../../../main/consts/server";
+import axios from 'axios'
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../../../redux/actions/index';
+
+class FormInputs extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            provincesNames:[],
             tournamentsGames:[],
-            status:[],
             searchFormField: {
                 "name":{},
                 "dateOfStart":{},
@@ -32,29 +41,26 @@ export default class FormInputs extends React.Component{
         }
     }
 
-    async componentWillReceiveProps(nextProps) {
-        if (nextProps.enums!==undefined && nextProps.enums !== this.props.enums) {
-            this.setState({tournamentsGames:nextProps.enums.gamesNames});
-            this.setState({status:nextProps.enums.tournamentStatus});
-        }
-    }
-
-    componentDidMount(){
-        this.setState({provincesNames:provinces});
-        this.setState({tournamentsGames:this.props.enums.gamesNames});
-        this.setState({status:this.props.enums.tournamentStatus});
+    async componentDidMount(){
+        await axios.get(serverName+`get/tournaments/enums`)
+            .then(res => {
+                this.setState({tournamentsGames:res.data});
+            })
+            .catch(error => {
+                this.props.showNetworkErrorMessage(error);
+            });
     }
 
     prepareProvinceOptions(){
         let provincesOptions = [];
         provincesOptions.push(<option value={""} key="nullOption"/>);
-        if(this.state.provincesNames!==undefined) {
-            this.state.provincesNames.forEach(
-                provincesName => {
-                    provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
-                }
-            );
-        }
+
+        provinces.forEach(
+            provincesName => {
+                provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
+            }
+        );
+
         return provincesOptions;
     }
 
@@ -74,14 +80,13 @@ export default class FormInputs extends React.Component{
     prepareTournamentStatusOptions(){
         let tournamentStatusOptions = [];
         tournamentStatusOptions.push(<option value={""}  key="nullOption"/>);
-        if(this.state.status!==undefined) {
-            this.state.status.forEach(
-                status => {
-                    tournamentStatusOptions.push(<option value={status} key={status}>{status.replace("_"," ")}</option>);
-                }
-            );
-        }
-        tournamentStatusOptions.push(<option value="BANNED"  key="BANNED">BANNED</option>);
+
+        tournamentStatus.forEach(
+            status => {
+                tournamentStatusOptions.push(<option value={status} key={status}>{status.replace("_"," ")}</option>);
+            }
+        );
+
         return tournamentStatusOptions;
     }
 
@@ -128,12 +133,15 @@ export default class FormInputs extends React.Component{
                       changeSearchForm = {this.changeSearchForm.bind(this)}
                   />
                 </div>
-                <div className={css(resp.optionContent)}>
-                  <StatusInput
-                      options = {tournamentStatusOptions}
-                      changeSearchForm = {this.changeSearchForm.bind(this)}
-                  />
-                </div>
+                  {
+                      this.props.entityPanelDisabled &&
+                      <div className={css(resp.optionContent)}>
+                          <StatusInput
+                              options = {tournamentStatusOptions}
+                              changeSearchForm = {this.changeSearchForm.bind(this)}
+                          />
+                      </div>
+                  }
               </div>
               <div className={css(resp.optionContent)}>
                   <div className={css(resp.halfSize)}>
@@ -231,3 +239,13 @@ export default class FormInputs extends React.Component{
         )
     }
 }
+
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
+
+function mapStateToProps( state ) {
+    return {};
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( FormInputs );

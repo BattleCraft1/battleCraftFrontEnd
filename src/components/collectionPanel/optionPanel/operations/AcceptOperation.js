@@ -30,7 +30,7 @@ class AcceptOperation extends React.Component {
                 getPageObjectsDTO: this.props.pageRequest
             };
 
-            let operationFunction = function(){
+            let operationFunction = () => {
                 axios.post(serverName+`accept/`+collectionType, GetPageAndModifyDataDTO)
                     .then(res => {
                         checkPreviouslyCheckedElements(res.data);

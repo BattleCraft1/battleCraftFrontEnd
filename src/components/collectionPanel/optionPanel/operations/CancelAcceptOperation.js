@@ -15,11 +15,6 @@ class CancelAcceptOperation extends React.Component {
         return "Acceptations for "+rejectedElementsNames.join(", ").join(", ")+" are canceled";
     }
 
-    getFailureMessage(rejectedElementsNames){
-        return "Elements "+rejectedElementsNames.join(", ")+" are still accepted " +
-            "because you can cancel acceptation only for accepted and not banned elements"
-    }
-
     cancelAcceptElements(){
         let checkedElementsNames = this.props.page.checkedElementsNames;
 

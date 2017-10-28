@@ -10,12 +10,6 @@ let icons = require('glyphicons');
 
 class AdvanceOperation extends React.Component {
 
-    getFailureMessage(elementsWhichCannotBeAdvance){
-        return "Users "+elementsWhichCannotBeAdvance
-                .map(function(element){return element.name}).join(", ")+" are not advance to Organizer " +
-            "because if you want advance user to Organizer he must by a Accepted"
-    }
-
     getSuccessMessage(advancedElementsNames){
         return "Users "+advancedElementsNames.join(", ")+" are advanced to Organizer"
     }

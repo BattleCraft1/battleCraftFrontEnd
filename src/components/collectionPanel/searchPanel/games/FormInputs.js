@@ -6,12 +6,12 @@ import DateInput from './../inputs/DateInput'
 import {resp, styles} from '../styles'
 import {css} from 'aphrodite';
 
+import {gameStatus} from '../../../../main/consts/status'
 
 export default class FormInputs extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            status:[],
             searchFormField: {
                 "name":{},
                 "tournamentsNumber":{},
@@ -21,27 +21,16 @@ export default class FormInputs extends React.Component{
         }
     }
 
-    async componentWillReceiveProps(nextProps) {
-        if (nextProps.enums!==undefined && nextProps.enums !== this.props.enums) {
-            this.setState({status:nextProps.enums.gamesStatus});
-        }
-    }
-
-    componentDidMount(){
-        this.setState({status:this.props.enums.gamesStatus});
-    }
-
     prepareGamesStatusOptions(){
         let gamesStatusOptions = [];
         gamesStatusOptions.push(<option value={""} key="nullOption"/>);
-        if(this.state.status!==undefined) {
-            this.state.status.forEach(
-                statusName => {
-                    gamesStatusOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
-                }
-            );
-            gamesStatusOptions.push(<option value="BANNED" key="BANNED">BANNED</option>);
-        }
+
+        gameStatus.forEach(
+            statusName => {
+                gamesStatusOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
+            }
+        );
+
         return gamesStatusOptions;
     }
 

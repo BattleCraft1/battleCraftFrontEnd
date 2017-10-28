@@ -1,5 +1,6 @@
 import React from 'react';
 import OperationButton from './operationButton/OperationButton'
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ActionCreators } from '../../../../redux/actions/index';
@@ -30,7 +31,9 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {};
+    return {
+        entityPanel:state.entityPanel
+    };
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( CancelInviteOperation );

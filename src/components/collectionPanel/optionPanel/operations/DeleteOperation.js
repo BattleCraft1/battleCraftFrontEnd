@@ -15,12 +15,6 @@ class DeleteOperation extends React.Component {
         return "Elements "+deletedElementsNames.join(", ")+" are deleted";
     }
 
-    getFailureMessage(elementsWhichCannotBeDeleted){
-        return "Elements "+elementsWhichCannotBeDeleted
-                .map(function(element){return element.name}).join(", ")+" are not deleted " +
-            "because if you want delete element you must ban it firstly"
-    }
-
     deleteElements(){
         let checkedElementsNames = this.props.page.checkedElementsNames;
         let clearCheckedElements = this.props.clearCheckedElements;
@@ -40,7 +34,6 @@ class DeleteOperation extends React.Component {
             let operationFunction = function(){
                 axios.post(serverName+`delete/`+collectionType, GetPageAndModifyDataDTO)
                     .then(res => {
-                        checkPreviouslyCheckedElements(res.data);
                         clearCheckedElements();
                         showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
