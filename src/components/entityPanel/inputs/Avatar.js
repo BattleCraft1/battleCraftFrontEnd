@@ -53,7 +53,7 @@ class Avatar extends React.Component{
     render(){
         return(
             <div>
-                <button style={Object.assign({}, styles.avatarButton, {backgroundImage:'url('+serverName+`/get/user/`+this.props.username+'/avatar?'+ new Date().getTime()+'), linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1), rgba(109, 80, 152, 0.7)'})}
+                <button style={Object.assign({}, styles.avatarButton, {backgroundImage:`url(${serverName}/get/user/avatar?username=${this.props.username}&${new Date().getTime()}), linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1), rgba(109, 80, 152, 0.7)`})}
                         className={css(resp.avatarButton)}>
                     {!this.props.disabled && <input style={styles.fileInput}
                                                     required

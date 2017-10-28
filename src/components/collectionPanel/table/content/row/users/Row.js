@@ -168,8 +168,7 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
-        entityPanel: state.entityPanel,
-        additionalEntityPanel: state.additionalEntityPanel
+        entityPanel: state.entityPanel
     };
 }
 

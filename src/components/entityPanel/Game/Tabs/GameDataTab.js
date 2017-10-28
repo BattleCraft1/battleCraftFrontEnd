@@ -1,7 +1,6 @@
 import React from 'react';
 
 import TextInput from '../../inputs/TextInput'
-import GameRulesInput from '../../inputs/GameRulesInput'
 
 import TextOutput from '../../outputs/TextOutput'
 import NumberOutput from '../../outputs/NumberOutput'
@@ -15,6 +14,7 @@ export default class GameDataTab extends React.Component{
         return(
             <div>
                 <ValidationErrorMessage validationErrorMessage={this.props.validationErrors["nameChange"]}/>
+                <ValidationErrorMessage validationErrorMessage={this.props.validationErrors["gameRules"]}/>
                 <TextInput
                     value={this.props.entity["nameChange"]}
                     fieldName="nameChange"
@@ -33,9 +33,6 @@ export default class GameDataTab extends React.Component{
                 <TextOutput
                     value={setDate(this.props.entity["dateOfCreation"])}
                     name="Creation date"/>
-                <GameRulesInput
-                    disabled = {this.props.inputsDisabled}
-                    name={this.props.entity["name"]}/>
             </div>
         )
     }

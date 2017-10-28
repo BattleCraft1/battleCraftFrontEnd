@@ -40,6 +40,11 @@ const tabsNamesMap = {
 class Panel extends React.Component{
     constructor(props) {
         super(props);
+        let today = new Date();
+        let tomorrow = new Date();
+        let dayAfterTomorrow = new Date();
+        tomorrow.setDate(today.getDate()+1);
+        dayAfterTomorrow.setDate(tomorrow.getDate()+1);
         this.state = {
             activeTab : "basicData",
             entity:{
@@ -48,8 +53,8 @@ class Panel extends React.Component{
                 "tablesCount": 0,
                 "playersOnTableCount": 2,
                 "game": "Warhammer",
-                "dateOfStart": new Date(),
-                "dateOfEnd": new Date(),
+                "dateOfStart": tomorrow,
+                "dateOfEnd":dayAfterTomorrow,
                 "province": "lubelskie",
                 "city": "",
                 "street": "",
@@ -248,10 +253,7 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {
-        message:state.message,
-        entityPanel: state.entityPanel
-    };
+    return {};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Panel );

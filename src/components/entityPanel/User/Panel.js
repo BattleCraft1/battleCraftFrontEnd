@@ -259,10 +259,7 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {
-        message:state.message,
-        entityPanel: state.entityPanel
-    };
+    return {};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Panel );

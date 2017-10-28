@@ -160,8 +160,7 @@ function mapDispatchToProps( dispatch ) {
 function mapStateToProps( state ) {
     return {
         page: state.page,
-        pageRequest: state.pageRequest,
-        message: state.message
+        pageRequest: state.pageRequest
     };
 }
 

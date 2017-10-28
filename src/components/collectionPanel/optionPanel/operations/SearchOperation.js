@@ -28,9 +28,7 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {
-        search:state.search
-    };
+    return {};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( SearchOperation );

@@ -44,9 +44,7 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {
-        page: state.page,
-    };
+    return {};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Checkbox );

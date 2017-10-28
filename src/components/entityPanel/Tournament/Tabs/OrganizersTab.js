@@ -43,11 +43,7 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {
-        pageRequest: state.pageRequest,
-        entityPanel: state.entityPanel,
-        possibleOperations: state.possibleOperations
-    };
+    return {};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( OrganizersTab );
