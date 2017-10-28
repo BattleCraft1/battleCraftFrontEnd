@@ -1,51 +1,49 @@
 import React from 'react';
+
 import TextInput from './../inputs/TextInput'
 import SelectInput from './../inputs/SelectInput'
-import NumberInput from './../inputs/NumberInput'
 import DateInput from './../inputs/DateInput'
 import GameInputForRanking from './../inputs/GameInputForRanking'
+
 import {resp, styles} from '../styles'
 import {css} from 'aphrodite';
+
 import findGameName from '../../../../main/functions/findGameName'
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../../../redux/actions';
+
 import {provinces} from "../../../../main/consts/provinces";
+
+import {serverName} from "../../../../main/consts/server";
+import axios from 'axios'
 
 class FormInputs extends React.Component{
     constructor(props) {
         super(props);
         this.state={
             gameName:findGameName(this.props.pageRequest.searchCriteria),
-            provincesNames:[],
             tournamentsGames:[],
             searchFormField: {
                 "name":{},
-                "playerCity":{},
-                "playerProvince":{},
                 "province":{},
                 "city":{},
                 "game":{},
-                "numberOfBattles":{},
-                "numberOfTournaments":{},
-                "pointsGe":{},
-                "pointsLe":{},
                 "dateOfStart":{},
                 "dateOfEnd":{},
             }
         }
     }
 
-    async componentWillReceiveProps(nextProps) {
-        if (nextProps.enums!==undefined && nextProps.enums !== this.props.enums) {
-            this.setState({tournamentsGames:nextProps.enums.gamesNames});
-            this.setDefaultGameSearchCriteria();
-        }
-    }
-
-    componentDidMount(){
-        this.setState({provincesNames:provinces});
-        this.setState({tournamentsGames:this.props.enums.gamesNames});
+    async componentDidMount(){
+        await axios.get(serverName+`get/tournaments/enums`)
+            .then(res => {
+                this.setState({tournamentsGames:res.data});
+            })
+            .catch(error => {
+                this.props.showNetworkErrorMessage(error);
+            });
         this.setDefaultGameSearchCriteria();
     }
 
@@ -63,13 +61,13 @@ class FormInputs extends React.Component{
     prepareProvinceOptions(){
         let provincesOptions = [];
         provincesOptions.push(<option value={""} key="nullOption"/>);
-        if(this.state.provincesNames!==undefined){
-            this.state.provincesNames.forEach(
-                provincesName => {
-                    provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
-                }
-            );
-        }
+
+        provinces.forEach(
+            provincesName => {
+                provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
+            }
+        );
+
         return provincesOptions;
     }
 

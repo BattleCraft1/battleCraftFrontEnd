@@ -11,9 +11,6 @@ import TournamentsFormInputs from './tournaments/FormInputs'
 import RankingFormInputs from './ranking/FormInputs'
 import GamesFormInputs from './games/FormInputs'
 
-import {serverName} from '../../../main/consts/server';
-import axios from 'axios';
-
 import {resp, styles} from './styles'
 import {css} from 'aphrodite';
 
@@ -30,8 +27,7 @@ class SearchPanel extends React.Component{
 
     }
 
-    async componentDidMount(){
-        await this.getEnums(this.props.collectionType);
+    componentDidMount(){
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 
@@ -43,22 +39,6 @@ class SearchPanel extends React.Component{
         if (this.searchPanelRef && !this.searchPanelRef.contains(event.target)) {
             this.hideSearchPanel();
         }
-    }
-
-    async componentWillReceiveProps(nextProps) {
-        if (nextProps.collectionType!==undefined && nextProps.collectionType !== this.props.collectionType) {
-            await this.getEnums(nextProps.collectionType);
-        }
-    }
-
-    async getEnums(collectionType){
-        await axios.get(serverName+`get/`+collectionType+`/enums`)
-            .then(res => {
-                this.setState({enums:res.data});
-            })
-            .catch(error => {
-                this.props.showNetworkErrorMessage(error);
-            });
     }
 
     search(inputs){
@@ -92,54 +72,37 @@ class SearchPanel extends React.Component{
         this.searchPanelRef = node;
     }
 
+    createSearchFormInputs(){
+        let searchFormInputsType;
+
+        if(this.props.collectionType==="tournaments"){
+            searchFormInputsType = TournamentsFormInputs;
+        }
+        else if(this.props.collectionType==="users"){
+            searchFormInputsType = UsersFormInputs;
+        }
+        else if(this.props.collectionType==="games"){
+            searchFormInputsType = GamesFormInputs;
+        }
+        else if(this.props.collectionType==="ranking"){
+            searchFormInputsType = RankingFormInputs;
+        }
+
+        return React.createElement(
+            searchFormInputsType,
+            {
+                search:this.search.bind(this),
+                hide:this.hideSearchPanel.bind(this),
+                entityPanelDisabled: this.props.entityPanel.mode === 'disabled'
+            },
+            null
+        );
+    }
+
     render(){
-        let searchFormInputs = "loading...";
-        if(!isNotEmpty(this.state.enums))
-            if(this.props.collectionType==="tournaments"){
-                searchFormInputs = React.createElement(
-                    TournamentsFormInputs,
-                    {
-                        enums:this.state.enums,
-                        search:this.search.bind(this),
-                        hide:this.hideSearchPanel.bind(this)
-                    },
-                    null
-                );
-            }
-            else if(this.props.collectionType==="users"){
-                searchFormInputs = React.createElement(
-                    UsersFormInputs,
-                    {
-                        entityPanelDisabled: this.props.entityPanel.mode === 'disabled',
-                        enums:this.state.enums,
-                        search:this.search.bind(this),
-                        hide:this.hideSearchPanel.bind(this)
-                    },
-                    null
-                );
-            }
-            else if(this.props.collectionType==="games"){
-                searchFormInputs = React.createElement(
-                    GamesFormInputs,
-                    {
-                        enums:this.state.enums,
-                        search:this.search.bind(this),
-                        hide:this.hideSearchPanel.bind(this)
-                    },
-                    null
-                );
-            }
-            else if(this.props.collectionType==="ranking"){
-                searchFormInputs = React.createElement(
-                    RankingFormInputs,
-                    {
-                        enums:this.state.enums,
-                        search:this.search.bind(this),
-                        hide:this.hideSearchPanel.bind(this)
-                    },
-                    null
-                );
-            }
+
+        let searchFormInputs = this.createSearchFormInputs();
+
         let searchPanel = <div style = {Object.assign({}, styles.background, {display: 'block'})}>
             <div ref={this.setSearchPanelRef} style = {Object.assign({},styles.goldAndBrownTheme ,styles.popupContent, {display:this.state.display})} className={css(resp.popupContent)}>
                 <form>
@@ -147,6 +110,7 @@ class SearchPanel extends React.Component{
                 </form>
             </div>
         </div>;
+
         return(
             <div>
                 {this.props.search && searchPanel}

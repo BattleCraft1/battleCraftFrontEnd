@@ -133,7 +133,7 @@ class CollectionPanel extends React.Component{
     }
 
     render(){
-        let searchPanel = "loading...";
+        let searchPanel = <div/>;
         if(this.state.collectionType!=="")
             searchPanel = React.createElement(
                 SearchPanel,

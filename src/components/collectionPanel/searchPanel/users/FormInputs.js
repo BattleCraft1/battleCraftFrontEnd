@@ -5,6 +5,7 @@ import StatusInput from './../inputs/StatusInput'
 import {resp, styles} from '../styles'
 import {css} from 'aphrodite';
 import {provinces} from "../../../../main/consts/provinces";
+import {userStatus} from "../../../../main/consts/status";
 
 export default class FormInputs extends React.Component{
     constructor(props) {
@@ -24,40 +25,28 @@ export default class FormInputs extends React.Component{
         }
     }
 
-    async componentWillReceiveProps(nextProps) {
-        if (nextProps.enums!==undefined && nextProps.enums !== this.props.enums) {
-            this.setState({status:nextProps.enums.usersTypes});
-        }
-    }
-
-    componentDidMount(){
-        this.setState({provincesNames:provinces});
-        this.setState({status:this.props.enums.usersTypes});
-    }
-
     prepareProvinceOptions(){
         let provincesOptions = [];
         provincesOptions.push(<option value={""} key="nullOption"/>);
-        if(this.state.provincesNames!==undefined){
-            this.state.provincesNames.forEach(
-                provincesName => {
-                    provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
-                }
-            );
-        }
+        provinces.forEach(
+            provincesName => {
+                provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
+            }
+        );
+
         return provincesOptions;
     }
 
     prepareUserTypeOptions(){
         let userTypeOptions = [];
         userTypeOptions.push(<option value={""} key="nullOption"/>);
-        if(this.state.status!==undefined){
-            this.state.status.forEach(
-                statusName => {
-                    userTypeOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
-                }
-            );
-        }
+
+        userStatus.forEach(
+            statusName => {
+                userTypeOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
+            }
+        );
+
         userTypeOptions.push(<option value="BANNED" key="BANNED">BANNED</option>);
         return userTypeOptions;
     }
