@@ -32,7 +32,8 @@ class Panel extends React.Component{
             },
             validationErrors:{
                 "name": "",
-                "nameChange":""
+                "nameChange":"",
+                "gameRules": ""
             }
         };
     }
@@ -79,20 +80,28 @@ class Panel extends React.Component{
         }
 
         let entityToSend = JSON.parse(JSON.stringify(this.state.entity));
+
         delete entityToSend["creatorName"];
         delete entityToSend["dateOfCreation"];
         delete entityToSend["tournamentsNumber"];
         delete entityToSend["status"];
 
-        let validationErrors = validateGame(entityToSend);
+        let isEditMode = this.props.mode === 'edit';
+        let gameRules = this.gameRules.files[0]
+
+        let validationErrors = validateGame(entityToSend,gameRules,isEditMode);
         if(checkIfObjectIsNotEmpty(validationErrors)){
             console.log("output entity:");
             console.log(entityToSend);
             axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend)
                 .then(res => {
-                    this.setState({entity:res.data});
-                    this.props.showSuccessMessage("Game: "+res.data.name+" successfully "+this.props.mode+"ed");
-                    this.props.disable();
+                    let newEntity = res.data;
+                    if(gameRules===undefined && isEditMode){
+                        this.props.showSuccessMessage("Game: "+newEntity.name+" successfully "+this.props.mode+"ed");
+                        this.props.disable();
+                    }
+                    else
+                        this.sendGameRules(res.data,gameRules);
                 })
                 .catch(error => {
                     if(error.response.data.fieldErrors===undefined){
@@ -106,6 +115,26 @@ class Panel extends React.Component{
         else{
             this.setValidationErrors(validationErrors);
         }
+    }
+
+    sendGameRules(entity,gameRules){
+        let formData = new FormData();
+        formData.append('gameRules',gameRules);
+        axios.post(serverName+`/upload/game/rules?gameName=`+ entity.name,
+            formData,
+            {
+                headers: {
+                    'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+                }
+            })
+            .then(res => {
+                this.setState({entity:entity});
+                this.props.showSuccessMessage("Game: "+entity.name+" successfully "+this.props.mode+"ed");
+                this.props.disable();
+            })
+            .catch(error => {
+                this.props.showNetworkErrorMessage(error);
+            });
     }
 
     setValidationErrors(validationException){
@@ -146,6 +175,14 @@ class Panel extends React.Component{
             <div style={styles.goldAndBrownTheme} className = {css(resp.smallPanel)}>
                 <div className={css(resp.content)}>
                     {this.createContent()}
+                    <div style={{position:'relative', width:'100%', height:'30px'}}>
+                        {this.props.mode!=='get' && <button style={styles.tableButton} className={css(resp.tableButton)}>
+                            <input style={styles.fileInput}
+                                   id="gameRules" type="file"
+                                   ref={(ref) => this.gameRules = ref}/>
+                            <div>Upload game rules</div>
+                        </button>}
+                    </div>
                 </div>
                 {buttons}
             </div>
@@ -159,10 +196,7 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {
-        message:state.message,
-        entityPanel:state.entityPanel
-    };
+    return {};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Panel );

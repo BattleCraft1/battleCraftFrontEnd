@@ -30,10 +30,7 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {
-        page: state.page,
-        entityPanel: state.entityPanel
-    };
+    return {};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( NavElement );

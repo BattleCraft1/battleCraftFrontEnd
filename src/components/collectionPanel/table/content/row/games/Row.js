@@ -39,7 +39,7 @@ class Row extends React.Component{
     }
 
     downloadGameRules(gameName){
-        axios.get(serverName+`/get/game/`+gameName+`/rules`)
+        axios.get(serverName+`/get/game/rules?gameName=${gameName}`,{responseType:'arraybuffer'})
             .then(res => {
                 let headers = res.headers;
                 let blob = new Blob([res.data],{type:headers['content-type']});
@@ -138,10 +138,7 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {
-        entityPanel: state.entityPanel,
-        message: state.message
-    };
+    return {};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Row );

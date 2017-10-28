@@ -30,10 +30,7 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {
-        entityPanel:state.entityPanel,
-        page:state.page
-    };
+    return {};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( CancelInviteOperation );

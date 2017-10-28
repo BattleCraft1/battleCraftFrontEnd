@@ -161,10 +161,8 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
-        page: state.page,
         pageRequest: state.pageRequest,
         search: state.search,
-        message: state.message,
         entityPanel: state.entityPanel
     };
 }

@@ -35,6 +35,7 @@ class BasicDataTab extends React.Component{
         await axios.get(serverName+`get/ranking/enums`)
             .then(res => {
                 this.setState({gameNames:res.data.gamesNames});
+                this.props.changeEntity("game",res.data.gamesNames[0])
             })
             .catch(error => {
                 this.props.showNetworkErrorMessage(error);
@@ -135,9 +136,7 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {
-        message: state.message
-    };
+    return {};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( BasicDataTab );

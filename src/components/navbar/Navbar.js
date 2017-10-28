@@ -141,9 +141,7 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {
-        entityPanel:state.entityPanel
-    };
+    return {};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Navbar );

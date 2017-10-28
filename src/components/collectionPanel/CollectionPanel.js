@@ -165,9 +165,7 @@ function mapStateToProps( state ) {
     return {
         page: state.page,
         pageRequest: state.pageRequest,
-        message: state.message,
-        entityPanel: state.entityPanel,
-        possibleOperations: state.possibleOperations
+        entityPanel: state.entityPanel
     };
 }
 

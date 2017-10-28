@@ -72,9 +72,7 @@ function mapDispatchToProps( dispatch ) {
 function mapStateToProps( state ) {
     return {
         page: state.page,
-        pageRequest: state.pageRequest,
-        confirmation: state.confirmation,
-        message: state.message,
+        pageRequest: state.pageRequest
     };
 }
 
