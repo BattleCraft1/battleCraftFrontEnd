@@ -59,9 +59,7 @@ export default class FormInputs extends React.Component{
 
     render(){
         let userTypeOptions = this.prepareUserTypeOptions();
-        let provincesOptions = [];
-        if(this.props.entityPanelDisabled)
-            provincesOptions = this.prepareProvinceOptions();
+        let provincesOptions = this.prepareProvinceOptions();
 
         return (
             <div>

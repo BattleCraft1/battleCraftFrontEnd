@@ -16,10 +16,6 @@ import {tournamentStatus} from "../../../../main/consts/status";
 import {serverName} from "../../../../main/consts/server";
 import axios from 'axios'
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ActionCreators } from '../../../../redux/actions/index';
-
 class FormInputs extends React.Component{
     constructor(props) {
         super(props);
@@ -239,13 +235,3 @@ class FormInputs extends React.Component{
         )
     }
 }
-
-function mapDispatchToProps( dispatch ) {
-    return bindActionCreators( ActionCreators, dispatch );
-}
-
-function mapStateToProps( state ) {
-    return {};
-}
-
-export default connect( mapStateToProps, mapDispatchToProps )( FormInputs );

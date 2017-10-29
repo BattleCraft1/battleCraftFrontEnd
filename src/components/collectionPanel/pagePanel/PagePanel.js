@@ -43,7 +43,7 @@ class PagePanel extends React.Component{
             pageRequest.pageRequest.page = 0;
             this.pageNumberInput.value = 1;
             this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest(this.props.collectionType);
+            this.props.getPage(this.props.collectionType);
         }
         else{
             this.props.showFailureMessage("Page size must be between 1 and 10");
@@ -57,7 +57,7 @@ class PagePanel extends React.Component{
             let pageRequest=this.props.pageRequest;
             pageRequest.pageRequest.page=this.pageNumberInput.value-1;
             this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest(this.props.collectionType);
+            this.props.getPage(this.props.collectionType);
         }
         else{
             this.props.showFailureMessage("Page "+this.pageNumberInput.value+" don't exist");
@@ -71,7 +71,7 @@ class PagePanel extends React.Component{
             pageRequest.pageRequest.page = number;
             this.pageNumberInput.value = number+1;
             this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest(this.props.collectionType);
+            this.props.getPage(this.props.collectionType);
         }
         else{
             this.props.showFailureMessage("Page "+number+" don't exist");
@@ -84,7 +84,7 @@ class PagePanel extends React.Component{
             pageRequest.pageRequest.page+=1;
             this.pageNumberInput.value=pageRequest.pageRequest.page+1;
             this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest(this.props.collectionType);
+            this.props.getPage(this.props.collectionType);
         }
         else{
             this.props.showFailureMessage("Page "+(pageRequest.pageRequest.page+2)+" don't exist");
@@ -97,7 +97,7 @@ class PagePanel extends React.Component{
             pageRequest.pageRequest.page-=1;
             this.pageNumberInput.value=pageRequest.pageRequest.page+1;
             this.props.setPageRequest(pageRequest);
-            this.props.getPageRequest(this.props.collectionType);
+            this.props.getPage(this.props.collectionType);
         }
         else{
             this.props.showFailureMessage("Page "+(pageRequest.pageRequest.page)+" don't exist");
