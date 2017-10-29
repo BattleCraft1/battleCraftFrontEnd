@@ -6,7 +6,7 @@ import SelectInput from '../../inputs/SelectInput'
 
 import ValidationErrorMessage from "../../outputs/ValidationErrorMessage";
 
-import {provinces} from '../../../../main/consts/provinces'
+import {provinces} from '../../../../main/consts/provincesWithoutEmptyOption'
 
 export default class AddressTab extends React.Component{
     render(){

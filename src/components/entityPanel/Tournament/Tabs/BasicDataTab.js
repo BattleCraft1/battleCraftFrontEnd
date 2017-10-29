@@ -34,8 +34,8 @@ class BasicDataTab extends React.Component{
     async getGameSelectData(){
         await axios.get(serverName+`get/ranking/enums`)
             .then(res => {
-                this.setState({gameNames:res.data.gamesNames});
-                this.props.changeEntity("game",res.data.gamesNames[0])
+                this.setState({gameNames:res.data});
+                this.props.changeEntity("game",res.data)
             })
             .catch(error => {
                 this.props.showNetworkErrorMessage(error);

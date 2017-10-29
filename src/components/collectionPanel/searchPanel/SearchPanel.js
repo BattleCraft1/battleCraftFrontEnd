@@ -91,7 +91,6 @@ class SearchPanel extends React.Component{
     }
 
     render(){
-
         let searchFormInputs = this.createSearchFormInputs();
 
         let searchPanel = <div style = {Object.assign({}, styles.background, {display: 'block'})}>

@@ -87,15 +87,18 @@ class CollectionList extends React.Component{
     render(){
         let rows = [];
         let key = 0;
-        let legend = <div/>
-        let rowHeader = React.createElement(
-            rowHeaderTypeMap[this.props.collectionType],
-            {
-                isColumnActive : this.isColumnActive.bind(this),
-                sortByColumnName : this.sortByColumnName.bind(this),
-                getArrowGlyph : this.getArrowGlyph.bind(this)
-            },
-            null);
+        let legend = <div/>;
+        let rowHeader = <div/>;
+
+        if(this.props.collectionType!=="")
+            rowHeader = React.createElement(
+                rowHeaderTypeMap[this.props.collectionType],
+                {
+                    isColumnActive : this.isColumnActive.bind(this),
+                    sortByColumnName : this.sortByColumnName.bind(this),
+                    getArrowGlyph : this.getArrowGlyph.bind(this)
+                },
+                null);
 
         if(this.props.collectionType==="ranking")
         {

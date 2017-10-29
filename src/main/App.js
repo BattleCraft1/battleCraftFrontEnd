@@ -4,7 +4,7 @@ import Navbar from '../components/navbar/Navbar'
 import CollectionPanel from '../components/collectionPanel/CollectionPanel'
 import {Switch, Route} from 'react-router-dom';
 import ConfirmDialog from '../components/commonComponents/confirmDialog/ConfirmDialog';
-import Message from '../components/commonComponents/messageBox/MessageBox';
+import Message from '../components/commonComponents/messageDialog/MessageDialog';
 import Background from '../resources/splashBig2.jpg';
 import EntityPanel from '../components/entityPanel/EntityPanel'
 import AdditionalEntityPanel from '../components/entityPanel/AdditionalEntityPanel'

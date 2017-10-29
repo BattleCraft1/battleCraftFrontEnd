@@ -4,14 +4,15 @@ import SelectInput from './../inputs/SelectInput'
 import StatusInput from './../inputs/StatusInput'
 import {resp, styles} from '../styles'
 import {css} from 'aphrodite';
+
 import {provinces} from "../../../../main/consts/provinces";
 import {userStatus} from "../../../../main/consts/status";
+import createOptions from "../../../../main/functions/createOptions";
 
 export default class FormInputs extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            provincesNames:[],
             status:[],
             searchFormField: {
                 "name":{},
@@ -25,32 +26,6 @@ export default class FormInputs extends React.Component{
         }
     }
 
-    prepareProvinceOptions(){
-        let provincesOptions = [];
-        provincesOptions.push(<option value={""} key="nullOption"/>);
-        provinces.forEach(
-            provincesName => {
-                provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
-            }
-        );
-
-        return provincesOptions;
-    }
-
-    prepareUserTypeOptions(){
-        let userTypeOptions = [];
-        userTypeOptions.push(<option value={""} key="nullOption"/>);
-
-        userStatus.forEach(
-            statusName => {
-                userTypeOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
-            }
-        );
-
-        userTypeOptions.push(<option value="BANNED" key="BANNED">BANNED</option>);
-        return userTypeOptions;
-    }
-
     changeSearchForm(index,value){
         let searchFormFields = this.state.searchFormField;
         searchFormFields[index] = value;
@@ -58,8 +33,8 @@ export default class FormInputs extends React.Component{
     }
 
     render(){
-        let userTypeOptions = this.prepareUserTypeOptions();
-        let provincesOptions = this.prepareProvinceOptions();
+        let userTypeOptions = createOptions(userStatus);
+        let provincesOptions = createOptions(provinces);
 
         return (
             <div>

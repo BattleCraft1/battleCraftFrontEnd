@@ -1,4 +1,4 @@
-import {provinces} from "../../../main/consts/provinces";
+import {provinces} from "../../../main/consts/provincesWithoutEmptyOption";
 
 export default (entity,fieldErrors) => {
 

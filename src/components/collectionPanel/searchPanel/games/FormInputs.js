@@ -1,12 +1,15 @@
 import React from 'react';
+
 import TextInput from './../inputs/TextInput'
 import NumberInput from './../inputs/NumberInput'
 import StatusInput from './../inputs/StatusInput'
 import DateInput from './../inputs/DateInput'
+
 import {resp, styles} from '../styles'
 import {css} from 'aphrodite';
 
 import {gameStatus} from '../../../../main/consts/status'
+import createOptions from '../../../../main/functions/createOptions'
 
 export default class FormInputs extends React.Component{
     constructor(props) {
@@ -21,19 +24,6 @@ export default class FormInputs extends React.Component{
         }
     }
 
-    prepareGamesStatusOptions(){
-        let gamesStatusOptions = [];
-        gamesStatusOptions.push(<option value={""} key="nullOption"/>);
-
-        gameStatus.forEach(
-            statusName => {
-                gamesStatusOptions.push(<option value={statusName} key={statusName}>{statusName}</option>);
-            }
-        );
-
-        return gamesStatusOptions;
-    }
-
     changeSearchForm(index,value){
         let searchFormFields = this.state.searchFormField;
         searchFormFields[index] = value;
@@ -41,7 +31,7 @@ export default class FormInputs extends React.Component{
     }
 
     render(){
-        let gamesStatusOptions = this.prepareGamesStatusOptions();
+        let gamesStatusOptions = createOptions(gameStatus);
 
         return (
             <div>
