@@ -14,6 +14,12 @@ import GamesFormInputs from './games/FormInputs'
 import {resp, styles} from './styles'
 import {css} from 'aphrodite';
 
+const searchFormInputsTypeMap = {
+    "tournaments":TournamentsFormInputs,
+    "users": UsersFormInputs,
+    "games":GamesFormInputs,
+    "ranking":RankingFormInputs
+};
 
 class SearchPanel extends React.Component{
     constructor(props) {
@@ -60,7 +66,7 @@ class SearchPanel extends React.Component{
         pageRequest.pageRequest.page = 0;
         pageRequest.pageRequest.size = 10;
         this.props.setPageRequest(pageRequest);
-        this.props.getPageRequest(this.props.collectionType);
+        this.props.getPage(this.props.collectionType);
         this.hideSearchPanel();
     }
 
@@ -73,23 +79,8 @@ class SearchPanel extends React.Component{
     }
 
     createSearchFormInputs(){
-        let searchFormInputsType;
-
-        if(this.props.collectionType==="tournaments"){
-            searchFormInputsType = TournamentsFormInputs;
-        }
-        else if(this.props.collectionType==="users"){
-            searchFormInputsType = UsersFormInputs;
-        }
-        else if(this.props.collectionType==="games"){
-            searchFormInputsType = GamesFormInputs;
-        }
-        else if(this.props.collectionType==="ranking"){
-            searchFormInputsType = RankingFormInputs;
-        }
-
         return React.createElement(
-            searchFormInputsType,
+            searchFormInputsTypeMap[this.props.collectionType],
             {
                 search:this.search.bind(this),
                 hide:this.hideSearchPanel.bind(this),
@@ -100,7 +91,6 @@ class SearchPanel extends React.Component{
     }
 
     render(){
-
         let searchFormInputs = this.createSearchFormInputs();
 
         let searchPanel = <div style = {Object.assign({}, styles.background, {display: 'block'})}>

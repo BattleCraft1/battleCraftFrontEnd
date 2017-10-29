@@ -22,6 +22,19 @@ import findGameName from '../../../../main/functions/findGameName'
 
 let icons = require('glyphicons');
 
+const rowTypeMap = {
+    "tournaments":TournamentRow,
+    "games":GameRow,
+    "ranking":RankingRow,
+    "users":UserRow
+};
+
+const rowHeaderTypeMap = {
+    "tournaments":TournamentRowHeader,
+    "games":GameRowHeader,
+    "ranking":RankingRowHeader,
+    "users":UserRowHeader
+};
 
 class CollectionList extends React.Component{
 
@@ -30,7 +43,7 @@ class CollectionList extends React.Component{
         pageRequest.pageRequest.property=columnName;
         pageRequest.pageRequest.direction=pageRequest.pageRequest.direction==='ASC'?'DESC':'ASC';
         this.props.setPageRequest(pageRequest);
-        this.props.getPageRequest(this.props.collectionType);
+        this.props.getPage(this.props.collectionType);
     }
 
     isColumnActive(columnName){
@@ -50,23 +63,14 @@ class CollectionList extends React.Component{
 
     prepareRowsOfTable(key){
         let rows = [];
-        let rowType;
-
-        if(this.props.collectionType==="tournaments")
-            rowType = TournamentRow;
-        else if(this.props.collectionType==="games")
-            rowType = GameRow;
-        else if(this.props.collectionType==="ranking")
-            rowType = RankingRow;
-        else
-            rowType = UserRow;
+        let typeOfRow = rowTypeMap[this.props.collectionType];
 
         this.props.page.content.forEach(
             element =>{
                 key++;
                 rows.push(
                     React.createElement(
-                        rowType,
+                        typeOfRow,
                         {key : key,
                         number : key,
                         element : element,
@@ -83,29 +87,31 @@ class CollectionList extends React.Component{
     render(){
         let rows = [];
         let key = 0;
-        let rowHeader;
-        let legend = <LegendPanel collectionType = {this.props.collectionType}/>;
+        let legend = <div/>;
+        let rowHeader = <div/>;
+
+        if(this.props.collectionType!=="")
+            rowHeader = React.createElement(
+                rowHeaderTypeMap[this.props.collectionType],
+                {
+                    isColumnActive : this.isColumnActive.bind(this),
+                    sortByColumnName : this.sortByColumnName.bind(this),
+                    getArrowGlyph : this.getArrowGlyph.bind(this)
+                },
+                null);
+
+        if(this.props.collectionType==="ranking")
+        {
+            legend = <RankingGameHeader gameName = {findGameName(this.props.pageRequest.searchCriteria)} />
+        }
+        else{
+            legend = <LegendPanel collectionType = {this.props.collectionType}/>;
+        }
 
         if(this.props.page.content!==undefined)
         {
             rows = this.prepareRowsOfTable(key);
         }
-
-        if(this.props.collectionType==="tournaments")
-        {
-            rowHeader = TournamentRowHeader;
-        }
-        else if(this.props.collectionType==="games")
-        {
-            rowHeader = GameRowHeader;
-        }
-        else if(this.props.collectionType==="ranking")
-        {
-            rowHeader = RankingRowHeader;
-            legend = <RankingGameHeader gameName = {findGameName(this.props.pageRequest.searchCriteria)} />
-        }
-        else
-            rowHeader = UserRowHeader;
 
         return (
             <div>
@@ -113,14 +119,7 @@ class CollectionList extends React.Component{
                     {legend}
                     <table style={styles.table}>
                         <thead>
-                        {
-                            React.createElement(
-                                rowHeader,
-                                {isColumnActive : this.isColumnActive.bind(this),
-                                sortByColumnName : this.sortByColumnName.bind(this),
-                                getArrowGlyph : this.getArrowGlyph.bind(this)},
-                                null)
-                        }
+                        {rowHeader}
                         </thead>
                         <tbody>
                         {rows}

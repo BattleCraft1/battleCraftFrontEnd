@@ -15,6 +15,7 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../../../redux/actions';
 
 import {provinces} from "../../../../main/consts/provinces";
+import createOptions from '../../../../main/functions/createOptions'
 
 import {serverName} from "../../../../main/consts/server";
 import axios from 'axios'
@@ -58,19 +59,6 @@ class FormInputs extends React.Component{
         );
     }
 
-    prepareProvinceOptions(){
-        let provincesOptions = [];
-        provincesOptions.push(<option value={""} key="nullOption"/>);
-
-        provinces.forEach(
-            provincesName => {
-                provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
-            }
-        );
-
-        return provincesOptions;
-    }
-
     prepareTournamentGamesOptions(){
         let tournamentGamesOptions = [];
         if(this.state.tournamentsGames!==undefined) {
@@ -90,7 +78,7 @@ class FormInputs extends React.Component{
     }
 
     render(){
-        let provincesOptions = this.prepareProvinceOptions();
+        let provincesOptions = createOptions(provinces);
         let tournamentGamesOptions = this.prepareTournamentGamesOptions();
 
         return(

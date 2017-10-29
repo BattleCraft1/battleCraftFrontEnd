@@ -12,15 +12,12 @@ import {css} from 'aphrodite';
 
 import {provinces} from "../../../../main/consts/provinces";
 import {tournamentStatus} from "../../../../main/consts/status";
+import createOptions from '../../../../main/functions/createOptions';
 
 import {serverName} from "../../../../main/consts/server";
 import axios from 'axios'
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ActionCreators } from '../../../../redux/actions/index';
-
-class FormInputs extends React.Component{
+export default class FormInputs extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -51,19 +48,6 @@ class FormInputs extends React.Component{
             });
     }
 
-    prepareProvinceOptions(){
-        let provincesOptions = [];
-        provincesOptions.push(<option value={""} key="nullOption"/>);
-
-        provinces.forEach(
-            provincesName => {
-                provincesOptions.push(<option value={provincesName} key={provincesName}>{provincesName}</option>);
-            }
-        );
-
-        return provincesOptions;
-    }
-
     prepareTournamentGamesOptions(){
         let tournamentGamesOptions = [];
         tournamentGamesOptions.push(<option value={""}  key="nullOption"/>);
@@ -75,19 +59,6 @@ class FormInputs extends React.Component{
             );
         }
         return tournamentGamesOptions;
-    }
-
-    prepareTournamentStatusOptions(){
-        let tournamentStatusOptions = [];
-        tournamentStatusOptions.push(<option value={""}  key="nullOption"/>);
-
-        tournamentStatus.forEach(
-            status => {
-                tournamentStatusOptions.push(<option value={status} key={status}>{status.replace("_"," ")}</option>);
-            }
-        );
-
-        return tournamentStatusOptions;
     }
 
     prepareTournamentTypeOptions(){
@@ -105,9 +76,9 @@ class FormInputs extends React.Component{
     }
 
     render(){
-        let provincesOptions = this.prepareProvinceOptions();
+        let provincesOptions = createOptions(provinces);
         let tournamentGamesOptions = this.prepareTournamentGamesOptions();
-        let tournamentStatusOptions = this.prepareTournamentStatusOptions();
+        let tournamentStatusOptions = createOptions(tournamentStatus);
         let tournamentTypeOptions = this.prepareTournamentTypeOptions();
 
         return (
@@ -239,13 +210,3 @@ class FormInputs extends React.Component{
         )
     }
 }
-
-function mapDispatchToProps( dispatch ) {
-    return bindActionCreators( ActionCreators, dispatch );
-}
-
-function mapStateToProps( state ) {
-    return {};
-}
-
-export default connect( mapStateToProps, mapDispatchToProps )( FormInputs );

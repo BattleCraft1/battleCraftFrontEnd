@@ -1,5 +1,4 @@
 export const provinces = [
-    "",
     "lubelskie",
     "dolnośląskie",
     "małopolskie",

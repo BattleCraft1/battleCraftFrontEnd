@@ -27,7 +27,7 @@ class CollectionPanel extends React.Component{
 
     async componentDidMount() {
         this.setPossibleOperations(this.props.match.params.collectionType);
-        await this.getPageRequest(this.props.match.params.collectionType);
+        await this.getPage(this.props.match.params.collectionType);
         await this.setState({collectionType: this.props.match.params.collectionType});
         this.createPageRequest(this.state.collectionType);
     }
@@ -37,7 +37,7 @@ class CollectionPanel extends React.Component{
             this.props.entityPanel.hidden === false) {
             await this.setState({collectionType: nextProps.match.params.collectionType});
             this.createPageRequestForEntityPanel(nextProps.entityPanel.relatedEntity.relatedEntityCriteria);
-            await this.getPageRequest(this.state.collectionType);
+            await this.getPage(this.state.collectionType);
             this.props.checkElements(nextProps.entityPanel.relatedEntity.relatedEntityNames,true)
         }
         else if (nextProps.match.params.collectionType !== this.state.collectionType ||
@@ -46,7 +46,7 @@ class CollectionPanel extends React.Component{
             this.createPageRequest(nextProps.match.params.collectionType);
             this.setPossibleOperations(nextProps.match.params.collectionType);
             await this.setState({collectionType: nextProps.match.params.collectionType});
-            await this.getPageRequest(this.state.collectionType);
+            await this.getPage(this.state.collectionType);
         }
     }
 
@@ -99,7 +99,7 @@ class CollectionPanel extends React.Component{
         this.props.setOperations(possibleOperationsForCollections[collectionType])
     }
 
-    async getPageRequest(collectionType){
+    async getPage(collectionType){
         console.log(this.props.pageRequest);
         await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
             .then(res => {
@@ -139,7 +139,7 @@ class CollectionPanel extends React.Component{
                 SearchPanel,
                 {
                     collectionType:this.state.collectionType,
-                    getPageRequest:this.getPageRequest.bind(this)
+                    getPage:this.getPage.bind(this)
                 },
                 null
             );
@@ -147,9 +147,9 @@ class CollectionPanel extends React.Component{
             <div className={css(resp.container)}>
                 <div className="row">
                     {searchPanel}
-                    <CollectionList getPageRequest={this.getPageRequest.bind(this)}
+                    <CollectionList getPage={this.getPage.bind(this)}
                                     collectionType={this.state.collectionType}/>
-                    <PagePanel getPageRequest={this.getPageRequest.bind(this)}
+                    <PagePanel getPage={this.getPage.bind(this)}
                                collectionType={this.state.collectionType}/>
                 </div>
             </div>
