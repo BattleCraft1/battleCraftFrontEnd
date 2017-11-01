@@ -26,7 +26,7 @@ export default class TurnCell extends React.Component{
                 <div id="cell2x2" style={Object.assign({}, styles.cell)}>
                 <BattleLabel height={this.state.height}/>
                 <div style = {{display:'flow-root'}}>
-                <div style={Object.assign({}, {border:'2px solid rgb(47, 77, 126)'})}>
+                <div style={Object.assign({}, styles.participantSegment2x2, {borderColor:'rgb(47, 77, 126)'})}>
                 <TextOutput title={"nick"} value={'NO NAME'}/>
                 <div style={e.subcontainer}>
                 <Avatar/>
@@ -35,7 +35,7 @@ export default class TurnCell extends React.Component{
                 </div>
                 <TextOutput title={"nick"} alignment={"right"} value={'NO NAME'} />
                 </div>
-                <div style={Object.assign({}, {border:'2px solid rgb(152, 42, 42)'})}>
+                <div style={Object.assign({}, styles.participantSegment2x2, {borderColor:'rgb(152, 42, 42)'})}>
                 <TextOutput title={"nick"} value={'NO NAME'}/>
                 <div style={e.subcontainer}>
                 <Avatar/>
@@ -87,10 +87,5 @@ subcontainer:{
   width:'100%',
   background:'brown',
   display:'-webkit-flex',
-},
-team:{
-  //boxSizing:'border-box',
-  //border:'2px solid',
-  //margin:'2px',
 },
 }

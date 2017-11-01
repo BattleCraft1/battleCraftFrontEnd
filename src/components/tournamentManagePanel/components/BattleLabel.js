@@ -23,6 +23,7 @@ const e = {
       textAlign:'center',
       fontWeight:'600',
       textShadow:'0 0 2px white',
+      marginRight:'3px',
   },
   number:{
     writingMode:'horizontal-tb',

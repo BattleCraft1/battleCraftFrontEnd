@@ -19,7 +19,7 @@ class Turn extends React.Component{
             <div style={Object.assign({}, styles.turnContent)}>
               <Cell_1x1/>
               <Cell_2x2/>
-
+              <Cell_1x1/>
             </div>
           </div>
 
