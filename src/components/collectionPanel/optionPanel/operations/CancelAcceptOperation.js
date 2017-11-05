@@ -12,7 +12,7 @@ let icons = require('glyphicons');
 class CancelAcceptOperation extends React.Component {
 
     getSuccessMessage(rejectedElementsNames){
-        return "Acceptations for "+rejectedElementsNames.join(", ").join(", ")+" are canceled";
+        return "Acceptations for "+rejectedElementsNames.join(", ")+" are canceled";
     }
 
     cancelAcceptElements(){

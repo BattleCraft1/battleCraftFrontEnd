@@ -61,7 +61,7 @@ export default class PersonalDataTab extends React.Component{
                     fieldName="phoneNumber"
                     changeEntity={this.props.changeEntity}
                     disabled = {this.props.inputsDisabled}
-                    name="Phone number"/>
+                    name="Phone number (optional)"/>
                 <TextOutput
                     value={this.props.entity["status"]}
                     name="User role"/>

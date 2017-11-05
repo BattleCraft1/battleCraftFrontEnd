@@ -27,7 +27,7 @@ export default (entity) => {
     if(entity.dateOfEnd===undefined || getDatesDifferenceInDays(new Date(entity.dateOfStart),new Date(entity.dateOfEnd))<0)
         fieldErrors.dateOfEnd = "End date must be later than "+setDateFunction(entity.dateOfStart);
 
-    if(getDatesDifferenceInDays(new Date(entity.dateOfEnd),new Date(entity.dateOfStart))>3)
+    if(getDatesDifferenceInDays(new Date(entity.dateOfStart),new Date(entity.dateOfEnd))>3)
         fieldErrors.dateOfEnd = "Duration of tournament cannnot be longer than 3 days";
 
     validateAddress(entity,fieldErrors);

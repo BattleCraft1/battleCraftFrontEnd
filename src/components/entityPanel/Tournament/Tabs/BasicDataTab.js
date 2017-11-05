@@ -81,11 +81,9 @@ class BasicDataTab extends React.Component{
                     changeEntity={this.props.changeEntity}
                     disabled = {this.props.inputsDisabled}
                     name="Name"/>
-                {this.props.mode!=='add' &&
                 <TextOutput
                     value={this.props.entity["status"]}
                     name="Tournament status"/>
-                }
                 <SelectInput
                     value={this.props.entity["game"]}
                     fieldName="game"

@@ -11,6 +11,12 @@ import { ActionCreators } from '../../redux/actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+const panelTypeMap = {
+    'tournament':TournamentPanel,
+    'game':GamePanel,
+    'user':UserPanel
+};
+
 class EntityPanel extends React.Component{
     constructor(props) {
         super(props);
@@ -39,13 +45,7 @@ class EntityPanel extends React.Component{
     }
 
     createPanel(){
-        let panelType;
-        if(this.props.entityPanel.entityType==='tournament')
-            panelType = TournamentPanel;
-        else if(this.props.entityPanel.entityType==='game')
-            panelType = GamePanel;
-        else if(this.props.entityPanel.entityType==='user')
-            panelType = UserPanel;
+        let panelType = panelTypeMap[this.props.entityPanel.entityType];
 
         return panelType ? React.createElement(
             panelType,

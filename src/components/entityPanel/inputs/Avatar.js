@@ -28,7 +28,9 @@ class Avatar extends React.Component{
         if(file){
             fileType = file.type.toString().split("/")[1];
         }
-        if(file && (fileType === 'bmp' || fileType === 'gif' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'png')){
+        if(fileType === 'jpg')
+            fileType = 'jpeg';
+        if(file && (fileType === 'bmp' || fileType === 'gif' || fileType === 'jpeg' || fileType === 'png')){
             let formData = new FormData();
             formData.append('avatar',file);
             axios.post(serverName+`upload/user/avatar?username=`+ this.props.username,

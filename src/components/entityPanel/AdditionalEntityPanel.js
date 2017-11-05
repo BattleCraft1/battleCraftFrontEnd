@@ -3,13 +3,18 @@ import {css} from 'aphrodite';
 import {resp, styles} from './styles'
 
 import TournamentPanel from './Tournament/Panel';
-import GamePanel from './Game/Panel';
 import UserPanel from './User/Panel';
-
 
 import { ActionCreators } from '../../redux/actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+
+const panelTypeMap = {
+    'tournament':TournamentPanel,
+    'user':UserPanel
+};
+
 
 class AdditionalEntityPanel extends React.Component{
     constructor(props) {
@@ -38,11 +43,7 @@ class AdditionalEntityPanel extends React.Component{
     }
 
     createPanel(){
-        let panelType;
-        if(this.props.additionalEntityPanel.additionalEntityType==='tournament')
-            panelType = TournamentPanel;
-        else if(this.props.additionalEntityPanel.additionalEntityType==='user')
-            panelType = UserPanel;
+        let panelType = panelTypeMap[this.props.additionalEntityPanel.additionalEntityType];
 
         return panelType ? React.createElement(
             panelType,
