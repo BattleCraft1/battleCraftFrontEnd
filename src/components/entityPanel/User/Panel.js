@@ -66,26 +66,23 @@ class Panel extends React.Component{
     }
 
     async componentDidMount() {
-        if(this.props.mode==='edit' || this.props.mode==='get')
-        {
-            await axios.get(serverName+`get/`+this.props.type+`?name=`+this.props.name)
-                .then(res => {
-                    this.setAccessToTabsByStatus(res.data.status);
-                    this.setState({entity:res.data});
-                    console.log("input entity: ");
-                    console.log(res.data);
-                })
-                .catch(error => {
-                    this.props.showNetworkErrorMessage(error);
-                });
-        }
+        await axios.get(serverName+`get/user?name=`+this.props.name)
+            .then(res => {
+                this.setAccessToTabsByStatus(res.data.status);
+                this.setState({entity:res.data});
+                console.log("input entity: ");
+                console.log(res.data);
+            })
+            .catch(error => {
+                this.props.showNetworkErrorMessage(error);
+            });
+
     }
 
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.hidden === false &&
-            this.props.hidden === true &&
-            !compareArrays(nextProps.relatedEntity.relatedEntityNames,this.props.relatedEntity.relatedEntityNames)) {
+            this.props.hidden === true) {
             this.actualizeRelatedEntityObjects(
                 nextProps.relatedEntity.relatedEntityType,
                 nextProps.relatedEntity.relatedEntityNames)

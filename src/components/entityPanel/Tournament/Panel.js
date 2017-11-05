@@ -87,7 +87,7 @@ class Panel extends React.Component{
     async componentDidMount() {
         if(this.props.mode==='edit' || this.props.mode==='get')
         {
-            await axios.get(serverName+`get/`+this.props.type+`?name=`+this.props.name)
+            await axios.get(serverName+`get/tournament?name=`+this.props.name)
                 .then(res => {
                     this.setState({entity:res.data});
                     console.log("input entity: ");
@@ -101,9 +101,7 @@ class Panel extends React.Component{
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.hidden === false &&
-            this.props.hidden === true &&
-            nextProps.relatedEntity.relatedEntityNames.length > 0 &&
-            !compareArrays(nextProps.relatedEntity.relatedEntityNames,this.props.relatedEntity.relatedEntityNames)) {
+            this.props.hidden === true) {
             this.actualizeRelatedEntityObjects(
                 nextProps.relatedEntity.relatedEntityType,
                 nextProps.relatedEntity.relatedEntityNames)

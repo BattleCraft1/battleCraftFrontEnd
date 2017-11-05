@@ -8,7 +8,11 @@ import TableRespNeutralHeader from './../../headRow/tableHeader/TableRespNeutral
 import {StyleSheet, css} from 'aphrodite';
 import {colors} from './../../../../../../main/consts/collectionsColors'
 
-export default class Row extends React.Component{
+import { ActionCreators } from '../../../../../../redux/actions/index';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+class Row extends React.Component{
 
     getColor(columnName, tournament){
         if(this.props.isColumnActive(columnName)){
@@ -17,6 +21,10 @@ export default class Row extends React.Component{
         else{
                 return colors["ranking"]["normal"]["NORMAL"];
         }
+    }
+
+    showUser(name){
+        this.props.getEntity("user",name);
     }
 
     render(){
@@ -28,7 +36,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "no"
                     color = {this.getColor("no")}
-                    edit = {() => {}}
+                    edit = {() => this.showUser(this.props.element.name)}
                     content = {this.props.number}
                 />
 
@@ -38,7 +46,7 @@ export default class Row extends React.Component{
                 <TableAvatarCell
                     columnName = "avatar"
                     color = {this.getColor("avatar")}
-                    edit={() => {}}
+                    edit = {() => this.showUser(this.props.element.name)}
                     name = {this.props.element.name}
                 />
 
@@ -52,7 +60,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "name"
                     color = {this.getColor("name")}
-                    edit = {() => {}}
+                    edit = {() => this.showUser(this.props.element.name)}
                     content = {this.props.element.name}
                 />
 
@@ -66,7 +74,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "province"
                     color = {this.getColor("province")}
-                    edit = {() => {}}
+                    edit = {() => this.showUser(this.props.element.name)}
                     content = {this.props.element.playerProvince}
                 />
 
@@ -80,7 +88,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "city"
                     color = {this.getColor("city")}
-                    edit = {() => {}}
+                    edit = {() => this.showUser(this.props.element.name)}
                     content = {this.props.element.playerCity}
                 />
 
@@ -94,7 +102,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "numberOfTournaments"
                     color = {this.getColor("numberOfTournaments")}
-                    edit = {() => {}}
+                    edit = {() => this.showUser(this.props.element.name)}
                     content = {this.props.element.numberOfTournaments}
                 />
 
@@ -108,7 +116,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "numberOfBattles"
                     color = {this.getColor("numberOfBattles")}
-                    edit = {() => {}}
+                    edit = {() => this.showUser(this.props.element.name)}
                     content = {this.props.element.numberOfBattles}
                 />
 
@@ -122,7 +130,7 @@ export default class Row extends React.Component{
                 <TableCell
                     columnName = "points"
                     color = {this.getColor("points")}
-                    edit = {() => {}}
+                    edit = {() => this.showUser(this.props.element.name)}
                     content = {this.props.element.points}
                 />
             </tr>
@@ -130,12 +138,31 @@ export default class Row extends React.Component{
     }
 }
 
+
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
+
+function mapStateToProps( state ) {
+    return {
+        entityPanel: state.entityPanel
+    };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( Row );
+
+
 const resp = StyleSheet.create({
     tableRow:{
+        cursor:'pointer',
         '@media (max-width: 600px)': {
             display:'block',
             position:'relative',
             marginBottom:'4px',
         },
+        '@media (max-width: 900px)': {
+            fontSize:'0.80em',
+        },
     },
+
 });

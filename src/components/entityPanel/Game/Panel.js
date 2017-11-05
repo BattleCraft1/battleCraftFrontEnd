@@ -41,7 +41,7 @@ class Panel extends React.Component{
     async componentDidMount() {
         if(this.props.mode==='edit' || this.props.mode==='get')
         {
-            await axios.get(serverName+`get/`+this.props.type+`?name=`+this.props.name)
+            await axios.get(serverName+`get/game?name=`+this.props.name)
                 .then(res => {
                     this.setState({entity:res.data});
                     console.log("input entity: ");
@@ -87,7 +87,7 @@ class Panel extends React.Component{
         delete entityToSend["status"];
 
         let isEditMode = this.props.mode === 'edit';
-        let gameRules = this.gameRules.files[0]
+        let gameRules = this.gameRules.files[0];
 
         let validationErrors = validateGame(entityToSend,gameRules,isEditMode);
         if(checkIfObjectIsNotEmpty(validationErrors)){

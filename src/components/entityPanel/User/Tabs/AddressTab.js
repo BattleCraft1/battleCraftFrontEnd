@@ -52,7 +52,7 @@ export default class AddressTab extends React.Component{
                     fieldName="description"
                     changeEntity={this.props.changeEntity.bind(this)}
                     disabled = {this.props.inputsDisabled}
-                    name="Description"/>
+                    name="Description (optional)"/>
             </div>
         )
     }

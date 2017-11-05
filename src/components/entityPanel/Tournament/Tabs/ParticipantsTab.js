@@ -28,7 +28,7 @@ class ParticipantsTab extends React.Component{
                     value={this.props.entity["participants"]}
                     fieldName="participants"
                     disabled = {this.props.inputsDisabled}
-                    changeEntity={this.props.changeEntity.bind(this)}
+                    changeEntity={this.props.changeEntity}
                     name="Participants" />
                 {!this.props.inputsDisabled && <InviteButton to='/collectionsPanel/users'
                                                  operation={this.startInviteParticipants.bind(this)}  text="Invite"/>}
