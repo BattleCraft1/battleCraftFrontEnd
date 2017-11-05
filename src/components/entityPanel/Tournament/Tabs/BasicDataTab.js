@@ -62,18 +62,20 @@ class BasicDataTab extends React.Component{
 
         return(
             <div>
-            <ValidationErrorMessage
-                validationErrorMessage={this.props.validationErrors["nameChange"]}/>
-            <ValidationErrorMessage
-                validationErrorMessage={this.props.validationErrors["game"]}/>
-            <ValidationErrorMessage
-                validationErrorMessage={this.props.validationErrors["tablesCount"]}/>
-            <ValidationErrorMessage
-                validationErrorMessage={this.props.validationErrors["playersOnTableCount"]}/>
-            <ValidationErrorMessage
-                validationErrorMessage={this.props.validationErrors["dateOfStart"]}/>
-            <ValidationErrorMessage
-                validationErrorMessage={this.props.validationErrors["dateOfEnd"]}/>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["nameChange"]}/>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["game"]}/>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["tablesCount"]}/>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["playersOnTableCount"]}/>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["toursCount"]}/>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["dateOfStart"]}/>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["dateOfEnd"]}/>
 
                 <TextInput
                     value={this.props.entity["nameChange"]}
@@ -106,18 +108,29 @@ class BasicDataTab extends React.Component{
                     options={tournamentTypeOptions}
                     disabled = {this.props.inputsDisabled}
                     name="Type"/>
+
+                <NumberInput
+                    value={this.props.entity["toursCount"]}
+                    fieldName="toursCount"
+                    changeEntity={this.props.changeEntity}
+                    disabled = {this.props.inputsDisabled}
+                    name="Tours count"/>
+
                 <NumberOutput
                     value={maxPlayers}
                     name="Max players"/>
+
                 <TextOutput
                     value={this.calculateTournamentType(maxPlayers)}
                     name="Tournament class"/>
+
                 <DateInput
                     value={this.props.entity["dateOfStart"]}
                     fieldName="dateOfStart"
                     changeEntity={this.props.changeEntity}
                     disabled = {this.props.inputsDisabled}
                     name="Start at"/>
+
                 <DateInput
                     value={this.props.entity["dateOfEnd"]}
                     fieldName="dateOfEnd"

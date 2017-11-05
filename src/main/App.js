@@ -15,10 +15,9 @@ class App extends Component {
 
     render(){
         return (
-
           <div>
-          <div className={css(resp.backgroundImage)}></div>
-          <div className={css(resp.backgroundConent)}></div>
+          <div className={css(resp.backgroundImage)}/>
+          <div className={css(resp.backgroundConent)}/>
             <div className = {css(resp.base)}>
                 <Navbar/>
                 <ConfirmDialog/>
@@ -27,7 +26,7 @@ class App extends Component {
                 <Message/>
                       <Switch>
                           <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
-                          <Route exact path='/tournamentManagement' component={ManagementPanel}/>
+                          <Route exact path='/tournamentManagement/:tournamentName' component={ManagementPanel}/>
                       </Switch>
             </div>
           </div>

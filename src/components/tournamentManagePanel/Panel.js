@@ -11,7 +11,7 @@ class Panel extends React.Component{
           height:window.innerHeight
         };
 
-        console.log(this.state.height)
+        console.log(this.state.height);
 
         this.updateDimensions = this.updateDimensions.bind(this);
     }
