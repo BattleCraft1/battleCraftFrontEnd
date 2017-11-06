@@ -20,7 +20,6 @@ const styles = {
     height:'100%',
     padding:'10px',
     overflowX:'scroll',
-    overflowY:'scroll',
     display:'inline-block',
     whiteSpace:'nowrap',
     margin:'0px',
@@ -72,6 +71,8 @@ const styles = {
     display:'inline-block',
     minWidth:'100px',
     minHeight:'100px',
+    overflowX:'scroll',
+
   },
   turnContent:{
     display:'relative',

@@ -38,14 +38,11 @@ class Panel extends React.Component{
         return(
           <div>
           <div style={Object.assign({}, styles.goldAndBrownTheme, styles.container)}>
-            <div style={Object.assign({}, styles.goldAndBrownThemeInset, styles.innerContainer, {maxHeight:this.state.height * 0.75 })}>
-            <Turn active={true}  name={"TURN 1"}/>
-            <Turn active={false} name={"TURN 2"}/>
-            <Turn active={false} name={"TURN 3"}/>
-            <Turn active={false} name={"TURN 4"}/>
-            <Turn active={false} name={"TURN 5"}/>
-            <Turn active={false} name={"TURN 6"}/>
-
+            <div style={Object.assign({}, styles.goldAndBrownThemeInset, styles.innerContainer)}>
+            <Turn maxHeight={this.state.height*0.75} active={true}  name={"TURN 1"}/>
+            <Turn maxHeight={this.state.height*0.75} active={false} name={"TURN 2"}/>
+            <Turn maxHeight={this.state.height*0.75} active={false} name={"TURN 3"}/>
+            <Turn maxHeight={this.state.height*0.75} active={false} name={"TURN 4"}/>
             </div>
           </div>
           <OptionPanel/>
