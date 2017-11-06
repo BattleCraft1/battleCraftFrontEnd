@@ -93,12 +93,6 @@ class Navbar extends React.Component{
                 name = "All tournaments"
                 link = "/collectionsPanel/tournaments"
 
-            />,
-            <NavigatingDropdownOption
-                key="3"
-                name = "Tournament management"
-                link = "/tournamentManagement"
-
             />]
     }
 

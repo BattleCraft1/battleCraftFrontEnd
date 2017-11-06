@@ -1,13 +1,13 @@
 import React from 'react';
-import {resp, styles} from '../styles'
+import {resp, styles} from '../../styles'
 import {css} from 'aphrodite';
-import TextOutput from './TextOutput'
-import Avatar from './AvatarSmall'
-import Points from './Points'
-import BattleLabel from './BattleLabel'
+import TextOutput from './components/TextOutput'
+import Avatar from './components/AvatarSmall'
+import Points from './components/Points'
+import BattleLabel from './components/BattleLabel'
 
 
-export default class TurnCell extends React.Component{
+export default class Battle2x2 extends React.Component{
   constructor(props) {
       super(props);
 
