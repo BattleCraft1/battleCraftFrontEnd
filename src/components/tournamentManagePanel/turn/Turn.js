@@ -2,8 +2,8 @@ import React from 'react';
 import {css} from 'aphrodite';
 import {resp, styles} from '../styles'
 import Label from './Label'
-import Cell_1x1 from './TurnCell1x1'
-import Cell_2x2 from './TurnCell2x2'
+import Battle1x1 from './battle/Battle1x1'
+import Battle2x2 from './battle/Battle2x2'
 
 class Turn extends React.Component{
     constructor(props) {
@@ -17,9 +17,9 @@ class Turn extends React.Component{
           <div style={Object.assign({}, styles.turnContainer)}>
             <Label active={this.props.active} name={ this.props.name } />
             <div style={Object.assign({}, styles.turnContent)}>
-              <Cell_1x1/>
-              <Cell_2x2/>
-              <Cell_1x1/>
+              <Battle1x1/>
+              <Battle2x2/>
+              <Battle2x2/>
             </div>
           </div>
 

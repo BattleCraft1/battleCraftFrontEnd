@@ -1,6 +1,8 @@
 import React from 'react';
 import {css} from 'aphrodite';
+
 import Button from '../inputs/Button';
+import ButtonLink from '../inputs/ButtonLink';
 
 import AddressTab from './Tabs/AddressTab';
 import BasicDataTab from './Tabs/BasicDataTab';
@@ -21,7 +23,6 @@ import axios from 'axios';
 
 import checkIfObjectIsNotEmpty from '../../../main/functions/checkIfObjectIsNotEmpty'
 import validateTournament from '../validators/TournamentValidator'
-import compareArrays from '../../../main/functions/compareArrays';
 
 const tabsMap = {
     "basicData":BasicDataTab,
@@ -36,6 +37,7 @@ const tabsNamesMap = {
     "organizers":"Organizers",
     "participants":"Participants",
 };
+
 
 class Panel extends React.Component{
     constructor(props) {
@@ -70,7 +72,7 @@ class Panel extends React.Component{
                 "nameChange": "",
                 "tablesCount": "",
                 "playersOnTableCount":"",
-                "toursCount":"",
+                "toursCount":0,
                 "maxPlayers": "",
                 "game": "",
                 "dateOfStart": "",
@@ -221,7 +223,9 @@ class Panel extends React.Component{
         if(this.props.mode!=='get'){
             buttons = [
                 <Button key="cancel" text={"Cancel"} action={() => this.props.disable()}/>,
-                <Button key="save" text={"Save"} action={() => {this.sendEntity()}}/>
+                <Button key="save" text={"Save"} action={() => {this.sendEntity()}}/>,
+                <ButtonLink key="progress" text={"Progress"} action={() => this.props.disable()}
+                            link={'/progress/'+this.state.entity.name}/>
             ]
         }
         else{

@@ -95,6 +95,28 @@ const styles = {
         color:'white',
         outline:'0',
         borderRadius:'2px',
+        fontSize:'14'
+    },
+    buttonLink:{
+        textDecoration: 'none',
+        textAlign: 'center',
+        width:'20%',
+        marginTop:'1%',
+        marginRight:'1%',
+        paddingTop:'6px',
+        paddingBottom:'6px',
+        float:'right',
+        border:'1px solid',
+        borderTopColor: '#E0BA51',
+        borderBottomColor: '#E0BA51',
+        borderRightColor: '#805D2C',
+        borderLeftColor: '#e3ca86',
+        backgroundImage: 'linear-gradient(#d55151, #55130f, #4b1310)',
+        boxShadow:'inset 0 0 7px #9c7239',
+        color:'white',
+        outline:'0',
+        borderRadius:'2px',
+        fontSize:'14'
     },
     tableButton:{
         cursor: 'pointer',
@@ -294,6 +316,18 @@ const resp = StyleSheet.create({
         '@media (max-width: 720px)': {
             paddingTop:'2px',
             paddingBottom:'2px',
+        },
+    },
+    buttonLink:{
+        ':active':{
+            borderTopColor: 'rgb(204, 126, 69)',
+            borderBottomColor: 'rgb(249, 249, 249)',
+            color:'lightGrey',
+            backgroundImage: 'linear-gradient( #4b110d, #6f1913, #dd5353 )',
+        },
+        '@media (max-width: 720px)': {
+            paddingTop:'0px',
+            paddingBottom:'0px',
         },
     },
     tableButton:{

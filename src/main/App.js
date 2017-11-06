@@ -24,10 +24,10 @@ class App extends Component {
                 <EntityPanel/>
                 <AdditionalEntityPanel/>
                 <Message/>
-                      <Switch>
-                          <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
-                          <Route exact path='/tournamentManagement/:tournamentName' component={ManagementPanel}/>
-                      </Switch>
+                <Switch>
+                    <Route exact path='/progress/:tournamentName' component={ManagementPanel}/>
+                    <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
+                </Switch>
             </div>
           </div>
         );

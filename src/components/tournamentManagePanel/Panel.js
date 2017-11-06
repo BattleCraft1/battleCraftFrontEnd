@@ -1,8 +1,8 @@
 import React from 'react';
 import {css} from 'aphrodite';
 import {resp, styles} from './styles'
-import Turn from './components/Turn'
-import OptionPanel from './components/OptionPanel'
+import Turn from './turn/Turn'
+import OptionPanel from './optionPanel/OptionPanel'
 
 class Panel extends React.Component{
     constructor(props) {
