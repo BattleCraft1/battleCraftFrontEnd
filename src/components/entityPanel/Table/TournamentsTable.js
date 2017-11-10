@@ -1,10 +1,11 @@
 import React from 'react';
 import {styles} from '../styles'
-import TournamentTableRow from './Row/TournamentTableRow'
-import EmptyTableRow from './Row/EmptyTableRow'
+import DuelTournamentTableRow from './Row/DuelTournamentTableRow'
+import GroupTournamentTableRow from './Row/GroupTournamentTableRow'
+import EmptyTableRow from './Row/EmptyTournamentTableRow'
 import './scrollbar.css'
 
-export default class UserTable extends React.Component{
+export default class TournamentsTable extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -23,14 +24,31 @@ export default class UserTable extends React.Component{
         }
         else{
             return this.props.value.map(
-                row => <TournamentTableRow key={row.name}
-                                           disabled = {this.props.disabled}
-                                           delete = {this.deleteElement.bind(this)}
-                                           accept = {this.acceptElement.bind(this)}
-                                           accepted={row.accepted}
-                                           name={row.name}/>
+                tournament => this.createTableRow(tournament)
             )
         }
+    }
+
+    createTableRow(tournament){
+        if(tournament.secondPlayerName === undefined){
+            return  <DuelTournamentTableRow key={tournament.name}
+                                        disabled = {this.props.disabled}
+                                        delete = {this.deleteElement.bind(this)}
+                                        accept = {this.acceptElement.bind(this)}
+                                        accepted={tournament.accepted}
+                                        name={tournament.name}/>
+        }
+        else{
+            return  <GroupTournamentTableRow key={tournament.name}
+                                        disabled = {this.props.disabled}
+                                        delete = {this.deleteElement.bind(this)}
+                                        accept = {this.acceptElement.bind(this)}
+                                        accepted={tournament.accepted}
+                                        name={tournament.name}
+                                        secondPlayerAccept={tournament.secondPlayerAccept}
+                                        secondPlayerName={tournament.secondPlayerName}/>
+        }
+
     }
 
     deleteElement(name){
@@ -59,9 +77,7 @@ export default class UserTable extends React.Component{
                 <div style={Object.assign({}, styles.optionLabel, styles.tableHeaderCell)}>{this.props.name}</div>
                 <span style={{position:'relative',width:'20%'}}/>
                 <div id="container" style={ this.state.height > 199 ? styles.scrollPanel:{}}>
-                    <table style={Object.assign( {}, styles.table)}>
-                        {rows}
-                    </table>
+                    {rows}
                 </div>
             </div>
         )

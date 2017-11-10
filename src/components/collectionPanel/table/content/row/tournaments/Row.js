@@ -86,7 +86,7 @@ class Row extends React.Component{
                 />
                 <TableCell
                     columnName = "city"
-                    color = {this.getColor("city", this.props.element)}
+                    color = {this.getColor("address.city", this.props.element)}
                     edit={() => this.editEntity(this.props.element)}
                     content = {this.props.element.city}
                 />

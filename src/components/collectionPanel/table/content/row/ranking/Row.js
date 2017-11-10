@@ -87,7 +87,7 @@ class Row extends React.Component{
                 />
                 <TableCell
                     columnName = "city"
-                    color = {this.getColor("city")}
+                    color = {this.getColor("playerAddress.city")}
                     edit = {() => this.showUser(this.props.element.name)}
                     content = {this.props.element.playerCity}
                 />

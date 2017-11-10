@@ -1,10 +1,10 @@
 import React from 'react';
 import {styles} from '../styles'
 import UserTableRow from './Row/UserTableRow'
-import EmptyTableRow from './Row/EmptyTableRow'
+import EmptyTableRow from './Row/EmptyUserTableRow'
 import './scrollbar.css'
 
-export default class UserTable extends React.Component{
+export default class OrganizersTable extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -23,11 +23,11 @@ export default class UserTable extends React.Component{
         }
         else{
             return this.props.value.map(
-                row => <UserTableRow key={row.name}
-                                     disabled = {this.props.disabled}
-                                     delete = {this.deleteElement.bind(this)}
-                                     accepted={row.accepted}
-                                     name={row.name}/>
+                organizer => <UserTableRow key={organizer.name}
+                                       disabled = {this.props.disabled}
+                                       delete = {this.deleteElement.bind(this)}
+                                       accepted={organizer.accepted}
+                                       name={organizer.name}/>
             )
         }
     }
@@ -50,7 +50,9 @@ export default class UserTable extends React.Component{
                 <span style={{position:'relative',width:'20%'}}/>
                 <div id="container" style={ this.state.height > 199 ? styles.scrollPanel:{}}>
                     <table style={Object.assign( {}, styles.table)}>
+                        <tbody>
                         {rows}
+                        </tbody>
                     </table>
                 </div>
             </div>

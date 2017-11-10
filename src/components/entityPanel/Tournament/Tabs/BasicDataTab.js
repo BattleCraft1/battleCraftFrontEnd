@@ -32,7 +32,7 @@ class BasicDataTab extends React.Component{
     }
 
     async getGameSelectData(){
-        await axios.get(serverName+`get/ranking/enums`)
+        await axios.get(serverName+`get/allGames/names`)
             .then(res => {
                 this.setState({gameNames:res.data});
                 this.props.changeEntity("game",res.data)
