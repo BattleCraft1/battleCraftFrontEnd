@@ -1,5 +1,5 @@
 import React from 'react';
-import UserTable from '../../Table/UsersTable'
+import OrganizersTable from '../../Table/OrganizersTable'
 import InviteButton from '../../Table/InviteButton'
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
@@ -25,7 +25,7 @@ class OrganizersTab extends React.Component{
             <div style={Object.assign({},{marginLeft:'10%',marginRight:'10%'})}>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["organizers"]}/>
-                <UserTable
+                <OrganizersTable
                     value={this.props.entity["organizers"]}
                     fieldName="organizers"
                     disabled = {this.props.inputsDisabled}

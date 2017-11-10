@@ -38,7 +38,7 @@ class FormInputs extends React.Component{
     }
 
     async componentDidMount(){
-        await axios.get(serverName+`get/tournaments/enums`)
+        await axios.get(serverName+`get/allGames/names`)
             .then(res => {
                 this.setState({tournamentsGames:res.data});
             })

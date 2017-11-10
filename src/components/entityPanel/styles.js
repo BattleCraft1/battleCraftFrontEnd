@@ -95,7 +95,7 @@ const styles = {
         color:'white',
         outline:'0',
         borderRadius:'2px',
-        fontSize:'14'
+        fontSize:'14px'
     },
     buttonLink:{
         textDecoration: 'none',
@@ -116,7 +116,7 @@ const styles = {
         color:'white',
         outline:'0',
         borderRadius:'2px',
-        fontSize:'14'
+        fontSize:'14px'
     },
     tableButton:{
         cursor: 'pointer',

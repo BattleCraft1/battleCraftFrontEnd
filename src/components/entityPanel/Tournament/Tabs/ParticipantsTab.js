@@ -1,6 +1,8 @@
 import React from 'react';
-import UserTable from '../../Table/UsersTable'
+import ParticipantsTable from '../../Table/ParticipantsTable'
+import ParticipantsGroupsTable from '../../Table/ParticipantsGroupsTable'
 import InviteButton from '../../Table/InviteButton'
+import AddGroupSlotButton from '../../Table/AddGroupSlotButton'
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
 
@@ -19,19 +21,57 @@ class ParticipantsTab extends React.Component{
         this.props.showEntityPanel(false);
     }
 
-    render(){
-        return(
-            <div style={Object.assign({},{marginLeft:'10%',marginRight:'10%'})}>
-                <ValidationErrorMessage
-                    validationErrorMessage={this.props.validationErrors["participants"]}/>
-                <UserTable
+    addNewGroupOfParticipants(){
+        let participants = this.props.entity["participants"];
+        participants.push(
+            [
+                {
+                    "name": undefined,
+                    "accepted": false
+                },
+                {
+                    "name": undefined,
+                    "accepted": false
+                }
+            ]
+        );
+        this.props.changeEntity("participants",participants);
+        console.log(this.props.entity["participants"]);
+    }
+
+    chooseUserTableByTournamentType(){
+        if(this.props.entity["playersOnTableCount"] === 2){
+            return <div>
+                <ParticipantsTable
                     value={this.props.entity["participants"]}
                     fieldName="participants"
                     disabled = {this.props.inputsDisabled}
                     changeEntity={this.props.changeEntity}
                     name="Participants" />
-                {!this.props.inputsDisabled && <InviteButton to='/collectionsPanel/users'
-                                                 operation={this.startInviteParticipants.bind(this)}  text="Invite"/>}
+                {!this.props.inputsDisabled &&
+                <InviteButton to='/collectionsPanel/users' operation={this.startInviteParticipants.bind(this)}  text="Invite"/>}
+            </div>
+        }
+        else{
+            return <div>
+                <ParticipantsGroupsTable
+                    value={this.props.entity["participants"]}
+                    fieldName="participants"
+                    disabled = {this.props.inputsDisabled}
+                    changeEntity={this.props.changeEntity}
+                    name="Participants" />
+                {!this.props.inputsDisabled &&
+                <AddGroupSlotButton operation={this.addNewGroupOfParticipants.bind(this)}  text="Add group"/>}
+            </div>
+        }
+    }
+
+    render(){
+        return(
+            <div style={Object.assign({},{marginLeft:'10%',marginRight:'10%'})}>
+                <ValidationErrorMessage
+                    validationErrorMessage={this.props.validationErrors["participants"]}/>
+                {this.chooseUserTableByTournamentType()}
             </div>
         )
     }
