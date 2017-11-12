@@ -1,8 +1,8 @@
 import React from 'react';
-import {styles} from '../styles'
+import {styles} from '../../../styles'
 import UserTableRow from './Row/UserTableRow'
 import EmptyTableRow from './Row/EmptyUserTableRow'
-import './scrollbar.css'
+import '../../../TableInputs/scrollbar.css'
 
 export default class OrganizersTable extends React.Component{
     constructor(props) {
@@ -15,6 +15,38 @@ export default class OrganizersTable extends React.Component{
     componentDidMount() {
         const height = document.getElementById('container').clientHeight;
         this.setState({ height:height });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.hidden === false &&
+            this.props.hidden === true &&
+            nextProps.relatedEntity.operationCanceled === false) {
+            this.actualizeRelatedEntityObjects(nextProps.relatedEntity.relatedEntities)
+        }
+    }
+
+    actualizeRelatedEntityObjects(relatedEntities){
+        let organizers = this.props.value;
+        let relatedEntitiesNames = organizers.map(entity => entity.name);
+        relatedEntities.forEach(
+            elementName => {
+                if(relatedEntitiesNames.indexOf(elementName)===-1){
+                    organizers.push({
+                        name:elementName,
+                        accepted:false
+                    })
+                }
+            }
+        );
+        relatedEntitiesNames.forEach(
+            elementName => {
+                if(relatedEntities.indexOf(elementName)===-1){
+                    let organizerToDelete = organizers.find(element => element.name===elementName);
+                    organizers.splice(organizers.indexOf(organizerToDelete),1);
+                }
+            }
+        );
+        this.props.changeEntity(this.props.fieldName,organizers);
     }
 
     createTableRows(){

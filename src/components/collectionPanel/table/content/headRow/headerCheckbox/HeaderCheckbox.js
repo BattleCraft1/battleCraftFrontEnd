@@ -6,7 +6,7 @@ export default class HeaderCheckbox extends React.Component{
     render(){
         return(
             <th key="all" style={styles.thead} className = {css(resp.theadElement)}>
-                <MultiCheckbox /></th>
+                <MultiCheckbox  disabled = {this.props.disabled}/></th>
         )
     }
 }

@@ -4,13 +4,12 @@ import TableHeader from './../../headRow/tableHeader/TableHeader'
 import HeaderCheckbox from './../../headRow/headerCheckbox/HeaderCheckbox'
 import {StyleSheet, css} from 'aphrodite';
 
-
 export default class RowHeader extends React.Component{
 
     render(){
         return (
             <tr className={css(resp.rowContent)}>
-                <HeaderCheckbox/>
+                <HeaderCheckbox disabled = {false}/>
                 <TableHeader
                     sortBy = "name"
                     sort = {this.props.sortByColumnName}
@@ -71,6 +70,7 @@ export default class RowHeader extends React.Component{
         );
     }
 }
+
 const resp = StyleSheet.create({
   rowContent:{
       position:'relative',

@@ -1,11 +1,10 @@
 import React from 'react';
-import {styles} from '../styles'
+import {styles} from '../../../styles'
 import DuelTournamentTableRow from './Row/DuelTournamentTableRow'
-import GroupTournamentTableRow from './Row/GroupTournamentTableRow'
 import EmptyTableRow from './Row/EmptyTournamentTableRow'
-import './scrollbar.css'
+import '../../../TableInputs/scrollbar.css'
 
-export default class TournamentsTable extends React.Component{
+export default class OrganizedTournamentsTable extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -18,37 +17,51 @@ export default class TournamentsTable extends React.Component{
         this.setState({ height:height });
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.hidden === false &&
+            this.props.hidden === true && nextProps.relatedEntity.operationCanceled === false) {
+            this.actualizeRelatedEntityObjects(nextProps.relatedEntity.relatedEntities)
+        }
+    }
+
+    actualizeRelatedEntityObjects(relatedEntities){
+        let organizedTournaments = this.props.value;
+        let relatedEntitiesNames = organizedTournaments.map(entity => entity.name);
+        relatedEntities.forEach(
+            elementName => {
+                if(relatedEntitiesNames.indexOf(elementName)===-1){
+                    organizedTournaments.push({
+                        name:elementName,
+                        accepted:false
+                    })
+                }
+            }
+        );
+        relatedEntitiesNames.forEach(
+            elementName => {
+                if(relatedEntities.indexOf(elementName)===-1){
+                    let organizerToDelete = organizedTournaments.find(element => element.name===elementName);
+                    organizedTournaments.splice(organizedTournaments.indexOf(organizerToDelete),1);
+                }
+            }
+        );
+        this.props.changeEntity(this.props.fieldName,organizedTournaments);
+    }
+
     createTableRows(){
         if(this.props.value.length===0){
             return <EmptyTableRow/>
         }
         else{
-            return this.props.value.map(
-                tournament => this.createTableRow(tournament)
-            )
-        }
-    }
-
-    createTableRow(tournament){
-        if(tournament.secondPlayerName === undefined){
-            return  <DuelTournamentTableRow key={tournament.name}
+            return this.props.value.map(tournament =>
+                <DuelTournamentTableRow key={tournament.name}
                                         disabled = {this.props.disabled}
                                         delete = {this.deleteElement.bind(this)}
                                         accept = {this.acceptElement.bind(this)}
                                         accepted={tournament.accepted}
                                         name={tournament.name}/>
+            )
         }
-        else{
-            return  <GroupTournamentTableRow key={tournament.name}
-                                        disabled = {this.props.disabled}
-                                        delete = {this.deleteElement.bind(this)}
-                                        accept = {this.acceptElement.bind(this)}
-                                        accepted={tournament.accepted}
-                                        name={tournament.name}
-                                        secondPlayerAccept={tournament.secondPlayerAccept}
-                                        secondPlayerName={tournament.secondPlayerName}/>
-        }
-
     }
 
     deleteElement(name){
@@ -77,7 +90,11 @@ export default class TournamentsTable extends React.Component{
                 <div style={Object.assign({}, styles.optionLabel, styles.tableHeaderCell)}>{this.props.name}</div>
                 <span style={{position:'relative',width:'20%'}}/>
                 <div id="container" style={ this.state.height > 199 ? styles.scrollPanel:{}}>
-                    {rows}
+                    <table style={Object.assign( {}, styles.table)}>
+                        <tbody>
+                        {rows}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         )

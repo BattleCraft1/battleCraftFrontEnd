@@ -21,7 +21,6 @@ import axios from 'axios';
 
 import checkIfObjectIsNotEmpty from '../../../main/functions/checkIfObjectIsNotEmpty'
 import validateUser from '../validators/UserValidator'
-import compareArrays from '../../../main/functions/compareArrays';
 
 class Panel extends React.Component{
     constructor(props) {
@@ -79,40 +78,6 @@ class Panel extends React.Component{
 
     }
 
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.hidden === false &&
-            this.props.hidden === true) {
-            this.actualizeRelatedEntityObjects(
-                nextProps.relatedEntity.relatedEntityType,
-                nextProps.relatedEntity.relatedEntityNames)
-        }
-    }
-
-    actualizeRelatedEntityObjects(relatedEntityType,relatedEntityNames){
-        let entity = this.state.entity;
-        let relatedEntitiesNames = entity[relatedEntityType].map(entity => entity.name);
-        relatedEntityNames.forEach(
-            elementName => {
-                if(relatedEntitiesNames.indexOf(elementName)===-1){
-                    entity[relatedEntityType].push({
-                        name:elementName,
-                        accepted:false
-                    })
-                }
-            }
-        );
-        relatedEntitiesNames.forEach(
-            elementName => {
-                if(relatedEntityNames.indexOf(elementName)===-1){
-                    let organizerToDelete = entity[relatedEntityType].find(element => element.name===elementName);
-                    entity[relatedEntityType].splice(entity[relatedEntityType].indexOf(organizerToDelete),1);
-                }
-            }
-        );
-        this.setState({entity:entity});
-    }
-
     setAccessToTabsByStatus(status){
         let tabsMap = {
             "personalData":PersonalDataTab,
@@ -143,15 +108,29 @@ class Panel extends React.Component{
     }
 
     createContent(){
-        return React.createElement(
-            this.state.tabsMap[this.state.activeTab],
-            {
-                entity:this.state.entity,
-                inputsDisabled: this.props.mode === 'get',
-                changeEntity: this.changeEntity.bind(this),
-                validationErrors: this.state.validationErrors
-            },
-            null)
+        if(this.state.activeTab === "organizer" || this.state.activeTab === "player")
+            return React.createElement(
+                this.state.tabsMap[this.state.activeTab],
+                {
+                    entity:this.state.entity,
+                    inputsDisabled: this.props.mode === 'get',
+                    changeEntity: this.changeEntity.bind(this),
+                    validationErrors: this.state.validationErrors,
+                    relatedEntity: this.props.relatedEntity,
+                    hidden: this.props.hidden
+                },
+                null);
+        else
+            return React.createElement(
+                this.state.tabsMap[this.state.activeTab],
+                {
+                    entity:this.state.entity,
+                    inputsDisabled: this.props.mode === 'get',
+                    changeEntity: this.changeEntity.bind(this),
+                    validationErrors: this.state.validationErrors
+                },
+                null);
+
     }
 
     changeEntity(fieldName,value){
@@ -171,8 +150,8 @@ class Panel extends React.Component{
         delete entityToSend["finishedOrganizedTournaments"];
         delete entityToSend["createdGames"];
         delete entityToSend["banned"];
+        console.log(entityToSend);
         let validationErrors = validateUser(entityToSend);
-        console.log(validationErrors);
         if(checkIfObjectIsNotEmpty(validationErrors)){
             console.log("output entity:");
             console.log(entityToSend);

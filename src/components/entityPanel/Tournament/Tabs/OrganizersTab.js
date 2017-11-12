@@ -1,6 +1,6 @@
 import React from 'react';
-import OrganizersTable from '../../Table/OrganizersTable'
-import InviteButton from '../../Table/InviteButton'
+import OrganizersTable from './Table/OrganizersTable'
+import InviteButton from '../../TableInputs/InviteButton'
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
 
@@ -16,8 +16,12 @@ class OrganizersTab extends React.Component{
         this.props.setRelatedEntity(
             this.props.entity["organizers"].map(entity => entity.name),
             "organizers",
-            ["ORGANIZER"]);
-        this.props.showEntityPanel(false);
+            [{
+                "keys": ["status"],
+                "operation": ":",
+                "value": ["ORGANIZER"]
+            }]
+            ,10);
     }
 
     render(){
@@ -30,6 +34,8 @@ class OrganizersTab extends React.Component{
                     fieldName="organizers"
                     disabled = {this.props.inputsDisabled}
                     changeEntity={this.props.changeEntity}
+                    relatedEntity={this.props.relatedEntity}
+                    hidden={this.props.hidden}
                     name="Organizers" />
                 {!this.props.inputsDisabled && <InviteButton to='/collectionsPanel/users'
                                                  operation={this.startInviteOrganizers.bind(this)} text="Invite"/>}

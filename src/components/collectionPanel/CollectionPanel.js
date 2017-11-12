@@ -37,7 +37,7 @@ class CollectionPanel extends React.Component{
             this.props.entityPanel.hidden === false) {
             await this.setState({collectionType: nextProps.match.params.collectionType});
             this.createPageRequestForEntityPanel(nextProps.entityPanel.relatedEntity.relatedEntityCriteria);
-            this.props.setElementsToCheck(nextProps.entityPanel.relatedEntity.relatedEntityNames);
+            this.setElementsToCheckForEntityPanel(nextProps.entityPanel.relatedEntity.relatedEntities);
             await this.getPage(this.state.collectionType);
         }
         else if (nextProps.match.params.collectionType !== this.state.collectionType ||
@@ -50,13 +50,21 @@ class CollectionPanel extends React.Component{
         }
     }
 
+    setElementsToCheckForEntityPanel(relatedEntities){
+        if(this.props.entityPanel.relatedEntity.relatedEntityType==="participatedTournaments"){
+            let relatedEntitiesNames = relatedEntities.map(
+                relatedEntity => relatedEntity.name
+            );
+            this.props.setElementsToCheck(relatedEntitiesNames);
+        }
+        else{
+            this.props.setElementsToCheck(relatedEntities);
+        }
+    }
+
     createPageRequestForEntityPanel(relatedEntityCriteria){
         this.props.setPageRequest({
-            searchCriteria:[{
-                "keys": ["status"],
-                "operation": ":",
-                "value": relatedEntityCriteria
-            }],
+            searchCriteria:relatedEntityCriteria,
             pageRequest:{
                 direction : "ASC",
                 property : "name",
@@ -115,19 +123,17 @@ class CollectionPanel extends React.Component{
                 });
             })
             .catch(error => {
-                if(this.props.entityPanel.mode !== 'disabled')
-                {
-                    this.props.setEmptyPage();
-                    this.props.setPageRequest({
-                        searchCriteria:this.props.pageRequest.searchCriteria,
-                        pageRequest:{
-                            direction : this.props.pageRequest.pageRequest.direction,
-                            property : this.props.pageRequest.pageRequest.property,
-                            size : 0,
-                            page : 0
-                        }
-                    });
-                }
+
+                this.props.setEmptyPage();
+                this.props.setPageRequest({
+                    searchCriteria:this.props.pageRequest.searchCriteria,
+                    pageRequest:{
+                        direction : this.props.pageRequest.pageRequest.direction,
+                        property : this.props.pageRequest.pageRequest.property,
+                        size : 0,
+                        page : 0
+                    }
+                });
                 this.props.showNetworkErrorMessage(error);
             });
     }

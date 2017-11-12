@@ -57,7 +57,7 @@ export default class PersonalDataTab extends React.Component{
                     disabled = {this.props.inputsDisabled}
                     name="E-mail"/>
                 <TextInput
-                    value={this.props.entity["phoneNumber"]}
+                    value={this.props.entity["phoneNumber"]?this.props.entity["phoneNumber"]:""}
                     fieldName="phoneNumber"
                     changeEntity={this.props.changeEntity}
                     disabled = {this.props.inputsDisabled}

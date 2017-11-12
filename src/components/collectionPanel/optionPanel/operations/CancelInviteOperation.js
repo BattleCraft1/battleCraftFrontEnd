@@ -10,9 +10,8 @@ let icons = require('glyphicons');
 class CancelInviteOperation extends React.Component {
 
     cancelInvite(){
-        this.props.setRelatedEntity(this.props.entityPanel.relatedEntity.relatedEntityNames,this.props.entityPanel.relatedEntity.relatedEntityType,"");
         this.props.clearCheckedElements();
-        this.props.showEntityPanel(true);
+        this.props.cancelEntityPanelOperation();
     }
 
     render() {
@@ -32,7 +31,6 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
-        entityPanel:state.entityPanel
     };
 }
 

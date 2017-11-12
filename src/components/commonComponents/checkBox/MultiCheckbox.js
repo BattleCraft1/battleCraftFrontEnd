@@ -34,15 +34,56 @@ class MultiCheckbox extends React.Component {
         }
     }
 
+    changeRelatedEntities(checked){
+        let relatedEntities = this.props.entityPanel.relatedEntity.relatedEntities;
+        if(!checked || this.props.entityPanel.relatedEntity.relatedEntityLimit>=relatedEntities.length+this.props.page.content.length){
+            if(this.props.entityPanel.relatedEntity.relatedEntityType==="participatedTournaments"){
+                this.props.checkAllElements(this.props.element.name, checked);
+                this.setState({checked:checked});
+                if(checked){
+                    relatedEntities.concat(this.props.page.checkedElementsNames.map(checkedElement => {
+                        return{
+                            name: checkedElement.name,
+                            playersOnTableCount: checkedElement.playersOnTableCount
+                        }}));
+                }
+                else{
+                    relatedEntities = relatedEntities.filter(relatedEntity =>
+                        this.props.page.checkedElementsNames.contains(relatedEntity.name))
+                }
+                this.props.changeRelatedEntities(relatedEntities);
+            }
+            else{
+                this.setState({checked:checked});
+                this.props.checkAllElements(checked);
+                if(checked){
+                    relatedEntities = relatedEntities.concat(this.props.page.checkedElementsNames);
+                }
+                else{
+                    relatedEntities = relatedEntities.diff(this.props.page.checkedElementsNames);
+                }
+                this.props.changeRelatedEntities(relatedEntities);
+            }
+        }
+        else{
+            this.props.showFailureMessage("You can choose only "+this.props.entityPanel.relatedEntity.relatedEntityLimit+" elements");
+        }
+    }
+
     render(){
         return(
-            <input type="checkbox"
+            <input type="checkbox" disabled={this.props.disabled}
                    onClick={
                        () => {
                            let checked=this.state.checked;
                            checked=!checked;
-                           this.setState({checked:checked});
-                           this.props.checkAllElements(checked);
+                           if(this.props.entityPanel.mode!=='disabled'){
+                               this.changeRelatedEntities(checked);
+                           }
+                           else{
+                               this.props.checkAllElements(checked);
+                               this.setState({checked:checked});
+                           }
                        }
                    }
                    checked={this.state.checked}/>
@@ -56,6 +97,7 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
+        entityPanel: state.entityPanel,
         page: state.page,
     };
 }

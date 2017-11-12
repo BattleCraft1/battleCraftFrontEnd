@@ -34,7 +34,6 @@ class Row extends React.Component{
         if(this.props.entityPanel.mode!=='disabled')
             this.props.showAdditionalEntityPanel("tournament",element.name);
         else if(element.status!=='NEW' && element.status!=='ACCEPTED'){
-            console.log("debug");
             this.props.getEntity("tournament",element.name);
         }
         else
@@ -45,7 +44,7 @@ class Row extends React.Component{
         return (
             <tr className={css(resp.tableRow)}>
                 <RowChecbox
-                    elementName = {this.props.element.name}
+                    element = {this.props.element}
                     checked = {this.props.element.checked}
                 />
 
@@ -116,7 +115,7 @@ class Row extends React.Component{
                     columnName = "players"
                     color = {this.getColor("freeSlots", this.props.element)}
                     edit={() => this.editEntity(this.props.element)}
-                    content = {this.props.element.playersNumber+"/"+this.props.element.maxPlayers}
+                    content = {(this.props.element.playersNumber%2===0?this.props.element.playersNumber:this.props.element.playersNumber+1)+"/"+this.props.element.maxPlayers}
                 />
 
                 <TableResponsiveHeader

@@ -15,11 +15,11 @@ export default (entity) => {
 
     if(entity.playersOnTableCount===2){
         if(entity.tablesCount<1 || entity.tablesCount>30)
-            fieldErrors.tablesCount = "Tables count must be between 1 and 30";
+            fieldErrors.tablesCount = "TableInputs count must be between 1 and 30";
     }
     else if(entity.playersOnTableCount===4){
         if(entity.tablesCount<1 || entity.tablesCount>15)
-            fieldErrors.tablesCount = "Tables count must be between 1 and 15";
+            fieldErrors.tablesCount = "TableInputs count must be between 1 and 15";
     }
 
     let maxPlayers = entity.playersOnTableCount*entity.tablesCount;
@@ -44,11 +44,21 @@ export default (entity) => {
     if((new Set(entity.organizers)).size !== entity.organizers.length)
         fieldErrors.organizers = "You can invite organizer only once";
 
-    if(entity.tablesCount*entity.playersOnTableCount!==0 && entity.participants.length>entity.tablesCount*entity.playersOnTableCount)
+    let participantsFlatTable = [];
+
+    entity.participants.map(participantGroup => {
+        let participantGroupToValidate = [];
+        participantGroup.forEach(participant => participantGroupToValidate.push(participant.name));
+        participantsFlatTable.push(participantGroupToValidate);
+    });
+
+    if((new Set(participantsFlatTable)).size !== participantsFlatTable.length)
+        fieldErrors.organizers = "You can invite player only once";
+
+    if(entity.tablesCount*entity.playersOnTableCount!==0 &&
+        participantsFlatTable.length*entity.playersOnTableCount/2>entity.tablesCount*entity.playersOnTableCount)
         fieldErrors.participants = "Participants count must be less than "+entity.maxPlayers;
 
-    if((new Set(entity.participants)).size !== entity.participants.length)
-        fieldErrors.organizers = "You can invite player only once";
 
     if(!checkIfObjectIsNotEmpty(fieldErrors)){
         validationErrors.message = "Invalid tournament data";
