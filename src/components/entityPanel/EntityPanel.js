@@ -53,8 +53,8 @@ class EntityPanel extends React.Component{
                 mode:this.props.entityPanel.mode,
                 type:this.props.entityPanel.entityType,
                 name:this.props.entityPanel.entityName,
-                hidden:this.props.entityPanel.hidden,
                 relatedEntity:this.props.entityPanel.relatedEntity,
+                hidden:this.props.entityPanel.hidden,
                 disable:this.props.closeEntityPanel.bind(this),
             },
             null) : <div/>

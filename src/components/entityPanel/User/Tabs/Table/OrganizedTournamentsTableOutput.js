@@ -1,10 +1,10 @@
 import React from 'react';
-import {styles} from '../styles'
-import TournamentTableRow from './Row/DuelTournamentTableRow'
+import {styles} from '../../../styles'
+import DuelTournamentTableRow from './Row/DuelTournamentTableRow'
 import EmptyTableRow from './Row/EmptyTournamentTableRow'
-import './scrollbar.css'
+import '../../../TableInputs/scrollbar.css'
 
-export default class TournamentsTableOutput extends React.Component{
+export default class OrganizedTournamentsTableOutput extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -22,11 +22,11 @@ export default class TournamentsTableOutput extends React.Component{
             return <EmptyTableRow/>
         }
         else{
-            return this.props.value.map(
-                tournament => <TournamentTableRow key={tournament}
-                                           disabled = {true}
-                                           accepted={false}
-                                           name={tournament}/>
+            return this.props.value.map(tournament =>
+                <DuelTournamentTableRow key={tournament.name}
+                                        disabled = {true}
+                                        accepted={false}
+                                        name={tournament.name}/>
             )
         }
     }
@@ -40,8 +40,11 @@ export default class TournamentsTableOutput extends React.Component{
                 <div style={Object.assign({}, styles.optionLabel, styles.tableHeaderCell)}>{this.props.name}</div>
                 <span style={{position:'relative',width:'20%'}}/>
                 <div id="container" style={ this.state.height > 199 ? styles.scrollPanel:{}}>
-
-                    {rows}
+                    <table style={Object.assign( {}, styles.table)}>
+                        <tbody>
+                        {rows}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         )

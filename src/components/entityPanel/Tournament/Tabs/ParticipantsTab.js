@@ -1,8 +1,8 @@
 import React from 'react';
-import ParticipantsTable from '../../Table/ParticipantsTable'
-import ParticipantsGroupsTable from '../../Table/ParticipantsGroupsTable'
-import InviteButton from '../../Table/InviteButton'
-import AddGroupSlotButton from '../../Table/AddGroupSlotButton'
+import ParticipantsTable from './Table/ParticipantsTable'
+import ParticipantsGroupsTable from './Table/ParticipantsGroupsTable'
+import InviteButton from '../../TableInputs/InviteButton'
+import AddGroupSlotButton from '../../TableInputs/AddGroupSlotButton'
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
 
@@ -14,15 +14,30 @@ class ParticipantsTab extends React.Component{
 
     startInviteParticipants(){
         this.props.setOperations(["Invite","CancelInvite","Search"]);
+        let invitedParticipantsNames = [];
+
+        for (let i = 0; i < this.props.entity["participants"].length; i++) {
+            invitedParticipantsNames.push(this.props.entity["participants"][i][0].name);
+        }
+
         this.props.setRelatedEntity(
-            this.props.entity["participants"].map(entity => entity.name),
+            invitedParticipantsNames,
             "participants",
-            ["ORGANIZER","ACCEPTED"]);
-        this.props.showEntityPanel(false);
+            [{
+                "keys": ["status"],
+                "operation": ":",
+                "value": ["ORGANIZER","ACCEPTED"]
+            }],
+            this.props.entity["tablesCount"]*this.props.entity["playersOnTableCount"]);
     }
 
     addNewGroupOfParticipants(){
         let participants = this.props.entity["participants"];
+        let maxPlayers = this.props.entity["tablesCount"]*this.props.entity["playersOnTableCount"];
+        if((participants.length+1)*2>maxPlayers){
+            this.props.showFailureMessage("Participants count must be less than "+maxPlayers)
+        }
+        else{
         participants.push(
             [
                 {
@@ -36,7 +51,7 @@ class ParticipantsTab extends React.Component{
             ]
         );
         this.props.changeEntity("participants",participants);
-        console.log(this.props.entity["participants"]);
+        }
     }
 
     chooseUserTableByTournamentType(){
@@ -47,6 +62,8 @@ class ParticipantsTab extends React.Component{
                     fieldName="participants"
                     disabled = {this.props.inputsDisabled}
                     changeEntity={this.props.changeEntity}
+                    relatedEntity={this.props.relatedEntity}
+                    hidden={this.props.hidden}
                     name="Participants" />
                 {!this.props.inputsDisabled &&
                 <InviteButton to='/collectionsPanel/users' operation={this.startInviteParticipants.bind(this)}  text="Invite"/>}
@@ -59,6 +76,8 @@ class ParticipantsTab extends React.Component{
                     fieldName="participants"
                     disabled = {this.props.inputsDisabled}
                     changeEntity={this.props.changeEntity}
+                    relatedEntity={this.props.relatedEntity}
+                    hidden={this.props.hidden}
                     name="Participants" />
                 {!this.props.inputsDisabled &&
                 <AddGroupSlotButton operation={this.addNewGroupOfParticipants.bind(this)}  text="Add group"/>}

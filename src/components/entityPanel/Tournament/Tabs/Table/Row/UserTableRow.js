@@ -1,7 +1,7 @@
 import React from 'react';
 import {css} from 'aphrodite';
-import {resp, styles} from '../../styles'
-import {serverName} from "../../../../main/consts/server";
+import {resp, styles} from '../../../../styles'
+import {serverName} from "../../../../../../main/consts/server";
 
 export default class UserTableRow extends React.Component{
     render(){

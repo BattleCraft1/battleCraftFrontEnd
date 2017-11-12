@@ -103,40 +103,6 @@ class Panel extends React.Component{
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.hidden === false &&
-            this.props.hidden === true) {
-            this.actualizeRelatedEntityObjects(
-                nextProps.relatedEntity.relatedEntityType,
-                nextProps.relatedEntity.relatedEntityNames)
-        }
-    }
-
-    actualizeRelatedEntityObjects(relatedEntityType,relatedEntityNames){
-        let entity = this.state.entity;
-        console.log(relatedEntityType);
-        let relatedEntitiesNames = entity[relatedEntityType].map(entity => entity.name);
-        relatedEntityNames.forEach(
-            elementName => {
-                if(relatedEntitiesNames.indexOf(elementName)===-1){
-                    entity[relatedEntityType].push({
-                        name:elementName,
-                        accepted:false
-                    })
-                }
-            }
-        );
-        relatedEntitiesNames.forEach(
-            elementName => {
-                if(relatedEntityNames.indexOf(elementName)===-1){
-                    let organizerToDelete = entity[relatedEntityType].find(element => element.name===elementName);
-                    entity[relatedEntityType].splice(entity[relatedEntityType].indexOf(organizerToDelete),1);
-                }
-            }
-        );
-        this.setState({entity:entity});
-    }
-
     setActiveTab(activeTabName){
         this.setState({activeTab:activeTabName});
     }
@@ -146,15 +112,28 @@ class Panel extends React.Component{
     }
 
     createContent(){
-        return React.createElement(
-            tabsMap[this.state.activeTab],
-            {
-                entity:this.state.entity,
-                inputsDisabled: this.props.mode === 'get',
-                changeEntity: this.changeEntity.bind(this),
-                validationErrors: this.state.validationErrors
-            },
-            null)
+        if(this.state.activeTab === "organizers" || this.state.activeTab === "participants")
+            return React.createElement(
+                tabsMap[this.state.activeTab],
+                {
+                    entity:this.state.entity,
+                    inputsDisabled: this.props.mode === 'get',
+                    changeEntity: this.changeEntity.bind(this),
+                    validationErrors: this.state.validationErrors,
+                    relatedEntity: this.props.relatedEntity,
+                    hidden: this.props.hidden
+                },
+                null);
+        else
+            return React.createElement(
+                tabsMap[this.state.activeTab],
+                {
+                    entity:this.state.entity,
+                    inputsDisabled: this.props.mode === 'get',
+                    changeEntity: this.changeEntity.bind(this),
+                    validationErrors: this.state.validationErrors
+                },
+                null)
     }
 
     changeEntity(fieldName,value){
@@ -173,7 +152,15 @@ class Panel extends React.Component{
 
         let entityToSend = JSON.parse(JSON.stringify(this.state.entity));
         entityToSend.organizers = this.state.entity.organizers.map(element => element.name);
-        entityToSend.participants = this.state.entity.participants.map(element => element.name);
+        entityToSend.participants = [];
+        this.state.entity.participants.map(participantGroup => {
+            let participantGroupToSend = [];
+            participantGroup.forEach(participant =>{
+                if(participant.name !== undefined)
+                participantGroupToSend.push(participant.name)});
+            if(participantGroupToSend.length !== 0)
+            entityToSend.participants.push(participantGroupToSend);
+        });
         delete entityToSend["status"];
         let validationErrors = validateTournament(entityToSend);
         if(checkIfObjectIsNotEmpty(validationErrors)){

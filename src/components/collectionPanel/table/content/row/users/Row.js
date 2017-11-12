@@ -2,7 +2,7 @@ import React from 'react';
 
 import TableCell from './../../row/tableCell/TableCell'
 import TableAvatarCell from './../../row/tableCell/TableAvatarCell'
-import RowUserChecbox from './../../row/rowUserCheckbox/RowUserChecbox'
+import RowUserChecbox from '../rowCheckbox/RowUserChecbox'
 import TableResponsiveHeader from './../../headRow/tableHeader/TableResponsiveHeader'
 import TableRespNeutralHeader from './../../headRow/tableHeader/TableRespNeutralHeader'
 
@@ -45,7 +45,8 @@ class Row extends React.Component{
           <tr className={css(resp.tableRow)}>
 
                 <RowUserChecbox
-                    elementName = {this.props.element.name}
+                    disabled={false}
+                    element = {this.props.element}
                     checked = {this.props.element.checked}
                 />
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import {css} from 'aphrodite';
-import {resp, styles} from '../../styles'
+import {resp, styles} from '../../../../styles'
 
-export default class EmptyUserTableRow extends React.Component{
+export default class EmptyTournamentTableRow extends React.Component{
     render(){
         return(
             <tr>

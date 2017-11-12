@@ -1,8 +1,8 @@
 import React from 'react';
-import {styles} from '../styles'
+import {styles} from '../../../styles'
 import UserTableRow from './Row/UserTableRow'
 import EmptyTableRow from './Row/EmptyUserTableRow'
-import './scrollbar.css'
+import '../../../TableInputs/scrollbar.css'
 
 export default class ParticipantsTable extends React.Component{
     constructor(props) {
@@ -15,6 +15,45 @@ export default class ParticipantsTable extends React.Component{
     componentDidMount() {
         const height = document.getElementById('container').clientHeight;
         this.setState({ height:height });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.hidden === false &&
+            this.props.hidden === true && this.props.relatedEntity.operationCanceled === false) {
+            this.actualizeRelatedEntityObjects(nextProps.relatedEntity.relatedEntities)
+        }
+    }
+
+    actualizeRelatedEntityObjects(relatedEntities){
+        let participants = this.props.value;
+        let invitedParticipantsNames = [];
+
+        for (let i = 0; i < participants.length; i++) {
+            invitedParticipantsNames.push(participants[i][0].name);
+        }
+        relatedEntities.forEach(
+            elementName => {
+                if(invitedParticipantsNames.indexOf(elementName)===-1){
+                    participants.push([{
+                        name:elementName,
+                        accepted:false
+                    }])
+                }
+            }
+        );
+        invitedParticipantsNames.forEach(
+            elementName => {
+                if(relatedEntities.indexOf(elementName)===-1){
+                    for (let i = 0; i < participants.length; i++) {
+                        if(participants[i][0].name===elementName){
+                            participants.splice(i,1);
+                        }
+                    }
+
+                }
+            }
+        );
+        this.props.changeEntity(this.props.fieldName,participants);
     }
 
     createTableRows(){
@@ -34,9 +73,11 @@ export default class ParticipantsTable extends React.Component{
 
     deleteElement(name){
         let elements = this.props.value;
-        elements = elements.filter(user => {
-            return user.name!==name
-        });
+        for (let i = 0; i < elements.length; i++) {
+            if(elements[i][0].name===name){
+                elements.splice(i,1);
+            }
+        }
         this.props.changeEntity(this.props.fieldName,elements)
     }
 

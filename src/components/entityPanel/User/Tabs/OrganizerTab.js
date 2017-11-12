@@ -1,8 +1,8 @@
 import React from 'react';
-import TournamentsTable from '../../Table/TournamentsTable'
-import InviteButton from '../../Table/InviteButton'
+import TournamentsTable from './Table/OrganizedTournamentsTable'
+import InviteButton from '../../TableInputs/InviteButton'
 
-import TournamentsTableOutput from '../../Table/TournamentsTableOutput'
+import TournamentsTableOutput from './Table/OrganizedTournamentsTableOutput'
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
 
@@ -17,8 +17,12 @@ class OrganizerTab extends React.Component{
         this.props.setRelatedEntity(
             this.props.entity["organizedTournaments"].map(entity => entity.name),
             "organizedTournaments",
-            ["ACCEPTED"]);
-        this.props.showEntityPanel(false);
+            [{
+                "keys": ["status"],
+                "operation": ":",
+                "value": ["NEW","ACCEPTED"]
+            }],
+            Number.POSITIVE_INFINITY);
     }
 
     render(){
@@ -28,6 +32,8 @@ class OrganizerTab extends React.Component{
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["organizedTournaments"]}/>
                 <TournamentsTable
+                    relatedEntity={this.props.relatedEntity}
+                    hidden={this.props.hidden}
                     value={this.props.entity["organizedTournaments"]}
                     fieldName="organizedTournaments"
                     disabled = {this.props.inputsDisabled}
