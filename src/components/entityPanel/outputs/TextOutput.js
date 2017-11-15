@@ -7,7 +7,7 @@ export default class TextOutput extends React.Component{
 
     render(){
         return(
-            <div style={styles.inputBlock} className={css(resp.inputBlock)}>
+            <div style={styles.inputBlock} className={css(this.props.notResponsive ? "" : resp.inputBlock)}>
                 <Label name={this.props.name}/>
                 <input
                     style={styles.optionInput}

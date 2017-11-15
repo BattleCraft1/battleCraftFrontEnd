@@ -1,9 +1,9 @@
 import React from 'react';
-import {resp, styles} from '../styles'
+import {resp, styles} from '../../styles'
 import {css} from 'aphrodite';
-import TextOutput from './TextOutput'
-import Avatar from './Avatar'
-import BattleLabel from './BattleLabel'
+import TextOutput from '../commonComponents/TextOutput'
+import Avatar from '../commonComponents/Avatar'
+import BattleLabel from '../commonComponents/BattleLabel'
 
 
 
@@ -25,7 +25,7 @@ export default class TurnCell extends React.Component{
     render(){
         return(
               <div>
-                <div id='cell1x1' style={Object.assign({}, styles.cell)}>
+                <div onClick={()=>{this.props.showPopup ? this.props.showPopup(1):{}}} id='cell1x1' style={Object.assign({}, styles.cell)}>
                 <BattleLabel height={this.state.height}/>
                 <div style={Object.assign({}, styles.participantSegment, {borderColor:'rgb(47, 77, 126)'})}>
                   <Avatar border={"rgb(20, 37, 65)"} />

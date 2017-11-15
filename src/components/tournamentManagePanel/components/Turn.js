@@ -1,9 +1,9 @@
 import React from 'react';
 import {css} from 'aphrodite';
 import {resp, styles} from '../styles'
-import Label from './Label'
-import Cell_1x1 from './TurnCell1x1'
-import Cell_2x2 from './TurnCell2x2'
+import Label from './commonComponents/Label'
+import Cell_1x1 from './turnContent/TurnCell1x1'
+import Cell_2x2 from './turnContent/TurnCell2x2'
 
 class Turn extends React.Component{
   constructor(props) {
@@ -41,11 +41,11 @@ class Turn extends React.Component{
         return(
           <div style={Object.assign({}, styles.turnContainer)}>
             <Label active={this.props.active} name={ this.props.name } />
-            <div ref="container" style={Object.assign({}, styles.turnContent, (this.state.elementHeight > this.state.height)?{overflowY:'scroll', maxHeight:this.state.height*0.75}:{})}>
-              <Cell_1x1/>
-              <Cell_2x2/>
-              <Cell_1x1/>
-              <Cell_1x1/>
+            <div ref="container" style={Object.assign({}, styles.turnContent, (this.state.elementHeight*1.4 > this.state.height)?{overflowY:'scroll', maxHeight:this.state.height*0.65}:{})}>
+              <Cell_1x1 showPopup={this.props.showPopup}/>
+              <Cell_2x2 showPopup={this.props.showPopup}/>
+              <Cell_1x1 showPopup={this.props.showPopup}/>
+              <Cell_1x1 showPopup={this.props.showPopup}/>
             </div>
           </div>
 

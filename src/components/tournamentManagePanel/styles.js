@@ -213,10 +213,130 @@ buttonGroupInside:{
   marginLeft:'0.5%',
   display:'flow-root',
 },
+popupBackground:
+{
+  position:'fixed',
+  width:'100%',
+  height:'100%',
+  background:'rgba(0, 0, 0, 0.5)',
+  zIndex:'9',
+  left:'0',
+  top:'0',
+},
+popup:
+{
+  position:'fixed',
+  zIndex:'10',
+  left:'30%',
+  top:'10%',
+  width:'40%',
+  textAlign:'center',
+},
+popupAvatar:
+{
+  minWidth:'60px',
+  height:'',
+},
+popupTitle:
+{
+  textAlign:'center',
+  marginBottom:'5px',
+  backgroundImage: 'linear-gradient(90deg, rgba(0,0,0,0),rgba(255,255,255,1),rgba(0,0,0,0))',
+  borderTop:'1px solid white',
+  borderBottom:'1px solid white',
+},
+playerList:
+{
+  position:'fixed',
+  bottom:'20%',
+  zIndex:'10',
+  maxWidth:'40%',
+  left:'0',
+  backgroundImage: 'linear-gradient(90deg, rgba(0,0,0,0),rgba(255,255,255,1),rgba(0,0,0,0))',
+  overflowX:'scroll',
+  display:'inline-block',
+  whiteSpace:'nowrap',
+  paddingLeft:'30%',
+  paddingRight:'30%',
+  border:'inset 20px solid black',
+},
+playerListELement:
+{
+  position:'relative',
+  display:'inline-flex',
+  margin:'2px',
+  display:'inline-block',
+  opacity:'inherit',
+  height:'100%',
+  padding:'3px',
+  background:'rgba(131, 84, 36, 0.9)',
+  backgroundImage:'linear-gradient(35deg, rgba(0, 0, 0, 0)10%, rgb(215, 187, 130)11%, rgba(0, 0, 0, 0)50%)',
+  border:'1px solid',
+  borderTopColor:'rgb(219, 190, 166)',
+  borderBottomColor:'rgb(83, 54, 27)',
+  borderLeftColor:'rgb(226, 205, 184)',
+  borderRightColor:'rgb(117, 86, 53)',
+  borderRadius:'2px',
+},
+playerListELementNoStyle:
+{
+  position:'relative',
+  display:'inline-flex',
+  display:'inline-block',
+  opacity:'inherit',
+  height:'100%',
+  padding:'0',
+},
+playerName:{
+  display:'block',
+  textAlign:'center',
+  background:'rgb(148, 135, 113)',
+  //border:'1px solid rgb(112, 105, 95)',
+  color:'rgb(203, 202, 191)',
+  //textShadow:'0 0 2px rgb(223, 163, 9)',
+  boxShadow:'inset 0 0 2px black, inset 0 0 4px rgb(135, 115, 94), 0 0 4px rgb(189, 153, 115)',
+  borderRadius:'2px',
+},
+dualPlayerElementContainer:{
+  display:'inline-block',
+  border:'1px black solid',
+  borderRadius:'2px',
+},
+
+pointsInput:{
+  margin:'0',
+  padding:'0',
+  textAlign:'center',
+  width:'60%',
+  boxSizing:'border-box',
+  marginBottom:'4px',
+  height:'16px',
+  fontSize:'80%',
+  border:'0',
+  backgroundImage:'linear-gradient(90deg, rgb(164, 144, 104)10%, rgb(215, 187, 130)50%, rgb(164, 144, 104)90%)',
+  boxShadow:'inset 0 0 3px black, inset 0 0 6px rgb(135, 115, 94), 0 0 4px rgb(224, 198, 169)',
+}
 };
 
 const resp = StyleSheet.create({
-
+  popup:
+  {
+    '@media (max-width: 720px)': {
+      top:'1%',
+      display:'',
+      width:'60%',
+      left:'20%',
+    },
+  },
+  cell:
+  {
+    '@media (max-width: 720px)': {
+      top:'1%',
+      display:'',
+      width:'60%',
+      left:'20%',
+    },
+  }
 });
 
 export {resp, styles};

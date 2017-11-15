@@ -2,6 +2,7 @@ import React from 'react';
 
 import TextInput from '../../inputs/TextInput'
 import AvatarInput from '../../inputs/Avatar'
+import {StyleSheet, css} from 'aphrodite';
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
 
@@ -23,30 +24,35 @@ export default class PersonalDataTab extends React.Component{
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["phoneNumber"]}/>
                 <div style={{display:'inline-block', width:'100%'}}>
-                    <div style={{position:'relative', display:'inline-block', float:'left', width:'20%',}}>
+                    <div style={{position:'relative', display:'inline-block', float:'left', width:'40%', marginRight:'10%'}}
+                          className = {css(resp.avatarContainer)}>
                         <AvatarInput
                             disabled = {this.props.inputsDisabled}
                             username={this.props.entity["name"]}
                         />
                     </div>
-                    <div style={{position:'relative', display:'inline-block', width:'70%', float:'right'}}>
+                    <div style={{position:'relative', display:'inline-block', width:'50%'}}
+                    className={css(resp.textContainer)}>
                         <TextInput
                             value={this.props.entity["nameChange"]}
                             fieldName="nameChange"
                             changeEntity={this.props.changeEntity}
                             disabled = {this.props.inputsDisabled}
+                            notResponsive = {true}
                             name="Username"/>
                         <TextInput
                             value={this.props.entity["firstname"]}
                             fieldName="firstname"
                             changeEntity={this.props.changeEntity}
                             disabled = {this.props.inputsDisabled}
+                            notResponsive = {true}
                             name="First name"/>
                         <TextInput
                             value={this.props.entity["lastname"]}
                             fieldName="lastname"
                             changeEntity={this.props.changeEntity}
                             disabled = {this.props.inputsDisabled}
+                            notResponsive = {true}
                             name="Surname"/>
                     </div>
                 </div>
@@ -55,17 +61,37 @@ export default class PersonalDataTab extends React.Component{
                     fieldName="email"
                     changeEntity={this.props.changeEntity}
                     disabled = {inputsDisabled}
+                    notResponsive = {true}
                     name="E-mail"/>
                 <TextInput
                     value={this.props.entity["phoneNumber"]}
                     fieldName="phoneNumber"
                     changeEntity={this.props.changeEntity}
                     disabled = {inputsDisabled}
+                    notResponsive = {true}
                     name="Phone number"/>
                 <TextOutput
                     value={this.props.entity["status"]}
+                    notResponsive = {true}
                     name="User role"/>
             </div>
         )
     }
 }
+
+
+const resp = StyleSheet.create({
+  avatarContainer:{
+    '@media (max-width: 720px)': {
+      width:'100%',
+      textAlign:'center',
+    },
+  },
+  textContainer:
+  {
+    '@media (max-width: 720px)': {
+      width:'100%',
+      textAlign:'center',
+    },
+  }
+})

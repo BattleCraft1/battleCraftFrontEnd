@@ -1,7 +1,7 @@
 import React from 'react';
-import {resp, styles} from '../styles'
+import {resp, styles} from '../../styles'
 import {css} from 'aphrodite';
-import Background from '../../../resources/questionAvatar.png';
+import Background from '../../../../resources/questionAvatar.png';
 
 
 export default class Avatar extends React.Component{
