@@ -1,13 +1,13 @@
 import React from 'react';
 import {resp, styles} from '../../styles'
 import {css} from 'aphrodite';
-import TextOutput from './components/TextOutput'
-import Avatar from './components/Avatar'
-import BattleLabel from './components/BattleLabel'
+import TextOutput from '../commonComponents/TextOutput'
+import Avatar from '../commonComponents/Avatar'
+import BattleLabel from '../commonComponents/BattleLabel'
 
 
 
-export default class Battle1x1 extends React.Component{
+export default class TurnCell extends React.Component{
 
   constructor(props) {
       super(props);
@@ -25,7 +25,7 @@ export default class Battle1x1 extends React.Component{
     render(){
         return(
               <div>
-                <div id='cell1x1' style={Object.assign({}, styles.cell)}>
+                <div onClick={()=>{this.props.showPopup ? this.props.showPopup(1):{}}} id='cell1x1' style={Object.assign({}, styles.cell)}>
                 <BattleLabel height={this.state.height}/>
                 <div style={Object.assign({}, styles.participantSegment, {borderColor:'rgb(47, 77, 126)'})}>
                   <Avatar border={"rgb(20, 37, 65)"} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import {resp, styles} from '../../../styles'
+import {resp, styles} from '../styles'
 import {css} from 'aphrodite';
 
 export default class Points extends React.Component{

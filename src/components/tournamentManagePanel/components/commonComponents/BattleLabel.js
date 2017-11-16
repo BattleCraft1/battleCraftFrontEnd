@@ -1,12 +1,12 @@
 import React from 'react';
-import {resp, styles} from '../../../styles'
+import {resp, styles} from '../../styles'
 import {css} from 'aphrodite';
 
 export default class BattleLabel extends React.Component{
 
     render(){
         return(
-                <span style={Object.assign({}, e.style, {height:this.props.height})}>BATTLE<span style={e.number}>{this.props.number}12</span></span>
+                <p style={Object.assign({}, e.style, {height:this.props.height})}>BATTLE<span style={e.number}>{this.props.number}12</span></p>
         )
     }
 }
@@ -24,6 +24,7 @@ const e = {
       fontWeight:'600',
       textShadow:'0 0 2px white',
       marginRight:'3px',
+
   },
   number:{
     writingMode:'horizontal-tb',

@@ -35,7 +35,6 @@ class BasicDataTab extends React.Component{
         await axios.get(serverName+`get/allGames/names`)
             .then(res => {
                 this.setState({gameNames:res.data});
-                this.props.changeEntity("game",res.data)
             })
             .catch(error => {
                 this.props.showNetworkErrorMessage(error);
