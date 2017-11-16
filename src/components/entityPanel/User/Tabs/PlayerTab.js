@@ -1,8 +1,8 @@
 import React from 'react';
-import TournamentsTable from './Table/ParticipatedTournamentsTable'
 import NumberOutput from '../../outputs/NumberOutput'
 import InviteButton from '../../TableInputs/InviteButton'
 
+import TournamentsTable from './Table/ParticipatedTournamentsTable'
 import TournamentsTableOutput from './Table/ParticipatedTournamentsTableOutput'
 
 import ValidationErrorMessage from '../../outputs/ValidationErrorMessage'
