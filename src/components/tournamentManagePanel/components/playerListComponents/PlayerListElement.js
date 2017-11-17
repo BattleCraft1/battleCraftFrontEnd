@@ -21,7 +21,7 @@ class PlayerListElement extends React.Component {
       let x = document.getElementById(this.props.id).getBoundingClientRect().x;
       let w = document.getElementById(this.props.id).getBoundingClientRect().width;
       let pw = window.innerWidth;
-      let offset = 0.2 * pw;
+      let offset = 0.1 * pw;
     if(x+(w/2) < offset)
     {
       opacity = x/offset
@@ -36,8 +36,8 @@ class PlayerListElement extends React.Component {
 
     render() {
         return (
-            <div id={this.props.id} style = {Object.assign({}, styles.playerListELement, {opacity:this.getOpacity(), height:(this.getOpacity()*100)+'px'})}>
-            <Avatar username={this.props.username} s={{height:'80px', width:'70px', boxShadow:'inset 0 0 6px rgb(0, 0, 0), inset 0 0 2px rgb(0, 0, 0)', border:'0', height:'80%'}}/>
+            <div onClick={this.props.onClick} id={this.props.id} style = {Object.assign({}, styles.playerListELement, {opacity:this.getOpacity(), height:(this.getOpacity()*100)+'px'})}>
+            <Avatar username={this.props.username} s={{width:'70px', boxShadow:'inset 0 0 6px rgb(0, 0, 0), inset 0 0 2px rgb(0, 0, 0)', border:'0', height:'80%'}}/>
             <div style={styles.playerName}>{this.props.username===""?"NO NAME":this.props.username}</div>
             </div>
         );

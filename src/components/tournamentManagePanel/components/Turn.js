@@ -44,8 +44,15 @@ class Turn extends React.Component{
             )
             .map(
                 (battle,index) => {
-                    if(this.props.haveAlonePlayer && index === this.props.tourData.length-1 && this.props.currentTourNumber<=this.props.tourNumber)
-                        return;
+                    let alonePlayerBattleExistAndDisabled = false;
+                    if(this.props.haveAlonePlayer && index === this.props.tourData.length-1){
+                        if(this.props.currentTourNumber<=this.props.tourNumber){
+                            return;
+                        }
+                        else{
+                            alonePlayerBattleExistAndDisabled = true;
+                        }
+                    }
 
                     if (this.props.playersOnTableCount === 2) {
                         return <Battle1x1
@@ -53,6 +60,7 @@ class Turn extends React.Component{
                             key={battle.tableNumber}
                             battleData={battle}
                             showBattlePopup={this.props.showBattlePopup}
+                            disabled={alonePlayerBattleExistAndDisabled?alonePlayerBattleExistAndDisabled:this.props.disabled}
                         />
                     }
                     else {
@@ -61,6 +69,7 @@ class Turn extends React.Component{
                             key={battle.tableNumber}
                             battleData={battle}
                             showBattlePopup={this.props.showBattlePopup}
+                            disabled={alonePlayerBattleExistAndDisabled?alonePlayerBattleExistAndDisabled:this.props.disabled}
                         />
                     }
                 }
