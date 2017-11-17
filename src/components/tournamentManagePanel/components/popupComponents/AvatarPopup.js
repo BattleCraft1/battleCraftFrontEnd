@@ -17,7 +17,7 @@ export default class Avatar extends React.Component{
     render(){
         return(
             <div
-                onClick={() => this.props.onClick()}
+                onClick={this.props.onClick}
                 style={Object.assign({}, styles.avatar, {float:this.props.float, backgroundImage:"url("+this.generateURL()+")",
                 borderColor:this.props.border}, this.props.popup ? styles.popupAvatar:"", this.props.s)}>
             </div>

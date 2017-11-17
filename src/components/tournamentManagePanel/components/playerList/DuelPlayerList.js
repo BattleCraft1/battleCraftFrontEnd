@@ -38,7 +38,7 @@ export default class DuelPlayerList extends React.Component {
 
     createPlayersList(){
         return this.props.playersWithoutBattles.map(
-            (player,index) => <Player key={index} username={player} parentWidth={this.state.width} id={index}/>
+            (player,index) => <Player key={index} username={player} onClick={()=>this.props.changePlayerData(player)} parentWidth={this.state.width} id={index}/>
         )
     }
 

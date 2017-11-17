@@ -20,6 +20,7 @@ class BattlePopup extends React.Component {
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.state = {
             usersListVisible:false,
+            numberOfPlayerToChange:-1
         };
     }
 
@@ -42,9 +43,45 @@ class BattlePopup extends React.Component {
         this.popupRef = node;
     }
 
-    showUsersList(isShow)
+    showUsersList(numberOfPlayerToChange)
     {
-        this.setState({usersListVisible:isShow})
+        this.setState({numberOfPlayerToChange:numberOfPlayerToChange});
+        this.setState({usersListVisible:true})
+    }
+
+    hideUsersList(){
+        this.setState({usersListVisible:false})
+    }
+
+    changePlayerData(changedPlayerName){
+        let battleData = this.props.battleData;
+        if(this.state.numberOfPlayerToChange === 0){
+            this.changePlayersWithoutBattles(battleData.firstPlayer.name,changedPlayerName);
+            battleData.firstPlayer = {
+                name:changedPlayerName,
+                points:0
+            }
+        }
+        else if(this.state.numberOfPlayerToChange === 1){
+            this.changePlayersWithoutBattles(battleData.secondPlayer.name,changedPlayerName);
+            battleData.secondPlayer = {
+                name:changedPlayerName,
+                points:0
+            }
+        }
+
+        this.setState({usersListVisible:false})
+    }
+
+    changePlayersWithoutBattles(playerNameToPush,playerNameToPop){
+        let playersWithoutBattles = this.props.playersWithoutBattles[this.props.battleData.tourNumber];
+        if(playerNameToPush!==""){
+            playersWithoutBattles.unshift(playerNameToPush);
+        }
+        if(playerNameToPop!==""){
+            playersWithoutBattles.splice(playersWithoutBattles.indexOf(playerNameToPop),1);
+        }
+
     }
 
     render(){
@@ -59,7 +96,7 @@ class BattlePopup extends React.Component {
                         <Cell_1x1
                             playersNamesWithPoints={this.props.playersNamesWithPoints}
                             battleData={this.props.battleData}
-                            showUsersList={() => this.showUsersList(true)}/>
+                            showUsersList={this.showUsersList.bind(this)}/>
 
                         <div style={{marginTop:'2px'}}>
                             <OptionButton operation={()=>{}} name={"Save"}/>
@@ -68,7 +105,8 @@ class BattlePopup extends React.Component {
                         </div>
                     </div>
                     {this.state.usersListVisible &&
-                    <PlayerList hideList={() => this.showUsersList(false)}
+                    <PlayerList hideList={() => this.hideUsersList()}
+                                changePlayerData={this.changePlayerData.bind(this)}
                                 playersWithoutBattles={this.props.playersWithoutBattles[this.props.battleData.tourNumber]}/>}
                 </div>
             </div>

@@ -5,6 +5,7 @@ import {css} from 'aphrodite';
 import Cell_2x2 from '../popupComponents/TurnCell2x2Popup'
 import OptionButton from '../optionButton/OptionButton'
 import PlayerList from '../playerList/GroupPlayerList'
+import compareArrays from '../../../../main/functions/compareArrays'
 
 
 class BattlePopup extends React.Component {
@@ -14,6 +15,7 @@ class BattlePopup extends React.Component {
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.state = {
             usersListVisible:false,
+            numberOfPlayersToChange:-1
         };
     }
 
@@ -36,9 +38,45 @@ class BattlePopup extends React.Component {
         this.popupRef = node;
     }
 
-    showUsersList(isShow)
+    showUsersList(numberOfPlayersToChange)
     {
-        this.setState({usersListVisible:isShow})
+        this.setState({numberOfPlayersToChange:numberOfPlayersToChange});
+        this.setState({usersListVisible:true})
+    }
+
+    hideUsersList(){
+        this.setState({usersListVisible:false})
+    }
+
+    changePlayersData(changedPlayersNames){
+        let battleData = this.props.battleData;
+        if(this.state.numberOfPlayersToChange === 0){
+            this.changePlayersWithoutBattles(battleData.firstPlayersGroup.playersNames,changedPlayersNames);
+            battleData.firstPlayersGroup = {
+                playersNames:changedPlayersNames,
+                points:0
+            }
+        }
+        else if(this.state.numberOfPlayersToChange === 1){
+            this.changePlayersWithoutBattles(battleData.secondPlayersGroup.playersNames,changedPlayersNames);
+            battleData.secondPlayersGroup = {
+                playersNames:changedPlayersNames,
+                points:0
+            }
+        }
+
+        this.setState({usersListVisible:false})
+    }
+
+    changePlayersWithoutBattles(playerNamesToPush,playerNamesToPop){
+        let playersWithoutBattles = this.props.playersWithoutBattles[this.props.battleData.tourNumber];
+        if(!compareArrays(playerNamesToPush,["",""])){
+            playersWithoutBattles.unshift(playerNamesToPush);
+        }
+        if(!compareArrays(playerNamesToPop,["",""])){
+            playersWithoutBattles.splice(playersWithoutBattles.indexOf(playerNamesToPop),1);
+        }
+
     }
 
     render(){
@@ -53,7 +91,7 @@ class BattlePopup extends React.Component {
                         <Cell_2x2
                             playersNamesWithPoints={this.props.playersNamesWithPoints}
                             battleData={this.props.battleData}
-                            showUsersList={() => this.showUsersList(true)}/>
+                            showUsersList={this.showUsersList.bind(this)}/>
 
                         <div style={{marginTop:'2px'}}>
                             <OptionButton operation={()=>{}} name={"Save"}/>
@@ -63,7 +101,8 @@ class BattlePopup extends React.Component {
                     </div>
 
                     {this.state.usersListVisible &&
-                    <PlayerList hideList={() => this.showUsersList(false)}
+                    <PlayerList hideList={() => this.hideUsersList()}
+                                changePlayersData={this.changePlayersData.bind(this)}
                                 playersWithoutBattles={this.props.playersWithoutBattles[this.props.battleData.tourNumber]}/>}
                 </div>
             </div>

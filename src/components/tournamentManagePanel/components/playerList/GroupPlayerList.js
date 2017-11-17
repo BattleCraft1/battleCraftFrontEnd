@@ -33,7 +33,7 @@ export default class GroupPlayerList extends React.Component {
 
     createPlayersList(){
         return this.props.playersWithoutBattles.map(
-            (players,index) => <PlayerDual key={index} players={players} parentWidth={this.state.width} id={index}/>
+            (players,index) => <PlayerDual key={index} players={players} onClick={()=>this.props.changePlayersData(players)} parentWidth={this.state.width} id={index}/>
         )
     }
 

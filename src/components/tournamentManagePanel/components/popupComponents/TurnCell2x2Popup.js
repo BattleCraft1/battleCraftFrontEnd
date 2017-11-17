@@ -20,11 +20,11 @@ export default class TurnCell extends React.Component{
                 <div style={Object.assign({}, styles.participantSegment2x2, {borderColor:'rgb(47, 77, 126)'})}>
                   <TextOutput title={"nick"} alignment={"left"} value={this.props.battleData.firstPlayersGroup.playersNames[0]}/>
                   <div style={e.subcontainer}>
-                    <Avatar username={this.props.battleData.firstPlayersGroup.playersNames[0]}  onClick={()=>this.props.showUsersList()} popup={true} />
+                    <Avatar username={this.props.battleData.firstPlayersGroup.playersNames[0]}  onClick={()=>this.props.showUsersList(0)} popup={true} />
                     <Points title={"points"} color={'rgb(47, 77, 126)'} width={"inherit"}
                             pointsBattle={this.props.battleData.firstPlayersGroup.playersPoints}
                             pointsTotal={this.props.playersNamesWithPoints[this.props.battleData.firstPlayersGroup.playersNames[0]]}/>
-                    <Avatar username={this.props.battleData.firstPlayersGroup.playersNames[1]}  onClick={()=>this.props.showUsersList()} popup={true} />
+                    <Avatar username={this.props.battleData.firstPlayersGroup.playersNames[1]}  onClick={()=>this.props.showUsersList(0)} popup={true} />
                   </div>
                   <TextOutput itle={"nick"} alignment={"right"} value={this.props.battleData.firstPlayersGroup.playersNames[1]} />
                 </div>
@@ -35,11 +35,11 @@ export default class TurnCell extends React.Component{
                   <div style={Object.assign({}, styles.participantSegment2x2, {borderColor:'rgb(152, 42, 42)'})}>
                     <TextOutput title={"nick"} alignment={"left"} value={this.props.battleData.secondPlayersGroup.playersNames[0]}/>
                     <div style={e.subcontainer}>
-                      <Avatar username={this.props.battleData.secondPlayersGroup.playersNames[0]}  onClick={()=>this.props.showUsersList()} popup={true} />
+                      <Avatar username={this.props.battleData.secondPlayersGroup.playersNames[0]}  onClick={()=>this.props.showUsersList(1)} popup={true} />
                       <Points title={"points"} color={'rgb(152, 42, 42)'} width={"inherit"}
                               pointsBattle={this.props.battleData.secondPlayersGroup.playersPoints}
                               pointsTotal={this.props.playersNamesWithPoints[this.props.battleData.secondPlayersGroup.playersNames[0]]}/>
-                      <Avatar username={this.props.battleData.secondPlayersGroup.playersNames[1]}  onClick={()=>this.props.showUsersList()} popup={true} />
+                      <Avatar username={this.props.battleData.secondPlayersGroup.playersNames[1]}  onClick={()=>this.props.showUsersList(1)} popup={true} />
                     </div>
                     <TextOutput title={"nick"} alignment={"right"} value={this.props.battleData.secondPlayersGroup.playersNames[1]} />
                   </div>

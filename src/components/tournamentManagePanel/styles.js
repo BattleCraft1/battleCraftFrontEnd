@@ -81,9 +81,9 @@ const styles = {
     minHeight:'100px',
   },
   cell:{
+    cursor:'pointer',
     border:'1px solid black',
     margin:'2px',
-    backgroundColor:'rgb(154, 140, 81)',
     marginBottom:'4px',
     marginTop:'4px',
     display:'flow-root',

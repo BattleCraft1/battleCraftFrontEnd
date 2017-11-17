@@ -47,29 +47,37 @@ class Panel extends React.Component{
 
     async fetchTournamentProgressData(tournamentName){
         await axios.get(`${serverName}progress/tournament?name=${tournamentName}`)
-            .then(res => {
+            .then(async res => {
                 console.log("tournament data:");
                 console.log(res.data);
-                this.setState({playersOnTableCount:res.data.playersOnTableCount});
-                if(res.data.playersOnTableCount === 4){
-                    for (let tourNumber in res.data.playersWithoutBattles) {
-                        if (res.data.playersWithoutBattles.hasOwnProperty(tourNumber)) {
-                            res.data.playersWithoutBattles[tourNumber].push(["", ""]);
-                        }
-                    }
-                }
-                else{
-                    for (let tourNumber in res.data.playersWithoutBattles) {
-                        if (res.data.playersWithoutBattles.hasOwnProperty(tourNumber)) {
-                            res.data.playersWithoutBattles[tourNumber].push("");
-                        }
-                    }
-                }
-                this.setState({tournamentData:res.data});
+                await this.setTournamentData(res.data);
             })
             .catch(error => {
                 this.props.showNetworkErrorMessage(error);
             });
+    }
+
+    sendBattleData(battleData){
+        console.log("battle before send: ");
+    }
+
+    async setTournamentData(tournamentData){
+        this.setState({playersOnTableCount:tournamentData.playersOnTableCount});
+        if(tournamentData.playersOnTableCount === 4){
+            for (let tourNumber in tournamentData.playersWithoutBattles) {
+                if (tournamentData.playersWithoutBattles.hasOwnProperty(tourNumber)) {
+                    tournamentData.playersWithoutBattles[tourNumber].push(["", ""]);
+                }
+            }
+        }
+        else{
+            for (let tourNumber in tournamentData.playersWithoutBattles) {
+                if (tournamentData.playersWithoutBattles.hasOwnProperty(tourNumber)) {
+                    tournamentData.playersWithoutBattles[tourNumber].push("");
+                }
+            }
+        }
+        this.setState({tournamentData:tournamentData});
     }
 
     createTours(){
@@ -81,6 +89,7 @@ class Panel extends React.Component{
                 haveAlonePlayer={this.state.tournamentData.playersCount%2!==0}
                 showBattlePopup={this.showBattlePopup.bind(this)}
                 playersOnTableCount={this.state.playersOnTableCount}
+                disabled={index>this.state.tournamentData.currentTourNumber}
                 currentTourNumber={this.state.tournamentData.currentTourNumber}
             />
         )
@@ -90,13 +99,13 @@ class Panel extends React.Component{
         if(this.state.playersOnTableCount===2){
             return <BattlePopup1x1 battleData={this.state.battlePopupUpData}
                                    playersNamesWithPoints={this.state.tournamentData.playersNamesWithPoints}
-                                   playersWithoutBattles={this.state.tournamentData.playersWithoutBattles}
+                                   playersWithoutBattles={JSON.parse(JSON.stringify(this.state.tournamentData.playersWithoutBattles))}
                                    hidePopup={()=>{this.setState({showBattlePopup:false,battlePopupUpData:{}})}}/>
         }
         else if(this.state.playersOnTableCount===4){
             return <BattlePopup2x2 battleData={this.state.battlePopupUpData}
                                    playersNamesWithPoints={this.state.tournamentData.playersNamesWithPoints}
-                                   playersWithoutBattles={this.state.tournamentData.playersWithoutBattles}
+                                   playersWithoutBattles={JSON.parse(JSON.stringify(this.state.tournamentData.playersWithoutBattles))}
                                    hidePopup={()=>{this.setState({showBattlePopup:false,battlePopupUpData:{}})}}/>
         }
         else{
