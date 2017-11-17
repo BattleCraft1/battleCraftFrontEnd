@@ -6,7 +6,7 @@ export default class BattleLabel extends React.Component{
 
     render(){
         return(
-                <p style={Object.assign({}, e.style, {height:this.props.height})}>BATTLE<span style={e.number}>{this.props.number}12</span></p>
+                <p style={Object.assign({}, e.style, {height:this.props.height})}>TABLE<span style={e.number}>{this.props.tableNumber+1}</span></p>
         )
     }
 }

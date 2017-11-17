@@ -13,9 +13,9 @@ class OptionPanel extends React.Component {
 
     render() {
         let operations = [
-          <OptionButton operation={()=>{}} name={"Previous"}/>,
-          <OptionButton operation={()=>{}} name={"Next"}/>,
-          <OptionButton operation={()=>{}} name={"Clear"} additionalStyle={{float:'right'}}/>,
+          <OptionButton key={"previous"} operation={()=>{}} name={"Previous"}/>,
+          <OptionButton key={"next"} operation={()=>{}} name={"Next"}/>,
+          <OptionButton key={"clear"} operation={()=>{}} name={"Clear"} additionalStyle={{float:'right'}}/>,
         ];
         return (
             <div style = {styles.buttonGroup}>
