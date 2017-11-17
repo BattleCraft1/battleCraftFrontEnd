@@ -17,11 +17,11 @@ class PlayerListElement extends React.Component {
 
   getOpacity(){
     let opacity = 1;
-    if(document.getElementById(this.props.id) != null){
+    if(document.getElementById(this.props.id) !== null){
       let x = document.getElementById(this.props.id).getBoundingClientRect().x
       let w = document.getElementById(this.props.id).getBoundingClientRect().width
-      let pw = window.innerWidth
-      let offset = 0.2 * pw
+      let pw = window.innerWidth;
+      let offset = 0.2 * pw;
     if(x+(w/2) < offset)
     {
       opacity = x/offset
@@ -38,12 +38,12 @@ class PlayerListElement extends React.Component {
         return (
           <div style = {Object.assign({},styles.playerListELement, styles.dualPlayerElementContainer, {opacity:this.getOpacity(), height:(this.getOpacity()*100)+'px'})}>
             <div id={this.props.id} style = {Object.assign({}, styles.playerListELementNoStyle, {marginRight:'1px'})}>
-            <Avatar s={{width:'70px', boxShadow:'inset 0 0 6px rgb(0, 0, 0), inset 0 0 2px rgb(0, 0, 0)', border:'0', height:'80%'}}/>
-            <div style={styles.playerName}>NAME 1</div>
+            <Avatar username={this.props.players[0]} s={{width:'70px', boxShadow:'inset 0 0 6px rgb(0, 0, 0), inset 0 0 2px rgb(0, 0, 0)', border:'0', height:'80%'}}/>
+            <div style={styles.playerName}>{this.props.players[0]===""?"NO NAME":this.props.players[0]}</div>
             </div>
             <div id={this.props.id} style = {Object.assign({}, styles.playerListELementNoStyle, {marginLeft:'1px'})}>
-            <Avatar s={{width:'70px', boxShadow:'inset 0 0 6px rgb(0, 0, 0), inset 0 0 2px rgb(0, 0, 0)', border:'0', height:'80%'}}/>
-            <div style={styles.playerName}>NAME 2</div>
+            <Avatar username={this.props.players[1]} s={{width:'70px', boxShadow:'inset 0 0 6px rgb(0, 0, 0), inset 0 0 2px rgb(0, 0, 0)', border:'0', height:'80%'}}/>
+            <div style={styles.playerName}>{this.props.players[1]===""?"NO NAME":this.props.players[1]}</div>
             </div>
           </div>
         );

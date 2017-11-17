@@ -23,7 +23,7 @@ export default class Points extends React.Component{
           <input
              style={Object.assign({}, styles.pointsInput, {width:'95%'})}
              type="text"
-             value = {this.props.pointsTurn ? this.props.pointsTurn:0}
+             value = {this.props.pointsTotal ? this.props.pointsTotal:0}
              disabled={this.props.disabled}
           />
           </div>

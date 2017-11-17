@@ -69,7 +69,7 @@ const styles = {
     margin:'0',
     boxSizing:'border-box',
     display:'inline-block',
-    minWidth:'100px',
+    minWidth:'220px',
     minHeight:'100px',
     overflowX:'scroll',
 

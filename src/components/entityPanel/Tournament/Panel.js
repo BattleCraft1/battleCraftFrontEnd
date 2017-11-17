@@ -212,12 +212,14 @@ class Panel extends React.Component{
                 <Button key="cancel" text={"Cancel"} action={() => this.props.disable()}/>,
                 <Button key="save" text={"Save"} action={() => {this.sendEntity()}}/>,
                 <ButtonLink key="progress" text={"Progress"} action={() => this.props.disable()}
-                            link={'/progress/'+this.state.entity.name}/>
+                            link={`/progress/${this.state.entity.name}`}/>
             ]
         }
         else{
             buttons = [
-                <Button key="ok" text={"Ok"} action={() => this.props.disable()}/>
+                <Button key="ok" text={"Ok"} action={() => this.props.disable()}/>,
+                <ButtonLink key="progress" text={"Progress"} action={() => this.props.disable()}
+                            link={`/progress/${this.state.entity.name}`}/>
             ]
         }
 
