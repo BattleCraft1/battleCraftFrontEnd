@@ -9,8 +9,7 @@ class Turn extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            height:window.innerHeight,
-            active:false
+            height:window.innerHeight
         };
 
         this.updateDimensions = this.updateDimensions.bind(this);
@@ -28,7 +27,6 @@ class Turn extends React.Component{
     }
 
     componentDidMount() {
-        this.setState({active:this.props.currentTourNumber===this.props.tourNumber});
         window.addEventListener("resize", this.updateDimensions);
         this.setState({ elementHeight: this.refs.container.clientHeight });
     }
@@ -44,13 +42,9 @@ class Turn extends React.Component{
             )
             .map(
                 (battle,index) => {
-                    let alonePlayerBattleExistAndDisabled = false;
-                    if(this.props.haveAlonePlayer && index === this.props.tourData.length-1){
+                    if(this.props.haveAlonePlayer && index === this.props.tourData.length-1 && this.props.tournamentStatus!=="FINISHED"){
                         if(this.props.currentTourNumber<=this.props.tourNumber){
                             return;
-                        }
-                        else{
-                            alonePlayerBattleExistAndDisabled = true;
                         }
                     }
 
@@ -60,7 +54,7 @@ class Turn extends React.Component{
                             key={battle.tableNumber}
                             battleData={battle}
                             showBattlePopup={this.props.showBattlePopup}
-                            disabled={alonePlayerBattleExistAndDisabled?alonePlayerBattleExistAndDisabled:this.props.disabled}
+                            disabled={this.props.disabled}
                         />
                     }
                     else {
@@ -69,7 +63,7 @@ class Turn extends React.Component{
                             key={battle.tableNumber}
                             battleData={battle}
                             showBattlePopup={this.props.showBattlePopup}
-                            disabled={alonePlayerBattleExistAndDisabled?alonePlayerBattleExistAndDisabled:this.props.disabled}
+                            disabled={this.props.disabled}
                         />
                     }
                 }
@@ -80,7 +74,7 @@ class Turn extends React.Component{
     render(){
         return(
             <div style={Object.assign({}, styles.turnContainer)}>
-                <Label active={this.state.active}
+                <Label active={this.props.currentTourNumber===this.props.tourNumber}
                        name={"TOUR "+(this.props.tourNumber+1) } />
                 <div ref="container" style={Object.assign({}, styles.turnContent, (this.state.elementHeight*1.4 > this.state.height)?{overflowY:'scroll', maxHeight:this.state.height*0.65}:{})}>
                     {this.createBattles()}

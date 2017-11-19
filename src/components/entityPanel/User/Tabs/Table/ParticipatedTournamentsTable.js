@@ -90,7 +90,7 @@ export default class TournamentsTable extends React.Component{
             for(let i=0; i<this.props.value.length; i++){
                 if(this.props.value[i].secondPlayerName === undefined){
                     outputTable.push(
-                        <DuelTournamentTableRow key={this.props.value[i].name}
+                        <DuelTournamentTableRow key={this.props.value[i].name+i}
                                                 disabled = {this.props.disabled}
                                                 delete = {this.deleteElement.bind(this)}
                                                 accept = {this.acceptElement.bind(this)}
@@ -101,7 +101,7 @@ export default class TournamentsTable extends React.Component{
                 else{
                     outputTable.push(
                         <TournamentDataInGroupTournamentRow
-                            key={this.props.value[i].name}
+                            key={this.props.value[i].name+i}
                             disabled = {this.props.disabled}
                             delete = {this.deleteElement.bind(this)}
                             accept = {this.acceptElement.bind(this)}
@@ -120,7 +120,7 @@ export default class TournamentsTable extends React.Component{
                             <SecondPlayerDataInGroupTournamentRow
                                 deleteElement={this.deletePlayerFromGroupTournament.bind(this)}
                                 tournament={this.props.value[i].name}
-                                key={this.props.value[i].secondPlayerName}
+                                key={this.props.value[i].secondPlayerName+i}
                                 name = {this.props.value[i].secondPlayerName}
                                 accepted = {this.props.value[i].secondPlayerAccept}
                                 disabled = {this.props.disabled}

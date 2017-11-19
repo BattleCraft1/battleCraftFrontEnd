@@ -7,7 +7,7 @@ import {resp, styles} from '../../../../styles'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../../../../../redux/actions/index';
-import { Link } from 'react-router-dom';
+import  {Link}  from 'react-router-dom';
 
 class ParticipantsGroupTableRow extends React.Component{
 

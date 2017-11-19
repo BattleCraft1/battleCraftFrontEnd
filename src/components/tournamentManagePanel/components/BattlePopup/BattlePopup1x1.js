@@ -1,16 +1,15 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import { ActionCreators } from '../../../../redux/actions/index';
 import {resp, styles} from '../../styles'
 import {css} from 'aphrodite';
-import Points from '../popupComponents/PointsPopup'
+
 import Cell_1x1 from '../popupComponents/TurnCell1x1Popup'
-import Cell_2x2 from '../popupComponents/TurnCell2x2Popup'
 import OptionButton from '../optionButton/OptionButton'
 import PlayerList from '../playerList/DuelPlayerList'
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../../../redux/actions';
 
 
 class BattlePopup extends React.Component {
@@ -19,13 +18,19 @@ class BattlePopup extends React.Component {
         this.setPopupRef = this.setPopupRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.state = {
+            battleData:{},
+            playersWithoutBattles:[],
             usersListVisible:false,
-            numberOfPlayerToChange:-1
+            numberOfPlayerToChange:-1,
+            componentReady:false
         };
     }
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
+        this.setState({battleData:JSON.parse(JSON.stringify(this.props.battleData))});
+        this.setState({playersWithoutBattles:JSON.parse(JSON.stringify(this.props.playersWithoutBattles[this.props.battleData.tourNumber]))});
+        this.setState({componentReady:true});
     }
 
     componentWillUnmount() {
@@ -54,7 +59,7 @@ class BattlePopup extends React.Component {
     }
 
     changePlayerData(changedPlayerName){
-        let battleData = this.props.battleData;
+        let battleData = this.state.battleData;
         if(this.state.numberOfPlayerToChange === 0){
             this.changePlayersWithoutBattles(battleData.firstPlayer.name,changedPlayerName);
             battleData.firstPlayer = {
@@ -70,18 +75,86 @@ class BattlePopup extends React.Component {
             }
         }
 
-        this.setState({usersListVisible:false})
+        this.setState({usersListVisible:false,battleData:battleData})
+    }
+
+    clearBattleData(){
+
+
+        this.props.showConfirmationDialog(
+            {
+                header:"Clear data for battle",
+                message:"Are you sure?",
+                onConfirmFunction: () => this.clearBattleDataFunction()
+            }
+        )
+    }
+
+    clearBattleDataFunction(){
+        this.state.battleData.firstPlayer.name = "";
+        this.state.battleData.secondPlayer.name = "";
+        this.state.battleData.firstPlayer.points = 0;
+        this.state.battleData.secondPlayer.points = 0;
+        this.props.sendBattleData(this.state.battleData);
+        this.props.hidePopup();
     }
 
     changePlayersWithoutBattles(playerNameToPush,playerNameToPop){
-        let playersWithoutBattles = this.props.playersWithoutBattles[this.props.battleData.tourNumber];
+        let playersWithoutBattles = this.state.playersWithoutBattles;
         if(playerNameToPush!==""){
             playersWithoutBattles.unshift(playerNameToPush);
         }
         if(playerNameToPop!==""){
             playersWithoutBattles.splice(playersWithoutBattles.indexOf(playerNameToPop),1);
         }
+        this.setState({playersWithoutBattles:playersWithoutBattles});
+    }
 
+    changePointsOfFirstPlayer(points){
+        let battleData = this.state.battleData;
+        battleData.firstPlayer.points = points;
+        this.setState({battleData:battleData});
+    }
+
+    changePointsOfSecondPlayer(points){
+        let battleData = this.state.battleData;
+        battleData.secondPlayer.points = points;
+        this.setState({battleData:battleData});
+    }
+
+    sendBattleData(){
+        if(isNaN(this.state.battleData.firstPlayer.points) || this.state.battleData.firstPlayer.points === undefined){
+            this.props.showFailureMessage("First player points cannot be empty");
+        }
+        else if(isNaN(this.state.battleData.secondPlayer.points) || this.state.battleData.secondPlayer.points === undefined){
+            this.props.showFailureMessage("Second player points cannot be empty");
+        }
+        else if(this.state.battleData.firstPlayer.points + this.state.battleData.secondPlayer.points>20 ||
+            this.state.battleData.firstPlayer.points<0 || this.state.battleData.secondPlayer.points<0){
+            this.props.showFailureMessage("Points number should be between 0 to 20 and summary of points should not be greater than 20");
+        }
+        else if(this.state.battleData.firstPlayer.name === ""){
+            this.props.showFailureMessage("First player slot cannot be empty");
+        }
+        else if(this.state.battleData.secondPlayer.name === ""){
+            this.props.showFailureMessage("Second player slot cannot be empty");
+        }
+        else{
+            let sendBattleData = this.props.sendBattleData;
+            let hidePopup = this.props.hidePopup;
+            let battleData = this.state.battleData;
+
+            this.props.showConfirmationDialog(
+                {
+                    header:"Save data for battle",
+                    message:"Are you sure?",
+                    onConfirmFunction: () => {
+                        sendBattleData(battleData);
+                        hidePopup();
+                    }
+                }
+            )
+        }
     }
 
     render(){
@@ -89,32 +162,40 @@ class BattlePopup extends React.Component {
         return (
             <div>
                 <div style={styles.popupBackground}/>
-                <div ref={this.setPopupRef}>
+                {this.state.componentReady && <div ref={this.setPopupRef}>
                     <div style={styles.popup} className={css(resp.popup)}>
-                        <div style={styles.popupTitle}>TABLE {this.props.battleData.tableNumber}</div>
+                        <div style={styles.popupTitle}>TABLE {this.state.battleData.tableNumber}</div>
 
                         <Cell_1x1
+                            changePointsOfFirstPlayer={this.changePointsOfFirstPlayer.bind(this)}
+                            changePointsOfSecondPlayer={this.changePointsOfSecondPlayer.bind(this)}
                             playersNamesWithPoints={this.props.playersNamesWithPoints}
-                            battleData={this.props.battleData}
+                            battleData={this.state.battleData}
                             showUsersList={this.showUsersList.bind(this)}/>
 
                         <div style={{marginTop:'2px'}}>
-                            <OptionButton operation={()=>{}} name={"Save"}/>
+                            <OptionButton operation={()=>{this.sendBattleData()}} name={"Save"}/>
                             <OptionButton operation={()=>{this.props.hidePopup()}} name={"Cancel"}/>
-                            <OptionButton operation={()=>{}} name={"Clear"} additionalStyle={{float:'right'}}/>
+                            <OptionButton operation={()=>{this.clearBattleData()}} name={"Clear"} additionalStyle={{float:'right'}}/>
                         </div>
                     </div>
                     {this.state.usersListVisible &&
                     <PlayerList hideList={() => this.hideUsersList()}
                                 changePlayerData={this.changePlayerData.bind(this)}
-                                playersWithoutBattles={this.props.playersWithoutBattles[this.props.battleData.tourNumber]}/>}
-                </div>
+                                playersWithoutBattles={this.state.playersWithoutBattles}/>}
+                </div>}
             </div>
 
         )
     }
 }
 
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
 
+function mapStateToProps( state ) {
+    return {};
+}
 
-export default BattlePopup
+export default connect( mapStateToProps, mapDispatchToProps )( BattlePopup );

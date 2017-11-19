@@ -12,9 +12,10 @@ export default class Points extends React.Component{
           {this.props.title && <div style={Object.assign({}, styles.pointsLabel)}>{this.props.title}</div>}
           <input
              style={Object.assign({}, styles.pointsInput, {width:'95%'})}
-             type="text"
-             value = {this.props.pointsBattle ? this.props.pointsBattle:0}
-             disabled={this.props.disabled}
+             type="number"
+             value = {this.props.pointsBattle}
+             onChange={(event) => {this.props.changeData(parseInt(event.target.value))}}
+             disabled={false}
           />
 
           </div>
@@ -23,8 +24,8 @@ export default class Points extends React.Component{
           <input
              style={Object.assign({}, styles.pointsInput, {width:'95%'})}
              type="text"
-             value = {this.props.pointsTotal ? this.props.pointsTotal:0}
-             disabled={this.props.disabled}
+             value = {this.props.pointsTotal}
+             disabled={true}
           />
           </div>
           </div>

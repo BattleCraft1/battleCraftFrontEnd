@@ -151,7 +151,7 @@ class PagePanel extends React.Component{
 
         );
     }
-};
+}
 
 function mapDispatchToProps( dispatch ) {
     return bindActionCreators( ActionCreators, dispatch );

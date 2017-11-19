@@ -2,7 +2,7 @@ import React from 'react';
 
 import {StyleSheet, css} from 'aphrodite';
 
-import CollectionList from './table/content/CollectionList';
+import TableOfEntities from './table/content/TableOfEntities';
 import PagePanel from './pagePanel/PagePanel';
 import SearchPanel from './searchPanel/SearchPanel';
 
@@ -108,9 +108,12 @@ class CollectionPanel extends React.Component{
     }
 
     async getPage(collectionType){
+        console.log("page request:");
         console.log(this.props.pageRequest);
         await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
             .then(res => {
+                console.log("page of data:");
+                console.log(res.data);
                 this.props.checkPreviouslyCheckedElements(res.data);
                 this.props.setPageRequest({
                     searchCriteria:this.props.pageRequest.searchCriteria,
@@ -153,7 +156,7 @@ class CollectionPanel extends React.Component{
             <div className={css(resp.container)}>
                 <div className="row">
                     {searchPanel}
-                    <CollectionList getPage={this.getPage.bind(this)}
+                    <TableOfEntities getPage={this.getPage.bind(this)}
                                     collectionType={this.state.collectionType}/>
                     <PagePanel getPage={this.getPage.bind(this)}
                                collectionType={this.state.collectionType}/>

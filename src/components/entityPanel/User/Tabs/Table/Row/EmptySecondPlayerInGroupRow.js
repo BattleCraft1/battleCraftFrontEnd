@@ -2,7 +2,7 @@ import React from 'react';
 import {css} from 'aphrodite';
 import {resp, styles} from '../../../../styles'
 import {serverName} from "../../../../../../main/consts/server";
-import { Link } from 'react-router-dom';
+import  {Link}  from 'react-router-dom';
 
 export default class EmptyUserInGroupRow extends React.Component{
 

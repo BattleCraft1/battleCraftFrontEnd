@@ -1,7 +1,7 @@
 import React from 'react';
 import {css} from 'aphrodite';
 import {resp, styles} from '../styles'
-import { Link } from 'react-router-dom';
+import  {Link}  from 'react-router-dom';
 
 export default class InviteButton extends React.Component{
     render(){
