@@ -3,24 +3,18 @@ import { connect } from 'react-redux';
 import {styles} from '../styles'
 import OptionButton from './optionButton/OptionButton'
 
-const mapOfOperations = {
-    "Next"     :null,
-    "Previous" :null,
-    "Clear"    :null,
-};
-
 class OptionPanel extends React.Component {
 
     render() {
         let operations = [
-          <OptionButton key={"previous"} operation={()=>{}} name={"Previous"}/>,
-          <OptionButton key={"next"} operation={()=>{}} name={"Next"}/>,
-          <OptionButton key={"clear"} operation={()=>{}} name={"Clear"} additionalStyle={{float:'right'}}/>,
+          <OptionButton key={"previous"} operation={()=>this.props.previousTour()} name={"Previous"}/>,
+          <OptionButton key={"next"} operation={()=>this.props.nextTour()} name={"Next"}/>,
+          <OptionButton key={"finish"} operation={()=>this.props.finishTournament()} name={"Finish"} additionalStyle={{float:'right'}}/>,
         ];
         return (
             <div style = {styles.buttonGroup}>
                 <div style = {Object.assign({}, styles.buttonGroup, styles.buttonGroupInside)}>
-                    {operations}
+                    {!this.props.disabled && operations}
                 </div>
             </div>
         );

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import TableHeader from './../../headRow/tableHeader/TableHeader'
-import TableNeutralHeader from "../tableHeader/TableNeutralHeader";
+import TableNeutralHeader from "./../tableHeader/TableNeutralHeader";
 
 export default class RowHeader extends React.Component{
 

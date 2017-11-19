@@ -23,9 +23,10 @@ export default class TurnCell extends React.Component{
     }
 
     onClick(){
-        if(!this.props.disabled)
+        if(!this.props.disabled){
         this.props.showBattlePopup(Object.assign({tourNumber: this.props.tourNumber,tableNumber: this.props.battleData.tableNumber},
             this.props.battleData))
+        }
     }
 
     render(){
@@ -33,7 +34,7 @@ export default class TurnCell extends React.Component{
             <div>
                 <div onClick={()=>{this.onClick()}}
                      id='cell1x1' style={Object.assign({}, styles.cell,
-                    {backgroundColor:(this.props.battleData.finished?'rgb(67, 40, 14)':'rgb(142, 133, 96)')})}>
+                    {backgroundColor:(this.props.battleData.finished?'rgb(46, 31, 5)':'rgb(142, 133, 96)')})}>
                     <BattleLabel tableNumber={this.props.battleData.tableNumber} height={this.state.height}/>
                     <div style={Object.assign({}, styles.participantSegment, {borderColor:'rgb(47, 77, 126)'})}>
                         <Avatar username={this.props.battleData.firstPlayer.name} border={"rgb(20, 37, 65)"} />

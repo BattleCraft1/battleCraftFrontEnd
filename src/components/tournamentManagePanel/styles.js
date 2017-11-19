@@ -94,6 +94,7 @@ const styles = {
     paddingBottom:'0',
   },
   avatar:{
+    cursor:'pointer',
     boxSizing:'border-box',
     border:'1px solid brown',
     height:'70px',

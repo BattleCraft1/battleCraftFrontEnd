@@ -4,9 +4,8 @@ import { ActionCreators } from '../../../../redux/actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-
-import OptionPanel from '../../optionPanel/OptionPanel'
-import LegendPanel from '../../legendPanel/LegendPanel'
+import OptionPanel from './../../optionPanel/OptionPanel'
+import LegendPanel from './../../legendPanel/LegendPanel'
 import RankingGameHeader from '../../legendPanel/RankingGameHeader'
 import TournamentRow from './row/tournaments/Row'
 import RankingRowHeader from './headRow/ranking/RowHeader'
@@ -36,7 +35,7 @@ const rowHeaderTypeMap = {
     "users":UserRowHeader
 };
 
-class CollectionList extends React.Component{
+class TableOfEntities extends React.Component{
 
     sortByColumnName(columnName){
         let pageRequest=this.props.pageRequest;
@@ -63,23 +62,25 @@ class CollectionList extends React.Component{
 
     prepareRowsOfTable(key){
         let rows = [];
-        let typeOfRow = rowTypeMap[this.props.collectionType];
+        if(rowTypeMap[this.props.collectionType]!==undefined){
+            let typeOfRow = rowTypeMap[this.props.collectionType];
 
-        this.props.page.content.forEach(
-            element =>{
-                key++;
-                rows.push(
-                    React.createElement(
-                        typeOfRow,
-                        {key : key,
-                        number : key,
-                        element : element,
-                        isColumnActive : this.isColumnActive.bind(this),
-                        sortByColumnName : this.sortByColumnName.bind(this),
-                        getArrowGlyph : this.getArrowGlyph.bind(this)},
-                        null));
-            }
-        );
+            this.props.page.content.forEach(
+                element =>{
+                    key++;
+                    rows.push(
+                        React.createElement(
+                            typeOfRow,
+                            {key : key,
+                                number : key,
+                                element : element,
+                                isColumnActive : this.isColumnActive.bind(this),
+                                sortByColumnName : this.sortByColumnName.bind(this),
+                                getArrowGlyph : this.getArrowGlyph.bind(this)},
+                            null));
+                }
+            );
+        }
         return rows;
     }
 
@@ -88,7 +89,7 @@ class CollectionList extends React.Component{
         let rows = [];
         let key = 0;
         let legend = <div/>;
-        let rowHeader = <div/>;
+        let rowHeader = <tr/>;
 
         if(this.props.collectionType!=="")
             rowHeader = React.createElement(
@@ -108,7 +109,7 @@ class CollectionList extends React.Component{
             legend = <LegendPanel collectionType = {this.props.collectionType}/>;
         }
 
-        if(this.props.page.content!==undefined)
+        if(this.props.page.content!==undefined && this.props.page.content.length>0)
         {
             rows = this.prepareRowsOfTable(key);
         }
@@ -143,7 +144,7 @@ function mapStateToProps( state ) {
     };
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( CollectionList );
+export default connect( mapStateToProps, mapDispatchToProps )( TableOfEntities );
 
 const styles = {
     table: {

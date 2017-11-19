@@ -2,7 +2,7 @@ import React from 'react';
 
 import TableCell from './../../row/tableCell/TableCell'
 import TableAvatarCell from './../../row/tableCell/TableAvatarCell'
-import RowUserChecbox from '../rowCheckbox/RowUserChecbox'
+import RowUserChecbox from '../rowCheckbox/RowChecbox'
 import TableResponsiveHeader from './../../headRow/tableHeader/TableResponsiveHeader'
 import TableRespNeutralHeader from './../../headRow/tableHeader/TableRespNeutralHeader'
 

@@ -12,8 +12,9 @@ export default class TextInput extends React.Component{
                 <div style={Object.assign({}, styles.textOutputLabel, {marginBottom:'-2px'})}>{this.props.name}</div>
                     <input
                        style={styles.pointsInput}
-                       type="text"
+                       type="number"
                        value = {this.props.value}
+                       onChange={(event) => {this.props.changeData(parseInt(event.target.value))}}
                        disabled={this.props.disabled}
                 />
             </div>
