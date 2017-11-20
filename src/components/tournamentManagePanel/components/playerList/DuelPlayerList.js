@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {styles} from '../../styles'
-import Player from '../playerListComponents/PlayerListElement'
-import PlayerDual from '../playerListComponents/PlayerListDualElement'
+import Player from './components/PlayerListElement'
+import PlayerDual from './components/PlayerListDualElement'
 
 export default class DuelPlayerList extends React.Component {
   constructor(props) {

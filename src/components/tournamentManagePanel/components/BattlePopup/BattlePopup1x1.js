@@ -79,8 +79,6 @@ class BattlePopup extends React.Component {
     }
 
     clearBattleData(){
-
-
         this.props.showConfirmationDialog(
             {
                 header:"Clear data for battle",

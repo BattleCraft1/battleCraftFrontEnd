@@ -21,7 +21,7 @@ export default class TurnCell extends React.Component{
                   <TextOutput title={"nick"} alignment={"left"} value={this.props.battleData.firstPlayersGroup.playersNames[0]}/>
                   <div style={e.subcontainer}>
                     <Avatar username={this.props.battleData.firstPlayersGroup.playersNames[0]}  onClick={()=>this.props.showUsersList(0)} popup={true} />
-                    <Points title={"points"} color={'rgb(47, 77, 126)'} width={"inherit"}
+                    <Points color={'rgb(47, 77, 126)'} width={"inherit"}
                             changeData={this.props.changePointsOfFirstPlayersGroup}
                             pointsBattle={this.props.battleData.firstPlayersGroup.playersPoints}
                             pointsTotal={this.props.playersNamesWithPoints[this.props.battleData.firstPlayersGroup.playersNames[0]]}/>
@@ -37,7 +37,7 @@ export default class TurnCell extends React.Component{
                     <TextOutput title={"nick"} alignment={"left"} value={this.props.battleData.secondPlayersGroup.playersNames[0]}/>
                     <div style={e.subcontainer}>
                       <Avatar username={this.props.battleData.secondPlayersGroup.playersNames[0]}  onClick={()=>this.props.showUsersList(1)} popup={true} />
-                      <Points title={"points"} color={'rgb(152, 42, 42)'} width={"inherit"}
+                      <Points color={'rgb(152, 42, 42)'} width={"inherit"}
                               changeData={this.props.changePointsOfSecondPlayersGroup}
                               pointsBattle={this.props.battleData.secondPlayersGroup.playersPoints}
                               pointsTotal={this.props.playersNamesWithPoints[this.props.battleData.secondPlayersGroup.playersNames[0]]}/>
