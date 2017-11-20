@@ -23,6 +23,7 @@ const styles = {
     display:'inline-block',
     whiteSpace:'nowrap',
     margin:'0px',
+    display:'flex',
   },
   goldAndBrownTheme:{
     border:'2px solid',

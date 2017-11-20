@@ -21,6 +21,7 @@ class Panel extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+            height : window.innerHeight,
             activeTab : "basicData",
             entity:{
                 "name": "",
@@ -52,6 +53,22 @@ class Panel extends React.Component{
                 });
         }
     }
+
+    updateDimensions()
+    {
+        this.setState({
+            height : window.innerHeight,
+        })
+    }
+
+    componentDidMount() {
+        window.addEventListener("resize", this.updateDimensions.bind(this));
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions.bind(this));
+    }
+
 
     createContent(){
         return React.createElement(
@@ -173,7 +190,7 @@ class Panel extends React.Component{
           <div>
           <PanelTitle name={"GAME PANEL"} />
             <div style={styles.goldAndBrownTheme} className = {css(resp.smallPanel)}>
-                <div className={css(resp.content)}>
+                <div style={{maxHeight:this.state.height * 0.5}} className={css(resp.content)}>
                     {this.createContent()}
                     <div style={{position:'relative', width:'100%', height:'30px'}}>
                         {this.props.mode!=='get' && <button style={styles.tableButton} className={css(resp.tableButton)}>

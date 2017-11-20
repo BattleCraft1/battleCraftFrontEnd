@@ -26,6 +26,7 @@ class Panel extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+          height : window.innerHeight,
             activeTab : "personalData",
             entity:{
                 "name": "",
@@ -65,6 +66,7 @@ class Panel extends React.Component{
     }
 
     async componentDidMount() {
+        window.addEventListener("resize", this.updateDimensions.bind(this));
         await axios.get(serverName+`get/user?name=`+this.props.name)
             .then(res => {
                 this.setAccessToTabsByStatus(res.data.status);
@@ -75,7 +77,17 @@ class Panel extends React.Component{
             .catch(error => {
                 this.props.showNetworkErrorMessage(error);
             });
+    }
 
+    updateDimensions()
+    {
+        this.setState({
+            height : window.innerHeight,
+        })
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions.bind(this));
     }
 
     setAccessToTabsByStatus(status){
@@ -220,7 +232,7 @@ class Panel extends React.Component{
                     tabNames={this.state.tabsNamesMap}
                     setActiveTab={this.setActiveTab.bind(this)}
                     isTabActive={this.isTabActive.bind(this)}/>
-                <div className={css(resp.content)}>
+                <div style={{maxHeight:this.state.height * 0.6, overflowY:'scroll'}}>
                     {content}
                 </div>
                 {buttons}

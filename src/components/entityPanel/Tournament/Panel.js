@@ -48,6 +48,7 @@ class Panel extends React.Component{
         tomorrow.setDate(today.getDate()+1);
         dayAfterTomorrow.setDate(tomorrow.getDate()+1);
         this.state = {
+            height:window.innerHeight,
             activeTab : "basicData",
             entity:{
                 "name": "",
@@ -88,9 +89,11 @@ class Panel extends React.Component{
         };
     }
 
+
     async componentDidMount() {
         if(this.props.mode==='edit' || this.props.mode==='get')
         {
+          this.setState({height:window.innerHeight})
             await axios.get(serverName+`get/tournament?name=`+this.props.name)
                 .then(res => {
                     this.setState({entity:res.data});
@@ -101,6 +104,21 @@ class Panel extends React.Component{
                     this.props.showNetworkErrorMessage(error);
                 });
         }
+    }
+
+    updateDimensions()
+    {
+        this.setState({
+            height : window.innerHeight,
+        })
+    }
+
+    componentDidMount() {
+        window.addEventListener("resize", this.updateDimensions.bind(this));
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions.bind(this));
     }
 
     setActiveTab(activeTabName){
@@ -226,12 +244,12 @@ class Panel extends React.Component{
         return(
           <div>
           <PanelTitle name={"TOURNAMENT PANEL"} />
-            <div style={styles.goldAndBrownTheme} className = {css(resp.panel)}>
+            <div style={Object.assign({},styles.goldAndBrownTheme)} className = {css(resp.panel)}>
                 <Navigation
                     tabNames={tabsNamesMap}
                     setActiveTab={this.setActiveTab.bind(this)}
                     isTabActive={this.isTabActive.bind(this)}/>
-                <div className={css(resp.content)}>
+                <div style={{maxHeight:this.state.height*0.52}} className={css(resp.content)}>
                     {content}
                 </div>
                 {buttons}
