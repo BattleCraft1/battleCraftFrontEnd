@@ -21,8 +21,6 @@ const styles = {
         borderRadius:'3px',
         background:'#45341d',
         padding:'10px',
-        paddingBottom:'15px',
-        paddingTop:'15px',
     },
     panelContainer:{
         boxSizing:'border-box',
@@ -280,7 +278,6 @@ const styles = {
 const resp = StyleSheet.create({
     popupContent:{
         '@media (max-width: 720px)': {
-            top:'2%',
             width:'96%',
             left:'2%',
             margin:'0',
@@ -366,21 +363,22 @@ const resp = StyleSheet.create({
         marginTop:'3%',
         marginBottom:'5%',
         overflowY:'scroll',
-        maxHeight:'320px',
-        '@media (max-width: 1023px)': {
-            maxHeight:'250px',
-            overflowY:'scroll',
-            marginBottom:'2px',
-            marginTop:'2px',
-            position:'relative',
-        },
-        '@media (max-width: 720px)': {
-            maxHeight:'180px',
-            overflowY:'scroll',
-            marginBottom:'2px',
-            marginTop:'2px',
-            position:'relative',
-        },
+        paddingTop:'10px',
+        paddingBottom:'10px',
+      // maxHeight:'320px',
+        // '@media (max-width: 1023px)': {
+        //     maxHeight:'250px',
+        //     overflowY:'scroll',
+        //     marginBottom:'2px',
+        //     marginTop:'2px',
+        // },
+        // '@media (max-width: 720px)': {
+        //     maxHeight:'180px',
+        //     overflowY:'scroll',
+        //     marginBottom:'2px',
+        //     marginTop:'2px',
+        //
+        //},
     },
     panel:{
         display:'block',
@@ -391,6 +389,7 @@ const resp = StyleSheet.create({
         borderTopLeftRadius:'9px',
         borderTopRightRadius:'9px',
         borderTop:'0px',
+
     },
     smallPanel:{
         display:'block',
