@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {styles} from '../../styles';
-import Avatar from '../commonComponents/Avatar'
+import {styles} from '../../../styles';
+import Avatar from '../../commonComponents/Avatar'
 
 class PlayerListElement extends React.Component {
 

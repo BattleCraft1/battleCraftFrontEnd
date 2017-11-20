@@ -9,7 +9,7 @@ export default class Points extends React.Component{
         return(
           <div style={Object.assign({}, styles.pointsContainer, {background:this.props.color, height:''}, this.props.width ? {width:this.props.width}:'')}>
           <div style={Object.assign({}, styles.points, {marginTop:'0', height:''})}>
-          {this.props.title && <div style={Object.assign({}, styles.pointsLabel)}>{this.props.title}</div>}
+          <div style={Object.assign({}, styles.pointsLabel)}>points</div>
           <input
              style={Object.assign({}, styles.pointsInput, {width:'95%'})}
              type="number"
@@ -20,7 +20,7 @@ export default class Points extends React.Component{
 
           </div>
           <div style={Object.assign({}, styles.points, {marginTop:'0', height:''})}>
-          {this.props.title && <div style={Object.assign({}, styles.pointsLabel)}>{this.props.title}</div>}
+           <div style={Object.assign({}, styles.pointsLabel)}>total points</div>
           <input
              style={Object.assign({}, styles.pointsInput, {width:'95%'})}
              type="text"

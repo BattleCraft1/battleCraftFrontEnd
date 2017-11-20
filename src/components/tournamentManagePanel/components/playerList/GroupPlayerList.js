@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {styles} from '../../styles'
-import Player from '../playerListComponents/PlayerListElement'
-import PlayerDual from '../playerListComponents/PlayerListDualElement'
+import Player from './components/PlayerListElement'
+import PlayerDual from './components/PlayerListDualElement'
 
 export default class GroupPlayerList extends React.Component {
     constructor(props) {
@@ -14,11 +14,15 @@ export default class GroupPlayerList extends React.Component {
         }
     }
     componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
         const position = document.getElementById('players').clientWidth;
         this.setState({
-            width:position,
-            visible:this.state.visible,
+            width:position
         })
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
     }
 
     handleClickOutside(event) {
