@@ -174,6 +174,7 @@ class BattlePopup extends React.Component {
                         <div style={{marginTop:'2px'}}>
                             <OptionButton operation={()=>{this.sendBattleData()}} name={"Save"}/>
                             <OptionButton operation={()=>{this.props.hidePopup()}} name={"Cancel"}/>
+                            <OptionButton operation={()=>{}} name={"DICE"} additionalStyle={{minWidth:'0', padding:'0'}}/>
                             <OptionButton operation={()=>{this.clearBattleData()}} name={"Clear"} additionalStyle={{float:'right'}}/>
                         </div>
                     </div>

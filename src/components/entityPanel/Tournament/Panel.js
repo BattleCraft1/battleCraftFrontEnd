@@ -94,6 +94,7 @@ class Panel extends React.Component{
         if(this.props.mode==='edit' || this.props.mode==='get')
         {
           this.setState({height:window.innerHeight})
+          window.addEventListener("resize", this.updateDimensions.bind(this));
             await axios.get(serverName+`get/tournament?name=`+this.props.name)
                 .then(res => {
                     this.setState({entity:res.data});
@@ -111,10 +112,6 @@ class Panel extends React.Component{
         this.setState({
             height : window.innerHeight,
         })
-    }
-
-    componentDidMount() {
-        window.addEventListener("resize", this.updateDimensions.bind(this));
     }
 
     componentWillUnmount() {

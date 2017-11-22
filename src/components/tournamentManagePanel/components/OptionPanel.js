@@ -9,6 +9,7 @@ class OptionPanel extends React.Component {
         let operations = [
           <OptionButton key={"previous"} operation={()=>this.props.previousTour()} name={"Previous"}/>,
           <OptionButton key={"next"} operation={()=>this.props.nextTour()} name={"Next"}/>,
+          <OptionButton key={"scoreboard"} operation={()=>{this.props.scoreboard()}} name={"Scoreboard"}/>,
           <OptionButton key={"finish"} operation={()=>this.props.finishTournament()} name={"Finish"} additionalStyle={{float:'right'}}/>,
         ];
         return (
