@@ -232,7 +232,8 @@ class Panel extends React.Component{
                     tabNames={this.state.tabsNamesMap}
                     setActiveTab={this.setActiveTab.bind(this)}
                     isTabActive={this.isTabActive.bind(this)}/>
-                <div style={{maxHeight:this.state.height * 0.6, overflowY:'scroll'}}>
+                <div style={{maxHeight:this.state.height * 0.6, overflowY:'scroll',
+                    width:'80%', padding:'20px',paddingRight:'10%',paddingLeft:'10%'}}>
                     {content}
                 </div>
                 {buttons}

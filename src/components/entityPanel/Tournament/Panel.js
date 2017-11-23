@@ -93,7 +93,9 @@ class Panel extends React.Component{
     async componentDidMount() {
         if(this.props.mode==='edit' || this.props.mode==='get')
         {
-          this.setState({height:window.innerHeight})
+
+            this.setState({height:window.innerHeight});
+            window.addEventListener("resize", this.updateDimensions.bind(this));
             await axios.get(serverName+`get/tournament?name=`+this.props.name)
                 .then(res => {
                     this.setState({entity:res.data});
@@ -111,10 +113,6 @@ class Panel extends React.Component{
         this.setState({
             height : window.innerHeight,
         })
-    }
-
-    componentDidMount() {
-        window.addEventListener("resize", this.updateDimensions.bind(this));
     }
 
     componentWillUnmount() {
@@ -175,9 +173,9 @@ class Panel extends React.Component{
             let participantGroupToSend = [];
             participantGroup.forEach(participant =>{
                 if(participant.name !== undefined)
-                participantGroupToSend.push(participant.name)});
+                    participantGroupToSend.push(participant.name)});
             if(participantGroupToSend.length !== 0)
-            entityToSend.participants.push(participantGroupToSend);
+                entityToSend.participants.push(participantGroupToSend);
         });
         delete entityToSend["status"];
         let validationErrors = validateTournament(entityToSend);
@@ -242,19 +240,19 @@ class Panel extends React.Component{
         }
 
         return(
-          <div>
-          <PanelTitle name={"TOURNAMENT PANEL"} />
-            <div style={Object.assign({},styles.goldAndBrownTheme)} className = {css(resp.panel)}>
-                <Navigation
-                    tabNames={tabsNamesMap}
-                    setActiveTab={this.setActiveTab.bind(this)}
-                    isTabActive={this.isTabActive.bind(this)}/>
-                <div style={{maxHeight:this.state.height*0.52}} className={css(resp.content)}>
-                    {content}
+            <div>
+                <PanelTitle name={"TOURNAMENT PANEL"} />
+                <div style={Object.assign({},styles.goldAndBrownTheme)} className = {css(resp.panel)}>
+                    <Navigation
+                        tabNames={tabsNamesMap}
+                        setActiveTab={this.setActiveTab.bind(this)}
+                        isTabActive={this.isTabActive.bind(this)}/>
+                    <div style={{maxHeight:this.state.height*0.52}} className={css(resp.content)}>
+                        {content}
+                    </div>
+                    {buttons}
                 </div>
-                {buttons}
             </div>
-          </div>
         )
     }
 }

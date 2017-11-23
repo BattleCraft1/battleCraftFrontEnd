@@ -42,6 +42,7 @@ class Panel extends React.Component{
     async componentDidMount() {
         if(this.props.mode==='edit' || this.props.mode==='get')
         {
+            window.addEventListener("resize", this.updateDimensions.bind(this));
             await axios.get(serverName+`get/game?name=`+this.props.name)
                 .then(res => {
                     this.setState({entity:res.data});
@@ -61,9 +62,6 @@ class Panel extends React.Component{
         })
     }
 
-    componentDidMount() {
-        window.addEventListener("resize", this.updateDimensions.bind(this));
-    }
 
     componentWillUnmount() {
         window.removeEventListener("resize", this.updateDimensions.bind(this));
