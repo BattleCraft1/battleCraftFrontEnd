@@ -11,18 +11,16 @@ class Scoreboard extends React.Component {
         super(props);
         this.setScoreboardRef = this.setScoreboardRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.updateDimensions = this.updateDimensions.bind(this);
         this.state = {
-          componentWidth:this.innerWidth,
+            componentWidth:this.innerWidth,
+            height:window.innerHeight
         };
     }
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
         window.addEventListener("resize", this.updateDimensions.bind(this));
-        const w = document.getElementById('scoreContainer').clientWidth;
-        this.setState({
-            componentWidth:w
-        })
     }
 
     handleClickOutside(event) {
@@ -35,12 +33,16 @@ class Scoreboard extends React.Component {
         this.scoreboardRef = node;
     }
 
+
     updateDimensions()
     {
-      if(document.getElementById('scoreContainer') !== null){
-        console.log(document.getElementById('scoreContainer'));
-        this.setState({dupa:'17'})
-      }
+        this.setState({
+            height : window.innerHeight,
+        })
+    }
+
+    componentWillMount(){
+        this.updateDimensions();
     }
 
     componentWillUnmount() {
@@ -49,7 +51,7 @@ class Scoreboard extends React.Component {
     }
 
     renderRow(name,points,index){
-        return <Row1x1 key={index} width={this.state.componentWidth} name={name} points={points}/>;
+        return <Row1x1 idx={index} key={index} width={this.state.componentWidth} name={name} points={points}/>;
     }
 
     render(){
@@ -62,11 +64,7 @@ class Scoreboard extends React.Component {
                 <div ref={this.setScoreboardRef}>
                     <div id="scoreContainer" style={styles.popup} className={css(resp.popup)}>
                         <div style={styles.popupTitle}>RANKING</div>
-                        <div style={Object.assign({}, styles.goldAndBrownTheme, styles.scoreboard, {paddingLeft:this.state.componentWidth * 0.03, width:''})}>
-
-                        <div style={{float:'left'}}><div style={{display:'inline-block', width:this.state.componentWidth*0.08}}/>
-                        <Label name="Player name" width={this.state.componentWidth * 0.65}/>
-                        <Label name="Score" width={this.state.componentWidth * 0.2}/></div>
+                        <div style={Object.assign({}, styles.scoreboard, {maxHeight:this.state.height * 0.8})}>
                         <div>
                             {
                                 Object.keys(playersNamesWithPoints)
