@@ -4,7 +4,7 @@ export default (entity,gameRules,isEditMode) => {
     let validationErrors = {};
     let fieldErrors = {};
 
-    if(entity.name.length<1 || entity.name.length>50)
+    if(entity.nameChange.length<1 || entity.nameChange.length>50)
         fieldErrors.nameChange = "Game name must have between 1 to 50 chars";
 
     if(gameRules!==undefined)

@@ -1,20 +1,23 @@
 import React from 'react';
-import Row1x1 from './scoreboardComponents/Row1x1';
-import Row2x2 from './scoreboardComponents/Row2x2';
-import Label from './commonComponents/HeadLabel'
+import Row1x1 from './Row1x1';
+import Row2x2 from './Row2x2';
+import Label from '../commonComponents/HeadLabel'
 
-import {resp, styles} from '../styles';
+import {resp, styles} from '../../styles';
 import {css} from 'aphrodite';
 
 class Scoreboard extends React.Component {
     constructor(props) {
         super(props);
+        this.setScoreboardRef = this.setScoreboardRef.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
         this.state = {
           componentWidth:this.innerWidth,
         };
     }
 
     componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
         window.addEventListener("resize", this.updateDimensions.bind(this));
         const w = document.getElementById('scoreContainer').clientWidth;
         this.setState({
@@ -22,26 +25,41 @@ class Scoreboard extends React.Component {
         })
     }
 
+    handleClickOutside(event) {
+        if (this.scoreboardRef && !this.scoreboardRef.contains(event.target)) {
+            this.props.hidePopup();
+        }
+    }
+
+    setScoreboardRef(node) {
+        this.scoreboardRef = node;
+    }
 
     updateDimensions()
     {
-      if(document.getElementById('scoreContainer') != null){
-        console.log(document.getElementById('scoreContainer'))
+      if(document.getElementById('scoreContainer') !== null){
+        console.log(document.getElementById('scoreContainer'));
         this.setState({dupa:'17'})
       }
     }
 
     componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
         window.removeEventListener("resize", this.updateDimensions);
     }
 
+    renderRow(name,points,index){
+        return <Row1x1 key={index} width={this.state.componentWidth} name={name} points={points}/>;
+    }
 
     render(){
 
+        let playersNamesWithPoints = this.props.playersNamesWithPoints;
+
         return (
             <div>
-                <div onClick={ ()=>this.props.hide() } style={styles.popupBackground}/>
-                <div ref={this.setPopupRef}>
+                <div style={styles.popupBackground}/>
+                <div ref={this.setScoreboardRef}>
                     <div id="scoreContainer" style={styles.popup} className={css(resp.popup)}>
                         <div style={styles.popupTitle}>RANKING</div>
                         <div style={Object.assign({}, styles.goldAndBrownTheme, styles.scoreboard, {paddingLeft:this.state.componentWidth * 0.03, width:''})}>
@@ -50,13 +68,11 @@ class Scoreboard extends React.Component {
                         <Label name="Player name" width={this.state.componentWidth * 0.65}/>
                         <Label name="Score" width={this.state.componentWidth * 0.2}/></div>
                         <div>
-                        <Row1x1 width={this.state.componentWidth} name={"no name"} points={"10"}/>
-                        <Row1x1 width={this.state.componentWidth} name={"no name"} points={"15"}/>
-                        <Row1x1 width={this.state.componentWidth} name={"no name"} points={"22"}/>
-                        <Row1x1 width={this.state.componentWidth} name={"no name"} points={"48"}/>
-                        <Row2x2 width={this.state.componentWidth} name1={"no name"} name2={"no name"} points1={"48"} points2={"75"}/>
-                        <Row2x2 width={this.state.componentWidth} name1={"no name"} name2={"no name"} points1={"48"} points2={"75"}/>
-
+                            {
+                                Object.keys(playersNamesWithPoints)
+                                    .sort((playerName1,playerName2) => playersNamesWithPoints[playerName2] - playersNamesWithPoints[playerName1])
+                                    .map((playerName,index) => this.renderRow(playerName,playersNamesWithPoints[playerName],index))
+                            }
                         </div>
 
 

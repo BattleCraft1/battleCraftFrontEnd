@@ -59,6 +59,50 @@ class BattlePopup extends React.Component {
         this.setState({usersListVisible:false})
     }
 
+
+    chooseRandomPlayers(){
+        let playersNames = this.state.playersWithoutBattles;
+
+        playersNames.splice(playersNames.indexOf(["",""]),1);
+        let battleData = this.state.battleData;
+
+        if(!compareArrays(battleData.firstPlayersGroup.playersNames,["",""]) &&
+            playersNames.indexOf(battleData.firstPlayersGroup.playersNames) === -1){
+            playersNames.unshift(battleData.firstPlayersGroup.playersNames);
+        }
+        if(!compareArrays(battleData.secondPlayersGroup.playersNames,["",""]) &&
+            playersNames.indexOf(battleData.secondPlayersGroup.playersNames) === -1) {
+            playersNames.unshift(battleData.secondPlayersGroup.playersNames);
+        }
+
+        let firstRandomNames = playersNames[Math.floor(Math.random()*playersNames.length)];
+        let secondRandomNames = playersNames[Math.floor(Math.random()*playersNames.length)];
+        if(compareArrays(firstRandomNames,secondRandomNames)){
+            let indexOfFirstNames = playersNames.indexOf(firstRandomNames);
+            if(indexOfFirstNames > 0){
+                secondRandomNames = playersNames[indexOfFirstNames-1];
+            }
+            else{
+                secondRandomNames = playersNames[indexOfFirstNames+1];
+            }
+        }
+
+        playersNames.splice(playersNames.indexOf(firstRandomNames),1);
+        battleData.firstPlayersGroup = {
+            playersNames:firstRandomNames,
+            playersPoints:0
+        };
+
+        playersNames.splice(playersNames.indexOf(secondRandomNames),1);
+        battleData.secondPlayersGroup = {
+            playersNames:secondRandomNames,
+            playersPoints:0
+        };
+
+        playersNames.push(["",""]);
+        this.setState({battleData:battleData,playersWithoutBattles:playersNames});
+    }
+
     changePlayersData(changedPlayersNames){
         let battleData = this.state.battleData;
         if(this.state.numberOfPlayersToChange === 0){
@@ -89,7 +133,6 @@ class BattlePopup extends React.Component {
         )
 
     }
-
 
     clearBattleDataFunction(){
         this.state.battleData.firstPlayersGroup.playersNames = ["",""];
@@ -183,6 +226,7 @@ class BattlePopup extends React.Component {
                         <div style={{marginTop:'2px'}}>
                             <OptionButton operation={()=>{this.sendBattleData()}} name={"Save"}/>
                             <OptionButton operation={()=>{this.props.hidePopup()}} name={"Cancel"}/>
+                            <OptionButton operation={()=>{this.chooseRandomPlayers()}} name={"DICE"} additionalStyle={{minWidth:'0', padding:'0'}}/>
                             <OptionButton operation={()=>{this.clearBattleData()}} name={"Clear"} additionalStyle={{float:'right'}}/>
                         </div>
                     </div>
