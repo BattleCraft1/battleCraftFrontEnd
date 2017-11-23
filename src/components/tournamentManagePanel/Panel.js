@@ -5,6 +5,7 @@ import Turn from './components/Turn'
 import OptionPanel from './components/OptionPanel'
 import BattlePopup1x1 from './components/BattlePopup/BattlePopup1x1'
 import BattlePopup2x2 from './components/BattlePopup/BattlePopup2x2'
+import Scoreboard from './components/Scoreboard'
 
 import axios from 'axios';
 import {serverName} from "../../main/consts/server";
@@ -18,6 +19,7 @@ class Panel extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+            scoreboardVisible:true,
             tournamentName:"",
             playersOnTableCount:0,
             showBattlePopup:false,
@@ -33,6 +35,7 @@ class Panel extends React.Component{
             },
         }
     }
+
 
     showBattlePopup(battleData)
     {
@@ -241,6 +244,21 @@ class Panel extends React.Component{
             });
     }
 
+    showScoreboard()
+    {
+      this.setState({
+        scoreboardVisible:true
+      })
+      console.log("click", this.state.scoreboardVisible)
+    }
+
+    hideScoreboard()
+    {
+      this.setState({
+        scoreboardVisible:false
+      })
+    }
+
     render(){
         return(
             <div>
@@ -254,8 +272,10 @@ class Panel extends React.Component{
                     previousTour={this.previousTour.bind(this)}
                     nextTour={this.nextTour.bind(this)}
                     finishTournament={this.finishTournament.bind(this)}
+                    scoreboard={this.showScoreboard.bind(this)}
                 />
                 {this.state.showBattlePopup && this.createPopup()}
+                {this.state.scoreboardVisible && <Scoreboard hide={this.hideScoreboard.bind(this)}/>}
             </div>
         )
     }

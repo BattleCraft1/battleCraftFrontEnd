@@ -1,14 +1,15 @@
 import React from 'react';
-import TextOutput from '../../../../../commonComponents/textOutput/TextOutput'
+import TextOutput from './TextOutput'
 import {StyleSheet, css} from 'aphrodite';
 
 export default class TableCell extends React.Component{
     render(){
         return(
-            <td className = {css(resp.rowContent)} onClick={this.props.edit}
+            <div className = {css(resp.rowContent)} onClick={this.props.edit}
 
-                style={Object.assign({}, styles.thead, styles.rowContent,  {backgroundColor: this.props.color})}>
-                <TextOutput text={this.props.content} limit={17}/></td>
+                style={Object.assign({}, styles.thead, styles.rowContent,
+                  {backgroundColor: this.props.color, width:this.props.width, height:'40px'}, this.props.s)}>
+                 {this.props.content} </div>
         )
     }
 }
@@ -23,7 +24,12 @@ const styles = {
         borderBottomColor: '#E0BA51',
         borderRightColor: '#805D2C',
         borderLeftColor: '#e3ca86',
+        //borderColor:'#4e3e28',
         background: '#735630',
+        width:'20%',
+        display:'inline-block',
+        // backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#b48443), to(#654a25))',
+        // WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px',
         backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
     },
     rowContent: {

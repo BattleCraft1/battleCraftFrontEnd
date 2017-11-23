@@ -304,7 +304,6 @@ dualPlayerElementContainer:{
   border:'1px black solid',
   borderRadius:'2px',
 },
-
 pointsInput:{
   margin:'0',
   padding:'0',
@@ -317,6 +316,9 @@ pointsInput:{
   border:'0',
   backgroundImage:'linear-gradient(90deg, rgb(164, 144, 104)10%, rgb(215, 187, 130)50%, rgb(164, 144, 104)90%)',
   boxShadow:'inset 0 0 3px black, inset 0 0 6px rgb(135, 115, 94), 0 0 4px rgb(224, 198, 169)',
+},
+scoreboard:{
+  display:'inline-block',
 }
 };
 
