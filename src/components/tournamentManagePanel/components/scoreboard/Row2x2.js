@@ -47,7 +47,7 @@ class Row2x2 extends React.Component{
                     columnName = "no"
                     color = {'rgb(217, 159, 117)'}
                     edit = {() => {}}
-                    content = {this.props.points2}
+                    content = {this.props.points}
                     width = {this.props.width*0.2}
                     s = {{height:'80px', top:"-40px", marginBottom:'-40px'}}
                 />

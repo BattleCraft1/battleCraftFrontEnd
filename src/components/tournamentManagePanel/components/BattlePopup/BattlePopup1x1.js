@@ -58,6 +58,46 @@ class BattlePopup extends React.Component {
         this.setState({usersListVisible:false})
     }
 
+    chooseRandomPlayers(){
+        let playersNames = this.state.playersWithoutBattles;
+        playersNames.splice(playersNames.indexOf(""),1);
+        let battleData = this.state.battleData;
+
+        if(battleData.firstPlayer.name!=="" && playersNames.indexOf(battleData.firstPlayer.name) === -1){
+            playersNames.unshift(battleData.firstPlayer.name);
+        }
+        if(battleData.secondPlayer.name!=="" && playersNames.indexOf(battleData.secondPlayer.name) === -1) {
+            playersNames.unshift(battleData.secondPlayer.name);
+        }
+
+        let firstRandomName = playersNames[Math.floor(Math.random()*playersNames.length)];
+        let secondRandomName = playersNames[Math.floor(Math.random()*playersNames.length)];
+        if(secondRandomName === firstRandomName){
+            let indexOfFirstName = playersNames.indexOf(firstRandomName);
+            if(indexOfFirstName > 0){
+                secondRandomName = playersNames[indexOfFirstName-1];
+            }
+            else{
+                secondRandomName = playersNames[indexOfFirstName+1];
+            }
+        }
+
+        playersNames.splice(playersNames.indexOf(firstRandomName),1);
+        battleData.firstPlayer = {
+            name:firstRandomName,
+            points:0
+        };
+
+        playersNames.splice(playersNames.indexOf(secondRandomName),1);
+        battleData.secondPlayer = {
+            name:secondRandomName,
+            points:0
+        };
+
+        playersNames.push("");
+        this.setState({battleData:battleData,playersWithoutBattles:playersNames});
+    }
+
     changePlayerData(changedPlayerName){
         let battleData = this.state.battleData;
         if(this.state.numberOfPlayerToChange === 0){
@@ -174,7 +214,7 @@ class BattlePopup extends React.Component {
                         <div style={{marginTop:'2px'}}>
                             <OptionButton operation={()=>{this.sendBattleData()}} name={"Save"}/>
                             <OptionButton operation={()=>{this.props.hidePopup()}} name={"Cancel"}/>
-                            <OptionButton operation={()=>{}} name={"DICE"} additionalStyle={{minWidth:'0', padding:'0'}}/>
+                            <OptionButton operation={()=>{this.chooseRandomPlayers()}} name={"DICE"} additionalStyle={{minWidth:'0', padding:'0'}}/>
                             <OptionButton operation={()=>{this.clearBattleData()}} name={"Clear"} additionalStyle={{float:'right'}}/>
                         </div>
                     </div>

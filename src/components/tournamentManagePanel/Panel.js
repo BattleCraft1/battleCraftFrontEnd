@@ -5,7 +5,8 @@ import Turn from './components/Turn'
 import OptionPanel from './components/OptionPanel'
 import BattlePopup1x1 from './components/BattlePopup/BattlePopup1x1'
 import BattlePopup2x2 from './components/BattlePopup/BattlePopup2x2'
-import Scoreboard from './components/Scoreboard'
+import Scoreboard from './components/scoreboard/Scoreboard1x1'
+import Scoreboard2x2 from './components/scoreboard/Scoreboard2x2'
 
 import axios from 'axios';
 import {serverName} from "../../main/consts/server";
@@ -19,7 +20,7 @@ class Panel extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            scoreboardVisible:true,
+            showScoreBoard:false,
             tournamentName:"",
             playersOnTableCount:0,
             showBattlePopup:false,
@@ -127,6 +128,20 @@ class Panel extends React.Component{
                                    playersWithoutBattles={this.state.tournamentData.playersWithoutBattles}
                                    hidePopup={()=>{this.setState({showBattlePopup:false,battlePopupUpData:{}})}}
                                    sendBattleData={this.sendBattleData.bind(this)}/>
+        }
+        else{
+            return <div/>
+        }
+    }
+
+    createScoreBoard(){
+        if(this.state.playersOnTableCount===2){
+            return <Scoreboard playersNamesWithPoints={this.state.tournamentData.playersNamesWithPoints}
+                               hidePopup={()=>{this.setState({showScoreBoard:false})}}/>
+        }
+        else if(this.state.playersOnTableCount===4){
+            return <Scoreboard2x2 playersNamesWithPoints={this.state.tournamentData.playersNamesWithPoints}
+                                  hidePopup={()=>{this.setState({showScoreBoard:false})}}/>
         }
         else{
             return <div/>
@@ -244,19 +259,8 @@ class Panel extends React.Component{
             });
     }
 
-    showScoreboard()
-    {
-      this.setState({
-        scoreboardVisible:true
-      })
-      console.log("click", this.state.scoreboardVisible)
-    }
-
-    hideScoreboard()
-    {
-      this.setState({
-        scoreboardVisible:false
-      })
+    showScoreBoard(){
+        this.setState({showScoreBoard:true})
     }
 
     render(){
@@ -272,10 +276,10 @@ class Panel extends React.Component{
                     previousTour={this.previousTour.bind(this)}
                     nextTour={this.nextTour.bind(this)}
                     finishTournament={this.finishTournament.bind(this)}
-                    scoreboard={this.showScoreboard.bind(this)}
+                    scoreboard={this.showScoreBoard.bind(this)}
                 />
                 {this.state.showBattlePopup && this.createPopup()}
-                {this.state.scoreboardVisible && <Scoreboard hide={this.hideScoreboard.bind(this)}/>}
+                {this.state.showScoreBoard && this.createScoreBoard()}
             </div>
         )
     }
