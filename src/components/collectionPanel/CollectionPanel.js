@@ -27,9 +27,8 @@ class CollectionPanel extends React.Component{
 
     async componentDidMount() {
         this.setPossibleOperations(this.props.match.params.collectionType);
-        await this.getPage(this.props.match.params.collectionType);
+        this.createPageRequest(this.props.match.params.collectionType);
         await this.setState({collectionType: this.props.match.params.collectionType});
-        this.createPageRequest(this.state.collectionType);
     }
 
     async componentWillReceiveProps(nextProps) {

@@ -34,7 +34,7 @@ class Scoreboard extends React.Component {
     setScoreboardRef(node) {
         this.scoreboardRef = node;
     }
-    
+
     updateDimensions()
     {
       if(document.getElementById('scoreContainer') !== null){
