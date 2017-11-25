@@ -1,72 +1,42 @@
 import React from 'react';
-import TextOutput from './TextOutput'
 import {StyleSheet, css} from 'aphrodite';
 
 export default class TableCell extends React.Component{
     render(){
         return(
-            <div className = {css(resp.rowContent)} onClick={this.props.edit}
-
-                style={Object.assign({}, styles.thead, styles.rowContent,
-                  {backgroundColor: this.props.color, width:this.props.width, height:'40px'}, this.props.s)}>
-                 {this.props.content} </div>
+            <div style={Object.assign({}, styles.textCell, this.props.double ? {height:'100px'}:{})}>
+                <div style={styles.text}>{this.props.content}</div>
+                 </div>
         )
     }
 }
 
 const styles = {
-    thead: {
-        borderCollapse: 'separate',
-        borderRadius: '4px 4px 0 0',
-        border: '1px solid',
-        color: 'white',
-        borderTopColor: '#E0BA51',
-        borderBottomColor: '#E0BA51',
-        borderRightColor: '#805D2C',
-        borderLeftColor: '#e3ca86',
-        //borderColor:'#4e3e28',
-        background: '#735630',
-        width:'20%',
-        display:'inline-block',
-        // backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#b48443), to(#654a25))',
-        // WebkitBorderImage: '-webkit-linear-gradient(left, #FE2EF7, #4AC0F2) 0 0 20px',
-        backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(#735327), to(#473419))',
+    textCell:{
+        display:'table',
+        //margin:'5px',
+        marginBottom:'0',
+        marginTop:'0',
+        width:'100%',
+        height:'50px',
+        textAlign:'center',
+        verticalAlign:'center',
+        position:'relative',
+        border:'1px solid #524527',
+        boxSizing:'border-box',
+        background:'rgb(245, 208, 134)',
+        backgroundImage: 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 5%, rgb(148, 123, 66) 77%, rgba(255, 255, 255, 0.4) 82%)',
     },
-    rowContent: {
-        borderRadius: '0',
-        background: '#c6a57d',
-        border: '1px solid',
-        padding: '8px',
-        paddingLeft: '8px',
-        textAlign: 'none',
-        backgroundImage: '',
-        WebkitBorderImage: '',
-        color: 'black',
-        borderTopColor: '#dfd19e',
-        borderBottomColor: '#886e4b',
-        borderLeftColor: '#dfd19e',
-        borderRightColor: '#886e4b',
-        paddingTop:'10px',
-        paddingBottom:'10px',
+
+    text:{
+        //transform:'translate(-50%, -50%)',
+        display: 'table-cell',
+        verticalAlign: 'middle',
+        textShadow:'0px 0px 2px #555555, 0px 0px 4px #aaaaaa',
+        color:'#ffffff',
     },
 };
 
 const resp = StyleSheet.create({
-    rowContent:{
-      overflow:'hidden',
-      textOverflow:'elipsis',
-        position:'relative',
-        textAlign:'center',
-        boxSizing:'border-box',
-        '@media (max-width: 599px)': {
-            width:'70%',
-            display: 'inline-block',
-            borderRadius:'0'
-        },
-        '@media (max-width: 1024px)': {
-            fontSize:'0.8em',
-            paddingLeft:'2px',
-            paddingRight:'2px',
-        },
-    },
+
 });

@@ -318,7 +318,12 @@ pointsInput:{
   boxShadow:'inset 0 0 3px black, inset 0 0 6px rgb(135, 115, 94), 0 0 4px rgb(224, 198, 169)',
 },
 scoreboard:{
-  display:'inline-block',
+    display:'inline-block',
+    padding:'5px',
+    backgroundImage:'linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgb(164, 164, 164) 50%, rgb(216, 216, 216) 50.5%, rgba(152, 152, 152, 0) 87%), linear-gradient(0deg, rgba(0, 0, 0, 0), rgb(164, 164, 164), rgba(0, 0, 0, 0) 90%)',
+    //backgroundColor:'rgb(158, 158,  158)',
+    overflowY:'scroll',
+    boxShadow:'0 0 6px black inset',
 }
 };
 
