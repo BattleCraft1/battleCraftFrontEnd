@@ -9,6 +9,7 @@ import Background from '../resources/splashBig2.jpg';
 import EntityPanel from '../components/entityPanel/EntityPanel'
 import AdditionalEntityPanel from '../components/entityPanel/AdditionalEntityPanel'
 import ManagementPanel from './../components/tournamentManagePanel/Panel'
+import LoginPanel from './../components/accountPanel/LoginPanel'
 
 
 class App extends Component {
@@ -24,6 +25,7 @@ class App extends Component {
                 <EntityPanel/>
                 <AdditionalEntityPanel/>
                 <Message/>
+                <LoginPanel/>
                 <Switch>
                     <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
                     <Route exact path='/progress/:tournamentName' component={ManagementPanel}/>

@@ -1,0 +1,121 @@
+import {StyleSheet} from 'aphrodite';
+
+const styles = {
+    popupBackground:
+        {
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0, 0, 0, 0.5)',
+            zIndex: '1000',
+            left: '0',
+            top: '0',
+        },
+    popup:
+        {
+            position: 'fixed',
+            zIndex: '10',
+            left: '30%',
+            top: '10%',
+            width: '40%',
+            textAlign: 'center',
+            zIndex: '',
+        },
+    optionLabel:{
+        boxSizing:'border-box',
+        fontWeight:'700',
+        textShadow:'rgba(0, 0, 0, 0.3) -2px -2px 0px',
+        paddingTop:'3px',
+        paddingBottom:'3px',
+        display:'inline-block',
+        width:'100%',
+        textAlign:'center',
+        borderRadius:'2px 2px 0 0',
+        backgroundColor:'rgba(101, 70, 42, 1)',
+        //backgroundImage:'linear-gradient(45deg, rgba(231, 224, 188, 0.1),rgb(214, 208, 179) 60%,rgba(231, 224, 188, 0.1)), linear-gradient(91deg,rgba(103, 94, 56, 1) -3%,rgba(251, 250, 249, 0.9) 6%, rgba(219, 216, 216, 0.1) 6.5%',
+        backgroundImage: 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(101, 70, 42, 1) 60%, rgba(255, 255, 255, 0.4) 65%)',
+        color:'rgb(223, 214, 197)',
+        border:'1px black solid',
+        borderTopRightRadius:'5px',
+        borderTopLeftRadius:'5px',
+        borderBottom:'0',
+    },
+    checkBox:{
+        background:'rgb(210, 197, 142)',
+        marginTop:'1px',
+        border:'1px solid #928080',
+        boxSizing:'border-box',
+        padding:'1px',
+        paddingLeft:'4px',
+        paddingRight:'4px',
+        float:'right',
+        borderColor:'rgb(235, 229, 205) rgb(124, 118, 98) rgb(88, 83, 65) rgb(177, 172, 155)',
+        backgroundImage: 'linear-gradient(-45deg, rgba(0,0,0,0),rgba(0,0,0,0),rgba(255,255,255,0.8),rgba(0,0,0,0),rgba(0,0,0,0))',
+    },
+    loginPanel:{
+        position:'fixed',
+        width:'30%',
+        left:'35%',
+        top:'200px',
+        zIndex:'10',
+        background:'rgba(0, 0, 0, 0.3)',
+        boxShadow:'0 0 35px 20px rgba(0, 0, 0, 0.3)',
+    },
+    textContainer:{
+        position:'relative',
+        display:'block',
+        border:'1px solid',
+        borderTopColor:'rgb(235, 229, 205)',
+        borderLeftColor:'rgb(177, 172, 155)',
+        borderRightColor:'rgb(124, 118, 98)',
+        borderBottomColor:'rgb(88, 83, 65)',
+        boxSizing:'border-box',
+        height:'50%',
+        paddingLeft:'4px',
+        paddingRight:'4px',
+        paddingTop:'5px',
+        paddingBottom:'10px',
+        overflow:'hidden',
+        background:'rgb(210, 197, 142)',
+        backgroundImage: 'linear-gradient(-45deg, rgba(0,0,0,0),rgba(0,0,0,0),rgba(255,255,255,0.8),rgba(0,0,0,0),rgba(0,0,0,0))',
+        boxShadow:'inset 0 0 5px rgb(152, 139, 91)',
+        textAlign:'center',
+    },
+    textOutputLabel:{
+        boxSizing:'border-box',
+        height:'12px',
+        fontSize:'10px',
+        width:'fit-content',
+        width:'100%',
+        textAlign:'center',
+        backgroundImage:'linear-gradient(90deg, rgba(255, 255, 255, 0.05)10%, rgba(255, 255, 255, 1)50%, rgba(255, 255, 255, 0.05)90%)',
+    },
+    textInput:{
+        padding:'0',
+        textAlign:'center',
+        width:'60%',
+        boxSizing:'border-box',
+        marginBottom:'4px',
+        marginTop:'4px',
+        height:'24px',
+        fontSize:'16px',
+        fontSize:'80%',
+        border:'0',
+        backgroundImage:'linear-gradient(90deg, rgb(164, 144, 104)10%, rgb(215, 187, 130)50%, rgb(164, 144, 104)90%)',
+        boxShadow:'inset 0 0 3px black, inset 0 0 6px rgb(135, 115, 94), 0 0 4px rgb(224, 198, 169)',
+    },
+}
+
+
+const resp = StyleSheet.create({
+    loginPanel:
+        {
+            '@media (max-width: 720px)': {
+                top:'20%',
+                width:'60%',
+                left:'20%',
+            },
+        },
+});
+
+export {resp, styles}
