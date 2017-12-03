@@ -7,6 +7,7 @@ import * as searchReducer from './search'
 import * as entityPanelReducer from './entityPanel'
 import * as possibleOperationsReducer from './possibleOperations'
 import * as additionalEntityPanelReducer from './additionalEntityPanel'
+import * as loginPanelReducer from './loginPanel'
 
 export default combineReducers( Object.assign(
     pageReducer,
@@ -16,5 +17,6 @@ export default combineReducers( Object.assign(
     searchReducer,
     entityPanelReducer,
     possibleOperationsReducer,
-    additionalEntityPanelReducer
+    additionalEntityPanelReducer,
+    loginPanelReducer,
 ) );

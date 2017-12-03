@@ -10,6 +10,7 @@ import EntityPanel from '../components/entityPanel/EntityPanel'
 import AdditionalEntityPanel from '../components/entityPanel/AdditionalEntityPanel'
 import ManagementPanel from './../components/tournamentManagePanel/Panel'
 import LoginPanel from './../components/accountPanel/LoginPanel'
+import CredentialsPanel from './../components/accountPanel/ChangeCredentialsPanel'
 
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
                 <AdditionalEntityPanel/>
                 <Message/>
                 <LoginPanel/>
+                <CredentialsPanel/>
                 <Switch>
                     <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
                     <Route exact path='/progress/:tournamentName' component={ManagementPanel}/>

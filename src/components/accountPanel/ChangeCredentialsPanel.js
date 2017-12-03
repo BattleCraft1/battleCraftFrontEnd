@@ -5,13 +5,12 @@ import {css, StyleSheet} from 'aphrodite';
 import Label from './Label';
 import Input from './TextInput';
 import Button from './optionButton/OptionButton';
-import CheckBox from './CheckBox'
 
 import { ActionCreators } from '../../redux/actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-class LoginPanel extends React.Component {
+class ChangeCredentialsPanel extends React.Component {
     constructor(props) {
         super(props);
         this.setMessageRef = this.setMessageRef.bind(this);
@@ -33,7 +32,7 @@ class LoginPanel extends React.Component {
     }
 
     hideMessageBox(){
-        this.props.showLoginPanel(false);
+        this.props.showCredentialsPanel(false);
     }
 
     setMessageRef(node) {
@@ -43,19 +42,16 @@ class LoginPanel extends React.Component {
     render(){
         return (
             <div>
-                {this.props.loginPanel.isShown &&
-                <div style = {styles.loginPanel}  className={css(resp.loginPanel)}>
-                <Label name={"Login"}/>
+                {this.props.loginPanel.isCredentialsShown &&
+            <div style = {styles.loginPanel}  className={css(resp.loginPanel)}>
+                <Label name={"Bring back credentials"}/>
                 <div ref={this.setMessageRef}>
-                <Input placeholder={"type your login"} name={"username"}/>
-                <Input type={"password"} placeholder={"password"} name={"password"}/>
+                <Input placeholder={"type your email"} name={"email"} type={"email"}/>
                 <Button operation={this.hideMessageBox.bind(this)} name={"Cancel"}/>
-                <Button operation={()=>{}} name={"Login"} additionalStyle={{float:'right'}}/>
-                <CheckBox/>
+                <Button operation={()=>{}} name={"Proceed"} additionalStyle={{float:'right'}}/>
                 </div>
-                </div>}
+            </div>}
             </div>
-
         )
     }
 }
@@ -71,7 +67,7 @@ function mapStateToProps( state ) {
     };
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( LoginPanel );
+export default connect( mapStateToProps, mapDispatchToProps )( ChangeCredentialsPanel );
 
 
 

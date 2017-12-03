@@ -67,7 +67,6 @@ class Navbar extends React.Component{
             <Dropdown
                 key="Users"
                 name="Users"
-                list={this.createUsersOptionList()}
             >{this.createUsersOptionList()}</Dropdown>
             <NavElement
                 key="Ranking"
@@ -77,7 +76,6 @@ class Navbar extends React.Component{
             <Dropdown
                 key="Account"
                 name="Account"
-                list={this.createAccountOptionList()}
             >{this.createAccountOptionList()}</Dropdown>
         </div>
     }
@@ -117,10 +115,16 @@ class Navbar extends React.Component{
     }
 
     createAccountOptionList(){
-        return <NavigatingDropdownOption
-                name = "Mock"
-                link = "mock"
-            />
+        return [<ActivingPopupDropdownOption
+            key="1"
+            name = "Login"
+            function = {() => {this.props.showLoginPanel(true)}}
+            />,
+            <ActivingPopupDropdownOption
+                key="2"
+                name = "Forgot credentials?"
+                function = {() => {this.props.showCredentialsPanel(true)}}
+            />,]
     }
 
     render(){
