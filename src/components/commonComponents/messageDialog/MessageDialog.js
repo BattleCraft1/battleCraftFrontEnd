@@ -30,7 +30,7 @@ class MessageBox extends React.Component {
     }
 
     handleClickOutside(event) {
-        if (this.messageRef && !this.messageRef.contains(event.target)) {
+        if (this.popupRef && !this.popupRef.contains(event.target)) {
             this.hideMessageBox();
             this.getMessageColor();
         }
@@ -45,7 +45,7 @@ class MessageBox extends React.Component {
     }
 
     setMessageRef(node) {
-        this.messageRef = node;
+        this.popupRef = node;
     }
 
     getMessageColor(){

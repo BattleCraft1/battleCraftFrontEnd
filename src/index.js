@@ -64,6 +64,10 @@ const store = configureStore( {
         searchCriteria:[
         ]
     },
+    loginPanel: {
+        isShown:false,
+        isCredentialsShown:false,
+    },
 } );
 
 
