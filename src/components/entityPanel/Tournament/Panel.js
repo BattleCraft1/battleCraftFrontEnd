@@ -46,7 +46,7 @@ class Panel extends React.Component{
         let tomorrow = new Date();
         let dayAfterTomorrow = new Date();
         tomorrow.setDate(today.getDate()+1);
-        dayAfterTomorrow.setDate(tomorrow.getDate()+1);
+        dayAfterTomorrow.setDate(today.getDate()+2);
         this.state = {
             height:window.innerHeight,
             activeTab : "basicData",

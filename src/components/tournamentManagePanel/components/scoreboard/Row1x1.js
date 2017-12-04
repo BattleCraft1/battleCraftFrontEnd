@@ -11,7 +11,7 @@ class Row1x1 extends React.Component{
         let width = 40;
         return (<div style={styles.rowContent}>
                 <div style={Object.assign({}, styles.rowCell, {width:'45px'})}>
-                {!this.props.idx && <div style={{height:'30px'}}></div>}
+                {!this.props.idx && <div style={{height:'30px'}}/>}
                 <TableAvatarCell
                     name = {this.props.name}
                     width = {this.props.width*0.08}
