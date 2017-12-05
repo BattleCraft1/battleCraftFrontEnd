@@ -1,6 +1,15 @@
 import {StyleSheet} from 'aphrodite';
 
 const styles = {
+    background:{
+        zIndex:'2',
+        position:'fixed',
+        height:'100%',
+        width:'100%',
+        top:'0',
+        left:'0',
+        backgroundColor:'rgba(5, 5, 5, 0.55)'
+    },
     popupBackground:
         {
             position: 'relative',

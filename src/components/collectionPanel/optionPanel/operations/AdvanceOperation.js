@@ -29,7 +29,12 @@ class AdvanceOperation extends React.Component {
             };
 
             let operationFunction = function(){
-                axios.post(serverName+`advance/players`, GetPageAndModifyDataDTO)
+                axios.post(serverName+`advance/players`, GetPageAndModifyDataDTO,
+                    {
+                        headers: {
+                            "X-Auth-Token":this.props.security.token
+                        }
+                    })
                     .then(res => {
                         checkPreviouslyCheckedElements(res.data);
                         showSuccessMessage(getSuccessMessage(checkedElementsNames));
@@ -70,7 +75,8 @@ function mapDispatchToProps( dispatch ) {
 function mapStateToProps( state ) {
     return {
         page: state.page,
-        pageRequest: state.pageRequest
+        pageRequest: state.pageRequest,
+        security: state.security
     };
 }
 

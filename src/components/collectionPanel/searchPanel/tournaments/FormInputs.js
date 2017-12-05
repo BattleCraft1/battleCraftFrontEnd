@@ -75,10 +75,18 @@ export default class FormInputs extends React.Component{
         this.setState({searchFormField:searchFormFields});
     }
 
+    getTournamentStatus(){
+        let tournamentStat = tournamentStatus;
+        if(this.props.security.role==="ROLE_ADMIN"){
+            tournamentStat["BANNED"] = "BANNED";
+        }
+        return tournamentStat;
+    }
+
     render(){
         let provincesOptions = createOptions(provinces);
         let tournamentGamesOptions = this.prepareTournamentGamesOptions();
-        let tournamentStatusOptions = createOptions(tournamentStatus);
+        let tournamentStatusOptions = createOptions(this.getTournamentStatus());
         let tournamentTypeOptions = this.prepareTournamentTypeOptions();
 
         return (

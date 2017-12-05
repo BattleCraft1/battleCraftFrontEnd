@@ -66,7 +66,8 @@ class Panel extends React.Component{
                 "description": "",
                 "organizers": [],
                 "participants": [],
-                "status":"NEW"
+                "status":"NEW",
+                "canCurrentUserEdit":false
             },
             validationErrors:{
                 "name": "",
@@ -96,7 +97,12 @@ class Panel extends React.Component{
 
             this.setState({height:window.innerHeight});
             window.addEventListener("resize", this.updateDimensions.bind(this));
-            await axios.get(serverName+`get/tournament?name=`+this.props.name)
+            await axios.get(serverName+`get/tournament?name=`+this.props.name,
+                {
+                    headers: {
+                        "X-Auth-Token":this.props.security.token
+                    }
+                })
                 .then(res => {
                     this.setState({entity:res.data});
                     console.log("input entity: ");
@@ -105,6 +111,11 @@ class Panel extends React.Component{
                 .catch(error => {
                     this.props.showNetworkErrorMessage(error);
                 });
+        }
+        else {
+            let entity = this.state.entity;
+            entity.canCurrentUserEdit = true;
+            this.setState({entity:entity});
         }
     }
 
@@ -133,7 +144,7 @@ class Panel extends React.Component{
                 tabsMap[this.state.activeTab],
                 {
                     entity:this.state.entity,
-                    inputsDisabled: this.props.mode === 'get',
+                    inputsDisabled: this.props.mode === 'get' || !this.state.entity.canCurrentUserEdit,
                     changeEntity: this.changeEntity.bind(this),
                     validationErrors: this.state.validationErrors,
                     relatedEntity: this.props.relatedEntity,
@@ -145,7 +156,8 @@ class Panel extends React.Component{
                 tabsMap[this.state.activeTab],
                 {
                     entity:this.state.entity,
-                    inputsDisabled: this.props.mode === 'get',
+                    mode:this.props.mode,
+                    inputsDisabled: this.props.mode === 'get' || !this.state.entity.canCurrentUserEdit,
                     changeEntity: this.changeEntity.bind(this),
                     validationErrors: this.state.validationErrors
                 },
@@ -178,11 +190,17 @@ class Panel extends React.Component{
                 entityToSend.participants.push(participantGroupToSend);
         });
         delete entityToSend["status"];
+        delete entityToSend["canCurrentUserEdit"];
         let validationErrors = validateTournament(entityToSend);
         if(checkIfObjectIsNotEmpty(validationErrors)){
             console.log("output entity:");
             console.log(entityToSend);
-            axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend)
+            axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend,
+                {
+                    headers: {
+                        "X-Auth-Token": this.props.security.token
+                    }
+                })
                 .then(res => {
                     this.setState({entity:res.data});
                     this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.mode+"ed");
@@ -223,7 +241,7 @@ class Panel extends React.Component{
         let content = this.createContent();
 
         let buttons = [];
-        if(this.props.mode!=='get'){
+        if(this.props.mode!=='get' && this.state.entity.canCurrentUserEdit){
             buttons = [
                 <Button key="cancel" text={"Cancel"} action={() => this.props.disable()}/>,
                 <Button key="save" text={"Save"} action={() => {this.sendEntity()}}/>,
@@ -262,7 +280,9 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {};
+    return {
+        security: state.security
+    };
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Panel );

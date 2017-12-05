@@ -105,7 +105,7 @@ class BasicDataTab extends React.Component{
                     fieldName="playersOnTableCount"
                     changeEntity={this.props.changeEntity}
                     options={tournamentTypeOptions}
-                    disabled = {this.props.inputsDisabled}
+                    disabled = {this.props.inputsDisabled || this.props.mode === 'edit'}
                     name="Type"/>
 
                 <NumberInput

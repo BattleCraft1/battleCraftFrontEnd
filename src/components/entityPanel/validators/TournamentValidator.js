@@ -22,8 +22,7 @@ export default (entity) => {
             fieldErrors.tablesCount = "TableInputs count must be between 1 and 15";
     }
 
-    let maxPlayers = entity.playersOnTableCount*entity.tablesCount;
-    let maxToursNumber = factorial(maxPlayers-1)/factorial(maxPlayers-2);
+    let maxToursNumber = (entity.tablesCount*2);
     if(entity.toursCount>maxToursNumber)
         fieldErrors.toursCount = "Max tours number in this tournament is: "+maxToursNumber;
 

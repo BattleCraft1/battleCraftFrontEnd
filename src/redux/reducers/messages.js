@@ -30,6 +30,13 @@ export const message = createReducer( {}, {
             else if(action.error.response.status !== 200){
                 if((typeof action.error.response.data)!=="string" || action.error.response.data==="")
                     throw new Error("error is not a string value");
+                if(action.error.response.status === 401)
+                    message={
+                        isShown: true,
+                        messageText: "You are unauthorized",
+                        messageType: "Unauthorized"
+                    };
+                else
                 message={
                     isShown: true,
                     messageText: action.error.response.data,

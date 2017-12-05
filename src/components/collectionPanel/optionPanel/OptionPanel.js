@@ -5,6 +5,8 @@ import BanOperation from './operations/BanOperation'
 import CancelAcceptOperation from './operations/CancelAcceptOperation'
 import DeleteOperation from './operations/DeleteOperation'
 import UnclokOperation from './operations/UnlockOperation'
+import AddEntityOperation from './operations/AddEntityOperation'
+import ReportOperation from './operations/ReportOperation'
 import AdvanceOperation from './operations/AdvanceOperation'
 import DegradeOperation from './operations/DegradeOperation'
 import SearchOperation from './operations/SearchOperation'
@@ -27,7 +29,9 @@ const mapOfOperations = {
     "Degrade":DegradeOperation,
     "Search":SearchOperation,
     "Invite":InviteOperation,
-    "CancelInvite":CancelInviteOperation
+    "CancelInvite":CancelInviteOperation,
+    "Add":AddEntityOperation,
+    "Report":ReportOperation
 };
 
 class OptionPanel extends React.Component {

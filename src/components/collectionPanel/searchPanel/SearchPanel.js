@@ -16,6 +16,8 @@ import {css} from 'aphrodite';
 
 const searchFormInputsTypeMap = {
     "tournaments":TournamentsFormInputs,
+    "participated":TournamentsFormInputs,
+    "organized":TournamentsFormInputs,
     "users": UsersFormInputs,
     "games":GamesFormInputs,
     "ranking":RankingFormInputs
@@ -75,11 +77,13 @@ class SearchPanel extends React.Component{
     }
 
     createSearchFormInputs(){
+        console.log(this.props.collectionType);
         return React.createElement(
             searchFormInputsTypeMap[this.props.collectionType],
             {
                 search:this.search.bind(this),
                 hide:this.hideSearchPanel.bind(this),
+                security:this.props.security,
                 entityPanelDisabled: this.props.entityPanel.mode === 'disabled'
             },
             null
@@ -113,7 +117,8 @@ function mapStateToProps( state ) {
     return {
         pageRequest: state.pageRequest,
         search: state.search,
-        entityPanel: state.entityPanel
+        entityPanel: state.entityPanel,
+        security: state.security
     };
 }
 

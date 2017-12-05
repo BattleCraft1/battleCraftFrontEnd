@@ -22,6 +22,10 @@ import axios from 'axios';
 import checkIfObjectIsNotEmpty from '../../../main/functions/checkIfObjectIsNotEmpty'
 import validateUser from '../validators/UserValidator'
 
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies('auth');
+
 class Panel extends React.Component{
     constructor(props) {
         super(props);
@@ -43,7 +47,8 @@ class Panel extends React.Component{
                 "organizedTournaments": [],
                 "finishedOrganizedTournaments": [],
                 "createdGames":[],
-                "banned":false
+                "banned":false,
+                "canCurrentUserEdit":false
             },
             validationErrors:{
                 "name": "",
@@ -67,7 +72,12 @@ class Panel extends React.Component{
 
     async componentDidMount() {
         window.addEventListener("resize", this.updateDimensions.bind(this));
-        await axios.get(serverName+`get/user?name=`+this.props.name)
+        await axios.get(serverName+`get/user?name=`+this.props.name,
+            {
+                headers: {
+                    "X-Auth-Token":this.props.security.token
+                }
+            })
             .then(res => {
                 this.setAccessToTabsByStatus(res.data.status);
                 this.setState({entity:res.data});
@@ -125,7 +135,7 @@ class Panel extends React.Component{
                 this.state.tabsMap[this.state.activeTab],
                 {
                     entity:this.state.entity,
-                    inputsDisabled: this.props.mode === 'get',
+                    inputsDisabled: this.props.mode === 'get' || !this.state.entity.canCurrentUserEdit,
                     changeEntity: this.changeEntity.bind(this),
                     validationErrors: this.state.validationErrors,
                     relatedEntity: this.props.relatedEntity,
@@ -137,7 +147,7 @@ class Panel extends React.Component{
                 this.state.tabsMap[this.state.activeTab],
                 {
                     entity:this.state.entity,
-                    inputsDisabled: this.props.mode === 'get',
+                    inputsDisabled: this.props.mode === 'get' || !this.state.entity.canCurrentUserEdit,
                     changeEntity: this.changeEntity.bind(this),
                     validationErrors: this.state.validationErrors
                 },
@@ -162,15 +172,24 @@ class Panel extends React.Component{
         delete entityToSend["finishedOrganizedTournaments"];
         delete entityToSend["createdGames"];
         delete entityToSend["banned"];
+        delete entityToSend["canCurrentUserEdit"];
         console.log(entityToSend);
         let validationErrors = validateUser(entityToSend);
         if(checkIfObjectIsNotEmpty(validationErrors)){
             console.log("output entity:");
             console.log(entityToSend);
-            axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend)
+            axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend,
+                {
+                    headers: {
+                        "X-Auth-Token": this.props.security.token
+                    }
+                })
                 .then(res => {
                     this.setAccessToTabsByStatus(res.data.status);
                     this.setState({entity:res.data});
+                    if (res.data.newToken !== "") {
+                        this.loginUserWithChangedUsername(res.data.newToken,res.data.name);
+                    }
                     this.props.showSuccessMessage("User: "+res.data.name+" successfully "+this.props.mode+"ed");
                     this.props.disable();
                 })
@@ -188,6 +207,16 @@ class Panel extends React.Component{
         }
     }
 
+    loginUserWithChangedUsername(token,name){
+        this.props.setTokenAndRole(token,this.props.security.role,name);
+        let date = new Date();
+
+        if(cookies.get('token')!==undefined && cookies.get('role')!==undefined && cookies.get('username')!==undefined){
+            cookies.set('token', token, { path: '/' ,expires: new Date(+new Date + 12096e5)});
+            cookies.set('role', this.props.security.role, { path: '/' ,expires: new Date(+new Date + 12096e5)});
+            cookies.set('username', name, { path: '/' ,expires: new Date(+new Date + 12096e5)});
+        }
+    }
 
     setValidationErrors(validationException){
         this.props.showFailureMessage(validationException.message);
@@ -212,7 +241,7 @@ class Panel extends React.Component{
             content = this.createContent();
 
         let buttons = [];
-        if(this.props.mode!=='get'){
+        if(this.props.mode!=='get'  && this.state.entity.canCurrentUserEdit){
             buttons = [
                 <Button key="cancel" text={"Cancel"} action={() => this.props.disable()}/>,
                 <Button key="save" text={"Save"} action={() => {this.sendEntity()}}/>
@@ -248,7 +277,9 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {};
+    return {
+        security:state.security
+    };
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Panel );
