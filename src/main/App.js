@@ -11,6 +11,7 @@ import AdditionalEntityPanel from '../components/entityPanel/AdditionalEntityPan
 import ManagementPanel from './../components/tournamentManagePanel/Panel'
 import LoginPanel from './../components/accountPanel/LoginPanel'
 import CredentialsPanel from './../components/accountPanel/ChangeCredentialsPanel'
+import LoadingImage from './../components/commonComponents/loadingImage/LoadingImage'
 
 
 class App extends Component {
@@ -32,6 +33,7 @@ class App extends Component {
                     <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
                     <Route exact path='/progress/:tournamentName' component={ManagementPanel}/>
                 </Switch>
+                <LoadingImage text={"SOME TEXT HERE"}/>
             </div>
           </div>
         );
