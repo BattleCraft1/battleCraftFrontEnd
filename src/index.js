@@ -20,6 +20,10 @@ function configureStore( initialState ) {
 }
 
 const store = configureStore( {
+    loading:{
+        dataFetched:false,
+        message:""
+    },
     search:false,
     possibleOperations:[],
     entityPanel: {

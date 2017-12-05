@@ -37,12 +37,15 @@ class ChangeCredentialsPanel extends React.Component {
             return;
         }
 
+        this.props.startLoading("Resending mail...");
         axios.post(serverName + "registration/resendToken", {email: this.state.value})
             .then(res => {
+                this.props.stopLoading();
                 this.props.showSuccessMessage("Verification email resubmitted. Please check your mail box.");
                 this.hideMessageBox();
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
 

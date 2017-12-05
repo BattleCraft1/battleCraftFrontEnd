@@ -123,6 +123,7 @@ class CollectionPanel extends React.Component{
     async getPage(collectionType){
         console.log("page request:");
         console.log(this.props.pageRequest);
+        this.props.startLoading("Fetching page of data...");
         await axios.post(serverName+`page/`+collectionType,this.props.pageRequest,
             {
                 headers: {
@@ -142,9 +143,9 @@ class CollectionPanel extends React.Component{
                         page : this.props.page.number
                     }
                 });
+                this.props.stopLoading();
             })
             .catch(error => {
-
                 this.props.setEmptyPage();
                 this.props.setPageRequest({
                     searchCriteria:this.props.pageRequest.searchCriteria,
@@ -155,6 +156,7 @@ class CollectionPanel extends React.Component{
                         page : 0
                     }
                 });
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }

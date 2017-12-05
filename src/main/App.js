@@ -15,6 +15,7 @@ import ChangePasswordPopup from '../components/accountPanel/changePassword/Chang
 import ForgotCredentialsPanel from '../components/accountPanel/forgotCredentialsPanel/ForgotCredentialsPanel'
 import RegisterPanel from '../components/accountPanel/registrationPanel/Panel'
 import ResendMailPanel from '../components/accountPanel/resendMailTab/ResendMailPanel'
+import Loading from '../components/commonComponents/loading/Loading'
 
 class App extends Component {
 
@@ -25,6 +26,7 @@ class App extends Component {
           <div className={css(resp.backgroundConent)}/>
             <div className = {css(resp.base)}>
                 <Navbar/>
+                <Loading/>
                 <ConfirmDialog/>
                 <ReportPanel/>
                 <EntityPanel/>

@@ -33,6 +33,7 @@ class Avatar extends React.Component{
         if(file && (fileType === 'bmp' || fileType === 'gif' || fileType === 'jpeg' || fileType === 'png')){
             let formData = new FormData();
             formData.append('avatar',file);
+            this.props.startLoading("Sending avatar...");
             axios.post(serverName+`upload/user/avatar?username=`+ this.props.username,
                 formData,
                 {
@@ -41,9 +42,11 @@ class Avatar extends React.Component{
                     }
                 })
                 .then(res => {
+                    this.props.stopLoading();
                     this.props.showSuccessMessage("Avatar successfully changed");
                 })
                 .catch(error => {
+                    this.props.stopLoading();
                     this.props.showNetworkErrorMessage(error);
                 });
         }

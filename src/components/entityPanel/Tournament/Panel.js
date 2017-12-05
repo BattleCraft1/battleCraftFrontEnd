@@ -97,6 +97,7 @@ class Panel extends React.Component{
 
             this.setState({height:window.innerHeight});
             window.addEventListener("resize", this.updateDimensions.bind(this));
+            this.props.startLoading("Fetching tournament...");
             await axios.get(serverName+`get/tournament?name=`+this.props.name,
                 {
                     headers: {
@@ -104,11 +105,13 @@ class Panel extends React.Component{
                     }
                 })
                 .then(res => {
+                    this.props.stopLoading();
                     this.setState({entity:res.data});
                     console.log("input entity: ");
                     console.log(res.data);
                 })
                 .catch(error => {
+                    this.props.stopLoading();
                     this.props.showNetworkErrorMessage(error);
                 });
         }
@@ -195,6 +198,7 @@ class Panel extends React.Component{
         if(checkIfObjectIsNotEmpty(validationErrors)){
             console.log("output entity:");
             console.log(entityToSend);
+            this.props.startLoading("Sending tournament...");
             axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend,
                 {
                     headers: {
@@ -202,11 +206,13 @@ class Panel extends React.Component{
                     }
                 })
                 .then(res => {
+                    this.props.stopLoading();
                     this.setState({entity:res.data});
                     this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.mode+"ed");
                     this.props.disable();
                 })
                 .catch(error => {
+                    this.props.stopLoading();
                     if(error.response.data.fieldErrors===undefined){
                         this.props.showNetworkErrorMessage(error);
                     }

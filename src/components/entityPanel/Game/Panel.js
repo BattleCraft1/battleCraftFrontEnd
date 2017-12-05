@@ -44,6 +44,7 @@ class Panel extends React.Component{
         if(this.props.mode==='edit' || this.props.mode==='get')
         {
             window.addEventListener("resize", this.updateDimensions.bind(this));
+            this.props.startLoading("Fetching game...");
             await axios.get(serverName+`get/game?name=`+this.props.name,
                 {
                     headers: {
@@ -51,11 +52,13 @@ class Panel extends React.Component{
                     }
                 })
                 .then(res => {
+                    this.props.stopLoading();
                     this.setState({entity:res.data});
                     console.log("input entity: ");
                     console.log(res.data);
                 })
                 .catch(error => {
+                    this.props.stopLoading();
                     this.props.showNetworkErrorMessage(error);
                 });
         }
@@ -120,6 +123,7 @@ class Panel extends React.Component{
         if(checkIfObjectIsNotEmpty(validationErrors)){
             console.log("output entity:");
             console.log(entityToSend);
+            this.props.startLoading("Sending game...");
             axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend,
                 {
                     headers: {
@@ -127,6 +131,7 @@ class Panel extends React.Component{
                     }
                 })
                 .then(res => {
+                    this.props.stopLoading();
                     let newEntity = res.data;
                     if(gameRules===undefined && isEditMode){
                         this.props.showSuccessMessage("Game: "+newEntity.name+" successfully "+this.props.mode+"ed");
@@ -136,6 +141,7 @@ class Panel extends React.Component{
                         this.sendGameRules(res.data,gameRules);
                 })
                 .catch(error => {
+                    this.props.stopLoading();
                     if(error.response.data.fieldErrors===undefined){
                         this.props.showNetworkErrorMessage(error);
                     }
@@ -152,6 +158,8 @@ class Panel extends React.Component{
     sendGameRules(entity,gameRules){
         let formData = new FormData();
         formData.append('gameRules',gameRules);
+
+        this.props.startLoading("Sending game rules...");
         axios.post(serverName+`/upload/game/rules?gameName=`+ entity.name,
             formData,
             {
@@ -161,11 +169,13 @@ class Panel extends React.Component{
                 }
             })
             .then(res => {
+                this.props.stopLoading();
                 this.setState({entity:entity});
                 this.props.showSuccessMessage("Game: "+entity.name+" successfully "+this.props.mode+"ed");
                 this.props.disable();
             })
             .catch(error => {
+                this.props.stopLoading();
                 let entity = this.state.entity;
                 entity.canCurrentUserEdit = true;
                 this.setState({entity:entity});

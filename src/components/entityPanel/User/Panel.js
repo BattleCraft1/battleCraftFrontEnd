@@ -72,6 +72,7 @@ class Panel extends React.Component{
 
     async componentDidMount() {
         window.addEventListener("resize", this.updateDimensions.bind(this));
+        this.props.startLoading("Fetching user...");
         await axios.get(serverName+`get/user?name=`+this.props.name,
             {
                 headers: {
@@ -79,12 +80,14 @@ class Panel extends React.Component{
                 }
             })
             .then(res => {
+                this.props.stopLoading();
                 this.setAccessToTabsByStatus(res.data.status);
                 this.setState({entity:res.data});
                 console.log("input entity: ");
                 console.log(res.data);
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -178,6 +181,7 @@ class Panel extends React.Component{
         if(checkIfObjectIsNotEmpty(validationErrors)){
             console.log("output entity:");
             console.log(entityToSend);
+            this.props.startLoading("Sending user...");
             axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend,
                 {
                     headers: {
@@ -185,6 +189,7 @@ class Panel extends React.Component{
                     }
                 })
                 .then(res => {
+                    this.props.stopLoading();
                     this.setAccessToTabsByStatus(res.data.status);
                     this.setState({entity:res.data});
                     if (res.data.newToken !== "") {
@@ -194,6 +199,7 @@ class Panel extends React.Component{
                     this.props.disable();
                 })
                 .catch(error => {
+                    this.props.stopLoading();
                     if(error.response.data.fieldErrors===undefined){
                         this.props.showNetworkErrorMessage(error);
                     }

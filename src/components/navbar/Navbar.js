@@ -106,7 +106,7 @@ class Navbar extends React.Component{
                     function = {() => {this.props.showResendMailPanel(true)}}
                 />]
         }
-        else if (this.props.security.role === "ROLE_PLAYER"){
+        else if (this.props.security.role === "ROLE_ACCEPTED"){
             return [<ActivingPopupDropdownOption
                 key="1"
                 name = "Edit profile"

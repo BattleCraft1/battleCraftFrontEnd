@@ -184,8 +184,11 @@ class Panel extends React.Component{
                     }
                 }
             }
+
+            this.props.startLoading("Creating account...");
             axios.post(serverName+url, entityToSend, config)
                 .then(res => {
+                    this.props.stopLoading();
                     if (this.props.security.role !== "ROLE_ADMIN") {
                         this.props.showSuccessMessage("You are successfully registered. Please check your mail box to verify you account. If you do not have any mail from us please try to rensend mail.");
                     }
@@ -195,6 +198,7 @@ class Panel extends React.Component{
                     this.props.showRegisterPanel(false);
                 })
                 .catch(error => {
+                    this.props.stopLoading();
                     if(error.response.data.fieldErrors===undefined){
                         this.props.showNetworkErrorMessage(error);
                     }

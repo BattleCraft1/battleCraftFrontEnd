@@ -58,6 +58,7 @@ class LoginPanel extends React.Component {
             password: this.state.password
         };
 
+        this.props.startLoading("Login...");
         axios.post(serverName+"auth",authDTO)
             .then(res => {
                 let role = res.data.role.replace("ROLE_","");
@@ -76,10 +77,12 @@ class LoginPanel extends React.Component {
                 cookies.set('role', res.data.role, { path: '/' ,expires: new Date(+new Date + 12096e5)});
                 cookies.set('username', res.data.username, { path: '/' ,expires: new Date(+new Date + 12096e5)});
 
+                this.props.stopLoading();
                 this.props.showSuccessMessage("You successfully log in with "+role+" permissions");
                 this.props.showLoginPanel(false);
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
 

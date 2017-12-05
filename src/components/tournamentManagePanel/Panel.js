@@ -59,6 +59,7 @@ class Panel extends React.Component{
     }
 
     async fetchTournamentProgressData(tournamentName){
+        this.props.startLoading("Fetching tournament progress...");
         await axios.get(`${serverName}progress/tournament?name=${tournamentName}`,
             {
                 headers: {
@@ -66,11 +67,13 @@ class Panel extends React.Component{
                 }
             })
             .then(async res => {
+                this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
                 await this.prepareToursData(res.data);
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -81,6 +84,7 @@ class Panel extends React.Component{
         let tournamentTypeString = this.state.playersOnTableCount === 4?"group":"duel";
         console.log("battle before send: ");
         console.log(battleData);
+        this.props.startLoading("Sending battle...");
         axios.post(`${serverName}set/points/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,battleDataToSend,
             {
                 headers: {
@@ -88,11 +92,13 @@ class Panel extends React.Component{
                 }
             })
             .then(res => {
+                this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
                 this.prepareToursData(res.data);
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -198,6 +204,7 @@ class Panel extends React.Component{
 
     nextTourRequest(){
         let tournamentTypeString = this.state.playersOnTableCount === 4?"group":"duel";
+        this.props.startLoading("Changing tour...");
         axios.get(`${serverName}next/tour/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,
             {
                 headers: {
@@ -205,6 +212,7 @@ class Panel extends React.Component{
                 }
             })
             .then(res => {
+                this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
                 this.setState({playersOnTableCount:res.data.playersOnTableCount});
@@ -212,6 +220,7 @@ class Panel extends React.Component{
                 this.setState({tournamentData:res.data});
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -232,6 +241,7 @@ class Panel extends React.Component{
 
     previousTourRequest(){
         let tournamentTypeString = this.state.playersOnTableCount === 4?"group":"duel";
+        this.props.startLoading("Coming back to previous tour...");
         axios.get(`${serverName}previous/tour/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,
             {
                 headers: {
@@ -239,6 +249,7 @@ class Panel extends React.Component{
                 }
             })
             .then(res => {
+                this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
                 this.setState({playersOnTableCount:res.data.playersOnTableCount});
@@ -246,6 +257,7 @@ class Panel extends React.Component{
                 this.setState({tournamentData:res.data});
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -274,6 +286,7 @@ class Panel extends React.Component{
     finishTournamentRequest(){
         let tournamentTypeString = this.state.playersOnTableCount === 4?"group":"duel";
 
+        this.props.startLoading("Finishing tournament...");
         axios.get(`${serverName}finish/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,
             {
                 headers: {
@@ -281,6 +294,7 @@ class Panel extends React.Component{
                 }
             })
             .then(res => {
+                this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
                 this.setState({playersOnTableCount:res.data.playersOnTableCount});
@@ -288,6 +302,7 @@ class Panel extends React.Component{
                 this.setState({tournamentData:res.data});
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }

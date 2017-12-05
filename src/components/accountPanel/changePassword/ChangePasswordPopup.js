@@ -45,6 +45,7 @@ class ChangePasswordPopup extends React.Component {
             return;
         }
 
+        this.props.startLoading("Changing password...");
         axios.post(serverName+"auth/change/password",
             {
                 oldPassword:this.state.oldPassword,
@@ -57,10 +58,12 @@ class ChangePasswordPopup extends React.Component {
                 }
             })
             .then(res => {
+                this.props.stopLoading();
                 this.props.showSuccessMessage("Password changed");
                 this.hideMessageBox();
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
