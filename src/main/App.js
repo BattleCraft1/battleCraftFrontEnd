@@ -8,10 +8,14 @@ import Message from '../components/commonComponents/messageDialog/MessageDialog'
 import Background from '../resources/splashBig2.jpg';
 import EntityPanel from '../components/entityPanel/EntityPanel'
 import AdditionalEntityPanel from '../components/entityPanel/AdditionalEntityPanel'
+import ReportPanel from '../components/commonComponents/reportPanel/ReportPanel'
 import ManagementPanel from './../components/tournamentManagePanel/Panel'
-import LoginPanel from './../components/accountPanel/LoginPanel'
-import CredentialsPanel from './../components/accountPanel/ChangeCredentialsPanel'
-
+import LoginPanel from '../components/accountPanel/loginPanel/LoginPanel'
+import ChangePasswordPopup from '../components/accountPanel/changePassword/ChangePasswordPopup'
+import ForgotCredentialsPanel from '../components/accountPanel/forgotCredentialsPanel/ForgotCredentialsPanel'
+import RegisterPanel from '../components/accountPanel/registrationPanel/Panel'
+import ResendMailPanel from '../components/accountPanel/resendMailTab/ResendMailPanel'
+import Loading from '../components/commonComponents/loading/Loading'
 
 class App extends Component {
 
@@ -22,15 +26,20 @@ class App extends Component {
           <div className={css(resp.backgroundConent)}/>
             <div className = {css(resp.base)}>
                 <Navbar/>
+                <Loading/>
                 <ConfirmDialog/>
+                <ReportPanel/>
                 <EntityPanel/>
                 <AdditionalEntityPanel/>
                 <Message/>
                 <LoginPanel/>
-                <CredentialsPanel/>
+                <ChangePasswordPopup/>
+                <ForgotCredentialsPanel/>
+                <RegisterPanel userKind={"normal"}/>
+                <ResendMailPanel/>
                 <Switch>
-                    <Route exact path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
-                    <Route exact path='/progress/:tournamentName' component={ManagementPanel}/>
+                    <Route path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
+                    <Route path='/progress/:tournamentName' component={ManagementPanel}/>
                 </Switch>
             </div>
           </div>

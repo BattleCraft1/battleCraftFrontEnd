@@ -57,7 +57,6 @@ class PlayerTab extends React.Component{
     }
 
     render(){
-        let inputsDisabled = this.props.mode !== 'get';
         return(
             <div>
                 <ValidationErrorMessage
@@ -71,7 +70,7 @@ class PlayerTab extends React.Component{
                     disabled = {this.props.inputsDisabled}
                     changeEntity={this.props.changeEntity.bind(this)}
                     name="Participated tournaments" />
-                {inputsDisabled && <InviteButton to='/collectionsPanel/tournaments'
+                {!this.props.inputsDisabled && <InviteButton to='/collectionsPanel/tournaments'
                                                  operation={this.startAddTournaments.bind(this)}  text="Add"/>}
                 <TournamentsTableOutput
                     value={this.props.entity["finishedParticipatedTournaments"]}

@@ -35,6 +35,14 @@ class Scoreboard extends React.Component {
         this.scoreboardRef = node;
     }
 
+    updateDimensions()
+    {
+      if(document.getElementById('scoreContainer') !== null){
+        console.log(document.getElementById('scoreContainer'));
+        this.setState({dupa:'17'})
+      }
+    }
+
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
         window.removeEventListener("resize", this.updateDimensions);

@@ -7,7 +7,10 @@ import * as searchReducer from './search'
 import * as entityPanelReducer from './entityPanel'
 import * as possibleOperationsReducer from './possibleOperations'
 import * as additionalEntityPanelReducer from './additionalEntityPanel'
-import * as loginPanelReducer from './loginPanel'
+import * as loginPanelReducer from './securityPanels'
+import * as securityReducer from './security'
+import * as reportPanelReducer from './reportPanel'
+import * as loadingReducer from './loading'
 
 export default combineReducers( Object.assign(
     pageReducer,
@@ -19,4 +22,7 @@ export default combineReducers( Object.assign(
     possibleOperationsReducer,
     additionalEntityPanelReducer,
     loginPanelReducer,
+    securityReducer,
+    reportPanelReducer,
+    loadingReducer
 ) );

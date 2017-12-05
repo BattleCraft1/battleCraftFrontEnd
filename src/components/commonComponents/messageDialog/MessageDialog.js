@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../../redux/actions/index';
 import {resp, styles} from '../../commonComponents/styles'
 import {css} from 'aphrodite';
+import Cookies from 'universal-cookie';
 
 const ALERT_COLOR = "rgb(140, 48, 48)";
 const ALERT_BORDER_COLOR = "rgb(199, 125, 113)";
@@ -13,6 +14,9 @@ const SUCCESS_COLOR = "rgb(51, 110, 135)";
 const SUCCESS_BORDER_COLOR = "rgb(123, 174, 196)";
 const WARNING_COLOR = "rgb(126, 109, 48)";
 const WARNING_BORDER_COLOR = "rgb(187, 171, 117)";
+
+
+const cookies = new Cookies('auth');
 
 class MessageBox extends React.Component {
     constructor(props) {
@@ -48,6 +52,13 @@ class MessageBox extends React.Component {
         this.popupRef = node;
     }
 
+    logout(){
+        this.props.logout();
+        cookies.remove('role', { path: '/' });
+        cookies.remove('token', { path: '/' });
+        cookies.remove('username', { path: '/' });
+    }
+
     getMessageColor(){
         let colorsObject = {};
         if(this.props.message.messageType === "alert-danger"){
@@ -55,6 +66,13 @@ class MessageBox extends React.Component {
             backgroundColor:ALERT_COLOR,
             borderColor:ALERT_BORDER_COLOR
           }
+        }
+        else if(this.props.message.messageType === "Unauthorized"){
+            this.logout();
+            colorsObject = {
+                backgroundColor:ALERT_COLOR,
+                borderColor:ALERT_BORDER_COLOR
+            }
         }
         else if(this.props.message.messageType === "alert-success"){
           colorsObject = {

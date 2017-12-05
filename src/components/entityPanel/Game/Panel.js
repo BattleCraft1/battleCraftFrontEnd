@@ -29,7 +29,8 @@ class Panel extends React.Component{
                 "creatorName":"",
                 "dateOfCreation": new Date(),
                 "tournamentsNumber":0,
-                "status":"NEW"
+                "status":"NEW",
+                "canCurrentUserEdit":false
             },
             validationErrors:{
                 "name": "",
@@ -43,15 +44,28 @@ class Panel extends React.Component{
         if(this.props.mode==='edit' || this.props.mode==='get')
         {
             window.addEventListener("resize", this.updateDimensions.bind(this));
-            await axios.get(serverName+`get/game?name=`+this.props.name)
+            this.props.startLoading("Fetching game...");
+            await axios.get(serverName+`get/game?name=`+this.props.name,
+                {
+                    headers: {
+                        "X-Auth-Token":this.props.security.token
+                    }
+                })
                 .then(res => {
+                    this.props.stopLoading();
                     this.setState({entity:res.data});
                     console.log("input entity: ");
                     console.log(res.data);
                 })
                 .catch(error => {
+                    this.props.stopLoading();
                     this.props.showNetworkErrorMessage(error);
                 });
+        }
+        else {
+            let entity = this.state.entity;
+            entity.canCurrentUserEdit = true;
+            this.setState({entity:entity});
         }
     }
 
@@ -73,7 +87,7 @@ class Panel extends React.Component{
             GameDataTab,
             {
                 entity:this.state.entity,
-                inputsDisabled: this.props.mode === 'get',
+                inputsDisabled: this.props.mode === 'get' || !this.state.entity.canCurrentUserEdit,
                 changeEntity: this.changeEntity.bind(this),
                 validationErrors: this.state.validationErrors
             },
@@ -100,6 +114,7 @@ class Panel extends React.Component{
         delete entityToSend["dateOfCreation"];
         delete entityToSend["tournamentsNumber"];
         delete entityToSend["status"];
+        delete entityToSend["canCurrentUserEdit"];
 
         let isEditMode = this.props.mode === 'edit';
         let gameRules = this.gameRules.files[0];
@@ -108,8 +123,15 @@ class Panel extends React.Component{
         if(checkIfObjectIsNotEmpty(validationErrors)){
             console.log("output entity:");
             console.log(entityToSend);
-            axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend)
+            this.props.startLoading("Sending game...");
+            axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend,
+                {
+                    headers: {
+                        "X-Auth-Token": this.props.security.token
+                    }
+                })
                 .then(res => {
+                    this.props.stopLoading();
                     let newEntity = res.data;
                     if(gameRules===undefined && isEditMode){
                         this.props.showSuccessMessage("Game: "+newEntity.name+" successfully "+this.props.mode+"ed");
@@ -119,6 +141,7 @@ class Panel extends React.Component{
                         this.sendGameRules(res.data,gameRules);
                 })
                 .catch(error => {
+                    this.props.stopLoading();
                     if(error.response.data.fieldErrors===undefined){
                         this.props.showNetworkErrorMessage(error);
                     }
@@ -135,19 +158,27 @@ class Panel extends React.Component{
     sendGameRules(entity,gameRules){
         let formData = new FormData();
         formData.append('gameRules',gameRules);
+
+        this.props.startLoading("Sending game rules...");
         axios.post(serverName+`/upload/game/rules?gameName=`+ entity.name,
             formData,
             {
                 headers: {
+                    "X-Auth-Token":this.props.security.token,
                     'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
                 }
             })
             .then(res => {
+                this.props.stopLoading();
                 this.setState({entity:entity});
                 this.props.showSuccessMessage("Game: "+entity.name+" successfully "+this.props.mode+"ed");
                 this.props.disable();
             })
             .catch(error => {
+                this.props.stopLoading();
+                let entity = this.state.entity;
+                entity.canCurrentUserEdit = true;
+                this.setState({entity:entity});
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -172,7 +203,7 @@ class Panel extends React.Component{
     render(){
 
         let buttons = [];
-        if(this.props.mode!=='get'){
+        if(this.props.mode!=='get' && this.state.entity.canCurrentUserEdit){
             buttons = [
                 <Button key="cancel" text={"Cancel"} action={() => this.props.disable()}/>,
                 <Button key="save" text={"Save"} action={() => {this.sendEntity()}}/>
@@ -191,7 +222,8 @@ class Panel extends React.Component{
                 <div style={{maxHeight:this.state.height * 0.5}} className={css(resp.content)}>
                     {this.createContent()}
                     <div style={{position:'relative', width:'100%', height:'30px'}}>
-                        {this.props.mode!=='get' && <button style={styles.tableButton} className={css(resp.tableButton)}>
+                        {this.props.mode!=='get'  && this.state.entity.canCurrentUserEdit &&
+                        <button style={styles.tableButton} className={css(resp.tableButton)}>
                             <input style={styles.fileInput}
                                    id="gameRules" type="file"
                                    ref={(ref) => this.gameRules = ref}/>
@@ -211,7 +243,9 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {};
+    return {
+        security: state.security
+    };
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Panel );

@@ -13,12 +13,12 @@ export default class PasswordInput extends React.Component{
         return(
             <div style={styles.inputBlock} className={css(this.props.notResponsive ? "" : resp.inputBlock)}>
                 <Label name={this.props.name}/>
-                    <input id={this.props.indexOfSearchFields}
-                       style={styles.optionInput}
-                       type="password"
-                       ref={(control) => this.text = control}
-                       name={this.props.indexOfSearchFields}
-                       placeholder={this.props.placeholder}
+                    <input
+                        style={styles.optionInput}
+                        type="password"
+                        value = {this.props.value}
+                        disabled={this.props.disabled}
+                        onChange={(event)=>this.props.changeEntity(this.props.fieldName,event.target.value)}
                 />
             </div>
         )

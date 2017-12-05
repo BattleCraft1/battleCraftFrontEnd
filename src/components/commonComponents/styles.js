@@ -65,6 +65,13 @@ const styles = {
     display:'inline-block',
     width:'100%'
   },
+    textArea:{
+        maxWidth:'90%',
+        minWidth:'90%',
+        minHeight:'40px',
+        maxHeight:'40px',
+        marginBottom:'-6px',
+    },
   modalBody:{
     boxSizing:'border-box',
     color:'rgb(74, 72, 69)',

@@ -17,7 +17,11 @@ import createOptions from '../../../../main/functions/createOptions';
 import {serverName} from "../../../../main/consts/server";
 import axios from 'axios'
 
-export default class FormInputs extends React.Component{
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import {ActionCreators} from "../../../../redux/actions";
+
+class FormInputs extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -39,11 +43,14 @@ export default class FormInputs extends React.Component{
     }
 
     async componentDidMount(){
+        this.props.startLoading("Fetching games names...");
         await axios.get(serverName+`get/allGames/names`)
             .then(res => {
+                this.props.stopLoading();
                 this.setState({tournamentsGames:res.data});
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -75,10 +82,18 @@ export default class FormInputs extends React.Component{
         this.setState({searchFormField:searchFormFields});
     }
 
+    getTournamentStatus(){
+        let tournamentStat = tournamentStatus;
+        if(this.props.security.role==="ROLE_ADMIN"){
+            tournamentStat["BANNED"] = "BANNED";
+        }
+        return tournamentStat;
+    }
+
     render(){
         let provincesOptions = createOptions(provinces);
         let tournamentGamesOptions = this.prepareTournamentGamesOptions();
-        let tournamentStatusOptions = createOptions(tournamentStatus);
+        let tournamentStatusOptions = createOptions(this.getTournamentStatus());
         let tournamentTypeOptions = this.prepareTournamentTypeOptions();
 
         return (
@@ -210,3 +225,14 @@ export default class FormInputs extends React.Component{
         )
     }
 }
+
+function mapDispatchToProps( dispatch ) {
+    return bindActionCreators( ActionCreators, dispatch );
+}
+
+function mapStateToProps( state ) {
+    return {
+    };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( FormInputs );

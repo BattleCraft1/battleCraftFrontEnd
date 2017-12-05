@@ -9,6 +9,7 @@ import {provinces} from "../../../../main/consts/provinces";
 import {userStatus} from "../../../../main/consts/status";
 import createOptions from "../../../../main/functions/createOptions";
 
+
 export default class FormInputs extends React.Component{
     constructor(props) {
         super(props);
@@ -32,8 +33,17 @@ export default class FormInputs extends React.Component{
         this.setState({searchFormField:searchFormFields});
     }
 
+
+    getUserStatus(){
+        let userStat = userStatus;
+        if(this.props.security.role==="ROLE_ADMIN"){
+            userStat["BANNED"] = "BANNED";
+        }
+        return userStat;
+    }
+
     render(){
-        let userTypeOptions = createOptions(userStatus);
+        let userTypeOptions = createOptions(this.getUserStatus());
         let provincesOptions = createOptions(provinces);
 
         return (

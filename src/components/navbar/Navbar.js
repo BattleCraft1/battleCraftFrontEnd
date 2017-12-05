@@ -56,18 +56,21 @@ class Navbar extends React.Component{
 
     createOptions(){
         return <div>
-            <Dropdown
+            <NavElement
                 key="Tournaments"
                 name="Tournaments"
-            >{this.createTournamentOptionList()}</Dropdown>
-            <Dropdown
+                link="/collectionsPanel/tournaments"
+            />
+            <NavElement
                 key="Games"
                 name="Games"
-            >{this.createGamesOptionList()}</Dropdown>
-            <Dropdown
+                link="/collectionsPanel/games"
+            />
+            <NavElement
                 key="Users"
                 name="Users"
-            >{this.createUsersOptionList()}</Dropdown>
+                link="/collectionsPanel/users"
+            />
             <NavElement
                 key="Ranking"
                 name="Ranking"
@@ -80,51 +83,101 @@ class Navbar extends React.Component{
         </div>
     }
 
-    createTournamentOptionList(){
-        return [<ActivingPopupDropdownOption
-                key="1"
-                name = "Add tournament"
-                function = {() => {this.props.addEntity(entityPanelTypes.tournament)}}
-            />,
-            <NavigatingDropdownOption
-                key="2"
-                name = "All tournaments"
-                link = "/collectionsPanel/tournaments"
-
-            />]
-    }
-
-    createGamesOptionList(){
-        return [<ActivingPopupDropdownOption
-                key="1"
-                name = "Add game"
-                function = {() => {this.props.addEntity(entityPanelTypes.game)}}
-            />,
-            <NavigatingDropdownOption
-                key="2"
-                name = "All games"
-                link = "/collectionsPanel/games"
-            />]
-    }
-
-    createUsersOptionList(){
-        return <NavigatingDropdownOption
-                name = "All users"
-                link = "/collectionsPanel/users"
-            />
-    }
-
     createAccountOptionList(){
-        return [<ActivingPopupDropdownOption
-            key="1"
-            name = "Login"
-            function = {() => {this.props.showLoginPanel(true)}}
+        if(this.props.security.role === "" && this.props.security.token === ""){
+            return [<ActivingPopupDropdownOption
+                key="1"
+                name = "Login"
+                function = {() => {this.props.showLoginPanel(true)}}
             />,
-            <ActivingPopupDropdownOption
-                key="2"
-                name = "Forgot credentials?"
-                function = {() => {this.props.showCredentialsPanel(true)}}
-            />,]
+                <ActivingPopupDropdownOption
+                    key="2"
+                    name = "Forgot credentials?"
+                    function = {() => {this.props.showForgotCredentialsPanel(true)}}
+                />,
+                <ActivingPopupDropdownOption
+                    key="3"
+                    name = "Register"
+                    function = {() => {this.props.showRegisterPanel(true)}}
+                />,
+                <ActivingPopupDropdownOption
+                    key="4"
+                    name = "Resend verification mail"
+                    function = {() => {this.props.showResendMailPanel(true)}}
+                />]
+        }
+        else if (this.props.security.role === "ROLE_ACCEPTED"){
+            return [<ActivingPopupDropdownOption
+                key="1"
+                name = "Edit profile"
+                function = {() => {this.props.editEntity("user",this.props.security.username)}}
+            />,
+                <NavigatingDropdownOption
+                    key="2"
+                    name = "Played tournaments"
+                    link = "/collectionsPanel/participated"
+                />,
+                <ActivingPopupDropdownOption
+                    key="6"
+                    name = "Change password"
+                    function = {() => {this.props.showChangePasswordPanel(true)}}
+                />,
+                <ActivingPopupDropdownOption
+                    key="5"
+                    name = "Logout"
+                    function = {() => {this.props.logout()}}
+                />]
+        }
+        else if (this.props.security.role === "ROLE_ORGANIZER"){
+            return [<ActivingPopupDropdownOption
+                key="1"
+                name = "Edit profile"
+                function = {() => {this.props.editEntity("user",this.props.security.username)}}
+            />,
+                <NavigatingDropdownOption
+                    key="2"
+                    name = "Played tournaments"
+                    link = "/collectionsPanel/participated"
+                />,
+                <NavigatingDropdownOption
+                    key="3"
+                    name = "Organized tournaments"
+                    link = "/collectionsPanel/organized"
+                />,
+                <ActivingPopupDropdownOption
+                    key="6"
+                    name = "Change password"
+                    function = {() => {this.props.showChangePasswordPanel(true)}}
+                />,
+                <ActivingPopupDropdownOption
+                    key="5"
+                    name = "Logout"
+                    function = {() => {this.props.logout()}}
+                />]
+        }
+        else if (this.props.security.role === "ROLE_ADMIN"){
+            return [<ActivingPopupDropdownOption
+                key="1"
+                name = "Edit profile"
+                function = {() => {this.props.editEntity("user",this.props.security.username)}}
+            />,
+                <ActivingPopupDropdownOption
+                    key="2"
+                    name = "Create admin"
+                    function = {() => {this.props.showRegisterPanel(true)}}
+                />,
+                <ActivingPopupDropdownOption
+                    key="6"
+                    name = "Change password"
+                    function = {() => {this.props.showChangePasswordPanel(true)}}
+                />,
+                <ActivingPopupDropdownOption
+                    key="3"
+                    name = "Logout"
+                    function = {() => {this.props.logout()}}
+                />]
+        }
+
     }
 
     render(){
@@ -146,7 +199,9 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {};
+    return {
+        security:state.security
+    };
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Navbar );

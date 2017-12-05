@@ -15,6 +15,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../redux/actions';
 
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies('auth');
+
 class Panel extends React.Component{
 
     constructor(props) {
@@ -34,6 +38,7 @@ class Panel extends React.Component{
                 playersOnTableCount:0,
                 playersCount:0
             },
+            canCurrentUserMenageTournament:false
         }
     }
 
@@ -45,19 +50,30 @@ class Panel extends React.Component{
     }
 
     async componentDidMount() {
+        if(cookies.get('token')!==undefined && cookies.get('role')!==undefined && cookies.get('username')!==undefined){
+            await this.props.setTokenAndRole(cookies.get('token'),cookies.get('role'),cookies.get('username'));
+        }
         let tournamentName = this.props.match.params.tournamentName.replace("%"," ");
         this.setState({tournamentName:tournamentName});
         await this.fetchTournamentProgressData(tournamentName);
     }
 
     async fetchTournamentProgressData(tournamentName){
-        await axios.get(`${serverName}progress/tournament?name=${tournamentName}`)
+        this.props.startLoading("Fetching tournament progress...");
+        await axios.get(`${serverName}progress/tournament?name=${tournamentName}`,
+            {
+                headers: {
+                    "X-Auth-Token":this.props.security.token
+                }
+            })
             .then(async res => {
+                this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
                 await this.prepareToursData(res.data);
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -68,13 +84,21 @@ class Panel extends React.Component{
         let tournamentTypeString = this.state.playersOnTableCount === 4?"group":"duel";
         console.log("battle before send: ");
         console.log(battleData);
-        axios.post(`${serverName}set/points/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,battleDataToSend)
+        this.props.startLoading("Sending battle...");
+        axios.post(`${serverName}set/points/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,battleDataToSend,
+            {
+                headers: {
+                    "X-Auth-Token": this.props.security.token
+                }
+            })
             .then(res => {
+                this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
                 this.prepareToursData(res.data);
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -108,7 +132,7 @@ class Panel extends React.Component{
                 showBattlePopup={this.showBattlePopup.bind(this)}
                 playersOnTableCount={this.state.playersOnTableCount}
                 tournamentStatus={this.state.tournamentData.tournamentStatus}
-                disabled={index>this.state.tournamentData.currentTourNumber || this.state.tournamentData.tournamentStatus==="FINISHED"}
+                disabled={index>this.state.tournamentData.currentTourNumber || !this.state.tournamentData.canCurrentUserMenageTournament}
                 currentTourNumber={this.state.tournamentData.currentTourNumber}
             />
         )
@@ -180,8 +204,15 @@ class Panel extends React.Component{
 
     nextTourRequest(){
         let tournamentTypeString = this.state.playersOnTableCount === 4?"group":"duel";
-        axios.get(`${serverName}next/tour/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`)
+        this.props.startLoading("Changing tour...");
+        axios.get(`${serverName}next/tour/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,
+            {
+                headers: {
+                    "X-Auth-Token":this.props.security.token
+                }
+            })
             .then(res => {
+                this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
                 this.setState({playersOnTableCount:res.data.playersOnTableCount});
@@ -189,6 +220,7 @@ class Panel extends React.Component{
                 this.setState({tournamentData:res.data});
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -209,8 +241,15 @@ class Panel extends React.Component{
 
     previousTourRequest(){
         let tournamentTypeString = this.state.playersOnTableCount === 4?"group":"duel";
-        axios.get(`${serverName}previous/tour/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`)
+        this.props.startLoading("Coming back to previous tour...");
+        axios.get(`${serverName}previous/tour/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,
+            {
+                headers: {
+                    "X-Auth-Token":this.props.security.token
+                }
+            })
             .then(res => {
+                this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
                 this.setState({playersOnTableCount:res.data.playersOnTableCount});
@@ -218,6 +257,7 @@ class Panel extends React.Component{
                 this.setState({tournamentData:res.data});
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -246,8 +286,15 @@ class Panel extends React.Component{
     finishTournamentRequest(){
         let tournamentTypeString = this.state.playersOnTableCount === 4?"group":"duel";
 
-        axios.get(`${serverName}finish/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`)
+        this.props.startLoading("Finishing tournament...");
+        axios.get(`${serverName}finish/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,
+            {
+                headers: {
+                    "X-Auth-Token":this.props.security.token
+                }
+            })
             .then(res => {
+                this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
                 this.setState({playersOnTableCount:res.data.playersOnTableCount});
@@ -255,6 +302,7 @@ class Panel extends React.Component{
                 this.setState({tournamentData:res.data});
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -264,6 +312,11 @@ class Panel extends React.Component{
     }
 
     render(){
+
+        let buttonsDisabled = this.state.tournamentData.tournamentStatus === "FINISHED" ||
+            this.props.security.role==="ROLE_ADMIN" ||
+            !this.state.tournamentData.canCurrentUserMenageTournament;
+
         return(
             <div>
                 <div style={Object.assign({}, styles.goldAndBrownTheme, styles.container)}>
@@ -272,7 +325,7 @@ class Panel extends React.Component{
                     </div>
                 </div>
                 <OptionPanel
-                    disabled={this.state.tournamentData.tournamentStatus === "FINISHED"}
+                    disabled={buttonsDisabled}
                     previousTour={this.previousTour.bind(this)}
                     nextTour={this.nextTour.bind(this)}
                     finishTournament={this.finishTournament.bind(this)}
@@ -290,7 +343,9 @@ function mapDispatchToProps( dispatch ) {
 }
 
 function mapStateToProps( state ) {
-    return {};
+    return {
+        security: state.security
+    };
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( Panel );

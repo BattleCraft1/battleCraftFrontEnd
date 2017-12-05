@@ -1,5 +1,5 @@
 import React from 'react';
-import {styles, resp} from './styles'
+import {styles, resp} from '../styles'
 import Label from './Label'
 import {StyleSheet, css} from 'aphrodite';
 
@@ -11,6 +11,7 @@ export default class TextInput extends React.Component{
             <div style={Object.assign({}, styles.textContainer, {display:'block'}, this.props.additionalStyle)}>
                 <div style={Object.assign({}, styles.textOutputLabel, {marginBottom:'-2px'})}>{this.props.name}</div>
                     <input
+                        onChange={(event) => this.props.onChange(event)}
                        style={styles.textInput}
                        type={this.props.type ? this.props.type:"text"}
                        value={this.props.value}

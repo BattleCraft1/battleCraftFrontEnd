@@ -12,9 +12,13 @@ import { ActionCreators } from '../../redux/actions';
 
 import {serverName} from '../../main/consts/server'
 
-import {possibleOperationsForCollections} from "../../main/consts/possibleOperationsForCollections";
+import possibleOperationsForCollections from "../../main/functions/possibleOperationsForCollections";
 
 import axios from 'axios';
+
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies('auth');
 
 class CollectionPanel extends React.Component{
     constructor(props) {
@@ -26,26 +30,35 @@ class CollectionPanel extends React.Component{
     }
 
     async componentDidMount() {
-        this.setPossibleOperations(this.props.match.params.collectionType);
-        await this.getPage(this.props.match.params.collectionType);
-        await this.setState({collectionType: this.props.match.params.collectionType});
-        this.createPageRequest(this.state.collectionType);
+        let collectionType = this.props.match.params.collectionType;
+        if(cookies.get('token')!==undefined && cookies.get('role')!==undefined && cookies.get('username')!==undefined){
+            await this.props.setTokenAndRole(cookies.get('token'),cookies.get('role'),cookies.get('username'));
+        }
+        this.setPossibleOperations(collectionType,this.props.security.role);
+        this.createPageRequest(collectionType);
+        await this.setState({collectionType: collectionType});
     }
 
     async componentWillReceiveProps(nextProps) {
         if (nextProps.entityPanel.hidden === true &&
-            this.props.entityPanel.hidden === false) {
-            await this.setState({collectionType: nextProps.match.params.collectionType});
+            this.props.entityPanel.hidden === false &&
+            nextProps.entityPanel.mode !== 'disabled') {
+            let collectionType = nextProps.match.params.collectionType;
+            await this.setState({collectionType: collectionType});
             this.createPageRequestForEntityPanel(nextProps.entityPanel.relatedEntity.relatedEntityCriteria);
             this.setElementsToCheckForEntityPanel(nextProps.entityPanel.relatedEntity.relatedEntities);
             await this.getPage(this.state.collectionType);
         }
         else if (nextProps.match.params.collectionType !== this.state.collectionType ||
             (nextProps.entityPanel.mode === 'disabled' &&
-                this.props.entityPanel.mode !== 'disabled')) {
-            this.createPageRequest(nextProps.match.params.collectionType);
-            this.setPossibleOperations(nextProps.match.params.collectionType);
-            await this.setState({collectionType: nextProps.match.params.collectionType});
+                this.props.entityPanel.mode !== 'disabled' ||
+                nextProps.security.role !== this.props.security.role)) {
+            let collectionType = nextProps.match.params.collectionType;
+            this.createPageRequest(collectionType);
+            console.log(nextProps.security.role);
+            console.log(this.props.security.role);
+            this.setPossibleOperations(collectionType,nextProps.security.role);
+            await this.setState({collectionType: collectionType});
             await this.getPage(this.state.collectionType);
         }
     }
@@ -103,14 +116,20 @@ class CollectionPanel extends React.Component{
         }
     }
 
-    setPossibleOperations(collectionType){
-        this.props.setOperations(possibleOperationsForCollections[collectionType])
+    setPossibleOperations(collectionType,role){
+        this.props.setOperations(possibleOperationsForCollections(collectionType,role))
     }
 
     async getPage(collectionType){
         console.log("page request:");
         console.log(this.props.pageRequest);
-        await axios.post(serverName+`page/`+collectionType,this.props.pageRequest)
+        this.props.startLoading("Fetching page of data...");
+        await axios.post(serverName+`page/`+collectionType,this.props.pageRequest,
+            {
+                headers: {
+                    "X-Auth-Token":this.props.security.token
+                }
+            })
             .then(res => {
                 console.log("page of data:");
                 console.log(res.data);
@@ -124,9 +143,9 @@ class CollectionPanel extends React.Component{
                         page : this.props.page.number
                     }
                 });
+                this.props.stopLoading();
             })
             .catch(error => {
-
                 this.props.setEmptyPage();
                 this.props.setPageRequest({
                     searchCriteria:this.props.pageRequest.searchCriteria,
@@ -137,6 +156,7 @@ class CollectionPanel extends React.Component{
                         page : 0
                     }
                 });
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
     }
@@ -174,7 +194,9 @@ function mapStateToProps( state ) {
     return {
         page: state.page,
         pageRequest: state.pageRequest,
-        entityPanel: state.entityPanel
+        entityPanel: state.entityPanel,
+        possibleOperations: state.possibleOperations,
+        security: state.security
     };
 }
 

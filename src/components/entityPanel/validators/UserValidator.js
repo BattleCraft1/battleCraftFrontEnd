@@ -7,8 +7,8 @@ export default (entity) => {
     let validationErrors = {};
     let fieldErrors = {};
 
-    if(!entity.nameChange.match(new RegExp("^[A-ZĄĆĘŁŃÓŚŹŻa-zzżźćńółęąś1-9]{3,30}$")))
-        fieldErrors.nameChange = "Name must start with big letter and have between 3 to 30 chars";
+    if(!entity.nameChange.match(new RegExp("^[A-ZĄĆĘŁŃÓŚŹŻa-zzżźćńółęąś0-9]{3,30}$")))
+        fieldErrors.nameChange = "Name must have between 3 to 30 chars";
 
     if(!entity.firstname.match(new RegExp("^[A-ZĄĆĘŁŃÓŚŹŻ][a-zzżźćńółęąś]{2,19}$")))
         fieldErrors.firstname = "First name must start with big letter and have between 3 to 30 chars";
@@ -31,7 +31,7 @@ export default (entity) => {
         fieldErrors.organizedTournaments = "You cannot have duplicated tournament";
 
     if(!checkIfObjectIsNotEmpty(fieldErrors)){
-        validationErrors.message = "Invalid tournament data";
+        validationErrors.message = "Invalid user data";
         validationErrors.fieldErrors = fieldErrors;
     }
 

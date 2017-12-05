@@ -1,5 +1,5 @@
 import React from 'react';
-import {styles} from './styles'
+import {styles} from '../styles'
 import {css} from 'aphrodite';
 
 export default class Label extends React.Component{

@@ -20,6 +20,10 @@ function configureStore( initialState ) {
 }
 
 const store = configureStore( {
+    loading:{
+        dataFetched:false,
+        message:""
+    },
     search:false,
     possibleOperations:[],
     entityPanel: {
@@ -64,10 +68,23 @@ const store = configureStore( {
         searchCriteria:[
         ]
     },
-    loginPanel: {
-        isShown:false,
-        isCredentialsShown:false,
+    securityPanels: {
+        isRegisterPanelShown:false,
+        isLoginPanelShown:false,
+        isForgotCredentialsPanelShown:false,
+        isResendMailPanelShown:false,
+        isChangePasswordPanelShown:false
     },
+    security:{
+        token:"",
+        role:"",
+        username:""
+    },
+    reportPanel:{
+        isShown:false,
+        objectType:"",
+        objectNames:[]
+    }
 } );
 
 

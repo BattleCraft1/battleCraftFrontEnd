@@ -32,7 +32,12 @@ class DeleteOperation extends React.Component {
             };
 
             let operationFunction = function(){
-                axios.post(serverName+`delete/`+collectionType, GetPageAndModifyDataDTO)
+                axios.post(serverName+`delete/`+collectionType, GetPageAndModifyDataDTO,
+                    {
+                        headers: {
+                            "X-Auth-Token":this.props.security.token
+                        }
+                    })
                     .then(res => {
                         clearCheckedElements();
                         showSuccessMessage(getSuccessMessage(checkedElementsNames));
@@ -73,7 +78,8 @@ function mapDispatchToProps( dispatch ) {
 function mapStateToProps( state ) {
     return {
         page: state.page,
-        pageRequest: state.pageRequest
+        pageRequest: state.pageRequest,
+        security: state.security
     };
 }
 

@@ -23,6 +23,8 @@ let icons = require('glyphicons');
 
 const rowTypeMap = {
     "tournaments":TournamentRow,
+    "participated":TournamentRow,
+    "organized":TournamentRow,
     "games":GameRow,
     "ranking":RankingRow,
     "users":UserRow
@@ -30,6 +32,8 @@ const rowTypeMap = {
 
 const rowHeaderTypeMap = {
     "tournaments":TournamentRowHeader,
+    "participated":TournamentRowHeader,
+    "organized":TournamentRowHeader,
     "games":GameRowHeader,
     "ranking":RankingRowHeader,
     "users":UserRowHeader
@@ -62,6 +66,7 @@ class TableOfEntities extends React.Component{
 
     prepareRowsOfTable(key){
         let rows = [];
+        console.log(this.props.collectionType);
         if(rowTypeMap[this.props.collectionType]!==undefined){
             let typeOfRow = rowTypeMap[this.props.collectionType];
 
@@ -91,6 +96,7 @@ class TableOfEntities extends React.Component{
         let legend = <div/>;
         let rowHeader = <tr/>;
 
+        console.log(this.props.collectionType);
         if(this.props.collectionType!=="")
             rowHeader = React.createElement(
                 rowHeaderTypeMap[this.props.collectionType],

@@ -38,11 +38,14 @@ class FormInputs extends React.Component{
     }
 
     async componentDidMount(){
+        this.props.startLoading("Fetching games names...");
         await axios.get(serverName+`get/allGames/names`)
             .then(res => {
+                this.props.stopLoading();
                 this.setState({tournamentsGames:res.data});
             })
             .catch(error => {
+                this.props.stopLoading();
                 this.props.showNetworkErrorMessage(error);
             });
         this.setDefaultGameSearchCriteria();
