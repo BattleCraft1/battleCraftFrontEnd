@@ -2,15 +2,14 @@ import React from 'react';
 import {StyleSheet, css} from 'aphrodite';
 import NavElement from './NavElements/NavElement';
 import Dropdown from './NavElements/Dropdown';
-import ActivingPopupDropdownOption from './NavElements/DropdownOption/ActivingPopupDropdownOption';
+import AccountDropdown from './NavElements/AccountDropdown';
+import ActivePopupDropdownOption from './NavElements/DropdownOption/ActivatePopupDropdownOption';
 import NavigatingDropdownOption from './NavElements/DropdownOption/NavigatingDropdownOption';
 import ResponsiveMenuButton from './ResponsiveMenuButton'
 
 import { ActionCreators } from '../../redux/actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-import {entityPanelTypes} from '../../main/consts/entityPanelTypes'
 
 class Navbar extends React.Component{
     constructor(props) {
@@ -59,55 +58,66 @@ class Navbar extends React.Component{
             <NavElement
                 key="Tournaments"
                 name="Tournaments"
-                link="/collectionsPanel/tournaments"
+                link="/battleCraft/collectionsPanel/tournaments"
             />
             <NavElement
                 key="Games"
                 name="Games"
-                link="/collectionsPanel/games"
+                link="/battleCraft/collectionsPanel/games"
             />
             <NavElement
                 key="Users"
                 name="Users"
-                link="/collectionsPanel/users"
+                link="/battleCraft/collectionsPanel/users"
             />
             <NavElement
                 key="Ranking"
                 name="Ranking"
-                link="/collectionsPanel/ranking"
+                link="/battleCraft/collectionsPanel/ranking"
             />
-            <Dropdown
-                key="Account"
-                name="Account"
-            >{this.createAccountOptionList()}</Dropdown>
+            {this.createAccountNavElement()}
         </div>
     }
 
-    createAccountOptionList(){
+    createAccountNavElement(){
         if(this.props.security.role === "" && this.props.security.token === ""){
-            return [<ActivingPopupDropdownOption
-                key="1"
-                name = "Login"
-                function = {() => {this.props.showLoginPanel(true)}}
-            />,
-                <ActivingPopupDropdownOption
+            return <Dropdown
+                key="Account"
+                name="Account">
+                <ActivePopupDropdownOption
+                    key="1"
+                    name = "Login"
+                    function = {() => {this.props.showLoginPanel(true)}}
+                />
+                <ActivePopupDropdownOption
                     key="2"
                     name = "Forgot credentials?"
                     function = {() => {this.props.showForgotCredentialsPanel(true)}}
-                />,
-                <ActivingPopupDropdownOption
+                />
+                <ActivePopupDropdownOption
                     key="3"
                     name = "Register"
                     function = {() => {this.props.showRegisterPanel(true)}}
-                />,
-                <ActivingPopupDropdownOption
+                />
+                <ActivePopupDropdownOption
                     key="4"
                     name = "Resend verification mail"
                     function = {() => {this.props.showResendMailPanel(true)}}
-                />]
+                />
+            </Dropdown>
         }
-        else if (this.props.security.role === "ROLE_ACCEPTED"){
-            return [<ActivingPopupDropdownOption
+        else{
+            return <AccountDropdown
+                key="Account"
+                name={this.props.security.username}>
+                {this.createAccountOptionList()}
+            </AccountDropdown>
+        }
+    }
+
+    createAccountOptionList(){
+        if (this.props.security.role === "ROLE_ACCEPTED"){
+            return [<ActivePopupDropdownOption
                 key="1"
                 name = "Edit profile"
                 function = {() => {this.props.editEntity("user",this.props.security.username)}}
@@ -115,21 +125,21 @@ class Navbar extends React.Component{
                 <NavigatingDropdownOption
                     key="2"
                     name = "Played tournaments"
-                    link = "/collectionsPanel/participated"
+                    link = "/battleCraft/collectionsPanel/participated"
                 />,
-                <ActivingPopupDropdownOption
+                <ActivePopupDropdownOption
                     key="6"
                     name = "Change password"
                     function = {() => {this.props.showChangePasswordPanel(true)}}
                 />,
-                <ActivingPopupDropdownOption
+                <ActivePopupDropdownOption
                     key="5"
                     name = "Logout"
                     function = {() => {this.props.logout()}}
                 />]
         }
         else if (this.props.security.role === "ROLE_ORGANIZER"){
-            return [<ActivingPopupDropdownOption
+            return [<ActivePopupDropdownOption
                 key="1"
                 name = "Edit profile"
                 function = {() => {this.props.editEntity("user",this.props.security.username)}}
@@ -137,41 +147,41 @@ class Navbar extends React.Component{
                 <NavigatingDropdownOption
                     key="2"
                     name = "Played tournaments"
-                    link = "/collectionsPanel/participated"
+                    link = "/battleCraft/collectionsPanel/participated"
                 />,
                 <NavigatingDropdownOption
                     key="3"
                     name = "Organized tournaments"
-                    link = "/collectionsPanel/organized"
+                    link = "/battleCraft/collectionsPanel/organized"
                 />,
-                <ActivingPopupDropdownOption
+                <ActivePopupDropdownOption
                     key="6"
                     name = "Change password"
                     function = {() => {this.props.showChangePasswordPanel(true)}}
                 />,
-                <ActivingPopupDropdownOption
+                <ActivePopupDropdownOption
                     key="5"
                     name = "Logout"
                     function = {() => {this.props.logout()}}
                 />]
         }
         else if (this.props.security.role === "ROLE_ADMIN"){
-            return [<ActivingPopupDropdownOption
+            return [<ActivePopupDropdownOption
                 key="1"
                 name = "Edit profile"
                 function = {() => {this.props.editEntity("user",this.props.security.username)}}
             />,
-                <ActivingPopupDropdownOption
+                <ActivePopupDropdownOption
                     key="2"
                     name = "Create admin"
                     function = {() => {this.props.showRegisterPanel(true)}}
                 />,
-                <ActivingPopupDropdownOption
+                <ActivePopupDropdownOption
                     key="6"
                     name = "Change password"
                     function = {() => {this.props.showChangePasswordPanel(true)}}
                 />,
-                <ActivingPopupDropdownOption
+                <ActivePopupDropdownOption
                     key="3"
                     name = "Logout"
                     function = {() => {this.props.logout()}}
@@ -210,7 +220,7 @@ export default connect( mapStateToProps, mapDispatchToProps )( Navbar );
 const resp = StyleSheet.create({
     navbar:{
         position:'relative',
-        marginBottom:'20px',
+        marginBottom:'70px',
         width:'70%',
         marginLeft:'15%',
         background:'none',

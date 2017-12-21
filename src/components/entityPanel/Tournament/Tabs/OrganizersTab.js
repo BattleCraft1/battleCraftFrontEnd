@@ -37,7 +37,7 @@ class OrganizersTab extends React.Component{
                     relatedEntity={this.props.relatedEntity}
                     hidden={this.props.hidden}
                     name="Organizers" />
-                {!this.props.inputsDisabled && <InviteButton to='/collectionsPanel/users'
+                {!this.props.inputsDisabled && <InviteButton to='/battleCraft/collectionsPanel/users'
                                                  operation={this.startInviteOrganizers.bind(this)} text="Invite"/>}
             </div>
         )

@@ -70,7 +70,7 @@ class PlayerTab extends React.Component{
                     disabled = {this.props.inputsDisabled}
                     changeEntity={this.props.changeEntity.bind(this)}
                     name="Participated tournaments" />
-                {!this.props.inputsDisabled && <InviteButton to='/collectionsPanel/tournaments'
+                {!this.props.inputsDisabled && <InviteButton to='/battleCraft/collectionsPanel/tournaments'
                                                  operation={this.startAddTournaments.bind(this)}  text="Add"/>}
                 <TournamentsTableOutput
                     value={this.props.entity["finishedParticipatedTournaments"]}

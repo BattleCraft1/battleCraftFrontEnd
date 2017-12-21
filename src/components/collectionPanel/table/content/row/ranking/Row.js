@@ -93,17 +93,17 @@ class Row extends React.Component{
                 />
 
                 <TableResponsiveHeader
-                    isActive = {this.props.isColumnActive("numberOfTournaments")}
-                    sortBy = "numberOfTournaments"
+                    isActive = {this.props.isColumnActive("numberOftournaments")}
+                    sortBy = "numberOftournaments"
                     sort = {this.props.sortByColumnName}
-                    arrow = {this.props.getArrowGlyph("numberOfTournaments")}
-                    headerName = "Tournaments number"
+                    arrow = {this.props.getArrowGlyph("numberOftournaments")}
+                    headerName = "tournaments number"
                 />
                 <TableCell
-                    columnName = "numberOfTournaments"
-                    color = {this.getColor("numberOfTournaments")}
+                    columnName = "numberOftournaments"
+                    color = {this.getColor("numberOftournaments")}
                     edit = {() => this.showUser(this.props.element.name)}
-                    content = {this.props.element.numberOfTournaments}
+                    content = {this.props.element.numberOftournaments}
                 />
 
                 <TableResponsiveHeader

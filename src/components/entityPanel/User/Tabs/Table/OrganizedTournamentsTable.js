@@ -1,10 +1,10 @@
 import React from 'react';
 import {styles} from '../../../styles'
-import DuelTournamentTableRow from './Row/DuelTournamentTableRow'
+import DueltournamentTableRow from './Row/DuelTournamentTableRow'
 import EmptyTableRow from './Row/EmptyTournamentTableRow'
 import '../../../TableInputs/scrollbar.css'
 
-export default class OrganizedTournamentsTable extends React.Component{
+export default class OrganizedtournamentsTable extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -25,12 +25,12 @@ export default class OrganizedTournamentsTable extends React.Component{
     }
 
     actualizeRelatedEntityObjects(relatedEntities){
-        let organizedTournaments = this.props.value;
-        let relatedEntitiesNames = organizedTournaments.map(entity => entity.name);
+        let organizedtournaments = this.props.value;
+        let relatedEntitiesNames = organizedtournaments.map(entity => entity.name);
         relatedEntities.forEach(
             elementName => {
                 if(relatedEntitiesNames.indexOf(elementName)===-1){
-                    organizedTournaments.push({
+                    organizedtournaments.push({
                         name:elementName,
                         accepted:false
                     })
@@ -40,12 +40,12 @@ export default class OrganizedTournamentsTable extends React.Component{
         relatedEntitiesNames.forEach(
             elementName => {
                 if(relatedEntities.indexOf(elementName)===-1){
-                    let organizerToDelete = organizedTournaments.find(element => element.name===elementName);
-                    organizedTournaments.splice(organizedTournaments.indexOf(organizerToDelete),1);
+                    let organizerToDelete = organizedtournaments.find(element => element.name===elementName);
+                    organizedtournaments.splice(organizedtournaments.indexOf(organizerToDelete),1);
                 }
             }
         );
-        this.props.changeEntity(this.props.fieldName,organizedTournaments);
+        this.props.changeEntity(this.props.fieldName,organizedtournaments);
     }
 
     createTableRows(){
@@ -54,7 +54,7 @@ export default class OrganizedTournamentsTable extends React.Component{
         }
         else{
             return this.props.value.map(tournament =>
-                <DuelTournamentTableRow key={tournament.name}
+                <DueltournamentTableRow key={tournament.name}
                                         disabled = {this.props.disabled}
                                         delete = {this.deleteElement.bind(this)}
                                         accept = {this.acceptElement.bind(this)}

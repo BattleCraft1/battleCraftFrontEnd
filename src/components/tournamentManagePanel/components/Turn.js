@@ -36,21 +36,21 @@ class Turn extends React.Component{
     }
 
     createBattles(){
-        return this.props.tourData
+        return this.props.turnData
             .sort(
                 (battle1,battle2) => battle1.tableNumber - battle2.tableNumber
             )
             .map(
                 (battle,index) => {
-                    if(this.props.haveAlonePlayer && index === this.props.tourData.length-1 && this.props.tournamentStatus!=="FINISHED"){
-                        if(this.props.currentTourNumber<=this.props.tourNumber){
+                    if(this.props.haveAlonePlayer && index === this.props.turnData.length-1 && this.props.tournamentStatus!=="FINISHED"){
+                        if(this.props.currentTurnNumber<=this.props.turnNumber){
                             return;
                         }
                     }
 
                     if (this.props.playersOnTableCount === 2) {
                         return <Battle1x1
-                            tourNumber={this.props.tourNumber}
+                            turnNumber={this.props.turnNumber}
                             key={battle.tableNumber}
                             battleData={battle}
                             showBattlePopup={this.props.showBattlePopup}
@@ -59,7 +59,7 @@ class Turn extends React.Component{
                     }
                     else {
                         return <Battle2x2
-                            tourNumber={this.props.tourNumber}
+                            turnNumber={this.props.turnNumber}
                             key={battle.tableNumber}
                             battleData={battle}
                             showBattlePopup={this.props.showBattlePopup}
@@ -74,8 +74,8 @@ class Turn extends React.Component{
     render(){
         return(
             <div style={Object.assign({}, styles.turnContainer)}>
-                <Label active={this.props.currentTourNumber===this.props.tourNumber}
-                       name={"TOUR "+(this.props.tourNumber+1) } />
+                <Label active={this.props.currentTurnNumber===this.props.turnNumber}
+                       name={"Turn "+(this.props.turnNumber+1) } />
                 <div ref="container" style={Object.assign({}, styles.turnContent, (this.state.elementHeight*1.4 > this.state.height)?{overflowY:'scroll', maxHeight:this.state.height*0.65}:{})}>
                     {this.createBattles()}
                 </div>

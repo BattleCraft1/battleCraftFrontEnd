@@ -30,7 +30,12 @@ class PagePanel extends React.Component{
         let pagesButtons = [];
         for(let i=0;i<this.props.page.totalPages;i++)
         {
-            pagesButtons.push(<button onClick={()=>this.changePage(i)} key={'pageButton'+i} type="button" style = {styles.pageButton}>{i+1}</button>);
+            pagesButtons.push(
+                <button
+                    onClick={()=>this.changePage(i)}
+                    key={'pageButton'+i}
+                    type="button"
+                    style = {Object.assign({}, styles.pageButton, i===this.props.pageRequest.pageRequest.page?{borderStyle:'inset'}:{borderStyle:'outset'})}>{i+1}</button>);
         }
         return pagesButtons;
     }

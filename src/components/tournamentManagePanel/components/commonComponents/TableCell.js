@@ -5,8 +5,10 @@ export default class TableCell extends React.Component{
     render(){
         return(
             <div style={Object.assign({}, styles.textCell, this.props.double ? {height:'100px'}:{})}>
-                <div style={styles.text}>{this.props.content}</div>
-                 </div>
+                <div style={styles.text}>
+                    {this.props.content}
+                </div>
+            </div>
         )
     }
 }

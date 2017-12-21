@@ -54,7 +54,7 @@ class ParticipantsTab extends React.Component{
         }
     }
 
-    chooseUserTableByTournamentType(){
+    chooseUserTableBytournamentType(){
         if(this.props.entity["playersOnTableCount"] === 2){
             return <div>
                 <ParticipantsTable
@@ -66,7 +66,7 @@ class ParticipantsTab extends React.Component{
                     hidden={this.props.hidden}
                     name="Participants" />
                 {!this.props.inputsDisabled &&
-                <InviteButton to='/collectionsPanel/users' operation={this.startInviteParticipants.bind(this)}  text="Invite"/>}
+                <InviteButton to='/battleCraft/collectionsPanel/users' operation={this.startInviteParticipants.bind(this)}  text="Invite"/>}
             </div>
         }
         else{
@@ -90,7 +90,7 @@ class ParticipantsTab extends React.Component{
             <div style={Object.assign({},{marginLeft:'10%',marginRight:'10%'})}>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["participants"]}/>
-                {this.chooseUserTableByTournamentType()}
+                {this.chooseUserTableBytournamentType()}
             </div>
         )
     }

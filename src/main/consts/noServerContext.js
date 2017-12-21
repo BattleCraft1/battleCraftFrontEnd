@@ -10,7 +10,7 @@ export const noServerContext =
            "dateOfEnd": 1531761420000,
            "province": "łódzkie",
            "city": "Łódź",
-           "name": "Tournament9",
+           "name": "tournament9",
            "dateOfStart": 1531502220000,
            "playersNumber": 2,
            "banned": false,
@@ -23,7 +23,7 @@ export const noServerContext =
            "dateOfEnd": 1527984720000,
            "province": "opolskie",
            "city": "Opole",
-           "name": "Tournament8",
+           "name": "tournament8",
            "dateOfStart": 1527898320000,
            "playersNumber": 4,
            "banned": false,
@@ -36,7 +36,7 @@ export const noServerContext =
            "dateOfEnd": 1543748760000,
            "province": "wielkopolskie",
            "city": "Poznań",
-           "name": "Tournament7",
+           "name": "tournament7",
            "dateOfStart": 1507195464665,
            "playersNumber": 4,
            "banned": false,
@@ -49,7 +49,7 @@ export const noServerContext =
            "dateOfEnd": 1542103980000,
            "province": "zachodiopomorskie",
            "city": "Szczecin",
-           "name": "Tournament6",
+           "name": "tournament6",
            "dateOfStart": 1507195464664,
            "playersNumber": 4,
            "banned": false,
@@ -62,7 +62,7 @@ export const noServerContext =
            "dateOfEnd": 1526400300000,
            "province": "śląskie",
            "city": "Katowice",
-           "name": "Tournament5",
+           "name": "tournament5",
            "dateOfStart": 1507195464663,
            "playersNumber": 2,
            "banned": false,
@@ -75,7 +75,7 @@ export const noServerContext =
            "dateOfEnd": 1524845100000,
            "province": "małopolskie",
            "city": "Kraków",
-           "name": "Tournament4",
+           "name": "tournament4",
            "dateOfStart": 1507195464662,
            "playersNumber": 4,
            "banned": false,
@@ -88,7 +88,7 @@ export const noServerContext =
            "dateOfEnd": 1520870700000,
            "province": "dolnośląskie",
            "city": "Wrocław",
-           "name": "Tournament3",
+           "name": "tournament3",
            "dateOfStart": 1507195464661,
            "playersNumber": 4,
            "banned": false,
@@ -101,7 +101,7 @@ export const noServerContext =
            "dateOfEnd": 1518357900000,
            "province": "lubelskie",
            "city": "Zamość",
-           "name": "Tournament2",
+           "name": "tournament2",
            "dateOfStart": 1507195464660,
            "playersNumber": 4,
            "banned": false,
@@ -114,7 +114,7 @@ export const noServerContext =
            "dateOfEnd": 1535306760000,
            "province": "podlaskie",
            "city": "Białystok",
-           "name": "Tournament10",
+           "name": "tournament10",
            "dateOfStart": 1535306700000,
            "playersNumber": 4,
            "banned": false,
@@ -127,7 +127,7 @@ export const noServerContext =
            "dateOfEnd": 1515506700000,
            "province": "lubelskie",
            "city": "Lublin",
-           "name": "Tournament1",
+           "name": "tournament1",
            "dateOfStart": 1507195464644,
            "playersNumber": 4,
            "banned": false,
@@ -326,7 +326,7 @@ export const noServerContext =
         "totalElements": 10,
     "content": [
         {
-            "numberOfTournaments": 5,
+            "numberOftournaments": 5,
             "province": "śląskie",
             "numberOfBattles": 9,
             "city": "Katowice",
@@ -334,7 +334,7 @@ export const noServerContext =
             "points": 105
         },
         {
-            "numberOfTournaments": 4,
+            "numberOftournaments": 4,
             "province": "dolnośląskie",
             "numberOfBattles": 8,
             "city": "Wrocław",
@@ -342,7 +342,7 @@ export const noServerContext =
             "points": 85
         },
         {
-            "numberOfTournaments": 4,
+            "numberOftournaments": 4,
             "province": "lubelskie",
             "numberOfBattles": 8,
             "city": "Lublin",
@@ -350,7 +350,7 @@ export const noServerContext =
             "points": 82
         },
         {
-            "numberOfTournaments": 4,
+            "numberOftournaments": 4,
             "province": "lubelskie",
             "numberOfBattles": 8,
             "city": "Zamość",
@@ -358,7 +358,7 @@ export const noServerContext =
             "points": 72
         },
         {
-            "numberOfTournaments": 3,
+            "numberOftournaments": 3,
             "province": "podlaskie",
             "numberOfBattles": 5,
             "city": "Białystok",
@@ -366,7 +366,7 @@ export const noServerContext =
             "points": 38
         },
         {
-            "numberOfTournaments": 2,
+            "numberOftournaments": 2,
             "province": "małopolskie",
             "numberOfBattles": 4,
             "city": "Kraków",
@@ -374,7 +374,7 @@ export const noServerContext =
             "points": 38
         },
         {
-            "numberOfTournaments": 1,
+            "numberOftournaments": 1,
             "province": "opolskie",
             "numberOfBattles": 2,
             "city": "Opole",
@@ -382,7 +382,7 @@ export const noServerContext =
             "points": 25
         },
         {
-            "numberOfTournaments": 1,
+            "numberOftournaments": 1,
             "province": "zachodiopomorskie",
             "numberOfBattles": 2,
             "city": "Szczecin",
@@ -390,7 +390,7 @@ export const noServerContext =
             "points": 22
         },
         {
-            "numberOfTournaments": 1,
+            "numberOftournaments": 1,
             "province": "łódzkie",
             "numberOfBattles": 2,
             "city": "Łódź",
@@ -398,7 +398,7 @@ export const noServerContext =
             "points": 18
         },
         {
-            "numberOfTournaments": 1,
+            "numberOftournaments": 1,
             "province": "wielkopolskie",
             "numberOfBattles": 2,
             "city": "Poznań",

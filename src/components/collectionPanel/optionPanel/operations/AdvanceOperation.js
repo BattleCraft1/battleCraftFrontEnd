@@ -22,6 +22,10 @@ class AdvanceOperation extends React.Component {
         let showNetworkErrorMessage = this.props.showNetworkErrorMessage;
         let getSuccessMessage = this.getSuccessMessage;
 
+        let startLoading=this.props.startLoading;
+        let stopLoading=this.props.stopLoading;
+        let token = this.props.security.token;
+
         if(checkedElementsNames.length>0) {
             let GetPageAndModifyDataDTO = {
                 namesOfObjectsToModify: checkedElementsNames,
@@ -29,17 +33,20 @@ class AdvanceOperation extends React.Component {
             };
 
             let operationFunction = function(){
+                startLoading("Advancing...");
                 axios.post(serverName+`advance/players`, GetPageAndModifyDataDTO,
                     {
                         headers: {
-                            "X-Auth-Token":this.props.security.token
+                            "X-Auth-Token":token
                         }
                     })
                     .then(res => {
+                        stopLoading();
                         checkPreviouslyCheckedElements(res.data);
                         showSuccessMessage(getSuccessMessage(checkedElementsNames));
                     })
                     .catch(error => {
+                        stopLoading();
                         showNetworkErrorMessage(error);
                     })
             };

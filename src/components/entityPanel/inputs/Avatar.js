@@ -38,6 +38,7 @@ class Avatar extends React.Component{
                 formData,
                 {
                     headers: {
+                        "X-Auth-Token":this.props.security.token,
                         'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
                     }
                 })
@@ -78,6 +79,7 @@ function mapDispatchToProps( dispatch ) {
 
 function mapStateToProps( state ) {
     return {
+        security: state.security,
         message: state.message
     };
 }

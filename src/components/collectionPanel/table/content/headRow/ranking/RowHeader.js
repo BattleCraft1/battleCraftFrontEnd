@@ -37,11 +37,11 @@ export default class RowHeader extends React.Component{
                     content="city"
                 />
                 <TableHeader
-                    sortBy = "numberOfTournaments"
+                    sortBy = "numberOftournaments"
                     sort = {this.props.sortByColumnName}
-                    isActive = {this.props.isColumnActive("numberOfTournaments")}
-                    arrow = {this.props.getArrowGlyph("numberOfTournaments")}
-                    content="Tournaments number"
+                    isActive = {this.props.isColumnActive("numberOftournaments")}
+                    arrow = {this.props.getArrowGlyph("numberOftournaments")}
+                    content="tournaments number"
                 />
                 <TableHeader
                     sortBy = "numberOfBattles"

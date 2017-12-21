@@ -16,6 +16,7 @@ import ForgotCredentialsPanel from '../components/accountPanel/forgotCredentials
 import RegisterPanel from '../components/accountPanel/registrationPanel/Panel'
 import ResendMailPanel from '../components/accountPanel/resendMailTab/ResendMailPanel'
 import Loading from '../components/commonComponents/loading/Loading'
+import HomePage from './HomePage'
 
 class App extends Component {
 
@@ -38,8 +39,9 @@ class App extends Component {
                 <RegisterPanel userKind={"normal"}/>
                 <ResendMailPanel/>
                 <Switch>
-                    <Route path='/collectionsPanel/:collectionType' component={CollectionPanel}/>
-                    <Route path='/progress/:tournamentName' component={ManagementPanel}/>
+                    <Route path='/battleCraft/collectionsPanel/:collectionType' component={CollectionPanel}/>
+                    <Route path='/battleCraft/progress/:tournamentName' component={ManagementPanel}/>
+                    <Route path='/battleCraft' component={HomePage}/>
                 </Switch>
             </div>
           </div>

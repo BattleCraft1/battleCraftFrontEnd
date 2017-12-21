@@ -2,7 +2,7 @@ import React from 'react';
 import {css} from 'aphrodite';
 import {resp, styles} from '../../../../styles'
 
-export default class EmptyTournamentTableRow extends React.Component{
+export default class EmptytournamentTableRow extends React.Component{
     render(){
         return(
             <tr>

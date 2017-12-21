@@ -41,7 +41,7 @@ class BasicDataTab extends React.Component{
             });
     }
 
-    calculateTournamentType(maxPlayers){
+    calculatetournamentType(maxPlayers){
         if(maxPlayers<=8){
             return "Local";
         }
@@ -70,7 +70,7 @@ class BasicDataTab extends React.Component{
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["playersOnTableCount"]}/>
                 <ValidationErrorMessage
-                    validationErrorMessage={this.props.validationErrors["toursCount"]}/>
+                    validationErrorMessage={this.props.validationErrors["turnsCount"]}/>
                 <ValidationErrorMessage
                     validationErrorMessage={this.props.validationErrors["dateOfStart"]}/>
                 <ValidationErrorMessage
@@ -84,7 +84,7 @@ class BasicDataTab extends React.Component{
                     name="Name"/>
                 <TextOutput
                     value={this.props.entity["status"]}
-                    name="Tournament status"/>
+                    name="tournament status"/>
                 <SelectInput
                     value={this.props.entity["game"]}
                     fieldName="game"
@@ -109,19 +109,19 @@ class BasicDataTab extends React.Component{
                     name="Type"/>
 
                 <NumberInput
-                    value={this.props.entity["toursCount"]}
-                    fieldName="toursCount"
+                    value={this.props.entity["turnsCount"]}
+                    fieldName="turnsCount"
                     changeEntity={this.props.changeEntity}
                     disabled = {this.props.inputsDisabled}
-                    name="Tours count"/>
+                    name="turns count"/>
 
                 <NumberOutput
                     value={maxPlayers}
                     name="Max players"/>
 
                 <TextOutput
-                    value={this.calculateTournamentType(maxPlayers)}
-                    name="Tournament class"/>
+                    value={this.calculatetournamentType(maxPlayers)}
+                    name="tournament class"/>
 
                 <DateInput
                     value={this.props.entity["dateOfStart"]}

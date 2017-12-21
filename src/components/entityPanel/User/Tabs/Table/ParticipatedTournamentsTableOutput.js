@@ -1,13 +1,13 @@
 import React from 'react';
 import {styles} from '../../../styles'
-import DuelTournamentTableRow from './Row/DuelTournamentTableRow'
+import DueltournamentTableRow from './Row/DuelTournamentTableRow'
 import EmptyTableRow from './Row/EmptyTournamentTableRow'
-import TournamentDataInGroupTournamentRow from './Row/TournamentDataInGroupTournamentRow'
+import tournamentDataInGrouptournamentRow from './Row/TournamentDataInGroupTournamentRow'
 import EmptySecondPlayerInGroupRow from "./Row/EmptySecondPlayerInGroupRow";
-import SecondPlayerDataInGroupTournamentRow from "./Row/SecondPlayerDataInGroupTournamentRow";
+import SecondPlayerDataInGrouptournamentRow from "./Row/SecondPlayerDataInGroupTournamentRow";
 import '../../../TableInputs/scrollbar.css'
 
-export default class TournamentsTableOutput extends React.Component{
+export default class tournamentsTableOutput extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -29,7 +29,7 @@ export default class TournamentsTableOutput extends React.Component{
             for(let i=0; i<this.props.value.length; i++){
                 if(this.props.value[i].secondPlayerName === undefined){
                     outputTable.push(
-                        <DuelTournamentTableRow key={this.props.value[i].name}
+                        <DueltournamentTableRow key={this.props.value[i].name}
                                                 disabled = {true}
                                                 accepted={false}
                                                 name={this.props.value[i].name}/>
@@ -37,7 +37,7 @@ export default class TournamentsTableOutput extends React.Component{
                 }
                 else{
                     outputTable.push(
-                        <TournamentDataInGroupTournamentRow
+                        <tournamentDataInGrouptournamentRow
                             key={this.props.value[i].name}
                             disabled = {true}
                             accepted={false}
@@ -48,7 +48,7 @@ export default class TournamentsTableOutput extends React.Component{
                     }
                     else{
                         outputTable.push(
-                            <SecondPlayerDataInGroupTournamentRow
+                            <SecondPlayerDataInGrouptournamentRow
                                 key={this.props.value[i].secondPlayerName}
                                 name = {this.props.value[i].secondPlayerName}
                                 disabled = {true}

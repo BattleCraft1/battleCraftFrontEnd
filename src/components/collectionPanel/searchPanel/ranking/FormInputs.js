@@ -55,14 +55,14 @@ class FormInputs extends React.Component{
         this.changeSearchForm(
             "game",
             {
-                "keys":["tour","tournament","game","name"],
+                "keys":["turn","tournament","game","name"],
                 "operation":":",
                 "value":[this.state.gameName]
             }
         );
     }
 
-    prepareTournamentGamesOptions(){
+    preparetournamentGamesOptions(){
         let tournamentGamesOptions = [];
         if(this.state.tournamentsGames!==undefined) {
             this.state.tournamentsGames.forEach(
@@ -82,7 +82,7 @@ class FormInputs extends React.Component{
 
     render(){
         let provincesOptions = createOptions(provinces);
-        let tournamentGamesOptions = this.prepareTournamentGamesOptions();
+        let tournamentGamesOptions = this.preparetournamentGamesOptions();
 
         return(
             <div>
@@ -99,9 +99,9 @@ class FormInputs extends React.Component{
                 <div className={css(resp.optionContent)}>
                     <div className={css(resp.halfSize)}>
                         <TextInput
-                            name = "Tournaments city"
+                            name = "tournaments city"
                             placeholder = "Lublin"
-                            keys = {["tour","tournament","address", "city"]}
+                            keys = {["turn","tournament","address", "city"]}
                             operation = ":"
                             indexOfSearchFields = "city"
                             changeSearchForm = {this.changeSearchForm.bind(this)}
@@ -109,8 +109,8 @@ class FormInputs extends React.Component{
                     </div>
                     <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
                         <SelectInput
-                            name = "Tournaments province"
-                            keys = {["tour","tournament","address", "province"]}
+                            name = "tournaments province"
+                            keys = {["turn","tournament","address", "province"]}
                             operation = ":"
                             indexOfSearchFields = "province"
                             options = {provincesOptions}
@@ -122,7 +122,7 @@ class FormInputs extends React.Component{
                     <GameInputForRanking
                         value = {this.state.gameName}
                         name = "Game"
-                        keys = {["tour","tournament","game","name"]}
+                        keys = {["turn","tournament","game","name"]}
                         operation = ":"
                         indexOfSearchFields = "game"
                         options = {tournamentGamesOptions}
@@ -133,7 +133,7 @@ class FormInputs extends React.Component{
                     <div className={css(resp.halfSize)}>
                         <DateInput
                             name = "Date from"
-                            keys = {["tour","tournament","dateOfStart"]}
+                            keys = {["turn","tournament","dateOfStart"]}
                             operation = ">"
                             indexOfSearchFields = "dateOfStart"
                             changeSearchForm = {this.changeSearchForm.bind(this)}
@@ -142,7 +142,7 @@ class FormInputs extends React.Component{
                     <div className={css(resp.halfSize)} style={{marginLeft:'0.5%'}}>
                         <DateInput
                             name = "Date to"
-                            keys = {["tour","tournament","dateOfEnd"]}
+                            keys = {["turn","tournament","dateOfEnd"]}
                             operation = "<"
                             indexOfSearchFields = "dateOfEnd"
                             changeSearchForm = {this.changeSearchForm.bind(this)}

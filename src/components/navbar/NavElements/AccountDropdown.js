@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import styles from '../NavStyle.css.js'
+import TextOutput from './../../commonComponents/textOutput/TextOutput'
+import {serverName} from "../../../main/consts/server";
 
 let icons = require('glyphicons');
 
@@ -56,8 +58,14 @@ export default class Dropdown extends React.Component{
 
         return (
             <div ref={this.setDropdownRef} className={css(resp.container)}>
-                <div onClick={this.toggleList.bind(this)} style = {styles.button} className={css(resp.button)}>
-                    {this.props.name}{this.state.listIsShow?icons.arrowTriD:icons.arrowTriU}
+                <div onClick={this.toggleList.bind(this)} style = {styles.accountButton} className={css(resp.button)}>
+                    <div style={{display:'inline-block',marginBottom:'-6px',lineHeight:'1'}}>
+                        <div style={Object.assign({background:`url(${serverName}/get/user/avatar?username=${this.props.name})`}, styles.avatarCell)}/>
+                        <div style={{position:'relative',float:'right',margin:'0',marginLeft:'5px'}}>
+                            <TextOutput text={this.props.name} limit={8}/><br/>
+                            <span style={{fontSize:'9px'}}>{this.state.listIsShow?icons.arrowTriD:icons.arrowTriU}</span>
+                        </div>
+                    </div>
                 </div>
                 {this.state.listIsShow && list}
             </div>
@@ -65,15 +73,13 @@ export default class Dropdown extends React.Component{
     }
 };
 
-
 const resp = StyleSheet.create({
     button:{
         width:"100%",
         position:'relative',
         borderWidth:' 3px 2px 3px 2px',
         cursor: 'pointer',
-        padding: '8px 0px',
-
+        padding: '2px 0px',
         ':hover':{
             borderTopColor: 'rgb(249, 249, 249)',
             borderBottomColor: 'rgb(204, 126, 69)',
@@ -92,8 +98,7 @@ const resp = StyleSheet.create({
             width:'100%',
             marginBottom:'1px',
             borderWidth:' 2px 1px 2px 1px',
-            padding: '4px 0px',
-
+            padding: '1px 0px',
         }
     },
     container:{

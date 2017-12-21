@@ -12,7 +12,7 @@ import { ActionCreators } from '../../../../redux/actions';
 
 class OrganizerTab extends React.Component{
 
-    startAddTournaments(){
+    startAddtournaments(){
         this.props.setOperations(["Invite","CancelInvite","Search"]);
         this.props.setRelatedEntity(
             this.props.entity["organizedTournaments"].map(entity => entity.name),
@@ -38,8 +38,8 @@ class OrganizerTab extends React.Component{
                     disabled = {this.props.inputsDisabled}
                     changeEntity={this.props.changeEntity.bind(this)}
                     name="Organized tournaments" />
-                {!this.props.inputsDisabled && <InviteButton to='/collectionsPanel/tournaments'
-                                                 operation={this.startAddTournaments.bind(this)}  text="Add"/>}
+                {!this.props.inputsDisabled && <InviteButton to='/battleCraft/collectionsPanel/tournaments'
+                                                 operation={this.startAddtournaments.bind(this)}  text="Add"/>}
                 <TournamentsTableOutput
                     value={this.props.entity["finishedOrganizedTournaments"]}
                     name="Finished tournaments"

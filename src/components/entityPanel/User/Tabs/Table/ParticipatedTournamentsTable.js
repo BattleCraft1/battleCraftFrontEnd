@@ -7,7 +7,7 @@ import EmptySecondPlayerInGroupRow from "./Row/EmptySecondPlayerInGroupRow";
 import SecondPlayerDataInGroupTournamentRow from "./Row/SecondPlayerDataInGroupTournamentRow";
 import '../../../TableInputs/scrollbar.css'
 
-export default class TournamentsTable extends React.Component{
+export default class tournamentsTable extends React.Component{
     constructor(props) {
         super(props);
         this.state={
