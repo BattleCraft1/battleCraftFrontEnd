@@ -88,7 +88,7 @@ class ParticipantsGroupTableRow extends React.Component{
                         style={Object.assign({}, styles.tableCell, styles.tableButton,{padding:'10px 20px 10px 20px'})}
                         className={css(resp.tableButton)}>delete group</span>
                     <Link
-                        to='/collectionsPanel/users'
+                        to='/battleCraft/collectionsPanel/users'
                         onClick={() => this.startInviteParticipantsToGroup()}
                         style={Object.assign({}, styles.tableCell, styles.tableButton,{padding:'10px 20px 10px 20px'})}
                         className={css(resp.tableButton)}>invite group</Link>

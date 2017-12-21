@@ -1,10 +1,10 @@
 import React from 'react';
 import {styles} from '../../../styles'
-import DuelTournamentTableRow from './Row/DuelTournamentTableRow'
+import DueltournamentTableRow from './Row/DuelTournamentTableRow'
 import EmptyTableRow from './Row/EmptyTournamentTableRow'
 import '../../../TableInputs/scrollbar.css'
 
-export default class OrganizedTournamentsTableOutput extends React.Component{
+export default class OrganizedtournamentsTableOutput extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -23,7 +23,7 @@ export default class OrganizedTournamentsTableOutput extends React.Component{
         }
         else{
             return this.props.value.map(tournament =>
-                <DuelTournamentTableRow key={tournament.name}
+                <DueltournamentTableRow key={tournament.name}
                                         disabled = {true}
                                         accepted={false}
                                         name={tournament.name}/>

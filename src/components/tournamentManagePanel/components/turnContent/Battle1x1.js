@@ -24,7 +24,7 @@ export default class TurnCell extends React.Component{
 
     onClick(){
         if(!this.props.disabled){
-        this.props.showBattlePopup(Object.assign({tourNumber: this.props.tourNumber,tableNumber: this.props.battleData.tableNumber},
+        this.props.showBattlePopup(Object.assign({turnNumber: this.props.turnNumber,tableNumber: this.props.battleData.tableNumber},
             this.props.battleData))
         }
     }

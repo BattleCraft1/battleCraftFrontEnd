@@ -14,10 +14,8 @@ export default class TableAvatarCell extends React.Component{
 
     render(){
         return(
-            <div style={Object.assign({}, styles.avatarCell)}>
-                <div className={css(resp.avatar)}
-                     style={{width:'100%', height:'38px', background:`url(${serverName}/get/user/avatar?username=${this.props.name}&${new Date().getTime()})`}}/>
-            </div>
+            <div style={Object.assign({background:`url(${serverName}/get/user/avatar?username=${this.props.name})`}, styles.avatarCell)}/>
+
         )
     }
 }
@@ -26,9 +24,11 @@ const styles = {
     avatarCell: {
         width:'100%',
         height:'50px',
-        background:'green',
         border:'1px solid black',
         boxSizing:'border-box',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
     },
 };
 

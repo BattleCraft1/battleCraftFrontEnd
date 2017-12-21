@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import OptionPanel from './../../optionPanel/OptionPanel'
 import LegendPanel from './../../legendPanel/LegendPanel'
 import RankingGameHeader from '../../legendPanel/RankingGameHeader'
-import TournamentRow from './row/tournaments/Row'
+import tournamentRow from './row/tournaments/Row'
 import RankingRowHeader from './headRow/ranking/RowHeader'
 import RankingRow from './row/ranking/Row'
 import UserRow from './row/users/Row'
-import TournamentRowHeader from './headRow/tournaments/RowHeader'
+import tournamentRowHeader from './headRow/tournaments/RowHeader'
 import UserRowHeader from './headRow/users/RowHeader'
 import GameRow from './row/games/Row'
 import GameRowHeader from './headRow/games/RowHeader'
@@ -22,18 +22,18 @@ import findGameName from '../../../../main/functions/findGameName'
 let icons = require('glyphicons');
 
 const rowTypeMap = {
-    "tournaments":TournamentRow,
-    "participated":TournamentRow,
-    "organized":TournamentRow,
+    "tournaments":tournamentRow,
+    "participated":tournamentRow,
+    "organized":tournamentRow,
     "games":GameRow,
     "ranking":RankingRow,
     "users":UserRow
 };
 
 const rowHeaderTypeMap = {
-    "tournaments":TournamentRowHeader,
-    "participated":TournamentRowHeader,
-    "organized":TournamentRowHeader,
+    "tournaments":tournamentRowHeader,
+    "participated":tournamentRowHeader,
+    "organized":tournamentRowHeader,
     "games":GameRowHeader,
     "ranking":RankingRowHeader,
     "users":UserRowHeader
@@ -96,7 +96,6 @@ class TableOfEntities extends React.Component{
         let legend = <div/>;
         let rowHeader = <tr/>;
 
-        console.log(this.props.collectionType);
         if(this.props.collectionType!=="")
             rowHeader = React.createElement(
                 rowHeaderTypeMap[this.props.collectionType],

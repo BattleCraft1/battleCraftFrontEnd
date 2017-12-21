@@ -30,10 +30,10 @@ class Panel extends React.Component{
             showBattlePopup:false,
             battlePopupUpData:{},
             tournamentData:{
-                tours:[],
+                turns:[],
                 playersNamesWithPoints:{},
                 playersWithoutBattles:{},
-                currentTourNumber:0,
+                currentTurnNumber:0,
                 tournamentStatus:"",
                 playersOnTableCount:0,
                 playersCount:0
@@ -70,7 +70,7 @@ class Panel extends React.Component{
                 this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
-                await this.prepareToursData(res.data);
+                await this.prepareTurnsData(res.data);
             })
             .catch(error => {
                 this.props.stopLoading();
@@ -95,7 +95,7 @@ class Panel extends React.Component{
                 this.props.stopLoading();
                 console.log("tournament data:");
                 console.log(res.data);
-                this.prepareToursData(res.data);
+                this.prepareTurnsData(res.data);
             })
             .catch(error => {
                 this.props.stopLoading();
@@ -103,37 +103,37 @@ class Panel extends React.Component{
             });
     }
 
-    async prepareToursData(tournamentData){
+    async prepareTurnsData(tournamentData){
         this.setState({playersOnTableCount:tournamentData.playersOnTableCount});
         if(tournamentData.playersOnTableCount === 4){
-            for (let tourNumber in tournamentData.playersWithoutBattles) {
-                if (tournamentData.playersWithoutBattles.hasOwnProperty(tourNumber)) {
-                    tournamentData.playersWithoutBattles[tourNumber].push(["", ""]);
+            for (let turnNumber in tournamentData.playersWithoutBattles) {
+                if (tournamentData.playersWithoutBattles.hasOwnProperty(turnNumber)) {
+                    tournamentData.playersWithoutBattles[turnNumber].push(["", ""]);
                 }
             }
         }
         else{
-            for (let tourNumber in tournamentData.playersWithoutBattles) {
-                if (tournamentData.playersWithoutBattles.hasOwnProperty(tourNumber)) {
-                    tournamentData.playersWithoutBattles[tourNumber].push("");
+            for (let turnNumber in tournamentData.playersWithoutBattles) {
+                if (tournamentData.playersWithoutBattles.hasOwnProperty(turnNumber)) {
+                    tournamentData.playersWithoutBattles[turnNumber].push("");
                 }
             }
         }
         this.setState({tournamentData:tournamentData});
     }
 
-    createTours(){
-        return this.state.tournamentData.tours.map(
-            (tour,index) => <Turn
+    createTurns(){
+        return this.state.tournamentData.turns.map(
+            (turn,index) => <Turn
                 key={index}
-                tourData={tour}
-                tourNumber={index}
+                turnData={turn}
+                turnNumber={index}
                 haveAlonePlayer={this.state.tournamentData.playersCount%2!==0}
                 showBattlePopup={this.showBattlePopup.bind(this)}
                 playersOnTableCount={this.state.playersOnTableCount}
                 tournamentStatus={this.state.tournamentData.tournamentStatus}
-                disabled={index>this.state.tournamentData.currentTourNumber || !this.state.tournamentData.canCurrentUserMenageTournament}
-                currentTourNumber={this.state.tournamentData.currentTourNumber}
+                disabled={index>this.state.tournamentData.currentTurnNumber || !this.state.tournamentData.canCurrentUserMenageTournament}
+                currentTurnNumber={this.state.tournamentData.currentTurnNumber}
             />
         )
     }
@@ -172,22 +172,22 @@ class Panel extends React.Component{
         }
     }
 
-    nextTour(){
-        if(this.state.tournamentData.currentTourNumber === this.state.tournamentData.tours.length-1){
+    nextTurn(){
+        if(this.state.tournamentData.currentTurnNumber === this.state.tournamentData.turns.length-1){
             this.props.showFailureMessage("This tournament is finished");
             return;
         }
 
         let notHaveAlonePlayer = this.state.tournamentData.playersCount%2===0;
-        for(let i=0;i<=this.state.tournamentData.currentTourNumber;i++){
-            for(let j=0; j<this.state.tournamentData.tours[i].length;j++){
-                if(!((notHaveAlonePlayer && this.state.tournamentData.tours[i][j].finished === true) ||
-                    (!notHaveAlonePlayer && (this.state.tournamentData.tours[i][j].tableNumber === this.state.tournamentData.tours[i].length-1 ||
-                            this.state.tournamentData.tours[i][j].finished === true)))){
+        for(let i=0;i<=this.state.tournamentData.currentturnNumber;i++){
+            for(let j=0; j<this.state.tournamentData.turns[i].length;j++){
+                if(!((notHaveAlonePlayer && this.state.tournamentData.turns[i][j].finished === true) ||
+                    (!notHaveAlonePlayer && (this.state.tournamentData.turns[i][j].tableNumber === this.state.tournamentData.turns[i].length-1 ||
+                            this.state.tournamentData.turns[i][j].finished === true)))){
                     console.log(notHaveAlonePlayer);
-                    console.log(this.state.tournamentData.tours[i][j].finished === true);
-                    console.log(this.state.tournamentData.tours[i].tableNumber === this.state.tournamentData.tours[i].length-1);
-                    this.props.showFailureMessage("Battle on table with number: "+(j+1)+" in tour: "+(i+1)+" is not finished yet");
+                    console.log(this.state.tournamentData.turns[i][j].finished === true);
+                    console.log(this.state.tournamentData.turns[i].tableNumber === this.state.tournamentData.turns[i].length-1);
+                    this.props.showFailureMessage("Battle on table with number: "+(j+1)+" in turn: "+(i+1)+" is not finished yet");
                     return;
                 }
             }
@@ -195,17 +195,17 @@ class Panel extends React.Component{
 
         this.props.showConfirmationDialog(
             {
-                header:"Start next tour",
+                header:"Start next turn",
                 message:"Are you sure?",
-                onConfirmFunction: () => this.nextTourRequest()
+                onConfirmFunction: () => this.nextTurnRequest()
             });
     }
 
 
-    nextTourRequest(){
+    nextTurnRequest(){
         let tournamentTypeString = this.state.playersOnTableCount === 4?"group":"duel";
-        this.props.startLoading("Changing tour...");
-        axios.get(`${serverName}next/tour/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,
+        this.props.startLoading("Changing turn...");
+        axios.get(`${serverName}next/turn/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,
             {
                 headers: {
                     "X-Auth-Token":this.props.security.token
@@ -216,7 +216,7 @@ class Panel extends React.Component{
                 console.log("tournament data:");
                 console.log(res.data);
                 this.setState({playersOnTableCount:res.data.playersOnTableCount});
-                this.prepareToursData(res.data);
+                this.prepareTurnsData(res.data);
                 this.setState({tournamentData:res.data});
             })
             .catch(error => {
@@ -225,24 +225,24 @@ class Panel extends React.Component{
             });
     }
 
-    previousTour(){
-        if(this.state.tournamentData.currentTourNumber === 0)
-            this.props.showFailureMessage("This is first tour of tournament");
+    previousTurn(){
+        if(this.state.tournamentData.currentTurnNumber === 0)
+            this.props.showFailureMessage("This is first turn of tournament");
         else{
 
             this.props.showConfirmationDialog(
                 {
-                    header:"Come back to previous tour",
-                    message:"Are you sure? If you come back to previous tour all data from this tour will be lost!",
-                    onConfirmFunction: () => this.previousTourRequest()
+                    header:"Come back to previous turn",
+                    message:"Are you sure? If you come back to previous turn all data from this turn will be lost!",
+                    onConfirmFunction: () => this.previousTurnRequest()
                 });
         }
     }
 
-    previousTourRequest(){
+    previousTurnRequest(){
         let tournamentTypeString = this.state.playersOnTableCount === 4?"group":"duel";
-        this.props.startLoading("Coming back to previous tour...");
-        axios.get(`${serverName}previous/tour/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,
+        this.props.startLoading("Coming back to previous turn...");
+        axios.get(`${serverName}previous/turn/${tournamentTypeString}/tournament?name=${this.state.tournamentName}`,
             {
                 headers: {
                     "X-Auth-Token":this.props.security.token
@@ -253,7 +253,7 @@ class Panel extends React.Component{
                 console.log("tournament data:");
                 console.log(res.data);
                 this.setState({playersOnTableCount:res.data.playersOnTableCount});
-                this.prepareToursData(res.data);
+                this.prepareTurnsData(res.data);
                 this.setState({tournamentData:res.data});
             })
             .catch(error => {
@@ -265,11 +265,11 @@ class Panel extends React.Component{
     finishTournament(){
         let haveAlonePlayer = this.state.tournamentData.playersCount%2===0;
 
-        for(let i=0;i<this.state.tournamentData.tours.length;i++){
-            for(let j=0; j<this.state.tournamentData.tours[i].length;j++){
-                if(haveAlonePlayer && this.state.tournamentData.tours[i].tableNumber !== this.state.tournamentData.tours[i].length-1 &&
-                    this.state.tournamentData.tours[i][j].finished === false){
-                    this.props.showFailureMessage("Battle on table with number: "+(j+1)+" in tour: "+(i+1)+" is not finished yet");
+        for(let i=0;i<this.state.tournamentData.turns.length;i++){
+            for(let j=0; j<this.state.tournamentData.turns[i].length;j++){
+                if(haveAlonePlayer && this.state.tournamentData.turns[i].tableNumber !== this.state.tournamentData.turns[i].length-1 &&
+                    this.state.tournamentData.turns[i][j].finished === false){
+                    this.props.showFailureMessage("Battle on table with number: "+(j+1)+" in turn: "+(i+1)+" is not finished yet");
                     return;
                 }
             }
@@ -298,7 +298,7 @@ class Panel extends React.Component{
                 console.log("tournament data:");
                 console.log(res.data);
                 this.setState({playersOnTableCount:res.data.playersOnTableCount});
-                this.prepareToursData(res.data);
+                this.prepareTurnsData(res.data);
                 this.setState({tournamentData:res.data});
             })
             .catch(error => {
@@ -321,13 +321,13 @@ class Panel extends React.Component{
             <div>
                 <div style={Object.assign({}, styles.goldAndBrownTheme, styles.container)}>
                     <div style={Object.assign({}, styles.goldAndBrownThemeInset, styles.innerContainer)}>
-                        {this.createTours()}
+                        {this.createTurns()}
                     </div>
                 </div>
                 <OptionPanel
                     disabled={buttonsDisabled}
-                    previousTour={this.previousTour.bind(this)}
-                    nextTour={this.nextTour.bind(this)}
+                    previousTurn={this.previousTurn.bind(this)}
+                    nextTurn={this.nextTurn.bind(this)}
                     finishTournament={this.finishTournament.bind(this)}
                     scoreboard={this.showScoreBoard.bind(this)}
                 />

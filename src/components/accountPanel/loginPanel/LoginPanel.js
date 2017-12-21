@@ -30,8 +30,7 @@ class LoginPanel extends React.Component {
             username:"",
             usernameError:"",
             password:"",
-            passwordError:"",
-            rememberMe:false
+            passwordError:""
         }
     }
 
@@ -79,6 +78,12 @@ class LoginPanel extends React.Component {
 
                 this.props.stopLoading();
                 this.props.showSuccessMessage("You successfully log in with "+role+" permissions");
+
+                this.setState({username:""});
+                this.setState({password:""});
+                this.setState({usernameError:""});
+                this.setState({passwordError:""});
+
                 this.props.showLoginPanel(false);
             })
             .catch(error => {
@@ -105,7 +110,6 @@ class LoginPanel extends React.Component {
     hideMessageBox(){
         this.setState({username:""});
         this.setState({password:""});
-        this.setState({rememberMe:false});
         this.setState({usernameError:""});
         this.setState({passwordError:""});
         this.props.showLoginPanel(false);

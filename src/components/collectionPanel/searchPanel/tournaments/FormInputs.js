@@ -55,7 +55,7 @@ class FormInputs extends React.Component{
             });
     }
 
-    prepareTournamentGamesOptions(){
+    preparetournamentGamesOptions(){
         let tournamentGamesOptions = [];
         tournamentGamesOptions.push(<option value={""}  key="nullOption"/>);
         if(this.state.tournamentsGames!==undefined) {
@@ -68,7 +68,7 @@ class FormInputs extends React.Component{
         return tournamentGamesOptions;
     }
 
-    prepareTournamentTypeOptions(){
+    preparetournamentTypeOptions(){
         let tournamentTypeOptions = [];
         tournamentTypeOptions.push(<option value={""}  key="nullOption"/>);
         tournamentTypeOptions.push(<option value={2} key={2}>Duel</option>);
@@ -82,7 +82,7 @@ class FormInputs extends React.Component{
         this.setState({searchFormField:searchFormFields});
     }
 
-    getTournamentStatus(){
+    gettournamentStatus(){
         let tournamentStat = tournamentStatus;
         if(this.props.security.role==="ROLE_ADMIN"){
             tournamentStat["BANNED"] = "BANNED";
@@ -92,16 +92,16 @@ class FormInputs extends React.Component{
 
     render(){
         let provincesOptions = createOptions(provinces);
-        let tournamentGamesOptions = this.prepareTournamentGamesOptions();
-        let tournamentStatusOptions = createOptions(this.getTournamentStatus());
-        let tournamentTypeOptions = this.prepareTournamentTypeOptions();
+        let tournamentGamesOptions = this.preparetournamentGamesOptions();
+        let tournamentStatusOptions = createOptions(this.gettournamentStatus());
+        let tournamentTypeOptions = this.preparetournamentTypeOptions();
 
         return (
             <div>
               <div className={css(resp.optionContent)}>
                 <TextInput
-                    name = "Tournament name"
-                    placeholder = "Tournament 2017"
+                    name = "tournament name"
+                    placeholder = "tournament 2017"
                     keys = {["name"]}
                     operation = ":"
                     indexOfSearchFields = "name"

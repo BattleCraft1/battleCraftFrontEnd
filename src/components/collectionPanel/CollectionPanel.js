@@ -17,7 +17,6 @@ import possibleOperationsForCollections from "../../main/functions/possibleOpera
 import axios from 'axios';
 
 import Cookies from 'universal-cookie';
-
 const cookies = new Cookies('auth');
 
 class CollectionPanel extends React.Component{
@@ -50,9 +49,7 @@ class CollectionPanel extends React.Component{
             await this.getPage(this.state.collectionType);
         }
         else if (nextProps.match.params.collectionType !== this.state.collectionType ||
-            (nextProps.entityPanel.mode === 'disabled' &&
-                this.props.entityPanel.mode !== 'disabled' ||
-                nextProps.security.role !== this.props.security.role)) {
+                    nextProps.security.role !== this.props.security.role) {
             let collectionType = nextProps.match.params.collectionType;
             this.createPageRequest(collectionType);
             console.log(nextProps.security.role);
@@ -91,10 +88,10 @@ class CollectionPanel extends React.Component{
         if(collectionType==='ranking') {
             this.props.setPageRequest({
                 searchCriteria:[{
-                        "keys": ["tour", "tournament", "game","name"],
-                        "operation":":",
-                        "value":["Warhammer"]
-                    }],
+                    "keys": ["turn", "tournament", "game","name"],
+                    "operation":":",
+                    "value":["Warhammer"]
+                }],
                 pageRequest:{
                     direction : "DESC",
                     property : "points",
@@ -177,7 +174,7 @@ class CollectionPanel extends React.Component{
                 <div className="row">
                     {searchPanel}
                     <TableOfEntities getPage={this.getPage.bind(this)}
-                                    collectionType={this.state.collectionType}/>
+                                     collectionType={this.state.collectionType}/>
                     <PagePanel getPage={this.getPage.bind(this)}
                                collectionType={this.state.collectionType}/>
                 </div>
@@ -204,16 +201,17 @@ export default connect( mapStateToProps, mapDispatchToProps )( CollectionPanel )
 
 
 const resp = StyleSheet.create({
-  container:{
-    display:'block',
-    position:'relative',
-    width:'90%',
-    marginLeft:'5%',
-    zIndex:'1',
-    '@media (max-width: 600px)': {
-      width:'100%',
-      margin:'0',
+    container:{
+        display:'block',
+        position:'relative',
+        clear:'left',
+        width:'90%',
+        marginLeft:'5%',
+        zIndex:'1',
+        '@media (max-width: 600px)': {
+            width:'100%',
+            margin:'0',
+        },
     },
-  },
 
 });

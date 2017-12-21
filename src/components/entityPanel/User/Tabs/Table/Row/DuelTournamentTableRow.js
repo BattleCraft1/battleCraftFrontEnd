@@ -2,7 +2,7 @@ import React from 'react';
 import {css} from 'aphrodite';
 import {resp, styles} from '../../../../styles'
 
-export default class DuelTournamentTableRow extends React.Component{
+export default class DueltournamentTableRow extends React.Component{
     render(){
         return(
             <tr>

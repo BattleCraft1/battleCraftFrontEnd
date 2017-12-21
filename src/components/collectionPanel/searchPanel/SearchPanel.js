@@ -7,7 +7,7 @@ import { ActionCreators } from '../../../redux/actions/index';
 import isNotEmpty from './../../../main/functions/checkIfObjectIsNotEmpty'
 
 import UsersFormInputs from './users/FormInputs'
-import TournamentsFormInputs from './tournaments/FormInputs'
+import tournamentsFormInputs from './tournaments/FormInputs'
 import RankingFormInputs from './ranking/FormInputs'
 import GamesFormInputs from './games/FormInputs'
 
@@ -15,9 +15,9 @@ import {resp, styles} from './styles'
 import {css} from 'aphrodite';
 
 const searchFormInputsTypeMap = {
-    "tournaments":TournamentsFormInputs,
-    "participated":TournamentsFormInputs,
-    "organized":TournamentsFormInputs,
+    "tournaments":tournamentsFormInputs,
+    "participated":tournamentsFormInputs,
+    "organized":tournamentsFormInputs,
     "users": UsersFormInputs,
     "games":GamesFormInputs,
     "ranking":RankingFormInputs
@@ -77,7 +77,6 @@ class SearchPanel extends React.Component{
     }
 
     createSearchFormInputs(){
-        console.log(this.props.collectionType);
         return React.createElement(
             searchFormInputsTypeMap[this.props.collectionType],
             {

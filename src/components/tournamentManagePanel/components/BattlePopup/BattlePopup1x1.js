@@ -29,7 +29,7 @@ class BattlePopup extends React.Component {
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
         this.setState({battleData:JSON.parse(JSON.stringify(this.props.battleData))});
-        this.setState({playersWithoutBattles:JSON.parse(JSON.stringify(this.props.playersWithoutBattles[this.props.battleData.tourNumber]))});
+        this.setState({playersWithoutBattles:JSON.parse(JSON.stringify(this.props.playersWithoutBattles[this.props.battleData.turnNumber]))});
         this.setState({componentReady:true});
     }
 

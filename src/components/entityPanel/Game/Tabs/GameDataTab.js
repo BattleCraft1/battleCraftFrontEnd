@@ -23,7 +23,7 @@ export default class GameDataTab extends React.Component{
                     name="Game name"/>
                 <NumberOutput
                     value={this.props.entity["tournamentsNumber"]}
-                    name="Tournaments count"/>
+                    name="tournaments count"/>
                 <TextOutput
                     value={this.props.entity["status"]}
                     name="Status"/>

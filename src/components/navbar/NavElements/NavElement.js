@@ -65,7 +65,9 @@ const resp = StyleSheet.create({
         }
     },
     container:{
+        position:'relative',
         display:'inline-block',
+        float:'left',
         width:'20%',
         '@media (max-width: 800px)': {
             width:'100%',

@@ -22,7 +22,7 @@ import {serverName} from '../../../main/consts/server';
 import axios from 'axios';
 
 import checkIfObjectIsNotEmpty from '../../../main/functions/checkIfObjectIsNotEmpty'
-import validateTournament from '../validators/TournamentValidator'
+import validatetournament from '../validators/TournamentValidator'
 
 const tabsMap = {
     "basicData":BasicDataTab,
@@ -55,7 +55,7 @@ class Panel extends React.Component{
                 "nameChange": "",
                 "tablesCount": 0,
                 "playersOnTableCount": 2,
-                "toursCount":0,
+                "turnsCount":0,
                 "game": "Warhammer",
                 "dateOfStart": tomorrow,
                 "dateOfEnd":dayAfterTomorrow,
@@ -74,7 +74,7 @@ class Panel extends React.Component{
                 "nameChange": "",
                 "tablesCount": "",
                 "playersOnTableCount":"",
-                "toursCount":0,
+                "turnsCount":0,
                 "maxPlayers": "",
                 "game": "",
                 "dateOfStart": "",
@@ -183,6 +183,7 @@ class Panel extends React.Component{
 
         let entityToSend = JSON.parse(JSON.stringify(this.state.entity));
         entityToSend.organizers = this.state.entity.organizers.map(element => element.name);
+
         entityToSend.participants = [];
         this.state.entity.participants.map(participantGroup => {
             let participantGroupToSend = [];
@@ -192,14 +193,23 @@ class Panel extends React.Component{
             if(participantGroupToSend.length !== 0)
                 entityToSend.participants.push(participantGroupToSend);
         });
+
         delete entityToSend["status"];
         delete entityToSend["canCurrentUserEdit"];
-        let validationErrors = validateTournament(entityToSend);
+        let validationErrors = validatetournament(entityToSend);
         if(checkIfObjectIsNotEmpty(validationErrors)){
+
+            let tournamentType = entityToSend.playersOnTableCount === 4?"group":"duel";
+            if(tournamentType === "duel"){
+                entityToSend.participants = entityToSend.participants.map(
+                    participantArray => participantArray[0]
+                );
+            }
+
             console.log("output entity:");
             console.log(entityToSend);
             this.props.startLoading("Sending tournament...");
-            axios.post(serverName+this.props.mode+'/'+this.props.type, entityToSend,
+            axios.post(serverName+this.props.mode+'/'+tournamentType+'/'+this.props.type, entityToSend,
                 {
                     headers: {
                         "X-Auth-Token": this.props.security.token
@@ -208,7 +218,7 @@ class Panel extends React.Component{
                 .then(res => {
                     this.props.stopLoading();
                     this.setState({entity:res.data});
-                    this.props.showSuccessMessage("Tournament: "+res.data.name+" successfully "+this.props.mode+"ed");
+                    this.props.showSuccessMessage("tournament: "+res.data.name+" successfully "+this.props.mode+"ed");
                     this.props.disable();
                 })
                 .catch(error => {
@@ -252,14 +262,14 @@ class Panel extends React.Component{
                 <Button key="cancel" text={"Cancel"} action={() => this.props.disable()}/>,
                 <Button key="save" text={"Save"} action={() => {this.sendEntity()}}/>,
                 <ButtonLink key="progress" text={"Progress"} action={() => this.props.disable()}
-                            link={`/progress/${this.state.entity.name}`}/>
+                            link={`/battleCraft/progress/${this.state.entity.name}`}/>
             ]
         }
         else{
             buttons = [
                 <Button key="ok" text={"Ok"} action={() => this.props.disable()}/>,
                 <ButtonLink key="progress" text={"Progress"} action={() => this.props.disable()}
-                            link={`/progress/${this.state.entity.name}`}/>
+                            link={`/battleCraft/progress/${this.state.entity.name}`}/>
             ]
         }
 

@@ -56,7 +56,7 @@ export default class FormInputs extends React.Component{
                 <div className={css(resp.optionContent)}>
                     <div className={css(resp.halfSize)}>
                     <NumberInput
-                        name = "Tournaments number"
+                        name = "tournaments number"
                         keys = {["tournamentsNumber"]}
                         operation = "<"
                         indexOfSearchFields = "tournamentsNumber"

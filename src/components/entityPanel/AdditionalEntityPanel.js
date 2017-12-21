@@ -2,7 +2,7 @@ import React from 'react';
 import {css} from 'aphrodite';
 import {resp, styles} from './styles'
 
-import TournamentPanel from './Tournament/Panel';
+import tournamentPanel from './Tournament/Panel';
 import UserPanel from './User/Panel';
 
 import { ActionCreators } from '../../redux/actions/index';
@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 
 
 const panelTypeMap = {
-    'tournament':TournamentPanel,
+    'tournament':tournamentPanel,
     'user':UserPanel
 };
 

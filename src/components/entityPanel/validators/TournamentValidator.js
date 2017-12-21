@@ -22,9 +22,9 @@ export default (entity) => {
             fieldErrors.tablesCount = "TableInputs count must be between 1 and 15";
     }
 
-    let maxToursNumber = (entity.tablesCount*2);
-    if(entity.toursCount>maxToursNumber)
-        fieldErrors.toursCount = "Max tours number in this tournament is: "+maxToursNumber;
+    let maxTurnsNumber = (entity.tablesCount*2);
+    if(entity.turnsCount>maxTurnsNumber)
+        fieldErrors.turnsCount = "Max turns count in this tournament is: "+maxTurnsNumber;
 
     if(entity.dateOfStart===undefined || getDatesDifferenceInDays(new Date(),new Date(entity.dateOfStart))<0)
         fieldErrors.dateOfStart = "You cannot start tournament at "+setDateFunction(entity.dateOfStart)+" because this date is outdated";
@@ -33,7 +33,7 @@ export default (entity) => {
         fieldErrors.dateOfEnd = "End date must be later than "+setDateFunction(entity.dateOfStart);
 
     if(getDatesDifferenceInDays(new Date(entity.dateOfStart),new Date(entity.dateOfEnd))>3)
-        fieldErrors.dateOfEnd = "Duration of tournament cannnot be longer than 3 days";
+        fieldErrors.dateOfEnd = "Duration of tournament cannot be longer than 3 days";
 
     validateAddress(entity,fieldErrors);
 
@@ -56,7 +56,7 @@ export default (entity) => {
 
     if(entity.tablesCount*entity.playersOnTableCount!==0 &&
         participantsFlatTable.length*entity.playersOnTableCount/2>entity.tablesCount*entity.playersOnTableCount)
-        fieldErrors.participants = "Participants count must be less than "+entity.maxPlayers;
+        fieldErrors.participants = "Participants count must be less than "+entity.tablesCount*entity.playersOnTableCount;
 
 
     if(!checkIfObjectIsNotEmpty(fieldErrors)){
