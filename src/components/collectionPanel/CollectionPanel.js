@@ -49,7 +49,10 @@ class CollectionPanel extends React.Component{
             await this.getPage(this.state.collectionType);
         }
         else if (nextProps.match.params.collectionType !== this.state.collectionType ||
-                    nextProps.security.role !== this.props.security.role) {
+            (nextProps.entityPanel.hidden === false &&
+                this.props.entityPanel.hidden === true &&
+                this.props.entityPanel.mode !== 'disabled') ||
+            nextProps.security.role !== this.props.security.role) {
             let collectionType = nextProps.match.params.collectionType;
             this.createPageRequest(collectionType);
             console.log(nextProps.security.role);

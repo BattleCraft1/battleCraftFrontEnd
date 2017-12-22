@@ -258,19 +258,17 @@ class Panel extends React.Component{
 
         let buttons = [];
         if(this.props.mode!=='get' && this.state.entity.canCurrentUserEdit){
-            buttons = [
-                <Button key="cancel" text={"Cancel"} action={() => this.props.disable()}/>,
-                <Button key="save" text={"Save"} action={() => {this.sendEntity()}}/>,
-                <ButtonLink key="progress" text={"Progress"} action={() => this.props.disable()}
-                            link={`/battleCraft/progress/${this.state.entity.name}`}/>
-            ]
+            buttons.push(<Button key="cancel" text={"Cancel"} action={() => this.props.disable()}/>);
+            buttons.push( <Button key="save" text={"Save"} action={() => {this.sendEntity()}}/>);
+            if(this.state.entity.canCurrentUserEdit || this.state.entity.status === 'IN_PROGRESS' || this.state.entity.status === 'FINISHED')
+            buttons.push(<ButtonLink key="progress" text={"Progress"} action={() => this.props.disable()}
+                                     link={`/battleCraft/progress/${this.state.entity.name}`}/>);
         }
         else{
-            buttons = [
-                <Button key="ok" text={"Ok"} action={() => this.props.disable()}/>,
-                <ButtonLink key="progress" text={"Progress"} action={() => this.props.disable()}
-                            link={`/battleCraft/progress/${this.state.entity.name}`}/>
-            ]
+            buttons.push(<Button key="ok" text={"Ok"} action={() => this.props.disable()}/>);
+            if(this.state.entity.canCurrentUserEdit || this.state.entity.status === 'IN_PROGRESS' || this.state.entity.status === 'FINISHED')
+            buttons.push(<ButtonLink key="progress" text={"Progress"} action={() => this.props.disable()}
+                                     link={`/battleCraft/progress/${this.state.entity.name}`}/>);
         }
 
         return(
