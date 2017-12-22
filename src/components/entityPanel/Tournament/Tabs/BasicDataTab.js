@@ -113,7 +113,7 @@ class BasicDataTab extends React.Component{
                     fieldName="turnsCount"
                     changeEntity={this.props.changeEntity}
                     disabled = {this.props.inputsDisabled}
-                    name="turns count"/>
+                    name="Turns count"/>
 
                 <NumberOutput
                     value={maxPlayers}
